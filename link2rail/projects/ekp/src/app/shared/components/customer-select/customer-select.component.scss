@@ -1,0 +1,56 @@
+
+.input-field {
+  width: 359px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  padding: 0px 5px 0px 5px;
+}
+
+.hide-icon {
+    visibility: hidden;
+}
+
+.show-icon {
+    visibility: visible;
+}
+
+.icon-block {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 15px;
+    top: 32px;
+
+    .icon {
+        position: absolute;
+    }
+}
+
+.remove-icon {
+  visibility: hidden;
+}
+
+input:focus ~ .icon-block .search-icon {
+  visibility: hidden;
+}
+
+input:focus ~ .icon-block .remove-icon {
+  visibility: unset;
+}
+
+.icon-block {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 15px;
+  top: 32px;
+
+  .icon {
+    position: absolute;
+  }
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}

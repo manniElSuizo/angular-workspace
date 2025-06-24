@@ -1,0 +1,45 @@
+<div class="main">
+  <div class="header-line">
+    <h2>{{ 'Navigation.Authorization-Matrix' | translate }}</h2> 
+    <div class="additional-buttons-block">
+    </div>
+  </div>
+  <ng-container>
+    <div class="elm-progress" *ngIf="loadingInProgress">
+      <progress id="progress-label-07"></progress>
+    </div>
+    <!-- MatrixSTART -->
+    <section>
+      <div class="profiles-table" >
+          <table class="list-table">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" class="header_group" [title]="header.text" [attr.colspan]="header.colSpan" *ngFor="let header of tableHeaderGroups">
+                  {{ header.text }}     
+                </th>
+              </tr>
+              <tr>
+                <th scope="col"  [class.rotate]="i > 0" [class.group-end]="header.rightBorder == true"  [attr.colspan]="header.colSpan" [title]="header.text" *ngFor="let header of tableHeaders; let i = index">
+                
+                    <div>
+                      <span>{{ header.text }}</span>
+                    </div>
+                </th>
+              </tr>
+            </thead>
+  
+            <tbody style="overflow: auto;">
+              <ng-container *ngFor="let tableRow of tableRows; let i = index">
+                <tr>
+                  <td *ngFor="let tableCell of tableRow"  class="order-row" [class.module]="tableCell.class === 'module'" [class.white-row]="i % 2 === 0" [attr.rowspan]="tableCell.rowSpan"  [class.group-end]="tableCell.rightBorder == true" [title]="tableCell.customerRoles">
+                    {{tableCell.text}}
+                  </td>
+                </tr>
+              </ng-container>
+      
+            </tbody>
+          </table>
+        </div>
+    </section>
+  </ng-container>
+  </div>

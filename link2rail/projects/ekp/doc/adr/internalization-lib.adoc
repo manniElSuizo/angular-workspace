@@ -1,0 +1,67 @@
+# ngx-translate as framework for internalization
+
+Date: 2019-07-05
+
+## State
+
+Decided
+
+## Kontext
+
+In order to build the application in multiple languages, there is a need for a internalization library
+
+* i18n (https://angular.io/guide/i18n) - the default of angular
+* ngx-translate (http://www.ngx-translate.com/)
+
+Web Links
+
+* https://github.com/ngx-translate/core/issues/495 - there are some statement of the autor of ngx-translate, who is now part of the angular team for i18n feature.
+
+
+## Decision
+
+We will take ngx-translate:
+
+*pro*
+
+* simpler than i18n
+** xlf format in i18n is far more complex then json file in ngx-translate
+** changes in application deployment required for i18n, due to an additional path element with locale string e.g. https://<hostname>/en/app
+* In i18n every language has to be built and deployed separately
+* In order to switch language the app has to be redirected and reloaded. E.g. from https://<hostname>/en/app -> https://<hostname>/de/app
+
+*contra*
+
+* i18n is default in angular
+* i18n is more advanced. E.g. it can handle singular/plural, genre or units translations.
+
+## Deciders
+
+Waldemar Schäfer
+
+## Attachments
+
+An example file for XLF file
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="ng2.template">
+        <body>
+        <trans-unit id="6080b77234e92ad41bb52653b239c4c4f851317d" datatype="html">
+            <source>Error</source>
+            <target>Fehler</target>
+            <context-group purpose="location">
+            <context context-type="sourcefile">app/error/error.component.html</context>
+            <context context-type="linenumber">2</context>
+            </context-group>
+            <note priority="1" from="description">@error</note>
+        </trans-unit>
+        </body>
+    </file>
+    </xliff>
+
+An example for JSON file
+
+    {
+        "ERROR": "Fehler {{value}}"
+    }

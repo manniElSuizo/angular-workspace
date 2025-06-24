@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Aanzicht houder",
+        "Tooltip": {
+            "Open-wagon-details": "Open wagondetails voor wagen: "
+        },
+        "Table-header": {
+            "Wagonkeeper": "Wagenhouder",
+            "Wagonnumber": "Wagen nummer",
+            "Wagoncategory": "Type wagen",
+            "Trackingstatus": "Traceerstatus",
+            "Trackingstatusdate": "Datum",
+            "Country": "Land",
+            "Location": "Locatie",
+            "Runability": "Runeerbaarheid",
+            "Damagecode": "Schadecode"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Wagenhouder",
+            "Vehicle-number": "Wagen nummer",
+            "Vehicle-type": "Type wagen",
+            "Runnability": "Runeerbaarheid",
+            "Damage-Code": "Schadecode",
+            "Location-country": "Locatie Land",
+            "Location": "Locatie"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Geschiedenis bijhouden",
+        "Overview-title": "Geschiedenis bijhouden",
+        "ZAB-order-number": "ZAB ordernumber:",
+        "Wagon-number": "Wagen nummer:",
+        "Table-header": {
+            "Event": "Gebeurtenis",
+            "Location": "Locatie",
+            "Real-time": "Werkelijke tijden",
+            "Train-number": "Treinnummer"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Wagen overzicht",
+        "Table-header": {
+            "Wagon-number": "Wagen nummer",
+            "Date-of-dispatch": "Verzendingsdatum",
+            "Expected-arrival": "Verwachte aankomst",
+            "Forwarding-yard": "Vertrekstation",
+            "Destination-yard": "Ontvangststation",
+            "Consignor": "Verzender",
+            "Consignee": "Ontvanger",
+            "Event": "Gebeurtenis",
+            "Location": "Huidige locatie",
+            "Zab-order-number": "Opdrachtnummer"
+        },
+        "Tooltip": {
+            "Loaded": "Wagen geladen",
+            "Empty": "Wagen leeg",
+            "Damage-limited-runablity": "Wagen beperkt functioneel",
+            "Damage-no-runablity": "Wagen niet functioneel",
+            "Duration-target": "Looptijddoel:",
+            "No-duration-target": "Geen looptijddoel beschikbaar",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Werkelijke aankomst",
+            "Actual-sending-date-label": "Werkelijk vertrek",
+            "Additional-commercial-information-discount-code": "Klantovereenkomst",
+            "Annotation-of-consignor-description": "Referentie van verzender",
+            "Bza-number": "BZA-nummer",
+            "Consignee": "Ontvanger",
+            "Customs-tariff-no": "Douanetariefnummer",
+            "Current-train-number-label": "Huidig treinnummer",
+            "Customer-reference": "Klantreferentie",
+            "Damage-code": "Schadecode",
+            "Damage-code-description": "Beschrijving van schadecode",
+            "Damage-limited-runablity": "Wagen beperkt functioneel",
+            "Damage-no-runablity": "Wagen niet functioneel",
+            "First-train-number-label": "Eerste treinnummer",
+            "Forwarding-yard-number": "Nummer van verzendstation",
+            "Loaded": "Wagen geladen",
+            "Location-status": "Status van huidige locatie",
+            "Location-time": "Tijd van huidige locatie",
+            "Netto-weight": "Netto gewicht",
+            "NHM-code-description": "NHM-code beschrijving",
+            "NHM-code-label": "NHM-code",
+            "Receiver-customer-number": "Klantnummer ontvanger",
+            "Receiving-country": "Ontvangend land",
+            "Receiving-station-number": "Nummer van ontvangststation",
+            "Runablity": "Runeerbaarheid",
+            "Sender-customer-number": "Klantnummer verzender",
+            "Sending-country": "Land van verzending",
+            "Status": "ZAB-status",
+            "Tare-weight": "Ledig gewicht",
+            "Template-name": "Sjabloonnaam",
+            "Wagon-type-label": "Wagentype",
+            "Weight": "Bruto gewicht",
+            "Zab-order-number": "Opdrachtnummer",
+            "Location-country":"Locatie Land"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Wagen nummer",
+                "Date-of-dispatch-from": "Verzenddatum (van)",
+                "Date-of-dispatch-to": "Verzenddatum (tot)",
+                "Incoming-by": "In aankomst tot",
+                "Zab-order-number": "Opdrachtnummer",
+                "Sending-station": "Vertrekstation",
+                "Receiving-station": "Ontvangststation",
+                "Location": "Huidige locatie",
+                "NHM-code": "NHM Code",
+                "Consignor": "Verzender",
+                "Consignee": "Ontvanger",
+                "Loading-state": "Laadtoestand",
+                "customerReference": "Referentie",
+                "senderIsoCountryCode": "Verzendland",
+                "deliveryIsoCountryCode": "Ontvangstland"
+            },
+            "Label": {
+                "Wagon-number": "Wagen nummer",
+                "Date-of-dispatch-from": "Verzenddatum (van)",
+                "Date-of-dispatch-to": "Verzenddatum (tot)",
+                "Incoming-by": "In aankomst tot",
+                "Zab-order-number": "Opdrachtnummer",
+                "Sending-station": "Vertrekstation",
+                "Receiving-station": "Ontvangststation",
+                "Location": "Huidige locatie",
+                "NHM-code": "NHM Code",
+                "Consignor": "Verzender",
+                "Consignee": "Ontvanger",
+                "Loading-state": "Laadtoestand",
+                "Loading-state-loaded": "Beladen",
+                "Loading-state-empty": "Leeg",
+                "customerReference": "Referentie",
+                "senderIsoCountryCode": "Verzendland",
+                "deliveryIsoCountryCode": "Ontvangstland"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Zoekopdracht",
+                "noDataAvailablePlaceholderText": "Geen gegevens beschikbaar"
+            }
+        }
+    }
+}

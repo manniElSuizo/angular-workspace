@@ -1,0 +1,178 @@
+<div class="dialog-container" id="order-edit-modal">
+    <header class="modal-header-sticky">
+        <h2>{{ headLine }}</h2>
+
+        <a class="close-icon" title="{{'New-order.Main.Tooltip.Close-dialog-label' | translate}}" mat-dialog-close>
+            <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close" />
+            </svg>
+        </a>
+    </header>
+
+    <!-- Main Content (Scrollable) -->
+    <main id="sectionMain" class="grid-container-flex">
+        <!-- Sidebar Menu (Sticky) -->
+        <div id="sidebarMenu" class="grid-item tabs-sticky">
+            <div class="tabs-item" id="SECTION_CONSIGNEE_CONSIGNOR">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_CONSIGNEE_CONSIGNOR)">
+                    {{'New-order.Main.Menu.Consignee-consignor' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line" (click)="setSection(SectionName.SECTION_CONSIGNEE_CONSIGNOR)"></div>
+
+            <div class="tabs-item" id="SECTION_PICKUP_DELIVERY">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_PICKUP_DELIVERY)">
+                    {{'New-order.Main.Menu.Pickup-delivery' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line" (click)="setSection(SectionName.SECTION_PICKUP_DELIVERY)"></div>
+
+            <div class="tabs-item" id="SECTION_TRANSPORT">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_TRANSPORT)">
+                    {{'New-order.Main.Menu.Transport' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line"></div>
+            <div class="tabs-item" id="SECTION_WAGON_DATA">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_WAGON_DATA)">
+                    {{'New-order.Main.Menu.Wagon-data' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line"></div>
+            <div class="tabs-item" id="SECTION_COMMERCIAL">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_COMMERCIAL)">
+                    {{'New-order.Main.Menu.Commercial' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line"></div>
+            <div class="tabs-item" id="SECTION_SERVICE">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_SERVICE)">
+                    {{'New-order.Main.Menu.Service' | translate }}
+                </a>
+            </div>
+            <div class="tabs-line"></div>
+            <div class="tabs-item" id="SECTION_SENDER_POLICY">
+                <a style="cursor: pointer" (click)="setSection(SectionName.SECTION_SENDER_POLICY)">
+                    {{'New-order.Main.Menu.Sender-policy' | translate }}
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Section Content (Scrollable) -->
+        <div id="sectionMain" class="section-box">
+            <div id="first-section" class="first-section"
+                style="justify-content: space-between; align-items: center; width: 100%;">
+                <form [formGroup]="formGroup">
+                    <div class="flex-row">
+                        <div class="input-field">
+                                <app-autocomplete-internal
+                                    [autocompleteResultList]="templateNumberSuggestions"
+                                    [displayNameTransform]="transformTemplateSummary"
+                                    [controlName]="'templateNumber'"
+                                    [formGroup]="formGroup"
+                                    [title]="'New-order.Main.Placeholder.Order-code' | translate"
+                                    [placeholder]="'New-order.Main.Placeholder.Order-code' | translate"
+                                    [otherConfig]=""
+                                    (onSelectItem)="onSelectOrderTemplateSummary($event)">
+                                </app-autocomplete-internal>
+                            </div>
+                           
+                        <div *ngIf="showUnlockButton()" id="unlockOrderTemplateBtn" class="input-field" style="padding: 15px 16px 14px 17px;">
+                            <db-button variant="brand-primary" (click)="unlockOrderTemplate()">
+                                {{ 'New-order.Main.Unlock-template-code' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                    <div *ngIf="!isValidTemplate">
+                        <ng-container>
+                            <small class="input-error">
+                                {{'New-order.Errors.Invalid-template' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </form>
+                <div class="mandatory-text">
+                    <p>*{{'New-order.Main.Label.Required-field' | translate }}</p>
+                </div>
+            </div>
+
+            <!-- Dynamic Sections -->
+            <section>
+                <app-new-order-consignor-consignee #sectionConsignorConsignee
+                    [currentSectionName]="currentSectionName" [editMode]="editMode"></app-new-order-consignor-consignee>
+            </section>
+            <section>
+                <app-new-order-pickup-delivery #sectionPickupDelivery
+                    [currentSectionName]="currentSectionName" [editMode]="editMode" [validationMode]="validationStage"></app-new-order-pickup-delivery>
+            </section>
+            <section>
+                <app-new-order-transport #sectionTransport
+                    [currentSectionName]="currentSectionName" [editMode]="editMode"></app-new-order-transport>
+            </section>
+            <section>
+                <app-new-order-wagon-data #sectionWagonData
+                    [currentSectionName]="currentSectionName" [editMode]="editMode" [validationStage]="validationStage"></app-new-order-wagon-data>
+            </section>
+            <section>
+                <app-new-order-commercial #sectionCommercial
+                    [currentSectionName]="currentSectionName" [editMode]="editMode"></app-new-order-commercial>
+            </section>
+            <section>
+                <app-new-order-service #sectionService
+                    [currentSectionName]="currentSectionName" [editMode]="editMode"></app-new-order-service>
+            </section>
+            <section>
+                <app-new-order-sender-policy #sectionConsignorConsignee
+                    [currentSectionName]="currentSectionName" [editMode]="editMode">
+                </app-new-order-sender-policy>
+            </section>
+
+            <!-- Last Section -->
+            <div class="last-section">
+                <hr>
+                <form [formGroup]="formGroup" *ngIf="isSingleConsigmentNoteVisible">
+                    <input id="singleConsignmentNote" name="singleConsignmentNote"
+                        formControlName="singleConsignmentNote" type="checkbox" class="elm-checkbox">
+                    <label for="singleConsignmentNote">{{ 'New-order.Main.Label.Singel-consignment-note' | translate
+                        }}</label>
+                </form>
+                <div class="elm-progress" *ngIf="loadingInProgress">
+                    <progress id="progress-label-07"></progress>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (Sticky) -->
+    <footer class="modal-footer-sticky">
+        <div class="close-section">
+            <a class="close-icon" title="Close the dialog" mat-dialog-close>
+                <db-button type="button">{{ closeButtonText }}</db-button>
+            </a>
+        </div>
+        <div *ngIf="editMode" class="button-navigation">
+            <db-button *ngIf="backIsVisibel" class="elm-buttom" variant="secondary-solid" type="button"
+                (click)="backSection()">
+                <i data-icon="chevron-left" data-icon-variant="24-outline"></i> {{ 'New-order.Main.Button.Back' | translate }}
+            </db-button>
+            <db-button *ngIf="nextIsVisibel" class="elm-buttom" variant="secondary-solid" type="button"
+                (click)="nextSection()">
+                <i data-icon="chevron-right" data-icon-variant="24-outline"></i> {{ 'New-order.Main.Button.Next' |
+                translate }}
+            </db-button>
+            
+            <db-button class="elm-buttom" variant="brand-primary" type="button" [disabled]="!consignmentButtonEnabled" (click)="getCurrentConsignmentNote()">
+                {{'New-order.Main.Button.Consignment-note-view' | translate }}
+            </db-button>
+            <db-button *ngIf="showDraftButton()" class="elm-buttom" variant="brand-primary" type="button" [disabled]="!draftButtonEnabled" (click)="draft()">
+                {{ 'New-order.Main.Button.Save-draft' | translate }}
+            </db-button>
+            <db-button *ngIf="showOrderButton()" class="elm-buttom" variant="brand-primary" type="button" [disabled]="!orderButtonEnabled" (click)="order()">
+                {{ 'New-order.Main.Button.Save-order' | translate }}
+            </db-button>
+            <db-button *ngIf="showBookButton()" class="elm-buttom" variant="brand-primary" type="button" [disabled]="!bookButtonEnabled" (click)="book()">
+                {{ 'New-order.Main.Button.Book' | translate }}
+            </db-button>
+        </div>
+    </footer>
+</div>

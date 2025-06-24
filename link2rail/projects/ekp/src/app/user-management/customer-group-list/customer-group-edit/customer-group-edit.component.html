@@ -1,0 +1,141 @@
+<header class="modal-header">
+    <h2>
+        <strong>{{ 'User-management-component.Customergroup-edit-header' | translate }}</strong>
+    </h2>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="openConfirmationModal()">
+        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+    <p *ngIf="groupId">
+        ID: {{ groupId }}
+    </p>
+</header>
+<main class="modal-main" style="overflow: hidden">
+    <form [formGroup]="formGroup" autocomplete="false" [class.loading]="loadingSave">
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="tab-header">
+                    <span class="tab-title">1. {{'User-management-component.Customergroup-edit-header' | translate }}</span>
+                    <span class="RequiredField" id="required-field">{{'Shared.Required-field' | translate}}</span>
+                </div>
+                <div class="input-block-complete" id="groupData">
+                    <div class="flex-row">                
+                        <div class="flex-column" style="width: 50%">
+                        <!--START: USERNAME -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputCustomerGroupName">
+                                <input formControlName="groupname"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.CustomerGroup.groupName' | translate }}"
+                                        name="groupname"
+                                        id="groupname"
+                                        aria-labelledby="groupname-label"
+                                        (change)="checkCustomerGroup()"
+                                        [style.cursor]="groupId ? 'default' : null"
+                                        [class.invalid-input]="formGroup.controls.groupname.invalid && formGroup.controls.groupname.touched || this.customerGroupNameExists"
+                                />
+                                <label class="elm-label" for="groupname" aria-hidden="true" id="group-name-label">{{ 'User-management-component.CustomerGroup.groupName' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.groupname.invalid && formGroup.controls.groupname.touched || this.customerGroupNameExists">
+                                    <small class="input-error" *ngIf="formGroup.controls.groupname.errors?.required">{{'Shared.Errors.Field-is-required-error-text' | translate}}</small>
+                                    <small class="input-error" *ngIf="this.customerGroupNameExists">{{
+                                        'Shared.Errors.Groupname-exists-error-text' | translate
+                                        }}
+                                    </small>
+                                </ng-container>
+                                <div class="elm-progress" *ngIf="loadingInProgress">
+                                    <progress id="progress-label-07"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END: USERNAME -->
+
+                    <div class="dashed-line"></div>
+
+                    <!-- START: USER-GROUPS -->
+                    <div class="flex-row">                
+                        <div class="flex-column" style="width: 50%">
+                            <h3>{{ 'User-management-component.User-groups-label' | translate }}</h3>
+                        </div>
+                        <div class="flex-column" style="width: 50%; text-align: right;">
+                            <db-button variant="secondary" type="button" (click)="openUserGroupModal()">
+                                <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'User-management-component.Add-usergroup-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                    <table class="list-table">
+                        <thead class="table-header">
+                          <tr>
+                            <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of groupTableHeaders">
+                              <div>
+                                <div>
+                                  <span>{{ header.text }}</span>
+                                </div>
+                                <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                                  <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                  <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                                </span>
+                              </div>
+                            </th>
+                            <th style="width: 20px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="group?.userGroups" style="overflow: auto;">
+                          <ng-container *ngFor="let g of group.userGroups; let i = index">
+                            <tr [class.white-row]="i % 2 === 0" title="{{getGroupInfo(g)}}" >
+                                <td>{{getGroupCustomer(g)}}</td>
+                                <td>{{g.groupName}}</td>
+                                <td class="no-op" style="text-align: right;">
+                                <span>
+                                    <a title="{{ 'delete' | translate }}">
+                                    <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="removeUserGroup(g)">
+                                        <use xlink:href="assets/icons/icons.svg#delete" />
+                                    </svg>
+                                    </a>
+                                </span>
+                                </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    <!-- END: USER-GROUPS -->   
+                </div>  
+            </div>
+
+            
+            <!-- START: BUTTON-LINE -->
+            <div class="grid-item">
+            </div>
+            <div class="flex-row">        
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-left">
+                        <div class="left-aligned">
+                            <db-button *ngIf="groupId && (userManagementService.hasDeletePermission() | async )" variant="secondary" type="button" (click)="deleteUserGroup()">
+                                {{ 'delete' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>        
+                <div class="flex-column elm-progress"  style="width: 20%">
+                    <progress *ngIf="loadingSave" id="progress-label-07"></progress>
+                </div>        
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-right">
+                        <div class="right-aligned">
+                            <db-button variant="brand-primary" *ngIf="(userManagementService.hasUpdatePermission() | async ) || (userManagementService.hasCreatePermission() | async )" type="button" (click)="doSaveCustomerGroup()" [disabled]="formGroup.invalid || this.customerGroupNameExists">
+                                {{ 'Shared.Save-button-label' | translate }}
+                            </db-button>
+                        <!-- /div>
+                        <div -->
+                            <db-button variant="secondary" type="button" (click)="openConfirmationModal()">
+                                {{ 'Shared.Cancel-button-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: BUTTON-LINE -->
+        </div>
+    </form>
+</main>

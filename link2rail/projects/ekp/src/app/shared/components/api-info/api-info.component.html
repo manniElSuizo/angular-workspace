@@ -1,0 +1,18 @@
+<header class="modal-header">
+    <h3 class="elm-headline">
+      <strong>{{'Shared.Info' | translate}}</strong>
+    </h3>
+</header>
+<main class="modal-main">
+  <div *ngIf="errorText" style="overflow-y: auto; max-height: 250px;">
+    <i data-icon="info" data-icon-variant="24-outline" style="color: #309FD1; padding-right: 10px;"></i> {{errorText}}
+  </div>
+  <!--div *ngFor="let item of apiErrors" style="overflow-y: auto; max-height: 250px;">
+    <i data-icon="info" data-icon-variant="24-outline" style="color: #309FD1; padding-right: 10px;"></i> {{item.errorCode}}: {{item.message}} ({{item.field}})
+  </div-->
+    <div class="button-group">
+      <button class="elm-button" data-variant="primary" type="button" mat-dialog-close>
+        Ok
+      </button>
+    </div>
+</main>

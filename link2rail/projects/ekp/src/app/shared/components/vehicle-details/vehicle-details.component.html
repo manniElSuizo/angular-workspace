@@ -1,0 +1,205 @@
+<header class="modal-header">
+  <span>{{ 'Vehicle-details-dialog.Dialog-title' | translate }}</span>
+  <h2>
+    <strong>{{ 'Vehicle-details-dialog.Vehicle-number' | translate }} {{vehicleNumber | wagonNumber
+      }}</strong>
+  </h2>
+
+  <a class="close-icon" title="Close the dialog" mat-dialog-close>
+    <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+      <use xlink:href="assets/icons/icons.svg#close" />
+    </svg>
+  </a>
+</header>
+<main class="modal-main">
+  <div class="details-info-block">
+    <div class="info-block-part-left">
+      <div>
+        <span class="label-left">{{
+          'Vehicle-details-dialog.Technical-attibuts.International-freightWagon-class'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.internationalFreightWagonClass)}}</span>
+      </div>
+      <div>
+        <span class="label-left">{{ 'Vehicle-details-dialog.Technical-attibuts.National-freightWagon-class'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.nationalFreightWagonClass)}}</span>
+      </div>
+      <div>
+        <span class="label-left">{{ 'Vehicle-details-dialog.Technical-attibuts.Type-of-construction'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.typeOfConstruction)}}</span>
+      </div>
+    </div>
+    <div class="info-block-part-right">
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Technical-attibuts.Tare-weight'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.tareWeight | number:'1.0':browserCultureLang)}}</span>
+      </div>
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Technical-attibuts.Length-over-buffers'| translate
+          }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.lengthOverBuffers/1000 |
+          number:'1.2-2':browserCultureLang)}}</span>
+      </div>
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Technical-attibuts.Maximum-speed-loaded'| translate
+          }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.maximumSpeedLoaded)}}</span>
+      </div>
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Technical-attibuts.Maximum-speed-empty'| translate
+          }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.technicalAttributes?.maximumSpeedEmpty)}}</span>
+      </div>
+    </div>
+  </div>
+  <hr id="sep1">
+  <div class="details-info-block">
+    <div class="info-block-part-left-suitable-for-running">
+      <div>
+        <span class="label-left">{{ 'Vehicle-details-dialog.Current-state.Suitable-for-running'| translate }}</span>
+        <span  class="suitableForRunnig">{{minusOnNoDetailsOrArg(vehicleDetails?.currentState?.suitableForRunning | suitableForRunning)}}</span>
+      </div>
+    </div>
+    <div class="info-block-part-damage">
+      <div *ngIf="vehicleDetails?.damage?.damageType.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th><!--{{ 'Vehicle-details-dialog.Damage.Damage-cause-code' | translate }}--></th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let dmgType of vehicleDetails.damage.damageType; ; let i = index">
+              
+              <tr>
+                <td *ngIf="i==0" class="label-left">{{ 'Vehicle-details-dialog.Damage.Damage-type' | translate }}</td>
+                <td *ngIf="i > 0" class="label-left"></td>
+                <td style="flex-direction: row; width: 5%; vertical-align: top;" >{{ dmgType.damageTypeCode }} -</td>
+                <td style="flex-direction: row; width:90%">{{ getDamageDescription(dmgType.damageTypeCode) }} </td>
+              </tr>
+              <!--tr>
+                <td class="label-left"><!--{{ 'Vehicle-details-dialog.Damage.Damage-type' | translate }}</td>
+                <td>{{ getDamageDescription(dmgType.damageTypeCode) }}</td>
+              </tr -->
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr id="sep2">
+  <div class="details-info-block">
+    <div class="info-block-part-left">
+      <div>
+        <span class="label-left">{{ 'Vehicle-details-dialog.Technical-attibuts.Intermodal-relevant'| translate }}</span>
+        <span *ngIf="!isIntermodalRelevant()" class="value" > {{ 'no' |translate }}</span>
+        <span *ngIf="isIntermodalRelevant()" class="value" > {{ 'yes' |translate }}</span>
+      </div>
+      <div>
+        <span class="label-left">{{ 'Vehicle-details-dialog.Revision.Date-next-revision'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.revision?.dateNextRevision | date: 'dd.MM.yyyy')}}</span>
+      </div>
+    </div>
+    <div class="info-block-part-right">
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Current-state.Vehicle-keeper-code'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.currentState?.vehicleKeeperCode)}}</span>
+      </div>
+      <div>
+        <span class="label-right">{{ 'Vehicle-details-dialog.Current-state.Vehicle-keeper-marking'| translate }}</span>
+        <span class="value">{{minusOnNoDetailsOrArg(vehicleDetails?.currentState?.vehicleKeeperMarking)}}</span>
+      </div>
+    </div>
+  </div>
+  <hr id="sep3">
+  <div class="details-info-block">
+    <div class="info-block-part-left">
+      <ng-container *ngIf="hasNationalLoadlimitPattern">
+        <div>
+          <span class="capture-left">{{ 'Vehicle-details-dialog.Load-limit-panel'| translate }}</span>
+        </div>
+        <div *ngIf="hasNationalLoadlimitPattern">
+          <table class="dynamic-width-table">
+            <thead>
+              <tr>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngIf="loadlimitPatternNationalTable.length > 0">
+              <tr *ngFor="let row of loadlimitPatternNationalTable.slice(0,2); let r = index">
+                <td *ngIf="r === 0" [ngStyle]="getColumnStyleNationalLoadlimitPatternHeader(0,true)">{{
+                  'Vehicle-details-dialog.Load-limit-pattern.Y-Type.Line-category'| translate }}</td>
+                <td *ngIf="r === 1" [ngStyle]="getColumnStyleNationalLoadlimitPatternHeader(0,true)">{{
+                  'Vehicle-details-dialog.Load-limit-pattern.Y-Type.X-Type.Asterisks'| translate }}</td>
+                <ng-container *ngFor="let cell of row;let c=index">
+                  <td *ngIf="c === 0" [ngStyle]="getColumnStyleNationalLoadlimitPattenTable(2,false)">{{
+                    cell }}</td>
+                  <td *ngIf="c > 0" [ngStyle]="getColumnStyleNationalLoadlimitPattenTable(c,false)">{{ cell
+                    }}</td>
+                </ng-container>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <span class="capture-left-speed-class">{{ 'Vehicle-details-dialog.Load-limit-pattern.Y-Type.X-Type.Speed-limit'|
+                    translate
+                    }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr *ngFor="let row of loadlimitPatternNationalTable.slice(2); let r = index">
+                <ng-container *ngFor="let cell of row let c=index" ;>
+                  <td *ngIf="c === 0" [ngStyle]="getColumnStyleNationalLoadlimitPatternHeader(c,true)">{{ cell }}</td>
+                  <td *ngIf="c > 0" [ngStyle]="getColumnStyleNationalLoadlimitPatternHeader(c,false)">{{ cell }}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="info-block-part-right" *ngIf="hasInternationalLoadlimitPattern">
+      <span class="capture-right">{{ 'Vehicle-details-dialog.Additonal-load-limit-panel'| translate }}</span>
+
+      <ng-container *ngFor="let data of loadlimitPatternInternationalTable ;let c=index">
+        <div class="int-loadlimit-before-country">
+          <span class="int-loadlimit-table-label-right">{{ 'Vehicle-details-dialog.Load-limit-pattern.Country-code'|
+            translate }}</span>
+          <span class="value">{{ data.countryCode }}</span>
+        </div>
+
+        <div>
+          <span class="int-loadlimit-table-label-right"></span>
+          <span class="value">{{ data.speedLimit}}</span>
+        </div>
+        <div>
+          <span class="int-loadlimit-table-label-right">{{
+            'Vehicle-details-dialog.Load-limit-pattern.Y-Type.X-Type.Speed-limit'| translate
+            }}</span>
+          <span class="value">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let line of data.lineCategories">
+                  <td class="int-loadlimit-table-speed-limit-label">{{ line.lineCategory }}</td>
+                  <td class="int-loadlimit-table-speed-limit-value">{{ line.loadLimit }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </span>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</main>

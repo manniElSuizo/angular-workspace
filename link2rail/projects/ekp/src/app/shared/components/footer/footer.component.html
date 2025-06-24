@@ -1,0 +1,34 @@
+<footer class="rea-footer" role="contentinfo">
+    <ul class="cmp-metanavigation">
+      <li>
+        <div class="tooltip pointer" (click)="showHelp()">
+          <i data-icon="help" data-icon-variant="24-outline" class="tooltip"><span class="tooltiptext">Informationen und Hilfe</span></i>
+        </div>        
+      </li>
+      <li>
+        <a class="elm-link" rel="help" href="https://www.dbcargo.com/rail-de-de/Datenschutz/datenschutzhinweis-link2rail-4983576">{{'compliance'|translate}}</a>
+      </li>
+      <li>
+        <a class="elm-link" rel="help" href="https://www.dbcargo.com/impressum">{{'imprint'|translate}}</a>
+      </li>
+      <li>
+        <a class="elm-link" rel="help noopener" href="https://www.dbcargo.com/rail-de-de/unternehmen/kontakt" target="_blank">{{'contact'|translate}}</a>
+      </li>
+      <li>
+        <a class="elm-link" rel="help" href="https://www.dbcargo.com/rail-de-de">{{'aboutUs'|translate}}</a>
+      </li>
+      <li>
+        <div class="elm-link" rel="help" (click)="showFeedback()">
+          <a class="elm-link">{{'feedback'|translate}}</a>
+        </div>
+      </li>
+    </ul>
+      Release {{ release }}<br>
+</footer>
+
+<div class="scroll-to-top" (click)="scrollToTop()" [ngClass]="{'show-scrollTop': windowScrolled}">
+  <svg class="icon" viewBox="0 0 20 20">
+      <use xlink:href="assets/icons/icons.svg#back-to-top" />
+  </svg>
+  <span>{{ 'Footer.Back-to-top-button-label' | translate }}</span>
+</div>

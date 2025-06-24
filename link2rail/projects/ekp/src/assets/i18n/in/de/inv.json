@@ -1,0 +1,30 @@
+{
+    "inv": {
+        "invoice": {
+            "overview": {
+                "title": "Rechnungssicht",
+                "filter": {
+                    "dateFrom": "Datum (von)",
+                    "dateTo": "Datum (bis)",
+                    "debitorNumber": "Debitorennummer",
+                    "invoiceNumber": "Rechnungsnummer"
+                },
+                "table": {
+                    "header": {
+                        "invoiceNumber": "Rechnungsnummer",
+                        "invoiceDate": "Rechnungsdatum",
+                        "referenceInvoiceNumber": "Ref. Rechnungsnummer",
+                        "recipientCompany": "Firmenname",
+                        "debitorNumber": "Debitorennummer",
+                        "dueDate": "Fälligkeit",
+                        "currency": "Währung",
+                        "netAmount": "Nettobetrag",
+                        "vatAmount": "Ust. Betrag",
+                        "grossAmount": "Bruttobetrag",
+                        "link": "PDF Link"
+                    }
+                }
+            }
+        }
+    }
+}

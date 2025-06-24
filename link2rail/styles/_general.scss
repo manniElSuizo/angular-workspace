@@ -1,0 +1,41 @@
+
+.cdk-global-overlay-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+}
+
+.icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.action-icon {
+    cursor: pointer;
+}
+
+.additional-buttons-block {
+    button {
+        font-weight: normal;
+        margin-left: 10px;
+        margin-right: 10px;
+
+        &:last-of-type {
+            margin-right: unset;
+        }
+    }
+}
+
+.block-scroll {
+    display: block;
+    position: fixed;
+  }

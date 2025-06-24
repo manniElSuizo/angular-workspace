@@ -1,0 +1,30 @@
+{
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Vista fatture",
+        "filter": {
+          "dateFrom": "Data (da)",
+          "dateTo": "Data (a)",
+          "debitorNumber": "Numero debitore",
+          "invoiceNumber": "Numero fattura"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Numero fattura",
+            "invoiceDate": "Data fattura",
+            "referenceInvoiceNumber": "Rif. numero fattura",
+            "recipientCompany": "Nome dell'azienda",
+            "debitorNumber": "Numero debitore",
+            "dueDate": "Scadenza",
+            "currency": "Valuta",
+            "netAmount": "Importo netto",
+            "vatAmount": "Importo IVA",
+            "grossAmount": "Importo lordo",
+            "link": "Link PDF"
+          }
+        }
+      }
+    }
+  }
+}

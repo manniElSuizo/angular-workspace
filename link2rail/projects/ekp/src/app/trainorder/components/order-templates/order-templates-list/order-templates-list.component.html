@@ -1,0 +1,96 @@
+<section>
+  <div class="header-line">
+    <h2>{{ 'Order-templates-component.Title' | translate }}</h2>
+    <div *ngIf="permissionService.hasPermission(null, [authorization.CREATE_ORDER_TEMPLATE]) | async"
+      class="additional-buttons-block">
+      <db-button variant="brand-primary" (click)="openNewOrderTemplateModal()">
+        <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'Order-templates-component.New-order-template.Header' | translate }}
+      </db-button>
+    </div>
+  </div>
+  <app-order-templates-filter #filter></app-order-templates-filter>
+  <ng-container>
+    <div class="controls"></div>
+    <div class="elm-progress" *ngIf="loadingInProgress">
+      <progress id="progress-label-07"></progress>
+    </div>
+    <div class="orders-table">
+      <table class="list-table">
+        <thead class="table-header">
+          <tr>
+            <th scope="col" [title]="header.text" *ngFor="let header of tableHeaders">
+              <div>
+                <div>
+                  <span>{{ header.text }}</span>
+                </div>
+                <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                  <div class="sort-descending"
+                    [class.active-sort]="filter.sortConditions.asc && filter.sortConditions.field === header.value"></div>
+                  <div class="sort-ascending"
+                    [class.active-sort]="!filter.sortConditions.asc && filter.sortConditions.field === header.value"></div>
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody style="overflow: auto;">
+          <ng-container *ngFor="let orderTemplate of orderTemplatesList; let i = index">
+            <tr [class.white-row]="i % 2 === 0">
+              <td (click)="openDetails(orderTemplate.templateId)" class="order-underline" title="{{'Order-templates-component.Show-details' | translate}}">
+                <a class="mouse-pointer">{{orderTemplate.templateId}}</a>
+              </td>
+              <td>{{orderTemplate.templateName}}</td>
+              <td>{{orderTemplate.sender}}</td>
+              <td>{{orderTemplate.sendingStation | uppercase}}</td>
+              <td>{{orderTemplate.receiver}}</td>
+              <td>{{orderTemplate.receivingStation | uppercase}}</td>
+              <td>{{orderTemplate.validFrom | dateTime:'shortDate'}}</td>
+              <td>{{orderTemplate.validTo | dateTime:'shortDate'}}</td>
+              <td>
+                <span title="{{ 'orderSpecialTrain' | translate }}"
+                  *ngIf="(permissionService.hasPermission(null, [authorization.CREATE_ORDER_FLEXTRAIN]) | async) && orderTemplate.trainType === 'SPECIAL_TRAIN'">
+                  <a>
+                    <svg viewBox="0 0 25 25" class="icon mouse-pointer" style="transform: rotate(45deg)"
+                      (click)="openNewOrderModal(orderTemplate.templateId)">
+                      <use xlink:href="assets/icons/icons.svg#cancel" />
+                    </svg>
+                  </a>
+                </span>
+
+                <span title="{{ 'cancelRegularTrain' | translate }}"
+                  *ngIf="orderTemplate.trainType === 'REGULAR_TRAIN'">
+                  <svg viewBox="0 0 25 25" class="icon mouse-pointer">
+                    <use xlink:href="assets/icons/icons.svg#cancel" />
+                  </svg>
+                </span>
+
+                <span *ngIf="permissionService.hasPermission(null, [authorization.UPDATE_ORDER_TEMPLATE]) | async"
+                  title="{{ 'editOrderTemplate' | translate }}" (click)="editTemplate(orderTemplate.templateId)">
+                  <svg viewBox="0 0 25 25" class="icon mouse-pointer">
+                    <use xlink:href="assets/icons/icons.svg#edit" />
+                  </svg>
+                </span>
+
+                <span *ngIf="permissionService.hasPermission(null, [authorization.DELETE_ORDER_TEMPLATE]) | async"
+                  title="{{ 'deleteOrderTemplate' | translate }}" (click)="deleteTemplate(orderTemplate.templateId)">
+                  <svg viewBox="0 0 25 25" class="icon mouse-pointer">
+                    <use xlink:href="assets/icons/icons.svg#delete" />
+                  </svg>
+                </span>
+
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      
+    </div>
+    <div class="flex-center" style="padding: 1em">
+      <db-button *ngIf="showLoadButton" variant="secondary-outline" (click)="loadMore()">{{ 'Order-view-page.Load-more-button-label' | translate }}</db-button>
+    </div>
+    <div>
+      <strong>{{ orderTemplatesList?.length }} {{'Shared.Of' | translate}} {{ filter.totalOrderTemplates }}</strong>
+    </div>
+  </ng-container>
+</section>

@@ -1,0 +1,45 @@
+<div class="modal">
+    <div class="modal-header">
+        <h2>
+            <strong>{{ 'Feedback-component.Details.Header' | translate }}</strong>
+        </h2>
+        <a class="close-icon" 
+            (click)="close()"
+            title="{{'New-order.Main.Tooltip.Close-dialog-label' | translate}}">
+            <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close" />
+            </svg>
+        </a>
+    </div>
+
+    <div class="modal-body">
+        <p>{{ 'Feedback-component.Details.First-line' | translate }}</p>
+        <p>{{ 'Feedback-component.Details.Second-line' | translate }}
+            <a [href]="dataProtectionLink" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="data-protection-link">
+                {{ 'Feedback-component.Details.Data-protection-notice' | translate }}</a>.
+        </p>
+        <hr>
+        <p>
+            <b>{{'Feedback-component.Details.Hint' | translate}}:</b>
+        </p>
+        <p>{{'Feedback-component.Details.First-hint-text' | translate }}
+            <br> 
+            {{ 'Feedback-component.Details.Second-hint-text' | translate }} 
+        </p>
+    </div>
+
+    <footer class="modal-footer">
+        <!-- Close button on the left -->
+        <button type="button" class="custom-close-button" mat-button (click)="close()">
+            {{ 'Feedback-component.Label.Close-button-label' | translate }}
+        </button>
+
+        <!-- Feedback button on the right -->
+        <button type="submit" class="feedback-button" mat-button (click)="openFeedbackLink()">
+            {{ 'Feedback-component.Label.Feedback-button-label' | translate }}
+        </button>
+    </footer>
+</div>

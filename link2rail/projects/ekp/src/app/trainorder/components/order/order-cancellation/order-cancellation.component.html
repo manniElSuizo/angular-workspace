@@ -1,0 +1,73 @@
+<header class="modal-header">
+    <div class="flex-row" style="font-size: 1.5em">
+        <strong>{{ 'Order-component.Cancellation.Cancellation' | translate}}</strong>
+        <span *ngIf="isRoundTrip" style="margin: .2em 0 0 .2em">
+            <svg class="icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#round-trip"/>
+            </svg>
+        </span>
+        <strong style="margin-left: .2em;"> {{ displayTrainNumber }} </strong>
+    </div>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <form [formGroup]="cancelForm" (submit)="cancelOrder()">
+        <div class="disruption" data-icon="account">
+            {{'Order-component.Cancellation.Service-Hint' | translate}}
+        </div>
+        <div *ngIf="isRoundTrip" class="flex-row" style="background-color: whitesmoke; padding: 10px;">
+            {{'Order-component.Cancellation.Roundtrip-info' | translate : { trainNumber: trainNumber } }}
+            <ng-container *ngFor="let train of otherRoundtrips">
+                <br />{{ train.trainNumber }} - {{ train.productionDate | date }}
+            </ng-container>
+        </div>
+        <div class="input-field" style="width: 100%;">
+            <h3>{{'Order-component.Cancellation.Other-Indications' | translate}}</h3>
+            <textarea 
+                name="reason"
+                id="reason"
+                formControlName="reason"
+                placeholder="{{'Order-component.Cancellation.Reason-placeholder' | translate}}"
+                aria-labelledby="result_textarea01"
+                maxlength="200"
+                style="margin: 0 0 0 2px; width: 100%; border-color: whitesmoke"
+                oninput="result_textarea01.value=this.value.length+'/'+this.attributes.maxlength.value"></textarea>
+            <output for="textarea01" id="result_textarea01"></output>
+        </div>
+        <hr/>
+        <div class="arrow-div">
+            <span class="arrow" (click)="openDetails()" #arrowIcon>
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                </svg>
+            </span>
+            <h3 class="head-resumen">{{'Order-component.Cancellation.Order-resumen' | translate}}</h3>
+        </div>
+
+        <div class="order-details-area" #orderDetailsArea>
+            <app-order-details [orderDetails]="orderDetails"></app-order-details>
+        </div>
+
+        <div class="elm-progress" *ngIf="loadingInProgress">
+            <progress id="progress-label-07"></progress>
+        </div>
+
+        <div class="form-control-block">
+            <span *ngIf="error" class="error-block">
+                <small class="input-error error-block">{{ error }}</small>
+            </span>
+            <div>
+                <db-button variant="secondary-solid" type="button" (click)="closeDialog()">
+                    {{ 'Shared.Cancel-button-label' | translate }}
+                </db-button>
+                <db-button variant="brand-primary" type="submit" style="margin-left: 1em" [disabled]="loadingInProgress">
+                    {{ 'Shared.Send-button-label' | translate }} 
+                </db-button>
+            </div>
+        </div>        
+    </form>
+</main>

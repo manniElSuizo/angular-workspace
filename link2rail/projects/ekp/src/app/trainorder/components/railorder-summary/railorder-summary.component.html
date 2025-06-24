@@ -1,0 +1,86 @@
+<header class="modal-header">
+    <div class="close-icon" title="{{'Railorder-summary-component.Tooltip.Close-dialog-label' | translate}}"
+        mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </div>
+    <span>{{ 'Railorder-summary-component.Dialog-header' | translate }}</span>
+    <div *ngIf="!isTrainChain()">
+        <h2 class="elm-headline">
+            <strong>{{ railorderSummaryList[0].trainNumber }}</strong><span class="details-h2-normal"> - {{
+                (railorderSummaryList[0].prodDate| dateTime: 'shortDate') || '-' }}</span>
+        </h2>
+    </div>
+
+    <div id="train-chain-selector" *ngIf="isTrainChain()">
+        <div id="train-chain-input" class="input-field">
+            <form id="form-group-train-chain" [formGroup]="formGroup">
+                <select class="elm-input" title="Zugkette" name="train-chain-items" id="train-chain-items"
+                    formControlName="railorderSummarySelector">
+                    <option *ngFor="let item of railorderSummaryList" [ngValue]="item">
+                        {{item.trainNumber}} -
+                        {{item.prodDate| dateTime: 'shortDate'}}</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</header>
+<main class="modal-main">
+    <div>
+        <table class="list-table">
+            <thead class="table-header">
+                <tr>
+                    <th scope="col" [title]="header.text" *ngFor="let header of tableHeaders" [style.max-width]="header.width" [style.min-width]="header.width">
+                        <div>
+                            <span class="tdHeadline">{{ header.text }}</span>
+                            <br>
+                            <span class="sort-icons-block" *ngIf="header.sortable">
+                                <div class="sort-descending" class="sort-descending active-sort"  (click)="sortTable(header.value, true)" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                <div class="sort-ascending" class="sort-ascending" (click)="sortTable(header.value, false)" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let wagon of railorderSummary.wagons; let i=index" [class.white-row]="i%2===0">
+                    <td class="wagonNumber">{{wagon.wagonNumber|wagonNumber }}</td>
+                    <td class="wagonType">{{wagon.wagonType}}</td>
+                    <td class="shippingDate">{{wagon.shippingTimestamp| date}}</td>
+                    <td class="consignor">{{wagon.consignor}}</td>
+                    <td class="consignee">{{wagon.consignee}}</td>
+                    <!-- td id="goodType" (click)="openNhmDetailsModal(wagon.nhmCode, wagon.orderNumber)" class="mouse-pointer">{{getGoodType(wagon.nhmCode)}}</td -->
+                    <td class="goodType">{{getGoodType(wagon.nhmCode)}}</td>
+                    <td class="cargoWeight">{{wagon.cargoWeight | number :'.2' }}</td>
+                    <td class="vehicleWeight">{{wagon.vehicleWeight | number : '.2'}}</td>
+                    <td class="totalWeight">{{wagon.totalWeight | number :'.2'}}</td>
+                    <td class="numberOfAxis">{{wagon.numberOfAxis}}</td>
+                    <ng-container *ngIf="wagon.length">
+                        <td class="lengthOfWagon">{{calcMeter(wagon.length)}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="!wagon.length">
+                        <td class="lengthOfWagon"></td>
+                    </ng-container>
+                    <td class="orderNumber" title="{{wagon.sendingStation}} - {{wagon.receivingStation}}">{{wagon.orderNumber | orderNumber:wagon.orderAuthority}} </td>
+                </tr>
+            </tbody>
+            <tfoot class="footer">
+                <tr>
+                    <td>{{ 'Railorder-summary-component.Table-footer.Number-of-wagons' |translate}} {{calulations.wagonCount}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="sigma">&Sigma;</td>
+                    <td class="cargoWeight">{{calulations.sumCargoWeight | number :'.2'}}</td>
+                    <td class="vehicleWeight">{{calulations.sumVehicleWeight | number :'.2'}}</td>
+                    <td class="totalWeight">{{calulations.sumTotalWeight | number :'.2'}}</td>
+                    <td class="numberOfAxis">{{calulations.axesCount }}</td>
+                    <td class="lengthOfWagon">{{calcMeter(calulations.sumLength) | number :'.2'}}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>

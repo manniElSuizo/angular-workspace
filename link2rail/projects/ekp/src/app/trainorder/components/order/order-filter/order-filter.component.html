@@ -1,0 +1,152 @@
+<div #test>
+    <form [formGroup]="filterForm">
+        <div class="radio-buttons">
+            <input (change)="orderStatusChange()" type="radio" class="elm-radio" id="input-all" formControlName="orderStatus" checked value="{{OrderSelection.ALL}}">
+            <label for="radio01">{{ 'Order-component.RadioAll' | translate }}</label>
+            <input (change)="orderStatusChange()" type="radio" class="elm-radio" id="input-orders" formControlName="orderStatus" value="{{OrderSelection.ORDERS}}" style="margin-left: .5em">
+            <label for="radio02">{{ 'Order-component.RadioOrders' | translate }}</label>
+            <input (change)="orderStatusChange()" type="radio" class="elm-radio" id="input-cancellations" formControlName="orderStatus" value="{{OrderSelection.CANCELLATION}}" style="margin-left: .5em">
+            <label for="radio03">{{ 'Order-component.RadioCancellations' | translate }}</label>
+        </div>
+        <div class="main-block">
+            <div class="input-field"> 
+                <input
+                    formControlName="orderNumber"
+                    placeholder="{{ 'Order-component.Table-header.Order-number' | translate }}"
+                    type="text"
+                    maxlength="15"
+                    spellcheck="false"
+                    name="order-number"
+                    id="order-number"
+                    class="elm-input"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (input)="selectOrderNumber($event)"
+                />
+                <label class="elm-label" for="order-number">{{ 'Order-component.Table-header.Order-number' | translate }}</label>
+                <div class="icon-block" (click)="clearSearchInput('orderNumber')">
+                    <svg class="icon text" [ngClass]="filterForm.get('orderNumber')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon pointer" [ngClass]="filterForm.get('orderNumber')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>
+            </div>
+            <div class="input-field">
+                <input
+                    #shipmentDateFromElement
+                    formControlName="shipmentDateFrom"
+                    type="date"
+                    [max]="maxDate"
+                    spellcheck="false"
+                    class="elm-input date-field"
+                    placeholder="{{ 'Order-component.Filter.Shipping-date-from-label' | translate }}"
+                    name="period-from"
+                    id="period-from"
+                    aria-labelledby="period-from-label"
+                    [class.focused]="shipmentDateFromElement.value" 
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (change)="selectShipmentDateFrom($event)"
+                />
+                <label class="date-label" for="period-from" aria-hidden="true" id="period-from-label">{{
+                    'Order-component.Filter.Shipping-date-from-label' | translate
+                }}</label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">{{
+                    'Shared.Errors.date-from-before-date-to' | translate
+                }}</small>
+            </div>
+            <div class="input-field">
+                <input
+                    #shipmentDateToElement
+                    formControlName="shipmentDateTo"
+                    type="date"
+                    [max]="maxDate"
+                    spellcheck="false"
+                    class="elm-input date-field"
+                    placeholder="{{ 'Order-component.Filter.Shipping-date-to-label' | translate }}"
+                    name="period-to"
+                    id="period-to"
+                    aria-labelledby="period-to-label"
+                    [class.focused]="shipmentDateToElement.value"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (change)="selectShipmentDateTo($event)"                    
+                />
+                <label class="date-label" for="period-to" aria-hidden="true" id="period-to-label">{{
+                    'Order-component.Filter.Shipping-date-to-label' | translate
+                }}</label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">{{
+                    'Shared.Errors.date-from-before-date-to' | translate
+                }}</small>
+            </div>
+            <div class="input-field">
+                <input
+                    autocomplete="off"
+                    formControlName="sendingStation"
+                    type="text"
+                    spellcheck="false"
+                    class="elm-input"
+                    placeholder="{{ 'Order-view-page.Shipping-station-placeholder' | translate }}"
+                    name="sending-station"
+                    id="sending-station"
+                    list="datalistsending-station"
+                    [class.invalid-input]="sendingStation.touched && sendingStation.invalid"
+                    (input)="autocompleteInputChanged($event)"
+                />
+                <label class="elm-label" for="sending-station" aria-hidden="true" id="sending-station-label">{{
+                    'Order-view-page.Shipping-station-placeholder' | translate
+                }}</label>
+                <datalist id="datalistsending-station">
+                    <option [value]="option.name" *ngFor="let option of sendingStationsAutocomplete">{{ option.name }}</option>
+                </datalist>
+                <div class="icon-block" (click)="clearSearchInput('sendingStation')">
+                    <svg class="icon text" [ngClass]="filterForm.get('sendingStation')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon pointer" [ngClass]="filterForm.get('sendingStation')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>                
+            </div>
+            <div class="input-field">
+                <input
+                    autocomplete="off"
+                    formControlName="receivingStation"
+                    type="text"
+                    class="elm-input"
+                    spellcheck="false"
+                    placeholder="{{ 'Order-view-page.Receiving-station-placeholder' | translate }}"
+                    name="receiving-station"
+                    id="receiving-station"
+                    list="datalistreceiving-station"
+                    [class.invalid-input]="receivingStation.touched && receivingStation.invalid"
+                    (input)="autocompleteInputChanged($event)"
+                />
+                <label class="elm-label" for="receiving-station" aria-hidden="true" id="receiving-station-label">
+                    {{ 'Order-view-page.Receiving-station-placeholder' | translate }}
+                </label>
+                <datalist id="datalistreceiving-station">
+                    <option [value]="option.name" *ngFor="let option of receivingStationsAutocomplete">{{ option.name }}</option>
+                </datalist>
+                <div class="icon-block" (click)="clearSearchInput('receivingStation')">
+                    <svg class="icon text" [ngClass]="filterForm.get('receivingStation')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon pointer" [ngClass]="filterForm.get('receivingStation')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-overview-filter-control-panel 
+    [resultsCount]="totalOrders" 
+    [activeFiltersCount]="activeFilterAmount()"
+    [isLoading]="loadingInProgress$" 
+    [downloadInProgress]="downloadInProgress"
+    (resetFilters)="resetFilterConditions()" 
+    (downloadReport)="saveCompleteListToCSV()">
+</app-overview-filter-control-panel>

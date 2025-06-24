@@ -1,0 +1,375 @@
+{
+  "ewd": {
+    "shared": {
+      "status": {
+        "canceled": "storniert",
+        "created": "bestellt",
+        "dispatched": "Bestellung disponiert",
+        "draft": "Entwurf angelegt",
+        "draftRemoved": "Entwurf gelöscht",
+        "inProcess": "in Bearbeitung",
+        "isTransmitted": "wird übertragen",
+        "partialCancellation": "(Teil-) Ausfall",
+        "rejected": "abgelehnt",
+        "transmitted": "übertragen",
+        "transmitFailed": "Übertragung fehlgeschlagen"
+      }
+    },
+    "order": {
+      "overview": {
+        "title": "Bestellübersicht",
+        "button": {
+          "createOrder": "Neue Bestellung",
+          "modifyOrder": "bearbeiten",
+          "cancelOrder": "stornieren",
+          "viewOrder": "öffnen"
+        },
+        "filter": {
+          "dateFrom": "Datum (von)",
+          "dateTo": "Datum (bis)",
+          "ordererSgv": "Kunde",
+          "ordererPartner": "Standortnummer des Kunden",
+          "demandLocation": "Bahnstelle",
+          "loadRunCountry": "Empfangsland",
+          "demandWagonType": "Bedarfstyp",
+          "status": "Status",
+          "searchReference": "Suche (Bestell-ID, link2rail-ID, Referenz)",
+          "origin": "Herkunft"
+        },
+        "table": {
+          "header": {
+            "orderId": {
+              "text": "Bestell-ID<br>link2rail-ID",
+              "title": "Bestell-ID, link2rail-ID"
+            },
+            "internalOrderNumber": {
+              "text": "Vorlage<br>EWD-ID",
+              "title": "Vorlage, EWD-ID"
+            },
+            "orderer": {
+              "text": "Kunde<br>Standort",
+              "title": "Kunde, Standort"
+            },
+            "shipper": {
+              "text": "Verlader<br>Standort",
+              "title": "Verlader, Standort"
+            },
+            "demandLocation": {
+              "text": "Bahnstelle",
+              "title": "Bahnstelle"
+            },
+            "freightWagonLocation": {
+              "text": "Bedarfsort<br>Land",
+              "title": "Bedarfsort, Land"
+            },
+            "demandWagonType": {
+              "text": "Bedarfstyp",
+              "title": "Bedarfstyp"
+            },
+            "numberOfWagon": {
+              "text": "Anzahl<br> vsl. Gestellung",
+              "title": "Anzahl, vsl. Gestellung"
+            },
+            "status": {
+              "text": "Status",
+              "title": "Status"
+            },
+            "origin": {
+              "text": "Herkunft",
+              "title": "Herkunft"
+            },
+            "demandDateTime": {
+              "text": "Bedarfstag<br>Zeit",
+              "title": "Bedarfstag -zeit"
+            },
+            "loadRunInformation": {
+              "text": "Lastlauf-<br>angaben",
+              "title": "Lastlaufangaben"
+            },
+            "customerCommentsToService": {
+              "text": "Bemerkung<br>Kundenservice",
+              "title": "Bemerkung Kundenservice"
+            },
+            "customerReference": {
+              "text": "Kundenreferenz",
+              "title": "Kundenreferenz"
+            },
+            "menu": {
+              "text": "",
+              "title": ""
+            }
+          },
+          "menu": {
+            "loadRunInformation": {
+              "title": "Lastlaufangaben",
+              "countryCodeUic": "Empfangsland",
+              "locationNumber": "Empfangsbahnstelle",
+              "transitRailwayUndertakingCode": "Transit EVU",
+              "nhmCode": "NHM Code"
+            }
+          },
+          "downloadCsv": {
+            "orderId": "Bestell-ID",
+            "templateName": "link2rail-ID",
+            "internalOrderNumber": "Vorlage",
+            "orderIdConsumer": "EWD-ID",
+            "ordererSgvId": "Kunde",
+            "ordererPartnerId": "Standort",
+            "shipperSgvId": "Verlader",
+            "shipperPartnerId": "Standort",
+            "demandLocationCountry": "Land",
+            "freightWagonLocation": "Bedarfsort",
+            "numberOfWagonsOrdered": "Anzahl",
+            "numberOfWagonsDisposed": "Gestellung",
+            "demandDateTime": "Bedarfstag",
+            "customerCommentsToService": "Bemerkung Kundenservice"
+          }
+        }
+      },
+      "form": {
+        "common": {
+          "orderTemplate": {
+            "required": "*Pflichtfeld",
+            "inputs": {
+              "templateName": {
+                "placeholder": "Vorlage",
+                "label": "Vorlage"
+              }
+            }
+          },
+          "orderPartners": {
+            "title": "Besteller",
+            "inputs": {
+              "ordererSgv": {
+                "placeholder": "Kunde",
+                "label": "Kunde"
+              },
+              "ordererPartner": {
+                "placeholder": "Standort Kunde",
+                "label": "Standort Kunde"
+              },
+              "shipperSgv": {
+                "placeholder": "Verlader",
+                "label": "Verlader"
+              },
+              "shipperPartner": {
+                "placeholder": "Standort Verlader",
+                "label": "Standort Verlader"
+              }
+            }
+          },
+          "demandLocation": {
+            "inputs": {
+              "commercialLocation": {
+                "placeholder": "Bahnstelle",
+                "label": "Bahnstelle"
+              },
+              "freightWagonLocation": {
+                "placeholder": "Bedarfsort",
+                "label": "Bedarfsort"
+              }
+            }
+          },
+          "demandTime": {
+            "title": "Bedarf",
+            "inputs": {
+              "demandDate": {
+                "placeholder": "Bedarfstag",
+                "label": "Bedarfstag"
+              },
+              "demandTime": {
+                "placeholder": "Bedarfszeit",
+                "label": "Bedarfszeit"
+              }
+            },
+            "errors": {
+              "demandDate": {
+                "required": "Bitte Bedarfstag eingeben.",
+                "isMinDateNotMet": "Der Bedarfstag liegt vor dem erforderlichen Mindestdatum {{ minDemandDate }}.",
+                "isMaxDateExceeded": "Der Bedarfstag darf nicht später als {{ maxDemandDate }} sein.",
+                "nonWorkingDay": "Der Bedarfstag ist kein Arbeitstag."
+              },
+              "demandTime": {
+                "required": "Bitte Bedarfszeit eingeben",
+                "expired": "Die Frist für die Bestellungen ist am {{ latestCustomerOrderDateTime}} abgelaufen."
+              },
+              "demandTypesArray": {
+                "invalidWagonCount": "Es muss mindestens ein Wagen bestellt werden."
+              }
+            }
+          },
+          "demandType": {
+            "inputs": {
+              "demandWagonType": {
+                "placeholder": "Bedarfstyp",
+                "label": "Bedarfstyp"
+              },
+              "wagonAmount": {
+                "placeholder": "Wagenanzahl",
+                "label": "Wagenanzahl"
+              },
+              "commentToCustomerService": {
+                "placeholder": "Bemerkung Kundenservice",
+                "label": "Bemerkung Kundenservice"
+              },
+              "customerReference": {
+                "placeholder": "Kundenreferenz",
+                "label": "Kundenreferenz"
+              },
+              "countryCode": {
+                "placeholder": "Empfangsland",
+                "label": "Empfangsland"
+              },
+              "loadRunLocation": {
+                "placeholder": "Empfangsbahnstelle",
+                "label": "Empfangsbahnstelle"
+              },
+              "transitRailway": {
+                "placeholder": "Transit EVU",
+                "label": "Transit EVU"
+              },
+              "nhmCode": {
+                "placeholder": "NHM Code",
+                "label": "NHM Code"
+              }
+            },
+            "infos": {
+              "maxNumberOfWagonExceeded": "Die maximale Anzahl von Wagen {{ maxNumberOfWagon }} wurde überschritten."
+            }
+          }
+        },
+        "creation": {
+          "title": "Neue Bestellung",
+          "titleForTemplate": "Vorlage",
+          "button": {}
+        },
+        "modification": {
+          "button": {}
+        },
+        "cancellation": {
+          "title": "Bestellung stornieren",
+          "message": "Möchten Sie die aktuell ausgewählte Teilbestellung oder die gesamte Bestellung stornieren?",
+          "button": {
+            "cancelOrderId": "Gesamte Bestellung stornieren",
+            "cancelOrderIdConsumer": "Aktuelle link2rail-ID stornieren"
+          }
+        },
+        "history": {
+          "title": "Historie",
+          "section": {
+            "title": "Historie"
+          }
+        }
+      }
+    },
+    "template": {
+      "overview": {
+        "title": "Vorlagenübersicht",
+        "button": {
+          "createOrder": "Neue Bestellung",
+          "viewTemplate": "öffnen"
+        },
+        "filter": {
+          "templateName": "Vorlage",
+          "ordererSgv": "Kunde",
+          "ordererPartner": "Standort Kunden",
+          "shipperSgv": "Verlader",
+          "shipperPartner": "Standort Verlader",
+          "demandLocation": "Bahnstelle",
+          "loadRunCountry": "Empfangsland",
+          "demandWagonType": "Bedarfstyp"
+        },
+        "table": {
+          "header": {
+            "templateName": "Vorlage",
+            "ordererSgv": "Kunde",
+            "ordererPartner": "Standort Kunden",
+            "shipperSgv": "Verlader",
+            "shipperPartner": "Standort Verlader",
+            "createOrder": "Neue Leerwagenbestellung",
+            "viewTemplate": "Vorlage einsehen",
+            "editTemplateName": "Vorlage umbenennen"
+          }
+        }
+      },
+      "form": {
+        "rename": {
+          "title": "Vorlage {{templateName}} umbenennen",
+          "inputs": {
+            "customerTemplateName": {
+              "placeholder": "Benutzerdefinierter Name",
+              "label": "Benutzerdefinierter Name"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Empty-wagon": {
+    "demand-component": {
+      "demand": "Bedarf",
+      "required-field": "*Pflichtfeld",
+      "placeholder": {
+        "delivery-date-time": "Bedarfstag",
+        "Number-of-wagons": "Wagenanzahl",
+        "customer-service": "Bemerkung Kundenservice",
+        "customer-reference": "Kundenreferenz",
+        "demand-wagon-type": "Bedarfstyp",
+        "receiving-country": "Empfangsland",
+        "station-name": "Empfangsbahnstelle",
+        "transit-railway": "Transit EVU",
+        "nhm-code": "NHM Code",
+        "demand-date": "Bedarfstag",
+        "time-range": "Bedarfszeit"
+      },
+      "demand-date": {
+        "invalid-date": "Bitte wählen Sie einen späteren Zeitpunkt.",
+        "missing-date": "Bitte wählen Sie Bedarfstag und Bedarfszeit."
+      },
+      "time-range": {
+        "invalid-date": "Bitte wählen Sie einen späteren Zeitpunkt."
+      },
+      "wagon-amount": {
+        "error-text": "Es muss mindestens ein Wagen bestellt werden."
+      }
+    },
+    "Template-view-list": {},
+    "Order-view-list": {
+      "Empty-wagon-order-list": "Bestellübersicht",
+      "Table-header": {
+        "Order-id": "Bestell-ID MRX-ID",
+        "Order-id-consumer": "MRX-ID",
+        "Internal-order-number": "EWD-ID  Vorlage",
+        "Orderer-customer-id": "Kunde Standort",
+        "Orderer-company-location-number": "Standort",
+        "Shipper-customer-id": "Verlader Standort",
+        "Shipper-company-location-number": "Standort ",
+        "Demand-location-commercial-location-country": "Bedarfsort Land",
+        "Demand-location-commercial-location-name": "Bahnstelle",
+        "Demand-location-commercial-location-number": "Bahnstelle Nummer",
+        "Demand-location-freight-wagon-location-number": "Bedarfsort Nummer",
+        "Demand-location-freight-wagon-location-name": "Bedarfsort Name",
+        "Load-run-data": "Lastlaufangaben",
+        "Demand-wagon-type-wagon-type": "Bedarfstyp",
+        "Demand-wagon-type-wagon-type-code": "Bedarfstyp Code",
+        "Demand-wagon-type-wagon-Type-number": "Bedarfstyp Nummer",
+        "Number-of-wagon-ordered": "Anzahl (Prognose)Gestellung",
+        "Number-of-wagon-disposed": "(Prognose) Gestellung",
+        "Status": "Status",
+        "Origin": "Herkunft",
+        "Delivery-date": "Bedarfstag Zeit",
+        "Load-run-location-commercial-location-country": "Empfangsland",
+        "Load-run-location-commercial-location-number": "Empfangsbahnstelle",
+        "Transit-railway-undertaking-company-code": "Transit EVU",
+        "Transported-goods-NHM-code": "NHM Code",
+        "Comment-to-customer-service": "Bemerkung Kundenservice",
+        "Customer-reference": "Kundenreferenz",
+        "Template": "Vorlage",
+        "Wagon-number": "Wagennummer",
+        "Wagon-type-national": "Wagengattung national",
+        "Wagon-type-international": "Wagengattung international",
+        "Wagon-type": "Bauart"
+      }
+    }
+  }
+}

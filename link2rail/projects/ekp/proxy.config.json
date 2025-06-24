@@ -1,0 +1,13 @@
+[
+  {
+    "context": [
+      "/api"
+    ],
+    "target": "https://trainorder-backend-dev.lso-test.comp.db.de",
+    "secure": false,
+    "logLevel": "debug",
+    "headers": {
+      "Forwarded":"host=localhost:4200;proto=http"
+    }
+  }
+]

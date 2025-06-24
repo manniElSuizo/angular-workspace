@@ -1,0 +1,37 @@
+# Architecture Decision Record: e2e test authentication implementation
+
+Date: 2021-05-25
+
+## State
+
+Decided
+
+Extends:
+
+- link:auth-library.adoc[OIDC Library]
+- link:e2e-lib.adoc[e2e Testing Library]
+
+## Kontext
+
+Some features of the application are protected and only accessible once a user has been logged in via OIDC.
+The common way at DB is to use the DB Web SSO OIDC provider to process the authentication (see: link:../howToAuth.adoc["How To Auth"]).
+
+As Cypress is our default e2e testing library, it should be possible to test the whole authentication process.
+However, Cypress has currently some limitations, that only allows tests within a single domain.
+The state of this limitation can be monitored at Github:
+https://github.com/cypress-io/cypress/issues/944#issuecomment-846970915
+
+As our app will redirect to another domain for authentication after clicking on the "Login"-Button, and redirects after successful login, we needed a way to tell cypress, wether an authentication process was successful or not.
+
+## Decision
+
+To be able to handle the temporarily switch of the domains for authentication, we decided to use a cypress plugin that will make use of the library link:https://github.com/microsoft/playwright[Playwright] to open another chrome browser in CI mode before starting the tests.
+With this browser the authentication is processed.
+Details can be found in the implementation in link:cypress/plugins/auth.js[cypress/plugins/auth.js].
+The whole authentication in managed within this second browser session.
+At the end, all cookies, sessions and localStorage data are passed through the plugin into the first browser session (Cypress).
+Now, all this data is used by cypress and in fact the user is authenticated successfully.
+
+## Deciders
+
+Danny Koppenhagen

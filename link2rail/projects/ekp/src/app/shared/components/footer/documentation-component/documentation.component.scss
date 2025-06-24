@@ -1,0 +1,117 @@
+@use 'color';
+
+.modal-header {
+  position: relative;
+  background:color.$background-color-light;
+  padding: 30px;
+  margin: 0;
+  height: 132px;
+
+  span {
+      font-weight: normal;
+  }
+
+  h2 {
+      margin-top: 16px;
+  }
+
+  .close-icon {
+      position: absolute;
+      top: 35px;
+      right: 35px;
+  }
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  .parting-line {
+    height: 1px;
+    border: solid 1px #c8cdd2;
+    margin-top: 10px;
+}
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+::ng-deep .mat-tab-label-active {
+  font-weight: bold;
+}
+
+.mat-tab-label {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  max-width: fit-content;
+}
+
+::ng-deep .mat-dialog-container {
+    margin-top: 0px;
+    overflow: hidden;
+    max-height: fit-content;
+}
+
+pdf-viewer {
+  ::ng-deep {
+    .ng2-pdf-viewer-container {
+      margin-left: 5%;
+      margin-right: 5%;
+      max-width: 95%;
+      overflow-x: hidden;
+    }
+  }
+}
+
+::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+  flex-grow: 0;
+}
+
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  font-weight: bold;
+  color: black;
+}
+
+::ng-deep .mat-mdc-tab.mdc-tab .mdc-tab__text-label {
+  font-size: 115%;
+}
+
+::ng-deep .mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+  --mdc-tab-indicator-active-indicator-color: white;
+  --mat-tab-header-disabled-ripple-color: rgba(0, 0, 0, 0.38);
+  --mat-tab-header-pagination-icon-color: #000;
+  --mat-tab-header-inactive-label-text-color: rgba(0, 0, 0, 0.6);
+  --mat-tab-header-active-label-text-color: grey;
+  --mat-tab-header-active-ripple-color: white;
+  --mat-tab-header-inactive-ripple-color: white;
+  --mat-tab-header-inactive-focus-label-text-color: rgba(0, 0, 0, 0.6);
+  --mat-tab-header-inactive-hover-label-text-color: rgba(0, 0, 0, 0.6);
+  --mat-tab-header-active-focus-label-text-color: black;
+  --mat-tab-header-active-hover-label-text-color: white;
+  --mat-tab-header-active-focus-indicator-color: white;
+  --mat-tab-header-active-hover-indicator-color: white;
+}
+
+::ng-deep .mat-tab-label-active {
+  font-weight: bold;
+}
+
+::ng-deep .mat-mdc-tab-header {
+  border: 1px solid white;
+}
+
+::ng-deep .mdc-tab-indicator {
+  background-color: white;
+}

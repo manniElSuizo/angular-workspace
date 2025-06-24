@@ -1,0 +1,15 @@
+<section>
+    <div *ngIf="showLoadMoreButton$ | async" class="bottom-controls">
+        <button class="load-btn" (click)="loadMore()">
+            {{ 'common.components.overview.button.loadMore' | translate }}
+        </button>
+    </div>
+    <div>
+        <strong>{{
+                'common.components.overview.resultsOf' | translate: {
+                    resultsCount: numberOfResults,
+                    totalResultsCount: totalNumberOfResult
+                }
+            }}</strong>
+    </div>
+</section>

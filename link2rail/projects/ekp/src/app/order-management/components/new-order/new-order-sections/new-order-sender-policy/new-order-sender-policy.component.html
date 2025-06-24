@@ -1,0 +1,583 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_SENDER_POLICY">
+    <form [formGroup]="formGroup">
+        <div class="flex-column">
+            <div class="flex-row">
+                <h3 id="sender-policy-group-header">
+                    {{ 'New-order.Sender-policy.Sender-policy-group-header' | translate}}
+                </h3>
+            </div>
+            <div class="flex-row fr-100-gap-10">
+                <div id="externalReferenceSender" class="fr-flex-1">
+                    <div id="externalReferenceSender-input-field" class="input-field" style="width: 100%;">
+                        <input id="externalReferenceSender-input" class="elm-input" name="externalReferenceSender"
+                            formControlName="externalReferenceSender" type="text"
+                            placeholder="{{ 'New-order.Sender-policy.Placeholder.Special-annotations-annotation-of-consignor-description' | translate }}"
+                            [class.invalid-input]="formGroup.get('externalReferenceSender')?.invalid && formGroup.get('externalReferenceSender')?.touched"
+                            aria-labelledby="externalReferenceSender-label" maxlength="35" />
+                        <label class="elm-label" id="externalReferenceSender-label" for="externalReferenceSender-input"
+                            aria-hidden="true">
+                                {{'New-order.Sender-policy.Label.Special-annotations-annotation-of-consignor-description'|translate }}
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('externalReferenceSender').invalid && formGroup.get('externalReferenceSender').touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="externalReferenceReceiver" class="fr-flex-1">
+                    <div id="externalReferenceReceiver-input-field" class="input-field" style="width: 100%;">
+                        <input id="externalReferenceReceiver-input" class="elm-input" name="externalReferenceReceiver"
+                            formControlName="externalReferenceReceiver" type="text"
+                            placeholder="{{ 'New-order.Sender-policy.Placeholder.Special-annotations-additional-declaration-of-Carrier' | translate }}"
+                            [class.invalid-input]="formGroup.get('externalReferenceReceiver')?.invalid && formGroup.get('externalReferenceReceiver')?.touched"
+                            aria-labelledby="externalReferenceReceiver-label" maxlength="35" />
+                        <label class="elm-label" id="externalReferenceReceiver-label"
+                            for="externalReferenceReceiver-input" aria-hidden="true">
+                                {{'New-order.Sender-policy.Label.Special-annotations-additional-declaration-of-Carrier' | translate }}
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('externalReferenceReceiver').invalid && formGroup.get('externalReferenceReceiver').touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">
+                                {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+
+                </div>
+            </div>
+            <div id='sender_policy_declaration_header' class="orderSectionHeader">
+                <p>{{ 'New-order.Sender-policy.Sender-policy-declaration-group' | translate }}</p>
+            </div>
+            <div id="array_consignor_declarations" formArrayName="consignorDeclarations">
+                <div *ngFor="let consignorDeclaration of consignorDeclarations.controls; let consignorDeclarationAtIndex = index;" [formGroupName]="consignorDeclarationAtIndex" class="declaration-container">
+                    <!-- Row for Code, Description, and Actions -->
+                    <div id="declaration-row">
+                        <div class="flex-row fr-100-gap-10">
+
+                            <!-- Consignor Declaration Code -->
+                            <div id="consignorDeclarationCode" class="fr-flex-1">
+                                <div class="input-field" id="consignorDeclarationCode-field" style="width: 100%;">
+                                    <select id="consignorDeclarationCode-select" class="elm-input" style="width: 100%;"
+                                        name="consignorDeclarationCode" formControlName="consignorDeclarationCode"
+                                        type="text"
+                                        title="{{ 'New-order.Sender-policy.Placeholder.Special-annotations-consignor-declarations-code' | translate }}"
+                                        [class.invalid-input]="consignorDeclaration.get('consignorDeclarationCode')?.invalid && consignorDeclaration.get('consignorDeclarationCode')?.touched"
+                                        aria-labelledby="consignorDeclarationCode-label"
+                                        (blur)="isConsignorDeclarationObligatory(consignorDeclarationAtIndex)">
+                                        <option value=""></option>
+                                        <option *ngFor="let consignorDeclarationCode of consignorDeclarationCodeOptions"
+                                            [value]="consignorDeclarationCode.code + '#' + consignorDeclarationCode.shortName">
+                                            {{ consignorDeclarationCode.name }} ({{ consignorDeclarationCode.code }})
+                                        </option>
+                                    </select>
+                                    <label id="consignorDeclarationCode-label" class="elm-label"
+                                        for="consignorDeclarationCode-select" aria-hidden="true">
+                                        {{ 'New-order.Sender-policy.Label.Special-annotations-consignor-declarations-code' | translate }}
+                                    </label>
+                                    <ng-container
+                                        *ngIf="consignorDeclaration.get('consignorDeclarationCode')?.invalid && consignorDeclaration.get('consignorDeclarationCode')?.touched">
+                                        <small class="input-error"
+                                            *ngIf="consignorDeclaration.get('consignorDeclarationCode')?.errors?.required">
+                                            {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                        </small>
+                                        <small class="input-error"
+                                            *ngIf="consignorDeclaration.get('consignorDeclarationCode')?.errors?.missingConsignorDeclarationCode">
+                                                    {{ 'New-order.Errors.Consignor-declaration-code-missing' | translate }}
+                                        </small>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <!-- Consignor Declaration Description -->
+                            <div id="consignorDeclarationDescription" class="fr-flex-1">
+                                <div id="consignorDeclarationDescription-input-field" class="input-field"
+                                    style="width: 100%;">
+                                    <input 
+                                        (blur)="onBlurConsignorDeclarationDescription(consignorDeclarationAtIndex)"
+                                        id="consignorDeclarationDescription-input"
+                                        class="elm-input"
+                                        name="consignorDeclarationDescription"
+                                        formControlName="consignorDeclarationDescription" type="text"
+                                        placeholder="{{ 'New-order.Sender-policy.Placeholder.Special-annotations-consignor-declarations-description' | translate }}"
+                                        [class.invalid-input]="consignorDeclaration.get('consignorDeclarationDescription')?.invalid && consignorDeclaration.get('consignorDeclarationDescription')?.touched"
+                                        aria-labelledby="consignorDeclarationDescription-label" maxlength="100" />
+                                    <label class="elm-label" id="consignorDeclarationDescription-label"
+                                        for="consignorDeclarationDescription-input" aria-hidden="true">
+                                        {{ 'New-order.Sender-policy.Label.Special-annotations-consignor-declarations-description' | translate }}
+                                    </label>
+                                    <ng-container
+                                        *ngIf="consignorDeclaration.get('consignorDeclarationDescription')?.errors">
+                                        <small class="input-error"
+                                            *ngIf="consignorDeclaration.get('consignorDeclarationDescription')?.errors?.required">
+                                            {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                        </small>
+                                        <small class="input-error"
+                                        *ngIf="consignorDeclaration.get('consignorDeclarationDescription')?.errors?.missingDescription">
+                                        {{ 'New-order.Errors.Sender-policy-description-missing' | translate }}
+                                    </small>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <!-- Add/Remove Buttons -->
+                            <div style="width: auto; margin-left: auto;">
+                                <db-button style="padding: 0px 0px 0px 0px;" type="button"
+                                    title="{{ 'New-order.Tooltip.Add-entry' | translate }}"
+                                    button-name="addConsignorDeclaration" class="elm-button icon-margin-top-1rem"
+                                    (click)="addConsignorDeclaration(null)"
+                                    [disabled]="consignorDeclarations.length >= 5 || !editMode  || (railOrder?.templateNumber?.length>0)">
+                                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                        <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                                    </svg>
+                                </db-button>
+                            </div>
+                            <div style="width: auto;">
+                                <db-button style="padding: 0px 0px 0px 0px;" type="button"
+                                    title="{{ 'New-order.Tooltip.Remove-entry' | translate }}"
+                                    button-name="removeConsignorDeclaration" class="elm-button icon-margin-top-1rem"
+                                    (click)="removeConsignorDeclaration(consignorDeclarationAtIndex)"
+                                    [disabled]="consignorDeclarations.length < 2 || !editMode || (railOrder?.templateNumber?.length>0)">
+                                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                        <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                                    </svg>
+                                </db-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='toggle-attached-documents-group' class="arrow-div flex-row"
+            (click)="toggleAttachedDocumentsGroupVisibility()">
+            <span [ngClass]="{'arrow': !isAttachedDocumentsGroupVisible, 'arrow-up': isAttachedDocumentsGroupVisible}"
+                #arrowIcon>
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                </svg>
+            </span>
+            <div class="flex-row show-hide-section" *ngIf="!isAttachedDocumentsGroupVisible"> {{
+                'New-order.Sender-policy.Show-section-attached-documents'|translate }}</div>
+            <div class="flex-row show-hide-section" *ngIf="isAttachedDocumentsGroupVisible"> {{
+                'New-order.Sender-policy.Hide-section-attached-documents'|translate }}</div>
+        </div>
+        <!-- Beilagen  -->
+        <div *ngIf="isAttachedDocumentsGroupVisible" class="flex-column">
+            <div id='sender-policy-declaration' class="orderSectionHeader">
+                <p>{{ 'New-order.Sender-policy.Label.Attached-documents' | translate }}</p>
+            </div>
+
+            <div formArrayName="attachedDocuments" style="width: 100%;">
+                <div *ngFor="let attachedDocument of attachedDocuments.controls; let attachedDocumentAtIndex = index"
+                    [formGroupName]="attachedDocumentAtIndex">
+                    <!-- Zeile für Anzahl, Art und Begleitpapier, Beschreibung Datum -->
+                    <div class="flex-row fr-100-gap-10">
+                        <div id="attachedDocumentNumberOfOriginals" class="flex-row fr-flex-1">
+                            <div id="attachedDocumentNumberOfOriginals-input-field" class="input-field"
+                                style="width: 100%;">
+                                <input id="attachedDocumentNumberOfOriginals-input" class="elm-input"
+                                    name="attachedDocumentNumberOfOriginals"
+                                    formControlName="attachedDocumentNumberOfOriginals" type="text"
+                                    placeholder="{{ 'New-order.Sender-policy.Placeholder.Attached-document-number-of-originals' | translate }}"
+                                    [class.invalid-input]="attachedDocument.get('attachedDocumentNumberOfOriginals')?.invalid && attachedDocument.get('attachedDocumentNumberOfOriginals')?.touched"
+                                    aria-labelledby="attachedDocumentNumberOfOriginals-label" maxlength="35" />
+                                <label class="elm-label" id="attachedDocumentNumberOfOriginals-label"
+                                    for="attachedDocumentNumberOfOriginals-input" aria-hidden="true">
+                                    {{'New-order.Sender-policy.Label.Attached-document-number-of-originals' |translate}}
+                                </label>
+                                <ng-container
+                                    *ngIf="attachedDocument.get('attachedDocumentNumberOfOriginals').invalid && attachedDocument.get('attachedDocumentNumberOfOriginals').touched">
+                                    <small class="input-error" *ngIf="formGroup.errors?.required">
+                                        {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div id="attachedDocumentCode" class="flex-row fr-flex-1">
+                            <div class="input-field" id="attachedDocumentCode-field" style="width: 100%;">
+                                <select id="attachedDocumentCode-select" class="elm-input" name="attachedDocumentCode"
+                                    style="width: 100%;" formControlName="attachedDocumentCode" type="text"
+                                    title="{{ 'New-order.Sender-policy.Placeholder.Attached-document-code' | translate }}"
+                                    [class.invalid-input]="attachedDocument.get('attachedDocumentCode')?.invalid && attachedDocument.get('attachedDocumentCode')?.touched"
+                                    aria-labelledby="attachedDocumentCode-label">
+                                    <option value=""></option>
+                                    <option [value]="supplementType.code"
+                                        *ngFor="let supplementType of supplementTypeList">
+                                        {{supplementType.name}} ({{supplementType.code}})
+                                    </option>
+                                </select>
+                                <label id="attachedDocumentCode-label" class="elm-label" for="attachedDocumentCode"
+                                    aria-hidden="true">
+                                    {{ 'New-order.Sender-policy.Label.Attached-document-code' | translate }}
+                                </label>
+                                <ng-container
+                                    *ngIf="attachedDocument.get('attachedDocumentCode').invalid && attachedDocument.get('attachedDocumentCode').touched">
+                                    <small class="input-error" *ngIf="formGroup.errors?.required">
+                                        {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                    </small>
+                                </ng-container>
+                                <ng-container
+                                *ngIf="attachedDocument.get('attachedDocumentCode').invalid && attachedDocument.get('attachedDocumentCode').touched">
+                                <small class="input-error" *ngIf="attachedDocument.get('attachedDocumentCode').errors?.missingCode">
+                                    {{ 'New-order.Errors.Attached-document-type-missing' | translate }}
+                                </small>
+                            </ng-container>
+                            </div>
+                        </div>
+                        <div id="attachedDocumentReferenceNumber" class="flex-row fr-flex-1">
+                            <div id="attachedDocumentReferenceNumber-input-field" class="input-field"
+                                style="width:100%">
+                                <input id="attachedDocumentReferenceNumber-input" class="elm-input" style="width: 100%;"
+                                    name="attachedDocumentReferenceNumber"
+                                    formControlName="attachedDocumentReferenceNumber" type="text"
+                                    placeholder="{{ 'New-order.Sender-policy.Placeholder.Attached-document-reference-number' | translate }}"
+                                    [class.invalid-input]="attachedDocument.get('attachedDocumentReferenceNumber')?.invalid && attachedDocument.get('attachedDocumentReferenceNumber')?.touched"
+                                    aria-labelledby="attachedDocumentReferenceNumber-label" maxlength="35" />
+                                <label class="elm-label" id="attachedDocumentReferenceNumber-label"
+                                    for="attachedDocumentReferenceNumber-input" aria-hidden="true">
+                                    {{'New-order.Sender-policy.Label.Attached-document-reference-number' | translate }}
+                                </label>
+                                <ng-container
+                                    *ngIf="attachedDocument.get('attachedDocumentReferenceNumber').invalid && attachedDocument.get('attachedDocumentReferenceNumber').touched">
+                                    <small class="input-error" *ngIf="formGroup.errors?.required">
+                                        {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div id="attachedDocumentDescription" class="flex-row fr-flex-1">
+                            <div id="attachedDocumentDescription-input-field" class="input-field" style="width: 100%;">
+                                <input id="attachedDocumentDescription-input" class="elm-input" style="width: 100%;"
+                                    name="attachedDocumentDescription" formControlName="attachedDocumentDescription"
+                                    type="text"
+                                    placeholder="{{ 'New-order.Sender-policy.Placeholder.Attached-document-description' | translate }}"
+                                    [class.invalid-input]="attachedDocument.get('attachedDocumentDescription')?.invalid && attachedDocument.get('attachedDocumentDescription')?.touched"
+                                    aria-labelledby="attachedDocumentDescription-label" maxlength="70" />
+                                <label class="elm-label" id="attachedDocumentDescription-label"
+                                    for="attachedDocumentDescription-input" aria-hidden="true">
+                                        {{'New-order.Sender-policy.Label.Attached-document-description' | translate }}
+                                </label>
+                                <ng-container
+                                    *ngIf="attachedDocument.get('attachedDocumentDescription').invalid && attachedDocument.get('attachedDocumentDescription').touched">
+                                    <small class="input-error" *ngIf="formGroup.errors?.required">
+                                        {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div id="attachedDocumentDateOfIssue" class="flex-row fr-flex-1">
+                            <div id="attachedDocumentDateOfIssue-input-field" class="input-field" style="width: 100%;">
+                                <input id="attachedDocumentDateOfIssue-input" class="elm-input" style="width: 100%;"
+                                    name="attachedDocumentDateOfIssue" formControlName="attachedDocumentDateOfIssue"
+                                    type="date"
+                                    placeholder="{{ 'New-order.Sender-policy.Placeholder.Attached-document-date-of-issue' | translate }}"
+                                    [class.invalid-input]="attachedDocument.get('attachedDocumentDateOfIssue')?.invalid && attachedDocument.get('attachedDocumentDateOfIssue')?.touched"
+                                    aria-labelledby="attachedDocumentDateOfIssue-label" />
+                                <label class="elm-label" id="attachedDocumentDateOfIssue-label"
+                                    for="attachedDocumentDateOfIssue-input" aria-hidden="true">
+                                        {{'New-order.Sender-policy.Label.Attached-document-date-of-issue' | translate }}
+                                </label>
+                                <ng-container
+                                    *ngIf="attachedDocument.get('attachedDocumentDateOfIssue').invalid && attachedDocument.get('attachedDocumentDateOfIssue').touched">
+                                    <small class="input-error" *ngIf="formGroup.errors?.required">
+                                        {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div style="width: auto; margin-left: auto;">
+                            <db-button style="padding: 0;" id='addConsignorDeclaration' type="button"
+                                title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                                button-name="addConsignorDeclaration" class="elm-button icon-margin-top-1rem"
+                                (click)="addAttachedDocument(null)" [disabled]="attachedDocuments.length >= 10">
+                                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                                </svg>
+                            </db-button>
+                        </div>
+                        <div style="width: auto;">
+                            <db-button style="padding: 0;" type="button"
+                                title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                                button-name="removeConsignorDeclaration" class="elm-button icon-margin-top-1rem"
+                                (click)="removeAttachedDocument(attachedDocumentAtIndex)"
+                                [disabled]="attachedDocuments.length < 2">
+                                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                                </svg>
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='toggle-takeover-conditions-sea-freight-group' class="arrow-div flex-row"
+            (click)="toggleTakeOverConditionsSeaFreightGroupVisibiliy()">
+            <span [ngClass]="{'arrow': !isTakeOverConditionsSeaFreightGroupVisible, 'arrow-up': isTakeOverConditionsSeaFreightGroupVisible}"#arrowIcon>
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                </svg>
+            </span>
+            <div class="flex-row show-hide-section" *ngIf="!isTakeOverConditionsSeaFreightGroupVisible"> 
+                {{'New-order.Sender-policy.Show-section-takeover-conditions-sea-freight-group'|translate }}
+            </div>
+            <div class="flex-row show-hide-section" *ngIf="isTakeOverConditionsSeaFreightGroupVisible"> 
+                {{'New-order.Sender-policy.Hide-section-takeover-conditions-sea-freight-group'|translate }}
+            </div>
+        </div>
+        <!-- Seefracht -->
+        <div *ngIf="isTakeOverConditionsSeaFreightGroupVisible" class="flex-column">
+            <div id='takeover-conditions-sea-freight' class="orderSectionHeader">
+                <p>{{ 'New-order.Sender-policy.Label.Takeover-conditions-sea-freight-group' | translate }}</p>
+            </div>
+            <div id='takeOverConditionsRow1' class="flex-row fr-100-gap-10">
+                <div id="takeOverConditionsTypeOfTakeOver" class="flex-row fr-flex-1">
+                    <div id="takeOverConditionsTypeOfTakeOver-input-field" class="input-field">
+                        <select id="takeOverConditionsTypeOfTakeOver-select" class="elm-input"
+                            name="takeOverConditionsTypeOfTakeOver" formControlName="takeOverConditionsTypeOfTakeOver"
+                            type="text"
+                            title="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-type-of-takeover' | translate }}*"
+                            [class.invalid-input]="formGroup.get('takeOverConditionsTypeOfTakeOver')?.invalid && formGroup.get('takeOverConditionsTypeOfTakeOver')?.touched"
+                            aria-labelledby="takeOverConditionsTypeOfTakeOver-label" aria-required="true">
+                            <option *ngFor="let handOverTakeOverOption of handOverTakeOverOptions"
+                                [value]="handOverTakeOverOption.value">
+                                {{ handOverTakeOverOption.label | translate}}
+                            </option>
+                        </select>
+                        <label class="elm-label" id="takeOverConditionsTypeOfTakeOver-label"
+                            for="takeOverConditionsTypeOfTakeOver-select" aria-hidden="true">
+                            {{ 'New-order.Sender-policy.Label.Takeover-conditions-type-of-takeover' | translate }}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('takeOverConditionsTypeOfTakeOver').invalid && formGroup.get('takeOverConditionsTypeOfTakeOver').touched">
+                            <small class="input-error"
+                                *ngIf="formGroup.get('takeOverConditionsTypeOfTakeOver')?.errors?.required">
+                                {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <ng-container *ngIf="isTakeOverConditionsVisible">
+                    <div id="takeOverConditionsShipOwner" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="takeOverConditionsShipOwner-input-field" class="input-field">
+                            <input id="takeOverConditionsShipOwner-input" class="elm-input"
+                                name="takeOverConditionsShipOwner" formControlName="takeOverConditionsShipOwner"
+                                type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-ship-owner' | translate }}"
+                                [class.invalid-input]="formGroup.get('takeOverConditionsShipOwner')?.invalid && formGroup.get('takeOverConditionsShipOwner')?.touched"
+                                aria-labelledby="takeOverConditionsShipOwner-label" maxlength="70" />
+                            <label class="elm-label" id="takeOverConditionsShipOwner-label"
+                                for="takeOverConditionsShipOwner-input" aria-hidden="true">
+                                    {{'New-order.Sender-policy.Label.Takeover-conditions-ship-owner' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsShipOwner')?.invalid && formGroup.get('takeOverConditionsShipOwner')?.touched">
+                                <small class="input-error"
+                                    *ngIf="formGroup.get('takeOverConditionsShipOwner')?.errors?.required">
+                                    {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="takeOverConditionsShipName" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="takeOverConditionsShipName-input-field" class="input-field">
+                            <input id="takeOverConditionsShipName-input" class="elm-input"
+                                name="takeOverConditionsShipName" formControlName="takeOverConditionsShipName"
+                                type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-ship-name' | translate }}"
+                                [class.invalid-input]="formGroup.get('takeOverConditionsShipName')?.invalid && formGroup.get('takeOverConditionsShipName')?.touched"
+                                aria-labelledby="takeOverConditionsShipName-label" maxlength="35" />
+                            <label class="elm-label" id="takeOverConditionsShipName-label"
+                                for="takeOverConditionsShipName-input" aria-hidden="true">
+                                    {{ 'New-order.Sender-policy.Label.Takeover-conditions-ship-name' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsShipName').invalid && formGroup.get('takeOverConditionsShipName').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="takeOverConditionsOriginPort" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="takeOverConditionsOriginPort-input-field" class="input-field">
+                            <input id="takeOverConditionsOriginPort-input" class="elm-input"
+                                name="takeOverConditionsOriginPort" formControlName="takeOverConditionsOriginPort"
+                                type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-origin-port' | translate }}"
+                                [class.invalid-input]="formGroup.get('takeOverConditionsOriginPort')?.invalid && formGroup.get('takeOverConditionsOriginPort')?.touched"
+                                aria-labelledby="takeOverConditionsOriginPort-label" maxlength="35" />
+                            <label class="elm-label" id="takeOverConditionsOriginPort-label"
+                                for="takeOverConditionsOriginPort-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Takeover-conditions-origin-port' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsOriginPort').invalid && formGroup.get('takeOverConditionsOriginPort').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                                <small class="input-error" *ngIf="formGroup.get('takeOverConditionsOriginPort').errors?.originMissingPort">
+                                    {{'New-order.Errors.Port-seafreight-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isHandOverConditionsVisible">
+                    <div id="handOverConditionsShipOwner" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="handOverConditionsShipOwner-input-field" class="input-field">
+                            <input id="handOverConditionsShipOwner-input" class="elm-input"
+                                name="handOverConditionsShipOwner" formControlName="handOverConditionsShipOwner"
+                                type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Handover-conditions-ship-owner' | translate }}"
+                                [class.invalid-input]="formGroup.get('handOverConditionsShipOwner')?.invalid && formGroup.get('handOverConditionsShipOwner')?.touched"
+                                aria-labelledby="handOverConditionsShipOwner-label" maxlength="70" />
+                            <label class="elm-label" id="handOverConditionsShipOwner-label"
+                                for="handOverConditionsShipOwner-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Handover-conditions-ship-owner' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsShipOwner')?.invalid && formGroup.get('handOverConditionsShipOwner')?.touched">
+                                <small class="input-error"
+                                    *ngIf="formGroup.get('takeOverConditionsShipOwner')?.errors?.required">
+                                    {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="handOverConditionsShipName" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="handOverConditionsShipName-input-field" class="input-field">
+                            <input id="handOverConditionsShipName-input" class="elm-input"
+                                name="handOverConditionsShipName" formControlName="handOverConditionsShipName"
+                                type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Handover-conditions-ship-name' | translate }}"
+                                [class.invalid-input]="formGroup.get('handOverConditionsShipName')?.invalid && formGroup.get('handOverConditionsShipName')?.touched"
+                                aria-labelledby="handOverConditionsShipName-label" maxlength="35" />
+                            <label class="elm-label" id="handOverConditionsShipName-label"
+                                for="handOverConditionsShipName-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Handover-conditions-ship-name' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('handOverConditionsShipName').invalid && formGroup.get('handOverConditionsShipName').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="handOverConditionsDestinationPort" class="flex-row fr-flex-1" style="width: 23%;">
+                        <div id="handOverConditionsDestinationPort-input-field" class="input-field">
+                            <input id="handOverConditionsDestinationPort-input" class="elm-input"
+                                name="handOverConditionsDestinationPort"
+                                formControlName="handOverConditionsDestinationPort" type="text"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Handover-conditions-destination-port' | translate }}"
+                                [class.invalid-input]="formGroup.get('handOverConditionsDestinationPort')?.invalid && formGroup.get('handOverConditionsDestinationPort')?.touched"
+                                aria-labelledby="handOverConditionsDestinationPort-label" maxlength="35" />
+                            <label class="elm-label" id="handOverConditionsDestinationPort-label"
+                                for="handOverConditionsDestinationPort-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Handover-conditions-destination-port' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('handOverConditionsDestinationPort').invalid && formGroup.get('handOverConditionsDestinationPort').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                                <small class="input-error" *ngIf="formGroup.get('handOverConditionsDestinationPort').errors?.destinationMissingPort">
+                                    {{'New-order.Errors.Port-seafreight-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="isHandOverConditionsVisible">
+                <div id="handOverConditionsRow2" class="flex-row fr-100-gap-10-no-justify-content">
+                    <div id="handOverConditionsDepartureDate" class="flex-row fr-flex-0" style="width: 27%; ">
+                        <div id="handOverConditionsDepartureDate-input-field" class="input-field">
+                            <input id="handOverConditionsDepartureDate-input" class="elm-input"
+                                name="handOverConditionsDepartureDate" formControlName="handOverConditionsDepartureDate"
+                                type="date"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Handover-conditions-departure-date' | translate }}"
+                                [class.invalid-input]="formGroup.get('handOverConditionsDepartureDate')?.invalid && formGroup.get('handOverConditionsDepartureDate')?.touched"
+                                aria-labelledby="handOverConditionsDepartureDate-label" />
+                            <label class="elm-label" id="handOverConditionsDepartureDate-label"
+                                for="handOverConditionsDepartureDate-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Handover-conditions-departure-date' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('handOverConditionsDepartureDate').invalid && formGroup.get('handOverConditionsDepartureDate').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">
+                                    {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="handOverConditionsDepartureTime" class="flex-row fr-flex-0" style="width: 23%; ">
+                        <div id="handOverConditionsDepartureTime-input-field" class="input-field">
+                            <input id="handOverConditionsDepartureTime-input" class="elm-input"
+                                name="handOverConditionsDepartureTime" formControlName="handOverConditionsDepartureTime"
+                                type="time"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Handover-conditions-departure-date' | translate }}"
+                                [class.invalid-input]="formGroup.get('handOverConditionsDepartureTime')?.invalid && formGroup.get('handOverConditionsDepartureTime')?.touched"
+                                aria-labelledby="handOverConditionsDepartureTime-label" />
+                            <label class="elm-label" id="handOverConditionsDepartureTime-label"
+                                for="handOverConditionsDepartureTime-input" aria-hidden="true">
+                                {{'New-order.Sender-policy.Label.Handover-conditions-departure-time' | translate }}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('handOverConditionsDepartureTime').invalid && formGroup.get('handOverConditionsDepartureTime').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isTakeOverConditionsVisible">
+                <div id="takeOverConditionsRow2" class="flex-row fr-100-gap-10-no-justify-content">
+                    <div id="takeOverConditionsArrivalDate" class="flex-row fr-flex-0" style="width: 27%; ">
+                        <div id="takeOverConditionsArrivalDate-input-field" class="input-field">
+                            <input id="takeOverConditionsArrivalDate-input" class="elm-input"
+                                name="takeOverConditionsArrivalDate" formControlName="takeOverConditionsArrivalDate"
+                                type="date"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-arrival-date' | translate }}"
+                                [class.invalid-input]="formGroup.get('takeOverConditionsArrivalDate')?.invalid && formGroup.get('takeOverConditionsArrivalDate')?.touched"
+                                aria-labelledby="takeOverConditionsArrivalDate-label" />
+                            <label class="elm-label" id="takeOverConditionsArrivalDate-label"
+                                for="takeOverConditionsArrivalDate-input" aria-hidden="true">
+                                {{'New-order.Sender-policy.Label.Takeover-conditions-arrival-date' | translate}}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsArrivalDate').invalid && formGroup.get('takeOverConditionsArrivalDate').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">
+                                    {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="takeOverConditionsArrivalTime" class="flex-row fr-flex-0" style="width: 25%; ">
+                        <div id="takeOverConditionsArrivalTime-input-field" class="input-field">
+                            <input id="takeOverConditionsArrivalTime-input" class="elm-input"
+                                name="takeOverConditionsArrivalTime" formControlName="takeOverConditionsArrivalTime"
+                                type="time"
+                                placeholder="{{ 'New-order.Sender-policy.Placeholder.Takeover-conditions-arrival-time' | translate }}"
+                                [class.invalid-input]="formGroup.get('takeOverConditionsArrivalTime')?.invalid && formGroup.get('takeOverConditionsArrivalTime')?.touched"
+                                aria-labelledby="takeOverConditionsArrivalTime-label" />
+                            <label class="elm-label" id="takeOverConditionsArrivalTime-label"
+                                for="takeOverConditionsArrivalTime-input" aria-hidden="true">
+                                {{ 'New-order.Sender-policy.Label.Takeover-conditions-arrival-time' | translate}}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('takeOverConditionsArrivalTime').invalid && formGroup.get('takeOverConditionsArrivalTime').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">
+                                    {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </form>
+</div>

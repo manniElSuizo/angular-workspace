@@ -1,0 +1,1540 @@
+<header class="modal-header">
+    <h2 *ngIf="editMode else newMode">{{ 'Order-templates-component.Edit-order-template' | translate }}</h2>
+    <ng-template #newMode>
+        <h2>{{ 'Order-templates-component.New-order-template.Header' | translate }}</h2>
+    </ng-template>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="openConfirmationModal()">
+        <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close"/>
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <form [formGroup]="newOrderTemplateForm" autocomplete="on">
+        <div class="grid-container">
+            <div class="grid-item tabs" style="min-height: calc(100vh - 392px);">
+                <div class="tabs-item" id="shippingTabHead">
+                    <a class="elm-link " (click)="changeTab(0)">
+                        {{'Order-templates-component.New-order-template.Shipping-header' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="receivingTabHead">
+                    <a class="elm-link " (click)="changeTab(1)">{{
+                        'Order-templates-component.New-order-template.Receiving-header' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="miscTabHead">
+                    <a class="elm-link " (click)="changeTab(2)">{{
+                        'Order-templates-component.New-order-template.Misc-header' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="transporterRouteTabHead">
+                    <a class="elm-link " (click)="changeTab(3)">{{
+                        'Order-templates-component.New-order-template.Transporterroute-header' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="trainDataTabHead">
+                    <a class="elm-link " (click)="changeTab(4)">{{
+                        'Order-templates-component.New-order-template.Train-data-header' | translate }}
+                    </a>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="tab-header">
+                    <span class="tab-title">1. {{'Order-templates-component.New-order-template.Shipping-header' | translate }}</span>
+                    <span>{{'Shared.Required-field' | translate}}</span>
+                </div>
+
+                <!-- Shipping group -->
+                <div class="input-block-complete" formGroupName="shippingGroup" id="shippingTab">
+                    <div class="span-two">
+                        <h3>{{ 'New-order-page.Order-group-header' | translate }}</h3>
+                    </div>
+                    <div class="input-block">
+                        <div class="input-field">
+                            <input formControlName="ordererSgvId" type="text" class="elm-input"
+                                placeholder="{{ 'Order-templates-component.Orderer-sgv' | translate }}*"
+                                name="ordererSgvId" id="ordererSgvId"
+                                aria-labelledby="ordererSgvId-label"
+                                list="datalist-ordererSgvId"
+                                (input)="getOrdererSgvIdsList($event)"
+                                (change)="selectSgvId($event)"
+                                [class.invalid-input]="shippingGroup.controls.ordererSgvId.invalid && shippingGroup.controls.ordererSgvId.touched"/>
+                            <label class="elm-label" for="ordererSgvId" aria-hidden="true" id="ordererSgvId-label"> {{
+                                'Order-templates-component.Orderer-sgv' | translate }}</label>
+                            <datalist id="datalist-ordererSgvId">
+                                <option *ngFor="let option of ordererSgvAutoComplete">{{ option | customerSgvName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('ordererSgvId')">
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.ordererSgvId.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.ordererSgvId.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.ordererSgvId.invalid && shippingGroup.controls.ordererSgvId.touched">
+                                <small class="input-error" *ngIf="shippingGroup.controls.ordererSgvId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="ordererPartnerId" class="elm-input" type="text" name="ordererPartnerId" id="ordererPartnerId" aria-labelledby="ordererPartnerId-label"
+                                    [class.invalid-input]="shippingGroup.controls.ordererPartnerId.invalid && shippingGroup.controls.ordererPartnerId.touched"
+                                    [class.disabled-input]="shippingGroup.controls.ordererSgvId.invalid">
+                                <option *ngFor="let option of ordererPartnerIdList" [ngValue]="option.partnerId">{{ '(' + option.partnerId + ') ' + option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="ordererPartnerId" aria-hidden="true" id="ordererPartnerId-label">
+                                {{ 'Order-templates-component.Orderer-partnerId' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.ordererPartnerId.invalid && shippingGroup.controls.ordererPartnerId.touched">
+                                <small class="input-error"
+                                    *ngIf="shippingGroup.controls.ordererPartnerId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select class="elm-input" name="customerLanguage" id="customerLanguage" type="text"
+                                    formControlName="customerLanguage">
+                                <option value="de">{{ 'Shared.German' | translate }}</option>
+                                <option value="en">{{ 'Shared.English' | translate }}</option>
+                                <option value="fr">{{ 'Shared.French' | translate }}</option>
+                                <option value="it">{{ 'Shared.Italian' | translate }}</option>
+                                <option value="pl">{{ 'Shared.Polish' | translate }}</option>
+                            </select>
+                            <label class="elm-label" for="customerLanguage" aria-hidden="true" id="customerLanguage-label">
+                                {{ 'New-order-page.Customer-language-label' | translate }}</label>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.customerLanguage.invalid && shippingGroup.controls.customerLanguage.touched">
+                                <small class="input-error"
+                                    *ngIf="shippingGroup.controls.customerLanguage.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+
+                        <!-- Sender -->
+                        <div class="span-two">
+                            <h3>{{ 'Order-templates-component.Sender' | translate }}</h3>
+                        </div>
+                        <div class="input-field">
+                            <input formControlName="senderSgvId" type="text" class="elm-input"
+                                placeholder="{{ 'Order-templates-component.Sender-sgv' | translate }}*"
+                                name="senderSgvId" id="senderSgvId"
+                                aria-labelledby="senderSgvId-label"
+                                list="datalist-senderSgvId"
+                                (input)="getSenderSgvIdsList($event)"
+                                (change)="selectSgvId($event)"
+                                [class.invalid-input]="shippingGroup.controls.senderSgvId.invalid && shippingGroup.controls.senderSgvId.touched"/>
+                            <label class="elm-label" for="senderSgvId" aria-hidden="true" id="senderSgvId-label"> {{
+                                'Order-templates-component.Sender-sgv' | translate }}*</label>
+                            <datalist id="datalist-senderSgvId">
+                                <option *ngFor="let option of senderSgvAutoComplete">{{ option | customerSgvName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('senderSgvId')">
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.senderSgvId.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.senderSgvId.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.senderSgvId.invalid && shippingGroup.controls.senderSgvId.touched">
+                                <small class="input-error" *ngIf="shippingGroup.controls.senderSgvId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="senderPartnerId" class="elm-input" type="text"
+                                    name="senderPartnerId"
+                                    id="senderPartnerId" aria-labelledby="senderPartnerId-label"
+                                    [class.invalid-input]="shippingGroup.controls.senderPartnerId.invalid && shippingGroup.controls.senderPartnerId.touched"
+                                    [class.disabled-input]="shippingGroup.controls.senderSgvId.invalid">
+                                <option *ngFor="let option of senderPartnerIdList" [ngValue]="option.partnerId">{{ '(' + option.partnerId + ') ' + option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="senderPartnerId" aria-hidden="true" id="senderPartnerId-label">
+                                {{ 'Order-templates-component.Sender-partnerId' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.senderPartnerId.invalid && shippingGroup.controls.senderPartnerId.touched">
+                                <small class="input-error" *ngIf="shippingGroup.controls.senderPartnerId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <app-el-s-autocomplete
+                                [displayNameTransform]="commercialLocationSummaryPipe.transform"
+                                [formGroup]="shippingGroup"
+                                [fieldName]="'newTemplateSendingStation'"
+                                placeholder="{{ 'Shared.Sending-station' | translate }}*"                
+                                [autocompleteResultList]="commercialLocationSummariesSendingStations"
+                                [otherConfig]="{errorConfig: {errorCondition: shippingGroup.controls.newTemplateSendingStation?.errors?.required && shippingGroup.controls.newTemplateSendingStation.touched, errorText: 'Shared.Errors.Field-is-required-error-text' | translate}, doNotDedup: true}"
+                                (doRequestSelectionListItems)="loadSendingStations($event)"
+                                (onSelectItem)="onSelectSendingStation($event)">
+                            </app-el-s-autocomplete>                            
+                        </div>
+                        <div class="input-field">
+                            <select
+                                    formControlName="wagonStoringPositionSender" class="elm-input" type="text"
+                                    name="wagonStoringPositionSender"
+                                    id="wagonStoringPositionSender"
+                                    (input)="autocompleteStationInputChanged($event)"
+                                    (change)="setObjectKeyFormValues($event);"
+                                    [class.invalid-input]="newOrderTemplateForm.controls.wagonStoringPositionSenderKeyAlpha.invalid && shippingGroup.controls.wagonStoringPositionSender.touched"
+                                    [class.disabled-input]="!newOrderTemplateForm.controls.newTemplateSendingStationKeyAlpha.value">
+                                <option [value]="option.name"
+                                        *ngFor="let option of wagonStoringPositionSenderAutocomplete">{{ option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="wagonStoringPositionSender" aria-hidden="true" id="gwp-sender-label">
+                                {{ 'Order-templates-component.wagonStoringPositionSender' | translate }}*</label>
+                            <div class="icon-block" (click)="clearInput('wagonStoringPositionSender')">
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.wagonStoringPositionSender.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="newOrderTemplateForm.controls.wagonStoringPositionSenderKeyAlpha.invalid && shippingGroup.controls.wagonStoringPositionSender.touched">
+                                <small class="input-error"
+                                    *ngIf="newOrderTemplateForm.controls.wagonStoringPositionSenderKeyAlpha.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <input formControlName="loaderSgvId" type="text" class="elm-input" type="text"
+                                placeholder="{{ 'Order-templates-component.Loader-sgv' | translate }}" name="loaderSgvId"
+                                id="loaderSgvId"
+                                aria-labelledby="loaderSgvId-label"
+                                list="datalist-loaderSgvId"
+                                (input)="getLoaderSgvIdsList($event)"
+                                (change)="selectSgvId($event)"
+                                [class.invalid-input]="shippingGroup.controls.loaderSgvId.invalid && shippingGroup.controls.loaderSgvId.touched"/>
+                            <label class="elm-label" for="loaderSgvId" aria-hidden="true" id="loaderSgvId-label"> {{
+                                'Order-templates-component.Loader-sgv' | translate }}</label>
+                            <datalist id="datalist-loaderSgvId">
+                                <option *ngFor="let option of loaderSgvAutoComplete">{{ option | customerSgvName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('loaderSgvId')">
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.loaderSgvId.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="shippingGroup.controls.loaderSgvId.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="loaderPartnerId" class="elm-input"
+                                    type="text"
+                                    name="loaderPartnerId"
+                                    id="loaderPartnerId" aria-labelledby="loaderPartnerId-label"
+                                    [class.invalid-input]="shippingGroup.controls.loaderPartnerId.invalid && shippingGroup.controls.loaderPartnerId.touched"
+                                    [class.disabled-input]="!shippingGroup.controls.loaderSgvId.value">
+                                <option *ngFor="let option of loaderPartnerIdList" [ngValue]="option.partnerId">{{ '(' + option.partnerId + ') ' + option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="loaderPartnerId" aria-hidden="true" id="loaderPartnerId-label">
+                                {{ 'Order-templates-component.Loader-partnerId' | translate }}</label>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="firstCarrierUicCompanyCode" class="elm-input"
+                                    type="text"
+                                    name="firstCarrierUicCompanyCode"
+                                    id="firstCarrierUicCompanyCode"
+                                    aria-labelledby="firstCarrierUicCompanyCode-label"
+                                    onchange="document.getElementById('firstCarrierUicCompanyCode').value=this.value"
+                                    (change)="selectMainCarrier($event)"
+                                    [class.invalid-input]="shippingGroup.controls.firstCarrierUicCompanyCode.invalid && shippingGroup.controls.firstCarrierUicCompanyCode.touched">
+                                <option [value]="supplier.uicCompanyCode"
+                                        *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                            </select>
+                            <label class="elm-label" for="firstCarrierUicCompanyCode" aria-hidden="true" id="firstCarrierUicCompanyCodeLabel">
+                                {{ 'Order-templates-component.First-carrier' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="shippingGroup.controls.firstCarrierUicCompanyCode.invalid && shippingGroup.controls.firstCarrierUicCompanyCode.touched">
+                                <small class="input-error" *ngIf="shippingGroup.controls.firstCarrierUicCompanyCode.errors?.required">
+                                    {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select
+                                    formControlName="workDirectionSend"
+                                    class="elm-input"
+                                    type="text"
+                                    name="workDirectionSend"
+                                    id="workDirectionSend"
+                                    aria-labelledby="workDirectionSend-label">
+                                <option></option>
+                                <option [value]="wd.code"
+                                        *ngFor="let wd of workingDirections">{{'(' + wd.code + ') ' + wd.name}}</option>
+                            </select>
+                            <label class="elm-label" for="workDirectionSend" aria-hidden="true"
+                                id="workDirectionSend-label">
+                                {{ 'Order-templates-component.Work-direction-send' | translate }}</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- receiving group -->
+                <div class="input-block-complete" formGroupName="receivingGroup" id="receivingTab">    
+                    <div class="input-block">
+                        <!-- Receiver -->
+                        <div class="span-two" style="margin-bottom: -8px;">
+                            <h3>{{ 'Order-templates-component.Receiver' | translate }}</h3>
+                        </div>
+                        <div class="input-field">
+                            <input formControlName="receiverSgvId" type="text" class="elm-input"
+                                placeholder="{{ 'Order-templates-component.Receiver-sgv' | translate }}*"
+                                name="receiverSgvId" id="receiverSgvId"
+                                aria-labelledby="receiverSgvId-label"
+                                list="datalist-receiverSgvId"
+                                (input)="getReceiverSgvIdsList($event)"
+                                (change)="selectSgvId($event)"
+                                [class.invalid-input]="receivingGroup.controls.receiverSgvId.invalid && receivingGroup.controls.receiverSgvId.touched"/>
+                            <label class="elm-label" for="receiverSgvId" aria-hidden="true" id="receiverSgvId-label"> {{
+                                'Order-templates-component.Receiver-sgv' | translate }}*</label>
+                            <datalist id="datalist-receiverSgvId">
+                                <option *ngFor="let option of receiverSgvAutoComplete">{{ option | customerSgvName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('receiverSgvId')">
+                                <svg class="icon"
+                                    [ngClass]="receivingGroup.controls.receiverSgvId.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="receivingGroup.controls.receiverSgvId.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="receivingGroup.controls.receiverSgvId.invalid && receivingGroup.controls.receiverSgvId.touched">
+                                <small class="input-error" *ngIf="receivingGroup.controls.receiverSgvId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="receiverPartnerId" class="elm-input" type="text"
+                                    name="receiverPartnerId"
+                                    id="receiverPartnerId" aria-labelledby="receiverPartnerId-label"
+                                    [class.invalid-input]="receivingGroup.controls.receiverPartnerId.invalid && receivingGroup.controls.receiverPartnerId.touched"
+                                    [class.disabled-input]="receivingGroup.controls.receiverSgvId.invalid">
+                                <option *ngFor="let option of receiverPartnerIdList" [ngValue]="option.partnerId">{{ '(' + option.partnerId + ') ' + option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="receiverPartnerId" aria-hidden="true"
+                                id="receiverPartnerId-label">
+                                {{ 'Order-templates-component.Receiver-partnerId' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="receivingGroup.controls.receiverPartnerId.invalid && receivingGroup.controls.receiverPartnerId.touched">
+                                <small class="input-error"
+                                    *ngIf="receivingGroup.controls.receiverPartnerId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+
+                        <div class="input-field">
+                            <app-el-s-autocomplete
+                                [displayNameTransform]="commercialLocationSummaryPipe.transform"
+                                [formGroup]="receivingGroup"
+                                [fieldName]="'newTemplateReceivingStation'"
+                                placeholder="{{ 'Shared.Receiving-station' | translate }}*"
+                                [autocompleteResultList]="commercialLocationSummariesReceivingStations"
+                                [otherConfig]="{errorConfig: {errorCondition: receivingGroup.controls.newTemplateReceivingStation?.errors?.required && receivingGroup.controls.newTemplateReceivingStation.touched, errorText: 'Shared.Errors.Field-is-required-error-text' | translate}, doNotDedup: true}"
+                                (doRequestSelectionListItems)="loadReceivingStations($event)"
+                                (onSelectItem)="onSelectReceivingStation($event)">
+                                <ng-container
+                                        *ngIf="newOrderTemplateForm.controls.newTemplateReceivingStationKeyAlpha.invalid && receivingGroup.controls.newTemplateReceivingStation.touched">
+                                    <small class="input-error"
+                                        *ngIf="newOrderTemplateForm.controls.newTemplateReceivingStationKeyAlpha.errors?.required">{{
+                                        'Shared.Errors.Field-is-required-error-text' | translate
+                                        }}</small>
+                                </ng-container>
+                            </app-el-s-autocomplete>                            
+                        </div>
+                        <div class="input-field">
+                            <select
+                                    formControlName="wagonStoringPositionReceiver" class="elm-input" type="text"
+                                    name="wagonStoringPositionReceiver"
+                                    id="wagonStoringPositionReceiver"
+                                    (input)="autocompleteStationInputChanged($event)"
+                                    (change)="setObjectKeyFormValues($event);"
+                                    [class.invalid-input]="newOrderTemplateForm.controls.wagonStoringPositionReceiverKeyAlpha.invalid && receivingGroup.controls.wagonStoringPositionReceiver.touched"
+                                    [class.disabled-input]="!newOrderTemplateForm.controls.newTemplateReceivingStationKeyAlpha.value">
+                                <option [value]="option.name"
+                                        *ngFor="let option of wagonStoringPositionReceiverAutocomplete">{{ option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="wagonStoringPositionReceiver" aria-hidden="true" id="gwp-receiver-label">
+                                {{ 'Order-templates-component.wagonStoringPositionReceiver' | translate }}*</label>
+                            <div class="icon-block" (click)="clearInput('wagonStoringPositionReceiver')">
+                                <svg class="icon"
+                                    [ngClass]="receivingGroup.controls.wagonStoringPositionReceiver.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="newOrderTemplateForm.controls.wagonStoringPositionReceiverKeyAlpha.invalid && receivingGroup.controls.wagonStoringPositionReceiver.touched">
+                                <small class="input-error"
+                                    *ngIf="newOrderTemplateForm.controls.wagonStoringPositionReceiverKeyAlpha.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <input formControlName="unloaderSgvId" type="text" class="elm-input" type="text"
+                                placeholder="{{ 'Order-templates-component.Unloader-sgv' | translate }}"
+                                name="unloaderSgvId" id="unloaderSgvId"
+                                aria-labelledby="unloaderSgvId-label"
+                                list="datalist-unloaderSgvId"
+                                (input)="getUnloaderSgvIdsList($event)"
+                                (change)="selectSgvId($event)"
+                                [class.invalid-input]="receivingGroup.controls.unloaderSgvId.invalid && receivingGroup.controls.unloaderSgvId.touched"/>
+                            <label class="elm-label" for="unloaderSgvId" aria-hidden="true" id="unloaderSgvId-label"> {{
+                                'Order-templates-component.Unloader-sgv' | translate }}</label>
+                            <datalist id="datalist-unloaderSgvId">
+                                <option *ngFor="let option of unloaderSgvAutoComplete">{{ option | customerSgvName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('unloaderSgvId')">
+                                <svg class="icon"
+                                    [ngClass]="receivingGroup.controls.unloaderSgvId.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="receivingGroup.controls.unloaderSgvId.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="unloaderPartnerId" class="elm-input"
+                                    type="text"
+                                    name="unloaderPartnerId"
+                                    id="unloaderPartnerId" aria-labelledby="unloaderPartnerId-label"
+                                    [class.invalid-input]="receivingGroup.controls.unloaderPartnerId.invalid && receivingGroup.controls.unloaderPartnerId.touched"
+                                    [class.disabled-input]="!receivingGroup.controls.unloaderSgvId.value">
+                                <option *ngFor="let option of unloaderPartnerIdList" [ngValue]="option.partnerId">{{ '(' + option.partnerId + ') ' + option.name }}</option>
+                            </select>
+                            <label class="elm-label" for="unloaderPartnerId" aria-hidden="true"
+                                id="unloaderPartnerId-label">
+                                {{ 'Order-templates-component.Unloader-partnerId' | translate }}</label>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="lastCarrierUicCompanyCode" class="elm-input"
+                                    type="text"
+                                    name="lastCarrierUicCompanyCode"
+                                    id="lastCarrierUicCompanyCode"
+                                    aria-labelledby="lastCarrierUicCompanyCode-label"
+                                    onchange="document.getElementById('lastCarrierUicCompanyCode').value=this.value"
+                                    [class.invalid-input]="receivingGroup.controls.lastCarrierUicCompanyCode.invalid && receivingGroup.controls.lastCarrierUicCompanyCode.touched">
+                                <option [value]="supplier.uicCompanyCode"
+                                        *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                            </select>
+                            <label class="elm-label" for="lastCarrierUicCompanyCode" aria-hidden="true" id="lastCarrierUicCompanyCodeLabel">
+                                {{ 'Order-templates-component.Last-carrier' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="receivingGroup.controls.lastCarrierUicCompanyCode.invalid && receivingGroup.controls.lastCarrierUicCompanyCode.touched">
+                                <small class="input-error"
+                                    *ngIf="receivingGroup.controls.lastCarrierUicCompanyCode.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select
+                                    formControlName="workDirectionReceive"
+                                    class="elm-input"
+                                    type="text"
+                                    name="workDirectionReceive"
+                                    id="workDirectionReceive"
+                                    aria-labelledby="workDirectionReceive-label">
+                                <option></option>
+                                <option [value]="wd.code"
+                                        *ngFor="let wd of workingDirections">{{'(' + wd.code + ') ' + wd.name}}</option>
+                            </select>
+                            <label class="elm-label" for="workDirectionReceive" aria-hidden="true"
+                                id="workDirectionReceive-label">
+                                {{ 'Order-templates-component.Work-direction-receive' | translate }}</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- misc group -->
+                <div class="input-block-complete" formGroupName="miscGroup" id="miscTab" style="margin-top: 61px;">
+                    <div class="input-block">
+                        <div class="input-field">
+                            <input
+                                    formControlName="templateName"
+                                    class="elm-input"
+                                    type="text"
+                                    name="templateName"
+                                    id="templateName"
+                                    maxlength="15"
+                                    aria-labelledby="templateName-label"/>
+    
+    
+                                <label class="elm-label" for="templateName" aria-hidden="true"
+                                    id="templateName-label">
+                                    {{ 'Order-templates-component.Template-name' | translate }}</label>
+                        </div><br>
+                        <div class="input-field">
+                            <select formControlName="mainCarrierUicCompanyCode" class="elm-input"
+                                    type="text"
+                                    name="mainCarrierUicCompanyCode"
+                                    id="mainCarrierUicCompanyCode"
+                                    aria-labelledby="mainCarrierUicCompanyCode-label"
+                                    onchange="document.getElementById('mainCarrierUicCompanyCode').value=this.value"
+                                    [class.invalid-input]="miscGroup.controls.mainCarrierUicCompanyCode.invalid && miscGroup.controls.mainCarrierUicCompanyCode.touched">
+                                <option [value]="supplier.uicCompanyCode"
+                                        *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                            </select>
+                            <label class="elm-label" for="mainCarrierUicCompanyCode" aria-hidden="true"
+                                id="mainCarrierUicCompanyCode-label">
+                                {{ 'Order-templates-component.Main-carrier' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="miscGroup.controls.mainCarrierUicCompanyCode.invalid && miscGroup.controls.mainCarrierUicCompanyCode.touched">
+                                <small class="input-error"
+                                    *ngIf="miscGroup.controls.mainCarrierUicCompanyCode.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        <div class="input-field">
+                            <select formControlName="marketSegmentCode" class="elm-input"
+                                    type="text"
+                                    name="marketSegmentCode"
+                                    id="marketSegmentCode"
+                                    aria-labelledby="marketSegmentCode-label"
+                                    onchange="document.getElementById('marketSegmentCode').value=this.value"
+                                    [class.invalid-input]="miscGroup.controls.marketSegmentCode.invalid && miscGroup.controls.marketSegmentCode.touched">
+                                <option [value]="marketSegment.code"
+                                        *ngFor="let marketSegment of marketSegments">({{marketSegment.code}}) {{marketSegment.name}}</option>
+                            </select>
+                            <label class="elm-label" for="marketSegmentCode" aria-hidden="true"
+                                id="marketSegmentCode-label">
+                                {{ 'Order-templates-component.MarketSegment' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="miscGroup.controls.marketSegmentCode.invalid && miscGroup.controls.marketSegmentCode.touched">
+                                <small class="input-error"
+                                    *ngIf="miscGroup.controls.marketSegmentCode.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                        
+                        <div class="input-field">
+                            <select
+                                    formControlName="tomGroup"
+                                    class="elm-input"
+                                    type="text"
+                                    name="tomGroup"
+                                    id="tomGroup"
+                                    aria-labelledby="tomGroup-label">
+                                <option></option>
+                                <option [value]="tg"
+                                        *ngFor="let tg of tomGroups">{{tg}}</option>
+                            </select>
+                            <label class="elm-label" for="tomGroup" aria-hidden="true"
+                                id="tomGroup-label">
+                                {{ 'Order-templates-component.TomGroup' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="miscGroup.controls.tomGroup.invalid && miscGroup.controls.tomGroup.touched">
+                                <small class="input-error" *ngIf="miscGroup.controls.tomGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+                    <div class="input-field">
+                        <input
+                                formControlName="operationalId"
+                                class="elm-input"
+                                type="text"
+                                name="operationalId"
+                                id="operationalId"
+                                maxlength="10"
+                                aria-labelledby="operationalId-label"/>
+
+
+                            <label class="elm-label" for="operationalId" aria-hidden="true"
+                                id="operationalId-label">
+                                {{ 'Order-templates-component.operationalId' | translate }}*</label>
+                            <ng-container
+                                    *ngIf="miscGroup.controls.operationalId.invalid && miscGroup.controls.operationalId.touched">
+                                <small class="input-error" *ngIf="miscGroup.controls.operationalId.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+
+                        <div class="input-field">
+                            <select
+                                    formControlName="commercialService"
+                                    class="elm-input"
+                                    type="text"
+                                    name="commercialService"
+                                    id="commercialService"
+                                    aria-labelledby="commercialService-label">
+                                <option></option>
+                                <option [value]="cs.code"
+                                        *ngFor="let cs of commercialServices">{{'(' + cs.code + ') ' + cs.name}}</option>
+                            </select>
+                            <label class="elm-label" for="commercialService" aria-hidden="true"
+                                id="commercialService-label">
+                                {{ 'Order-templates-component.CommercialService' | translate }}</label>
+                        </div>
+
+                        <div class="input-field">
+                            <input formControlName="borderStation" type="text" class="elm-input"
+                                placeholder="{{ 'Order-templates-component.BorderStation' | translate }}"
+                                name="borderStation" id="borderStation"
+                                aria-labelledby="borderStation-label"
+                                list="datalist-borderStation"
+                                (input)="getBorderStationList($event)"
+                                [class.invalid-input]="miscGroup.controls.borderStation.invalid && miscGroup.controls.borderStation.touched"/>
+                            <label class="elm-label" for="borderStation" aria-hidden="true" id="borderStation-label"> {{
+                                'Order-templates-component.BorderStation' | translate }}</label>
+                            <datalist id="datalist-borderStation">
+                                <option *ngFor="let option of borderStationAutoComplete"
+                                >{{option | borderCodeAndName}}</option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearInput('borderStation')">
+                                <svg class="icon"
+                                    [ngClass]="miscGroup.controls.borderStation.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search"/>
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="miscGroup.controls.borderStation.value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close"/>
+                                </svg>
+                            </div>
+                            <ng-container
+                                    *ngIf="miscGroup.controls.borderStation.invalid && miscGroup.controls.borderStation.touched">
+                                <small class="input-error" *ngIf="miscGroup.controls.borderStation.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+
+                        <div class="input-field">
+                            <input
+                                    formControlName="validFrom"
+                                    type="date"
+                                    [max]="maxDate"
+                                    class="elm-input date-field"
+                                    placeholder="{{ 'Order-templates-component.ValidFrom' | translate }}*"
+                                    name="valid-from"
+                                    id="valid-from"
+                                    aria-labelledby="valid-from-label"
+                                    [class.invalid-input]="miscGroup.controls.validFrom.invalid && miscGroup.controls.validFrom.touched"
+                                    (focus)="onFocus($event)"
+                                    (blur)="onBlur($event)"
+
+                            />
+                            <label
+                                    class="date-label"
+                                    for="valid-from"
+                                    aria-hidden="true"
+                                    id="valid-from-label"
+                            >
+                                {{ 'Order-templates-component.ValidFrom' | translate }}*</label>
+
+                            <ng-container
+                                    *ngIf="miscGroup.controls.validFrom.invalid && miscGroup.controls.validFrom.touched">
+                                <small class="input-error"
+                                    *ngIf="miscGroup.controls.validFrom.errors?.required">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                            </ng-container>
+                        </div>
+
+                        <div class="input-field">
+                            <input
+                                    formControlName="validUntil"
+                                    type="date"
+                                    [max]="maxDate"
+                                    class="elm-input date-field"
+                                    placeholder="{{ 'Order-templates-component.ValidUntil' | translate }}*"
+                                    name="valid-until"
+                                    id="valid-until"
+                                    aria-labelledby="valid-until-label"
+                                    [class.invalid-input]="(miscGroup.controls.validUntil.invalid && miscGroup.controls.validUntil.touched) || newOrderTemplateForm.errors?.earliestBeforeLatestError"
+                                    (focus)="onFocus($event)"
+                                    (blur)="onBlur($event)"
+
+                            />
+                            <label
+                                    class="date-label"
+                                    for="valid-until"
+                                    aria-hidden="true"
+                                    id="valid-until-label"
+                            >
+                                {{ 'Order-templates-component.ValidUntil' | translate }}*</label>
+
+                            <ng-container
+                                    *ngIf="(miscGroup.controls.validUntil.invalid && miscGroup.controls.validUntil.touched) || newOrderTemplateForm.errors?.earliestBeforeLatestError">
+                                <small class="input-error"
+                                    *ngIf="miscGroup.controls.validUntil.errors?.required">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                <small class="input-error" *ngIf="newOrderTemplateForm.errors?.earliestBeforeLatestError">{{
+                                    'Shared.Errors.Valid-until-before-valid-from-error-text' | translate
+                                    }}</small>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- transport route group -->
+                <div class="input-block-complete" id="transporterRouteTab" formGroupName="transportRouteGroup">
+
+                    <!--Start erste Befördererroute-->
+                    <div class="input-block">
+                        <ng-container [formGroup]="transportRouteGroup">
+                            <div class="span-two" style="margin-bottom: -8px;">
+                                <h3>{{ 'Order-templates-component.Transporterroute-group-header' | translate }}<span style="display: inline;">(1)</span></h3>
+                                <!--svg *ngIf="i > 0" viewBox="0 0 24 24" class="icon mouse-pointer remove-train-data-icon" (click)="deleteTransportGroupData(i)">
+                                    <use xlink:href="assets/icons/icons.svg#delete" />
+                                </svg-->
+                            </div>
+
+                            <!--Start erster Beförderer: Startbahnhof-->
+                            <div class="input-field">
+                                <input formControlName="firstStartStation"
+                                       class="elm-input"
+                                       type="text"
+                                       placeholder="{{ 'Order-templates-component.Startstation' | translate }}"
+                                       name="sending-station"
+                                       id="firstStartStation"                                        
+                                       disabled
+                                       (input)="autocompleteStationInputChanged($event)"
+                                       [class.invalid-input]="transportRouteGroup.controls.firstStartStation.invalid && transportRouteGroup.controls.firstStartStation.touched"/>
+                                <label class="elm-label" for="firstStartStation" aria-hidden="true" id="firstStartStationLabel">
+                                    {{ 'Order-templates-component.Startstation' | translate }}
+                                </label>                                                             
+                            </div>
+                            <!--Ende erster Beförderer: Startbahnhof-->
+
+                            <!--Start erster Beförderer: Zielbahnhof-->
+                            <div class="input-field">
+                                <input formControlName="firstEndStation"
+                                    class="elm-input"
+                                    type="text"
+                                    placeholder="{{ 'Order-templates-component.Endstation' | translate }}"
+                                    name="receiving-station"
+                                    id="firstEndStation"
+                                    list="datalistreceiving-station-new-order"
+                                    (input)="autocompleteStationInputChanged($event)"
+                                    (change)="setObjectKeyRouteValues($event)"
+                                    [class.invalid-input]="transportRouteGroup.controls.firstEndStation.invalid && transportRouteGroup.controls.firstEndStation.touched"/>
+                                <label class="elm-label" for="firstEndStation" aria-hidden="true" id="firstEndStationLabel">
+                                    {{ 'Order-templates-component.Endstation' | translate }}
+                                </label>
+                                <div class="icon-block" (click)="clearInput('firstEndStation')">
+                                    <svg class="icon"
+                                        [ngClass]="receivingGroup.controls.wagonStoringPositionReceiver.value ? 'show-icon' : 'hide-icon'"
+                                        viewBox="0 0 25 25">
+                                        <use xlink:href="assets/icons/icons.svg#close"/>
+                                    </svg>
+                                </div>
+                                <datalist id="datalistreceiving-station-new-order">
+                                    <option [value]="option.name" *ngFor="let option of endStationsAutocomplete">{{ option.name }}</option>
+                                </datalist>                            
+                            </div>
+                            <!--Ende erster Beförderer: Zielbahnhof-->
+ 
+                            <!--Start erster Beförderer: Carrier -->
+                            <div class="input-field">
+                                <select disabled
+                                        formControlName="firstCarrierUicCompanyCode" class="elm-input"
+                                        type="text"
+                                        name="firstCarrierUicCompanyCode"                                        
+                                        id="firstCarrierUicCompanyCode"
+                                        style="pointer-events: none"
+                                        aria-labelledby="firstCarrierUicCompanyCode-label">
+                                    <option [value]="supplier.uicCompanyCode" *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                                </select>
+                                <label class="elm-label" for="firstCarrierUicCompanyCode" aria-hidden="true" id="firstCarrierUicCompanyCodeLabel"> 
+                                    {{ 'Order-templates-component.FirstCarrier' | translate }}
+                                </label>
+                            </div>
+                            <!--Start erster Beförderer: Carrier -->
+                        </ng-container>
+                    </div>
+                    <!--Ende erste Befördererroute-->
+
+                    <!-- Start: Weitere hinzugefügte Befördererrouten -->
+                    <div formArrayName="additionalRoutes" *ngFor="let route of getAdditionalRoutes().controls; let i=index">
+                        <div [formGroupName]="i">
+                            <div class="input-block">
+                                <div class="span-two">
+                                    <h3>{{ 'Order-templates-component.Transporterroute-group-header' | translate }}<span style="display: inline;">({{i+2}})</span></h3>
+                                    <svg viewBox="0 0 24 24" class="icon mouse-pointer remove-train-data-icon" (click)="deleteTransportGroupData(i)">
+                                        <use xlink:href="assets/icons/icons.svg#delete" />
+                                    </svg>
+                                </div>
+
+                                <!--Start erster Beförderer: Startbahnhof-->
+                                <div class="input-field">
+                                    <input formControlName="startStation"
+                                           class="elm-input"
+                                           type="text"
+                                           placeholder="{{ 'Order-templates-component.Startstation' | translate }}*"
+                                           name="sending-station"
+                                           id="startStation"
+                                           list="datalistsending-station-new-order"
+                                           (input)="autocompleteStationInputChanged($event)"
+                                           (change)="setObjectKeyRouteValues($event, (i+2))" />
+                                    <label class="elm-label" for="startStation" aria-hidden="true" id="startStationLabel">
+                                        {{ 'Order-templates-component.Startstation' | translate }}*
+                                    </label>
+                                    <div class="icon-block" (click)="clearAdditionalRouteInput('startStation', i)">
+                                        <svg class="icon"
+                                            [ngClass]="receivingGroup.controls.wagonStoringPositionReceiver.value ? 'show-icon' : 'hide-icon'"
+                                            viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#close"/>
+                                        </svg>
+                                    </div>
+                                    <datalist id="datalistsending-station-new-order">
+                                        <option [value]="option.name" *ngFor="let option of startStationsAutocomplete">{{ option.name }}</option>
+                                    </datalist>                                
+                                </div>
+                                <!--Ende letzter Beförderer: Startbahnhof-->
+
+                                <!--Start letzter Beförderer: Zielbahnhof-->
+                                <div class="input-field">
+                                    <input formControlName="endStation"
+                                        class="elm-input"
+                                        type="text"
+                                        placeholder="{{ 'Order-templates-component.Endstation' | translate }}*"
+                                        name="receiving-station"
+                                        id="endStation"
+                                        list="datalistreceiving-station-new-order"
+                                        (input)="autocompleteStationInputChanged($event)"
+                                        (change)="setObjectKeyRouteValues($event, (i+2))"/>
+                                    <label class="elm-label" for="endStation" aria-hidden="true" id="endStation_label">
+                                        {{ 'Order-templates-component.Endstation' | translate }}*
+                                    </label>
+                                    <div class="icon-block" (click)="clearAdditionalRouteInput('endStation', i)">
+                                        <svg class="icon"
+                                            [ngClass]="receivingGroup.controls.wagonStoringPositionReceiver.value ? 'show-icon' : 'hide-icon'"
+                                            viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#close"/>
+                                        </svg>
+                                    </div>
+                                    <datalist id="datalistreceiving-station-new-order">
+                                        <option [value]="option.name" *ngFor="let option of endStationsAutocomplete">{{ option.name }}</option>
+                                    </datalist>                            
+                                </div>
+                                <!--Ende letzter Beförderer: Zielbahnhof-->
+
+                                <!--Start letzter Beförderer: Carrier -->
+                                <div class="input-field">
+                                    <select formControlName="carrierUicCompanyCode" 
+                                            class="elm-input"
+                                            type="text"
+                                            name="carrierUicCompanyCode"
+                                            id="carrierUicCompanyCode"
+                                            (change)="setCarrier($event, (i))">
+                                        <option [value]="supplier.uicCompanyCode" *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                                    </select>
+                                    <label class="elm-label" for="carrierUicCompanyCode" aria-hidden="true" id="carrierUicCompanyCode"> 
+                                        {{ 'Order-templates-component.Carrier' | translate }}*
+                                    </label>
+                                </div>
+                                <!--Ende letzter Beförderer: Carrier -->                                
+                            </div>
+                        </div>
+                    </div>    
+                    <!-- Ende: Weitere hinzugefügte Befördererrouten -->
+
+                    <!--Start letzte Befördererroute-->
+                    <div class="input-block">
+                        <div class="span-two"> 
+                            <h3>{{ 'Order-templates-component.Transporterroute-group-header' | translate }} <span style="display: inline;">({{getAdditionalRoutes().length + 2}})</span></h3>
+                        </div>
+
+                        <!--Start letzter Beförderer: Startbahnhof-->
+                        <div class="input-field">
+                            <input formControlName="lastStartStation"
+                                   class="elm-input"
+                                   type="text"
+                                   placeholder="{{ 'Order-templates-component.Startstation' | translate }}"
+                                   name="sending-station"
+                                   id="lastStartStation"
+                                   list="datalistsending-station-new-order"
+                                   (input)="autocompleteStationInputChanged($event)"
+                                   (change)="setObjectKeyRouteValues($event)"
+                                   [class.invalid-input]="transportRouteGroup.controls.lastStartStation.invalid && transportRouteGroup.controls.lastStartStation.touched"/>
+                            <label class="elm-label" for="lastStartStation" aria-hidden="true" id="lastStartStationLabel">
+                                {{ 'Order-templates-component.Startstation' | translate }}</label>
+                                <div class="icon-block" (click)="clearInput('lastStartStation')">
+                                    <svg class="icon"
+                                        [ngClass]="receivingGroup.controls.wagonStoringPositionReceiver.value ? 'show-icon' : 'hide-icon'"
+                                        viewBox="0 0 25 25">
+                                        <use xlink:href="assets/icons/icons.svg#close"/>
+                                    </svg>
+                                </div>
+                            <datalist id="datalistsending-station-new-order">
+                                <option [value]="option.name" *ngFor="let option of startStationsAutocomplete">{{ option.name }}</option>
+                            </datalist>                            
+                        </div>
+                        <!--Ende letzter Beförderer: Startbahnhof-->
+
+                        <!--Start letzter Beförderer: Zielbahnhof-->
+                        <div class="input-field">
+                            <input formControlName="lastEndStation"
+                                   class="elm-input"
+                                   type="text"
+                                   placeholder="{{ 'Order-templates-component.Endstation' | translate }}"
+                                   name="sending-station"
+                                   id="lastEndStation"
+                                   disabled
+                                   (input)="autocompleteStationInputChanged($event)"
+                                   (change)="setObjectKeyFormValues($event)"
+                                   [class.invalid-input]="transportRouteGroup.controls.lastEndStation.invalid && transportRouteGroup.controls.lastEndStation.touched"/>
+                            <label class="elm-label" for="lastEndStation" aria-hidden="true" id="lastEndStationLabel">
+                                {{ 'Order-templates-component.Endstation' | translate }}
+                            </label>                            
+                        </div>
+                        <!--Ende letzter Beförderer: Zielbahnhof-->
+
+                        <!--Start letzter Beförderer: Carrier -->
+                        <div class="input-field">
+                            <select disabled
+                                    formControlName="lastCarrierUicCompanyCode" class="elm-input"
+                                    type="text"
+                                    name="lastCarrierUicCompanyCode"
+                                    id="lastCarrierUicCompanyCode"
+                                    style="pointer-events: none"
+                                    aria-labelledby="lastCarrierUicCompanyCode-label">
+                                <option [value]="supplier.uicCompanyCode" *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                            </select>
+                            <label class="elm-label" for="lastCarrierUicCompanyCode" aria-hidden="true" id="lastCarrierUicCompanyCodeLabel"> 
+                                {{ 'Order-templates-component.LastCarrier' | translate }}
+                            </label>
+                        </div>
+                        <!--Ende letzter Beförderer: Carrier -->
+                    </div>
+                       
+                        <!-- Start Add Group -->
+                        <div id="add-transportroute-area">
+                            <div class="border-transport-up"></div>
+                            <div>
+                                <span>
+                                    <svg viewBox="0 0 25 25" class="icon mouse-pointer" style="transform: rotate(45deg)" (click)="addTransportGroupData()">
+                                        <use xlink:href="assets/icons/icons.svg#add" />
+                                    </svg>
+                                </span>
+                                <span style="font-weight: bold; padding-left: 10px;">{{ 'Order-templates-component.New-order-template.AddTransportrouteGroup' | translate }}</span>
+                            </div>    
+                            <div class="border-transport-down"></div>
+                        </div>
+                        <!-- End Add Group -->
+
+                        <!--Ende letzte Befördererroute-->
+                </div>
+
+                <!-- Train Data Group-->
+                <div class="input-block-complete" id="trainDataTab">
+                    <div class="radio-buttons" style="margin: 1em 0 0 1em">
+                        <div class="flex-column">
+                            <div class="flex-row">
+                                <input type="radio" class="elm-radio" id="trainParamSelection_length" formControlName="trainParamSelection" checked value="GROSS_WEIGHT_AND_TRAIN_LENGTH" (click)="onSelectGrossWeight()">
+                                <label class="elm-label" for="radio01">Angabe von Brutto-Gewicht und Zuglänge</label>
+                            </div>
+                            <div class="flex-row" style="margin: 0.5em 0 0 0">
+                                <input type="radio" class="elm-radio" id="trainParamSelection_waggons" formControlName="trainParamSelection" value="NET_WEIGHT_AND_WAGGON_AMOUNT" (click)="onSelectNetWeight()" disabled>
+                                <label class="elm-label" for="radio02">Angabe von Netto-Gewicht und Anzahl Wagen</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div formGroupName="trainDataGroup">
+                        <!-- Start: Brutto-Gewicht und Zuglänge: ZUGDATEN --> 
+                        <div *ngIf="viewState === ViewState.GROSS_WEIGHT_AND_TRAIN_LENGTH">
+                            <div class="flex-column">
+                                <div class="block-title" style="margin: 1em 0 0 0">{{ 'New-order-page.Train-information' | translate }}</div>
+
+                                <div class="flex-row" style="width: 100%">
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input formControlName="grossWeight"
+                                                type="number"
+                                                min=1
+                                                step=1
+                                                class="elm-input"
+                                                placeholder="{{ 'New-order-page.Gross-weight-label' | translate }}"
+                                                name="gross-weight"
+                                                id="gross-weight"
+                                                aria-labelledby="gross-weight-label"
+                                                ondrop="return false;"
+                                                onpaste="return false;"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57" />
+                                        <label class="elm-label" for="gross-weight" aria-hidden="true" id="gross-weight-label">
+                                            {{ 'New-order-page.Gross-weight-label' | translate }}
+                                        </label>  
+                                        <!-- <ng-container *ngIf="trainDataGroup.controls.grossWeight.invalid && trainDataGroup.controls.grossWeight.touched">
+                                            <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                        </ng-container>                               -->
+                                    </div>
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input formControlName="trainLength"
+                                                type="number"
+                                                min=1
+                                                step=1
+                                                class="elm-input"
+                                                placeholder="{{ 'New-order-page.Train-length-label' | translate }}"
+                                                name="train-length"
+                                                id="train-length"
+                                                aria-labelledby="train-length-label"
+                                                ondrop="return false;"
+                                                onpaste="return false;"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57" />
+                                        <label class="elm-label" for="train-length" aria-hidden="true" id="train-length-label">
+                                            {{ 'New-order-page.Train-length-label' | translate }}
+                                        </label>           
+                                        <!-- <ng-container *ngIf="trainDataGroup.controls.trainLength.invalid && trainDataGroup.controls.trainLength.touched">
+                                            <small class="input-error"
+                                                   *ngIf="trainDataGroup.controls.trainLength.errors?.required">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                        </ng-container>                       -->
+                                    </div>
+                                
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0;">
+                                        <input formControlName="vmax"
+                                                type="number"
+                                                min=1
+                                                step=1
+                                                class="elm-input"
+                                                placeholder="{{ 'New-order-page.Train-vmax-label' | translate }}"
+                                                name="vmax"
+                                                id="vmax"
+                                                ondrop="return false;"
+                                                onpaste="return false;"
+                                                onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                                aria-labelledby="vmax-label"/>
+                                        <label class="elm-label" for="vmax" aria-hidden="true" id="vmax-label">
+                                            {{ 'New-order-page.Train-vmax-label' | translate }}
+                                        </label>                                
+                                    </div>
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input formControlName="nhmCode"
+                                            type="text"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.NHM-code-label' | translate }}"
+                                            name="nhm-code"
+                                            id="nhm-code"
+                                            aria-labelledby="nhm-code-label"
+                                            list="data-list-nhm-code"
+                                            (input)="autocompleteInputChanged($event, 'cargo')" />
+                                        <label class="elm-label" for="nhm-code" aria-hidden="true" id="nhm-code-label">
+                                            {{ 'New-order-page.NHM-code-label' | translate }}
+                                        </label>
+                                        <!-- <ng-container *ngIf="trainDataGroup.controls.nhmCode.invalid && trainDataGroup.controls.nhmCode.touched">
+                                            <small class="input-error"
+                                                   *ngIf="trainDataGroup.controls.nhmCode.errors?.required">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                        </ng-container> -->
+                                        <datalist id="data-list-nhm-code">
+                                            <option [value]="option.nhmCode" *ngFor="let option of nhmCodeAutocomplete; trackBy: trackByFn">{{ option.description }}</option>
+                                        </datalist>
+                                        <div class="icon-block">
+                                            <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                <use xlink:href="assets/icons/icons.svg#search" />
+                                            </svg>
+                                        </div>                                        
+                                    </div>                                    
+                                </div>
+
+                                <div class="flex-row" style="width: 100%">
+                                    <div class="input-field" style="margin: 0 0.6em 0 0; width: 349px;">                                        
+                                        <select formControlName="dangerousGoodClass" 
+                                                class="elm-input"
+                                                type="text"
+                                                name="dangerousGoodClass"
+                                                id="dangerousGoodClass">
+                                            <option value=""></option>
+                                            <option [value]="dgc.code" *ngFor="let dgc of dangerousGoodsClasses">{{dgc.name}}</option>
+                                        </select>
+                                        <label class="elm-label" for="dangerousGoodClass" aria-hidden="true" id="dangerousGoodsClass-label">
+                                            {{ 'New-order-page.Dangerous-good-class-label' | translate }}
+                                        </label>
+                                    </div>
+                                    <div class="input-field">
+                                        <input
+                                            formControlName="bzaNr"
+                                            type="text"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.BzaNr-label' | translate }}"
+                                            name="bzaNr"
+                                            id="bzaNr"
+                                            maxlength="1000"
+                                            aria-labelledby="bzaNr-label"
+                                            />
+                                        <label class="elm-label" for="bzaNr" aria-hidden="true" id="bzaNr-label">
+                                            {{ 'New-order-page.BzaNr-label' | translate }}
+                                        </label>
+                                        <ng-container *ngIf="trainDataGroup.controls.bzaNr.touched && trainDataGroup.controls.bzaNr.value && trainDataGroup.controls.bzaNr.value.length == 1000">
+                                            <small class="input-info">{{ 'Shared.Errors.Field-is-limited-on-1000' | translate }}</small>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="flex-row">
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input
+                                            formControlName="p2"
+                                            type="number"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.kv-profil-p2' | translate }}"
+                                            name="p2"
+                                            id="p2"
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            maxlength="2"
+                                            max="99"
+                                            min="0"
+                                            aria-labelledby="p2-label"/>
+                                        <label class="elm-label" for="p2" aria-hidden="true" id="p2-label">
+                                            {{ 'New-order-page.kv-profil-p2' | translate }}
+                                        </label>                                       
+                                    </div>
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input
+                                            formControlName="c2"
+                                            type="number"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.kv-profil-c2' | translate }}"
+                                            name="c2"
+                                            id="c2"
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            maxlength="2"
+                                            max="99"
+                                            min="0"
+                                            aria-labelledby="c2-label"/>
+                                        <label class="elm-label" for="c2" aria-hidden="true" id="c2-label">
+                                            {{ 'New-order-page.kv-profil-c2' | translate }}
+                                        </label>                                       
+                                    </div>
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input
+                                            formControlName="p3"
+                                            type="number"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.kv-profil-p3' | translate }}"
+                                            name="p3"
+                                            id="p3"
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            maxlength="3"
+                                            max="999"
+                                            min="0"
+                                            aria-labelledby="p3-label"/>
+                                        <label class="elm-label" for="p3" aria-hidden="true" id="p3-label">
+                                            {{ 'New-order-page.kv-profil-p3' | translate }}
+                                        </label>                                       
+                                    </div>
+                                    <div class="input-field" style="width: 170px; margin: 0 0.6em 0 0">
+                                        <input
+                                            formControlName="c3"
+                                            type="number"
+                                            class="elm-input"
+                                            placeholder="{{ 'New-order-page.kv-profil-c3' | translate }}"
+                                            name="c3"
+                                            id="c3"
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            maxlength="3"
+                                            max="999"
+                                            min="0"
+                                            aria-labelledby="c3-label"/>
+                                        <label class="elm-label" for="c3" aria-hidden="true" id="c3-label">
+                                            {{ 'New-order-page.kv-profil-c3' | translate }}
+                                        </label>                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Ende: Brutto-Gewicht und Zuglänge: ZUGDATEN -->  
+                            
+                            <!-- Start: Brutto-Gewicht und Zuglänge: LADUNGEN -->
+                            <div formArrayName="trainDataGroupArray_1" *ngFor="let cargo of getAdditionalCargo_1().controls; let i=index">
+                                <div [formGroupName]="i">
+                                    <div class="border-transport-up" style="margin-right: 20px;"></div>
+
+                                <div class="flex-row" style="margin: 1em 0 0">
+                                    <div class="block-title flex-row" style="margin: 1em 0 0 0">{{ 'New-order-page.Cargo-information' | translate }}<div *ngIf="trainDataGroupArray_1.length > 0" style="margin: 0 0 0 0.5em">({{i+1}})</div></div>
+                                    <div style="flex-grow: 1"></div>
+                                    <div style="margin: 1.5em 20px 0 0">
+                                        <svg viewBox="0 0 24 24" class="icon mouse-pointer remove-train-data-icon" (click)="deleteCargoData_1(i)">
+                                            <use xlink:href="assets/icons/icons.svg#delete" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="flex-column">
+                                    <div class="flex-row">
+                                        <div class="input-field" style="margin: 0 0.6em 0 0">
+                                            <input formControlName="cargoNhmCode"
+                                                type="text"
+                                                class="elm-input"
+                                                placeholder="{{ 'New-order-page.NHM-code-label' | translate }}"
+                                                name="nhm-code"
+                                                id="nhm-code"
+                                                aria-labelledby="nhm-code-label"
+                                                list="data-list-nhm-code"
+                                                (input)="autocompleteInputChanged($event, 'cargo')"/>
+                                            <label class="elm-label" for="nhm-code" aria-hidden="true" id="nhm-code-label">
+                                                {{ 'New-order-page.NHM-code-label' | translate }}
+                                            </label>
+                                            <!-- <ng-container *ngIf="trainDataGroupArray_1_FieldIsInvalid('cargoNhmCode', i)">
+                                                <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                            </ng-container> -->
+                                            <datalist id="data-list-nhm-code">
+                                                <option [value]="option.nhmCode" *ngFor="let option of nhmCodeAutocomplete; trackBy: trackByFn">{{ option.description }}</option>
+                                            </datalist>
+                                            <div class="icon-block">
+                                                <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                    <use xlink:href="assets/icons/icons.svg#search" />
+                                                </svg>
+                                            </div>                                        
+                                        </div>
+                                        <div class="input-field" style="margin: 0 0.6em 0 0; width: 170px">
+                                            <input formControlName="cargoWagonAmount"
+                                                    type="number"
+                                                    min=1
+                                                    step=1
+                                                    class="elm-input"
+                                                    placeholder="{{ 'New-order-page.Number-of-wagons-label' | translate }}"
+                                                    name="first-cargo-waggon-amount"
+                                                    id="first-cargo-waggon-amount"
+                                                    [class.invalid-input]="trainDataGroupArray_1_FieldIsInvalid('cargoWagonAmount', i)"
+                                                    aria-labelledby="first-cargo-waggon-amount-label"/>
+                                            <label class="elm-label" for="first-cargo-waggon-amount" aria-hidden="true" id="first-cargo-waggon-amount-label">
+                                                {{ 'New-order-page.Number-of-wagons-label' | translate }}
+                                            </label>
+                                            <ng-container *ngIf="trainDataGroupArray_1_FieldIsInvalid('cargoWagonAmount', i)">
+                                                <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                            </ng-container>                                
+                                        </div>
+                                    </div>    
+                                    
+                                    <div class="flex-row">
+                                        <div class="flex-column">
+                                            <div class="input-field" style="margin: 0 0.6em 0 0">
+                                                <input formControlName="cargoWagonType"
+                                                    type="text"
+                                                    class="elm-input"
+                                                    placeholder="{{ 'New-order-page.Wagon-type-label' | translate }}"
+                                                    name="wagon-type" 
+                                                    id="wagon-type"
+                                                    aria-labelledby="wagon-type-label"
+                                                    [class.invalid-input]="cargoWagonTypeIsInvalidBrutto(i)"
+                                                    list="data-list-wagon-type"
+                                                    (input)="autocompleteInputChanged($event, 'wagon-type')"/>                                           
+                                                <label class="elm-label" for="wagon-type" aria-hidden="true" id="wagon-type-label">
+                                                    {{ 'New-order-page.Wagon-type-label' | translate }}
+                                                </label>
+                                                <div *ngIf="noWagonTypeDatafound" class="input-error">{{ 'Shared.Errors.No-Data' | translate }}</div>
+                                                <datalist id="data-list-wagon-type">
+                                                    <option [value]="option.code" *ngFor="let option of wagonTypeAutocomplete; trackBy: trackByFn">{{ option.name }}</option>
+                                                </datalist>
+                                                <div class="icon-block">
+                                                    <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                        <use xlink:href="assets/icons/icons.svg#search" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="cargoWagonTypeHasNoData(i)" class="input-error"><small>{{ 'Shared.Errors.no-data' | translate }}</small></div>
+                                            <div *ngIf="cargoWagonTypeIsEmpty(i)" class="input-error"><small>{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small></div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <input formControlName="cargoUnCode"
+                                                type="text"
+                                                class="elm-input"
+                                                placeholder="{{ 'New-order-page.Dangerous-good-label' | translate }}"
+                                                name="dangerous-good"
+                                                id="dangerous-good"
+                                                aria-labelledby="dangerous-good-label"
+                                                list="data-list-dangerous-good"
+                                                (input)="autocompleteInputChanged($event, 'dangerous-cargo')" />
+                                            <label class="elm-label" for="dangerous-good" aria-hidden="true" id="dangerous-good-label">
+                                                {{ 'New-order-page.Dangerous-good-label' | translate }}</label>
+                                            <datalist id="data-list-dangerous-good">
+                                                <option [value]="option.unCode" *ngFor="let option of dangerousGoodsAutocomplete; trackBy: trackByFn">{{ option.unDescription }}</option>
+                                            </datalist>                                    
+                                            <div class="icon-block">
+                                                <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                    <use xlink:href="assets/icons/icons.svg#search" />
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Ende: Brutto-Gewicht und Zuglänge: LADUNGEN -->
+                            <div *ngIf="this.trainDataGroupArray_1.length < 10" style="margin-right: 20px;">
+                                <div class="border-transport-up"></div>
+                                <span id="add-train-data-area">
+                                    <div>
+                                        <span>
+                                            <svg viewBox="0 0 25 25" class="icon mouse-pointer" style="transform: rotate(45deg)" (click)="addCargoData_1()">
+                                                <use xlink:href="assets/icons/icons.svg#add" />
+                                            </svg>
+                                        </span>
+                                        <span style="font-weight: bold; padding-left: 10px;">{{ 'New-order-page.AddTransportGroup' | translate }}</span>
+                                    </div>    
+                                </span>
+                                <div class="border-transport-down"></div>
+                            </div>
+                        </div>
+
+                        <!-- Start: Netto-Gewicht und Anzahl Wagen -->
+                        <div *ngIf="viewState === ViewState.NET_WEIGHT_AND_WAGGON_AMOUNT">
+                            <div class="flex-column">
+
+                                <div formArrayName="trainDataGroupArray_2" *ngFor="let cargo of getAdditionalCargo_2().controls; let i=index">
+                                    <div *ngIf="i > 0" class="border-transport-up" style="margin-right: 20px;"></div>
+                                    <div [formGroupName]="i">
+                                        <div class="flex-row">
+                                            <div class="block-title flex-row" style="margin: 1em 0 0 0">{{ 'New-order-page.Cargo-information' | translate }}<div *ngIf="trainDataGroupArray_2.length > 1" style="margin: 0 0 0 0.5em">({{i+1}})</div></div>
+                                            <div style="flex-grow: 1"></div>
+                                            <div *ngIf="i > 0" style="margin: 1.5em 20px 0 0">
+                                                <svg viewBox="0 0 24 24" class="icon mouse-pointer remove-train-data-icon" (click)="deleteCargoData_2(i)">
+                                                    <use xlink:href="assets/icons/icons.svg#delete" />
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-row" style="width: 100%">
+                                            <div class="input-field" style="margin: 0 0.6em 0 0">
+                                                <input formControlName="cargoNhmCode"
+                                                    type="text"
+                                                    class="elm-input"
+                                                    placeholder="{{ 'New-order-page.NHM-code-label' | translate }}"
+                                                    name="nhm-code"
+                                                    id="nhm-code"
+                                                    aria-labelledby="nhm-code-label"
+                                                    list="data-list-nhm-code"
+                                                    (input)="autocompleteInputChanged($event, 'cargo')"
+                                                    />
+                                                    <label class="elm-label" for="nhm-code" aria-hidden="true" id="nhm-code-label">
+                                                        {{ 'New-order-page.NHM-code-label' | translate }}
+                                                    </label>
+                                                    <!-- <ng-container *ngIf="trainDataGroupArray_2_FieldIsInvalid('cargoNhmCode', i)">
+                                                        <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}*</small>
+                                                    </ng-container>   -->
+                                                <datalist id="data-list-nhm-code">
+                                                    <option [value]="option.nhmCode" *ngFor="let option of nhmCodeAutocomplete; trackBy: trackByFn">{{ option.description }}</option>
+                                                </datalist>
+                                                <div class="icon-block">
+                                                    <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                        <use xlink:href="assets/icons/icons.svg#search" />
+                                                    </svg>
+                                                </div>                                        
+                                            </div>
+                                            <div class="input-field" style="margin: 0 0.6em 0 0; width: 170px">
+                                                <input formControlName="cargoNetWeight"
+                                                        type="number"
+                                                        min=1
+                                                        step=1
+                                                        class="elm-input"
+                                                        placeholder="{{ 'New-order-page.Net-weight-label' | translate }}"
+                                                        name="net-weight"
+                                                        id="net-weight"
+                                                        aria-labelledby="net-weight-label"
+                                                        />
+                                                <label class="elm-label" for="net-weight" aria-hidden="true" id="net-weight-label">
+                                                    {{ 'New-order-page.Net-weight-label' | translate }}
+                                                </label>
+                                                <!-- <ng-container *ngIf="trainDataGroupArray_2_FieldIsInvalid('cargoNetWeight', i)">
+                                                    <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}</small>
+                                                </ng-container>                                        -->
+                                            </div>
+                                            <div class="input-field" style="margin: 0 0.6em 0 0; width: 170px">
+                                                <input formControlName="cargoWagonAmount"
+                                                        type="number"
+                                                        min=1
+                                                        step=1
+                                                        class="elm-input"
+                                                        placeholder="{{ 'New-order-page.Number-of-wagons-label' | translate }}"
+                                                        name="first-cargo-waggon-amount"
+                                                        id="first-cargo-waggon-amount"
+                                                        aria-labelledby="first-cargo-waggon-amount-label" />
+                                                <label class="elm-label" for="first-cargo-waggon-amount" aria-hidden="true" id="first-cargo-waggon-amount-label">
+                                                    {{ 'New-order-page.Number-of-wagons-label' | translate }}
+                                                </label>
+                                                <!-- <ng-container *ngIf="trainDataGroupArray_2_FieldIsInvalid('cargoWagonAmount', i)">
+                                                    <small class="input-error">{{ 'Shared.Errors.Field-is-required-error-text' | translate }}*</small>
+                                                </ng-container>                                 -->
+                                            </div>
+                                        </div>
+                                        <div class="flex-row">
+                                            <div class="flex-column">
+                                                <div class="input-field">
+                                                    <input formControlName="cargoWagonType"
+                                                        type="text"
+                                                        class="elm-input"
+                                                        placeholder="{{ 'New-order-page.Wagon-type-label' | translate }}"
+                                                        name="wagon-type"
+                                                        id="wagon-type"
+                                                        aria-labelledby="wagon-type-label"
+                                                        list="data-list-wagon-type"
+                                                        (input)="autocompleteInputChanged($event, 'wagon-type')"
+                                                        [class.invalid-input]="cargoWagonTypeHasNoData(i)"
+                                                        />                                           
+                                                    <label class="elm-label" for="wagon-type" aria-hidden="true" id="wagon-type-label">
+                                                        {{ 'New-order-page.Wagon-type-label' | translate }}
+                                                    </label>
+                                                    <div *ngIf="noWagonTypeDatafound" class="input-error">{{ 'Shared.Errors.No-Data' | translate }}</div>
+                                                    <datalist id="data-list-wagon-type">
+                                                        <option [value]="option.code" *ngFor="let option of wagonTypeAutocomplete; trackBy: trackByFn">{{ option.name }}</option>
+                                                    </datalist>
+                                                    <div class="icon-block">
+                                                        <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                            <use xlink:href="assets/icons/icons.svg#search" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="cargoWagonTypeHasNoData(i)" class="input-error"><small>{{ 'Shared.Errors.no-data' | translate }}</small></div>
+                                                <!--div *ngIf="cargoWagonTypeIsInvalidNetto(i)" class="input-error"><small>{{ 'Shared.Errors.check-input' | translate }}</small></div-->
+                                            </div>
+                                            <div class="input-field" style="margin: 0 0 0 0.6em">
+                                                <input formControlName="cargoBzaNumber"
+                                                    type="text"
+                                                    class="elm-input"
+                                                    placeholder="{{ 'New-order-page.BzaNr-label' | translate }}"
+                                                    name="bzaNr"
+                                                    id="bzaNr"
+                                                    maxlength="1000"
+                                                    aria-labelledby="bzaNr-label"
+                                                    />
+                                                <label class="elm-label" for="bzaNr" aria-hidden="true" id="bzaNr-label">
+                                                    {{ 'New-order-page.BzaNr-label' | translate }}
+                                                </label>
+                                                <ng-container *ngIf="trainDataGroupArray_2_FieldLimitReached('cargoBzaNumber', i)">
+                                                    <small class="input-info">{{ 'Shared.Errors.Field-is-limited-on-1000' | translate }}</small>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="flex-row">
+                                            <div class="input-field">
+                                                <input formControlName="cargoUnCode"
+                                                       type="text"
+                                                       class="elm-input"
+                                                       placeholder="{{ 'New-order-page.Dangerous-good-label' | translate }}"
+                                                       name="dangerous-good"
+                                                       id="dangerous-good"
+                                                       aria-labelledby="dangerous-good-label"
+                                                       list="data-list-dangerous-good"
+                                                       (input)="autocompleteInputChanged($event, 'dangerous-cargo')" />
+                                                <label class="elm-label" for="dangerous-good" aria-hidden="true" id="dangerous-good-label">
+                                                    {{ 'New-order-page.Dangerous-good-label' | translate }}</label>
+                                                <datalist id="data-list-dangerous-good">
+                                                    <option [value]="option.unCode" *ngFor="let option of dangerousGoodsAutocomplete; trackBy: trackByFn">{{ option.unDescription }}</option>
+                                                </datalist>                                    
+                                                <div class="icon-block">
+                                                    <svg class="icon search-icon" viewBox="0 0 25 25">
+                                                        <use xlink:href="assets/icons/icons.svg#search" />
+                                                    </svg>
+                                                </div>                                                
+                                            </div>
+                                            <div class="input-field" style="margin: 0 0 0 0.6em">
+                                                <select formControlName="dangerousGoodClass" 
+                                                        class="elm-input"
+                                                        type="text"
+                                                        name="dangerousGoodClass"
+                                                        id="dangerousGoodClass">
+                                                    <option value=""></option>
+                                                    <option [value]="dgc.code" *ngFor="let dgc of dangerousGoodsClasses">{{dgc.name}}</option>
+                                                </select>
+                                                <label class="elm-label" for="dangerousGoodClass" aria-hidden="true" id="dangerousGoodsClass-label">
+                                                    {{ 'New-order-page.Dangerous-good-class-label' | translate }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div *ngIf="this.trainDataGroupArray_2.length < 10" style="margin-right: 20px;">
+                                    <div class="border-transport-up"></div>
+                                    <span id="add-train-data-area">
+                                        <span>
+                                            <svg viewBox="0 0 25 25" class="icon mouse-pointer" style="transform: rotate(45deg)" (click)="addCargoData_2()">
+                                                <use xlink:href="assets/icons/icons.svg#add" />
+                                            </svg>
+                                        </span>
+                                        <span style="font-weight: bold; padding-left: 10px;">{{ 'New-order-page.AddTransportGroup' | translate }}</span>
+                                    </span>
+                                    <div class="border-transport-down"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Ende: Netto-Gewicht und Anzahl Wagen -->
+                    </div>
+                </div>
+
+            </div><!-- END right grid -->
+
+            <div class="grid-item">
+                <div>
+                    <button class="elm-button" data-variant="secondary" type="button" (click)="openConfirmationModal()">
+                        {{ 'Shared.Cancel-button-label' | translate }}
+                    </button>
+                </div>
+
+            </div>
+            <div class="grid-item buttons-right">
+                <div>
+                    <span *ngIf="error" class="error-block">
+                        <small class="input-error error-block">{{ error }}</small>
+                    </span>
+                </div>
+                <div *ngIf="currentTab < 4" class="right-aligned">
+                    <db-button variant="secondary-solid"  style="margin: 0 10px;" (click)="prevTab()">
+                        <i data-icon="chevron-left" data-icon-variant="24-outline"></i> {{ 'Shared.Back-button-label' | translate }}
+                    </db-button>
+                    <db-button variant="brand-primary" style="margin: 0 10px;" (click)="nextTab()">
+                        <i data-icon="chevron-right" data-icon-variant="24-outline"></i> {{ 'Shared.Next-button-label' | translate }}
+                    </db-button>
+                </div>
+                <div *ngIf="currentTab === 4" class="right-aligned">
+                    <db-button variant="secondary"  style="margin: 0 10px;" (click)="prevTab()">
+                        <i data-icon="chevron-left" data-icon-variant="24-outline"></i> {{ 'Shared.Back-button-label' | translate }}
+                    </db-button>
+                    <db-button variant="brand-primary" type="submit" [disabled]="!isFormValid()" (click)="sendNewOrderTemplateRequest()">
+                        {{ 'Order-templates-component.New-order-template.Save-button' | translate }}
+                    </db-button>
+                </div>
+            </div>
+        </div><!-- END grid-container -->
+
+        <div class="elm-progress" *ngIf="loadingInProgress">
+            <progress id="progress-label-07"></progress>
+        </div>
+
+    </form>
+</main>

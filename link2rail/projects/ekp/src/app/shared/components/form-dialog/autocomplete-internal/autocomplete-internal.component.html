@@ -1,0 +1,41 @@
+<div [formGroup]="formGroup">
+    <input
+            class='elm-input'
+            id="{{getFieldId()}}"
+            name="{{getFieldName()}}"
+            formControlName="{{controlName}}"
+            placeholder="{{placeholder}}"
+            type="text"
+            autocomplete="off"
+            attr.list="datalist-{{getFieldId()}}"
+            style="width: 100%"
+            attr.aria-labelledby="{{getFieldId()}}-label"
+            [class.invalid-input]="otherConfig && otherConfig.errorConfig && otherConfig.errorConfig.errorCondition"/>
+    <label class="elm-label" id="{{getFieldId()}}-label" for="{{getFieldId()}}" aria-hidden="true">
+        {{ title }}
+    </label>
+    <datalist id="datalist-{{getFieldId()}}">
+        <option [value]="option.displayValue" *ngFor="let option of publicDatalist"> {{ option.displayValue }}</option>
+    </datalist>
+    <div class="icon-block-autocomplete" (click)="clear()" style="cursor: pointer" *ngIf="!control?.value && control?.enabled && !busy">
+        <svg class="icon"
+            viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#search" />
+        </svg>
+    </div>
+    <div class="icon-block-autocomplete" (click)="clear()" style="cursor: pointer" *ngIf="control?.enabled && control?.value && !busy">
+        <svg class="icon"
+            viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </div>
+    <div class="icon-block-autocomplete" *ngIf="busy">
+        <i class="fa-solid fa-hourglass-half fa-spin"></i>
+    </div>
+    <ng-container
+            *ngIf="otherConfig && otherConfig.errorConfig && otherConfig.errorConfig.errorCondition && otherConfig.errorConfig.errorText">
+        <small class="input-error">
+            {{ otherConfig.errorConfig.errorText }}
+        </small>
+    </ng-container>
+</div>

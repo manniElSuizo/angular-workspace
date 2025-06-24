@@ -1,0 +1,54 @@
+<div class="dialog-container">
+    <header class="modal-header-sticky">
+        <h2 *ngIf="action==='create'">{{ 'ewd.order.form.creation.title' | translate }}</h2>
+        <h2 *ngIf="action==='view'">{{ 'ewd.order.form.creation.titleForTemplate' | translate }}</h2>
+        <a class="close-icon" title="{{ 'common.components.form.button.close' | translate }}" mat-dialog-close>
+            <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close"/>
+            </svg>
+        </a>
+    </header>
+    <main id="sectionMain" style="overflow-y: auto; margin: 0 0 0 20px">
+        <form [formGroup]="formGroup" (submit)="sendOrderCreationRequest()" autocomplete="off">
+            <app-order-template
+                    [data]="templateName"
+                    [customerTemplateName]="data?.customerTemplateName"
+                    [action]="action"
+                    [formGroup]="templateControl"
+                    (templateNameChanged)="onTemplateNameChange($event)"
+            ></app-order-template>
+            <app-order-partners
+                    [data]="partners"
+                    [formGroup]="partnersControl"
+            ></app-order-partners>
+            <div formArrayName="demandsControl">
+                <ng-container *ngFor="let item of demandsControl.controls; let i = index"
+                              [class.white-row]="i % 2 === 0" [formGroupName]="i">
+                    <app-demand
+                            [data]="demands[i]"
+                            [action]="action"
+                            [showWagonAmountNotValidMessage]="showWagonAmountNotValidMessage"
+                            [formGroup]="this.getDemandFormGroup(i)"
+                    >
+                    </app-demand>
+                </ng-container>
+            </div>
+
+        </form>
+    </main>
+    <footer class="modal-footer-sticky" style="margin: 0 0 0 20px;">
+        <div class="close-section">
+            <a class="close-icon" mat-dialog-close>
+                <db-button type="button">{{ 'common.components.form.button.cancel' | translate }}</db-button>
+            </a>
+        </div>
+        <div *ngIf="action ==='create'" class="button-navigation">
+            <db-button class="elm-button"
+                       [disabled]="isSendButtonDisabled"
+                       variant="brand-primary"
+                       type="button" (click)="submit()">
+                {{ 'common.components.form.button.send' | translate }}
+            </db-button>
+        </div>
+    </footer>
+</div>

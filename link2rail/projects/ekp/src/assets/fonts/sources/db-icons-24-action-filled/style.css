@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'db-icons';
+  src:
+    url('fonts/db-icons.ttf?hq36em') format('truetype'),
+    url('fonts/db-icons.woff?hq36em') format('woff'),
+    url('fonts/db-icons.svg?hq36em#db-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'db-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-alert-on:before {
+  content: "\1f514";
+}
+.icon-heart-on:before {
+  content: "\2661";
+}
+.icon-star-on:before {
+  content: "\2606";
+}

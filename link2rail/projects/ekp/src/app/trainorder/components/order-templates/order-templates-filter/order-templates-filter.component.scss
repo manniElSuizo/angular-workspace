@@ -1,0 +1,38 @@
+@use 'color';
+
+.main-block {
+  display: grid;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+
+  div {
+    position: relative;
+  }
+
+  .input-field {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .hide-icon {
+    visibility: hidden;
+  }
+
+  .show-icon {
+    visibility: visible;
+  }
+
+  .icon-block {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 15px;
+    top: 32px;
+
+    .icon {
+      position: absolute;
+    }
+  }
+}
+

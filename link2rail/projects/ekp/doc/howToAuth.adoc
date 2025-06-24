@@ -1,0 +1,230 @@
+# How To Auth
+
+:toc:
+
+## Purpose
+
+This reference implementation supports authentication and authorization
+based on OIDC (OpenID Connect) protocol, which is an extension of oauth2 specification.
+
+For internal users is WebSSO the Identity Provider, which supports OIDC, WebSSO is the default Identity provider. Other Providers are supported.
+More details are described in this document below.
+
+More informations about WebSSO you can find there:
+
+* https://db-planet.deutschebahn.com/workspaces/secure-access-services/apps/wiki/sso/list/view/a9e11da4-17b7-453d-ab30-b283426963a4[User Management API]
+* https://db-planet.deutschebahn.com/workspaces/secure-access-services/apps/wiki/sso/list/view/ae52fb7b-9109-4948-bd18-022334af7dd2[Getting Started with OAUTH 2.0]
+
+## Local Run
+
+### Default
+
+By default, the internal WebSSO Provider ist configured. In order to get a user send a POST request to:
+
+https://oauth-tmsx.test.service.deutschebahn.com/api/user
+
+with the body (You have to adjust the body with your preferred username and password.)
+
+[source, json]
+----
+{"username": "tmp_ri1","password": "tmp_ri1","firstname": "Nik","lastname": "Gebhardt","groups": "Testuser","mail": "nik1.gebhardt@mail.de", "lifetime": "800"}
+----
+
+You can also use `/demo/websso-admin` page in this implementation to create a temporary user by submitting the form.
+
+### You want use other identity provider?
+
+Add your favorit OIDC provider in the `environment.ts` file and change the `authCongfig.provider` value like this:
+
+----
+export const authConfig = {
+  "provider": "identityserver.io",
+  // ...
+}
+----
+
+identityserver.io is a good external identity provider for testing purpose.
+
+### You are offline?
+
+Change in `/src/app/auth/auth.service.ts` the method `isLoggedIn()`` to return always `true`.
+
+## Implementation Details
+
+The OIDC implementation used in this application is based on the https://github.com/IdentityModel/oidc-client-js/wiki[oidc-client-js] lib.
+The selection criteria for the lib is documented in link:/doc/adr/auth-lib.adoc[architecture design decision record].
+
+The major functionality is encapsulated in the `AuthModule`.
+If you do not want to use auth, then you can follow the instructions for removing it, described in this document.
+The `AuthService` acts as an Angular guard in order to enforce authorization.
+The auth module is not lazy loaded, because it is used by other modules as guard.
+
+### Configuration
+
+
+IMPORTANT: The configurations works out of the box on your local machine. For PRODUCTION you have to onboard your application to the IdP.
+
+The app works with multiple Identity Providers.
+Please see *Supported Identity Providers* section in this document
+
+The configuration for a identity provider in `environment.ts` is passed 1:1 to the lib.
+
+### Supported Flows
+
+All flows mentioned in  https://dbsystel.wiki.intranet.deutschebahn.com/wiki/x/4MO3Bw[Oauth2 Flows - Entscheidungshilfe]
+are supported by the lib.
+
+IMPORTANT: Do not use "Implicit Flow" due to security issues.
+
+### Auth Module
+
+The most of the functionality is in the `AuthModule```.
+This module has:
+
+* `AuthService` - wraps the `oidc-client` lib and implements `canActivate` interface in order to be used as Routing Guard.
+* `CallbackComponent` - provides route endpoint `/auth/callback` in order to be called from IdP with `code`
+* `SilentCallbackComponent` - provides route endpoint `/silentcallback` in order to be called from IdP  during the renew token process
+
+This module can't be lazy loaded because the `AuthService` is used as guard application wide.
+
+Besides the module, the following changes must be done:
+
+* register auth route to app route
+* provide `authConfig` in `environment.ts`
+
+### PKCE
+
+PKCE (=Proof Key for Code Exchange) is a required feature if you use
+Authorization Code Flow with public Client.
+
+https://tools.ietf.org/html/rfc7636#section-1.1
+
+The selected library handles PKCE automatically if response type is set to `code`:
+
+----
+{
+  response_type: "code",
+  // ...
+}
+----
+
+
+### Restore last url (state) after successful login
+
+If you want, that after successful login the app automatically opens the last url (=state),
+then you have to pass it as `state` parameter to IdP.
+Then, the IdP returns this state 1:1 back and you can set the route to it.
+
+[source, javascript]
+----
+// ...
+//store current url in data, that is part of state OIDC param
+this.manager.signinRedirect({
+  data: {
+    redirect_url: this.router.url
+  }
+});
+
+// ...
+// tell the router to navigate to stored url
+this.manager.signinRedirectCallback()
+  .then(user => {
+    this.user = user;
+    this.router.navigateByUrl(user.state.redirect_url);
+  });
+----
+
+Since the browser will be redirected to another url, the app state is will be reset.
+You can store the current state to sessionStorage before the browser redirects.
+
+### Silent refresh
+
+The access token is always time limited.
+The user uses the app often longer than an access token is valid.
+In order to solve it, the browser can renew the access token,
+that can be done without user interaction (=silent).
+
+The corresponding implementation can be found in `SilentCallbackComponent`.
+
+### Logout
+
+If a user triggers the logout then the app will:
+
+* if `end_session_endpoint` in metadata, then send logout request to the IdP
+* remove local user
+
+### Supported Identity Providers
+
+The lib supports all OIDC conform identity provider.
+Some IdPs require custom queryParams, that is supported by adding extraQueryParams to authConfig
+
+e.g. for WebSSO (based on F5)
+----
+extraQueryParams: { token_content_type: "jwt" }
+----
+
+#### Tested IdPs:
+
+##### WebSSO
+Endpoint:: https://oauth-tmsx.test.service.deutschebahn.com/f5-oauth2/v1/.well-known/openid-configuration
+Tests:: ng e2e will test it if IdP Provider is set to "websso" in cypress/integration/login.spec.ts
+User:: can be created by WebSSO User API (https://db-planet.deutschebahn.com/workspaces/secure-access-services/apps/wiki/sso/list/view/a9e11da4-17b7-453d-ab30-b283426963a4[See there for more details])
+
+##### identityserver.io
+Endpoint:: https://demo.identityserver.io/.well-known/openid-configuration
+Tests:: -
+User:: bob/bob, alice/alice
+
+##### auth0
+Endpoint:: https://<YOUR_CLIENT_NAME>.eu.auth0.com/.well-known/openid-configuration
+Tests:: no e2e tests, because there is no api for test users and no static demo users
+User:: you have to create one at auth0
+
+#### e2e Tests
+
+Tests are in e2e/src/auth folder.
+The e2e tests works by default for WebSSO.
+Since WebSSO does not support all features, you can switch tests to "identityserver.io".
+
+#### List of other potential IdPs:
+
+* https://accounts.google.com/.well-known/openid-configuration
+* https://login.salesforce.com/.well-known/openid-configuration
+* https://login.windows.net/common/.well-known/openid-configuration
+* https://gitlab.com/.well-known/openid-configuration
+* https://git.tech.rz.db.de/.well-known/openid-configuration
+
+## Howto
+
+### Switch Provider different than websso
+
+If you want to switch to other Identity Provider than WebSSO (e.g. for Tests),
+you can add a provider configuration to authConfig in environment.ts.
+
+The authConfig.provider setting defines the used provider.
+
+### Make Production ready
+
+* Register client in Production WebSSO. It is important:
+** to take the right client type: "public" or "confidential".
+** CORS is set right
+* Configure production WebSSO //TODO find convenient way for CI/CD
+* remove all other providers from configuration
+
+### Remove Auth Feature from your project
+
+If you do not need Auth in your application or it is done by another technology then you can remove this feature by:
+
+* delete `src/app/auth`
+* un-register routes from `src/app/app-routing-module.ts` and remove usage of `AuthService` as Guard from `canActivate`
+* delete `e2e/src/auth.e2e-spec.ts`
+* remove authConfig from all files `src/environments/`` folder
+* remove `oidc-client` from `package.json`
+
+
+## Possible Enhancements
+
+* [ ] Test for PKCE
+* [ ] CI/CD integration
+* [ ] Add USER Profile Info
+* [ ] Optimize performance

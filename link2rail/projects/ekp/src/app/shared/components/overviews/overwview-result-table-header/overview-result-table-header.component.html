@@ -1,0 +1,23 @@
+<tr>
+    <th *ngFor="let header of tableHeaders"
+        scope="col" [style.min-width]="header.minWidth"
+        [style.text-align]="header.textAlign"
+        [title]="header.headerText"
+        role="columnheader">
+        <div class="flex-row">
+            <span [innerHtml]="header.headerText"></span>
+            <span *ngIf="header.sortable"
+                  class="sort-icons-block"
+                  role="button"
+                  tabindex="0"
+                  (click)="onClickSortField(header.fieldName)"
+                  (keydown.enter)="onClickSortField(header.fieldName)"
+                  [attr.aria-sort]="getAriaSort(header.fieldName)">
+                <div class="sort-descending" [class.active-sort]="isAscending(header.fieldName)"></div>
+                <div class="sort-ascending" [class.active-sort]="isDescending(header.fieldName)"></div>
+            </span>
+        </div>
+    </th>
+</tr>
+
+

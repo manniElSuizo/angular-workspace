@@ -1,0 +1,110 @@
+<div class="main">
+    <div class="header-line">
+      <h2>{{ 'User-management-component.User-groups-label' | translate }}</h2>
+      <div class="additional-buttons-block">
+      </div>
+    </div>
+    <!-- Filter START -->
+    <div class="elm-progress" style="height: 0px; margin-top: -5px; padding-bottom: 5px;" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+    </div>
+    <div>
+      <form [formGroup]="filterForm">
+        <div class="flex-row">       
+            <div class="main-block">
+                <div class="flex-column" style="width: 33%">
+                    <div class="input-field">
+                        <input formControlName="groupname" type="text" class="elm-input" placeholder="{{ 'User-management-component.UserGroup.searchPlaceholder' | translate }}" name="groupname" id="groupname" />
+                        <label class="elm-label" for="groupname" aria-hidden="true" id="groupname-label">
+                        {{ 'User-management-component.UserGroup.searchPlaceholder' | translate }}
+                        </label>
+                        <div class="icon-block" (click)="clearSearchInput()">
+                        <svg class="icon" [ngClass]="filterForm.get('groupname')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#search" />
+                        </svg>
+                        <svg class="icon" [ngClass]="filterForm.get('groupname')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#close" />
+                        </svg>
+                        </div>
+                        <small class="input-error" *ngIf="false">{{ 'Shared.Errors.Stations-autocomplete-error-text' | translate }}</small>
+                    </div>
+                </div>          
+                <div class="flex-column" style="width: 33%">
+                    <!-- Customer-->
+                    <div class="input-field">
+                        <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersCustomer" (formFieldEventEmitter)="multiselectChangeEventListener($event)"  #mssc></app-multiselect-autocomplete>
+                    </div>
+                </div>
+                <div class="flex-column" style="width: 33%">
+                    <!-- Customer-->
+                    <div class="input-field">
+                        <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersRole" (formFieldEventEmitter)="multiselectChangeEventListener($event)"  #mssr></app-multiselect-autocomplete>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filter END   -->
+    <ng-container>
+    <div class="controls">
+    </div>
+    <!-- Users List START -->
+    <div class="table-container">
+      <table class="list-table">
+        <thead class="table-header">
+          <tr>
+            <th scope="col" [title]="header.text" [style.width]="header.width? head.width : 'auto'" *ngFor="let header of tableHeaders">
+              <div>
+                <div>
+                  <span>{{ header.text }}</span>
+                </div>
+                <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                  <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                  <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                </span>
+              </div>
+            </th>
+            <th style="width: 20px;"></th>
+          </tr>
+        </thead>
+       
+        <tbody *ngIf="displayGroups" style="overflow: auto;">
+          <ng-container *ngFor="let g of displayGroups; let i = index">
+            <tr [class.white-row]="i % 2 === 0">
+                <td>{{getGroupCustomer(g)}}</td>
+                <td>{{g.groupName}}</td>
+                <td><small style="display:block" [innerText]="getGroupRoles(g)"></small></td>
+                <td class="no-op" style="text-align: left;">
+                  <span>
+                  <a title="{{ 'add' | translate }}">
+                  <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="addUserGroup(g)">
+                      <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                  </svg>
+                  </a>
+                  </span>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      
+    </div>
+    <div>
+        <strong *ngIf="displayGroups">{{ displayGroups.length }} {{'Shared.Of' | translate}} {{ filteredGroups.length }}</strong>
+    </div>
+    <div class="bottom-controls">
+        <button *ngIf="displayGroups && filteredGroups.length > displayGroups.length" class="load-btn" (click)="loadMore()">{{ 'Shared.Load-more-button-label' | translate }}</button>
+        <db-button variant="brand-primary" type="button" (click)="updateGroupList()">
+            {{ 'Shared.Accept-button-label' | translate }}
+        </db-button>
+        <db-button variant="secondary" type="button" (click)="closeDialog()">
+            {{ 'Shared.Cancel-button-label' | translate }}
+        </db-button>
+    </div>
+    
+    </ng-container>
+    
+
+  </div>

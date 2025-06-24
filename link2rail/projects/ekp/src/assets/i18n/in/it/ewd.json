@@ -1,0 +1,375 @@
+{
+  "ewd": {
+    "shared": {
+      "status": {
+        "canceled": "annullato",
+        "created": "ordinato",
+        "dispatched": "Ordine disposto",
+        "draft": "Bozza creata",
+        "draftRemoved": "Bozza eliminata",
+        "inProcess": "in lavorazione",
+        "isTransmitted": "in trasmissione",
+        "partialCancellation": "Annullamento (parziale)",
+        "rejected": "rifiutato",
+        "transmitted": "trasmesso",
+        "transmitFailed": "Trasmissione fallita"
+      }
+    },
+    "order": {
+      "overview": {
+        "title": "Panoramica ordini",
+        "button": {
+          "createOrder": "Nuovo ordine",
+          "modifyOrder": "modifica",
+          "cancelOrder": "annulla",
+          "viewOrder": "apri"
+        },
+        "filter": {
+          "dateFrom": "Data (da)",
+          "dateTo": "Data (a)",
+          "ordererSgv": "Cliente",
+          "ordererPartner": "Numero sede cliente",
+          "demandLocation": "Stazione",
+          "loadRunCountry": "Paese di ricezione",
+          "demandWagonType": "Tipo richiesta",
+          "status": "Stato",
+          "searchReference": "Ricerca (ID ordine, ID link2rail, Riferimento)",
+          "origin": "Origine"
+        },
+        "table": {
+          "header": {
+            "orderId": {
+              "text": "ID ordine<br>ID link2rail",
+              "title": "ID ordine, ID link2rail"
+            },
+            "internalOrderNumber": {
+              "text": "Modello<br>ID EWD",
+              "title": "Modello, ID EWD"
+            },
+            "orderer": {
+              "text": "Cliente<br>Sede",
+              "title": "Cliente, Sede"
+            },
+            "shipper": {
+              "text": "Mittente<br>Sede",
+              "title": "Mittente, Sede"
+            },
+            "demandLocation": {
+              "text": "Stazione",
+              "title": "Stazione"
+            },
+            "freightWagonLocation": {
+              "text": "Luogo richiesta<br>Paese",
+              "title": "Luogo richiesta, Paese"
+            },
+            "demandWagonType": {
+              "text": "Tipo richiesta",
+              "title": "Tipo richiesta"
+            },
+            "numberOfWagon": {
+              "text": "Numero<br> prevista messa a disposizione",
+              "title": "Numero, prevista messa a disposizione"
+            },
+            "status": {
+              "text": "Stato",
+              "title": "Stato"
+            },
+            "origin": {
+              "text": "Origine",
+              "title": "Origine"
+            },
+            "demandDateTime": {
+              "text": "Giorno richiesta<br>Ora",
+              "title": "Giorno richiesta -ora"
+            },
+            "loadRunInformation": {
+              "text": "Informazioni sulla corsa di carico<br>",
+              "title": "Informazioni sulla corsa di carico"
+            },
+            "customerCommentsToService": {
+              "text": "Commento<br>Servizio clienti",
+              "title": "Commento Servizio clienti"
+            },
+            "customerReference": {
+              "text": "Riferimento cliente",
+              "title": "Riferimento cliente"
+            },
+            "menu": {
+              "text": "",
+              "title": ""
+            }
+          },
+          "menu": {
+            "loadRunInformation": {
+              "title": "Informazioni sulla corsa di carico",
+              "countryCodeUic": "Paese di ricezione",
+              "locationNumber": "Stazione di ricezione",
+              "transitRailwayUndertakingCode": "RU di transito",
+              "nhmCode": "Codice NHM"
+            }
+          },
+          "downloadCsv": {
+            "orderId": "ID ordine",
+            "templateName": "ID link2rail",
+            "internalOrderNumber": "Modello",
+            "orderIdConsumer": "ID EWD",
+            "ordererSgvId": "Cliente",
+            "ordererPartnerId": "Sede",
+            "shipperSgvId": "Mittente",
+            "shipperPartnerId": "Sede",
+            "demandLocationCountry": "Paese",
+            "freightWagonLocation": "Luogo richiesta",
+            "numberOfWagonsOrdered": "Numero",
+            "numberOfWagonsDisposed": "Messa a disposizione",
+            "demandDateTime": "Giorno richiesta",
+            "customerCommentsToService": "Commento Servizio clienti"
+          }
+        }
+      },
+      "form": {
+        "common": {
+          "orderTemplate": {
+            "required": "*Campo obbligatorio",
+            "inputs": {
+              "templateName": {
+                "placeholder": "Modello",
+                "label": "Modello"
+              }
+            }
+          },
+          "orderPartners": {
+            "title": "Ordinante",
+            "inputs": {
+              "ordererSgv": {
+                "placeholder": "Cliente",
+                "label": "Cliente"
+              },
+              "ordererPartner": {
+                "placeholder": "Sede cliente",
+                "label": "Sede cliente"
+              },
+              "shipperSgv": {
+                "placeholder": "Mittente",
+                "label": "Mittente"
+              },
+              "shipperPartner": {
+                "placeholder": "Sede mittente",
+                "label": "Sede mittente"
+              }
+            }
+          },
+          "demandLocation": {
+            "inputs": {
+              "commercialLocation": {
+                "placeholder": "Stazione",
+                "label": "Stazione"
+              },
+              "freightWagonLocation": {
+                "placeholder": "Luogo richiesta",
+                "label": "Luogo richiesta"
+              }
+            }
+          },
+          "demandTime": {
+            "title": "Richiesta",
+            "inputs": {
+              "demandDate": {
+                "placeholder": "Giorno richiesta",
+                "label": "Giorno richiesta"
+              },
+              "demandTime": {
+                "placeholder": "Ora richiesta",
+                "label": "Ora richiesta"
+              }
+            },
+            "errors": {
+              "demandDate": {
+                "required": "Inserire il giorno della richiesta.",
+                "isMinDateNotMet": "Il giorno della richiesta è precedente alla data minima richiesta {{ minDemandDate }}.",
+                "isMaxDateExceeded": "Il giorno della richiesta non deve essere successivo a {{ maxDemandDate }}.",
+                "nonWorkingDay": "Il giorno della richiesta non è un giorno lavorativo."
+              },
+              "demandTime": {
+                "required": "Inserire l'ora della richiesta",
+                "expired": "La scadenza per gli ordini è scaduta il {{ latestCustomerOrderDateTime}}."
+              },
+              "demandTypesArray": {
+                "invalidWagonCount": "Deve essere ordinato almeno un carro."
+              }
+            }
+          },
+          "demandType": {
+            "inputs": {
+              "demandWagonType": {
+                "placeholder": "Tipo richiesta",
+                "label": "Tipo richiesta"
+              },
+              "wagonAmount": {
+                "placeholder": "Numero di carri",
+                "label": "Numero di carri"
+              },
+              "commentToCustomerService": {
+                "placeholder": "Commento Servizio clienti",
+                "label": "Commento Servizio clienti"
+              },
+              "customerReference": {
+                "placeholder": "Riferimento cliente",
+                "label": "Riferimento cliente"
+              },
+              "countryCode": {
+                "placeholder": "Paese di ricezione",
+                "label": "Paese di ricezione"
+              },
+              "loadRunLocation": {
+                "placeholder": "Stazione di ricezione",
+                "label": "Stazione di ricezione"
+              },
+              "transitRailway": {
+                "placeholder": "RU di transito",
+                "label": "RU di transito"
+              },
+              "nhmCode": {
+                "placeholder": "Codice NHM",
+                "label": "Codice NHM"
+              }
+            },
+            "infos": {
+              "maxNumberOfWagonExceeded": "Il numero massimo di carri {{ maxNumberOfWagon }} è stato superato."
+            }
+          }
+        },
+        "creation": {
+          "title": "Nuovo ordine",
+          "titleForTemplate": "Modello",
+          "button": {}
+        },
+        "modification": {
+          "button": {}
+        },
+        "cancellation": {
+          "title": "Annulla ordine",
+          "message": "Vuoi annullare la sottocommessa selezionata o l'intero ordine?",
+          "button": {
+            "cancelOrderId": "Annulla l'intero ordine",
+            "cancelOrderIdConsumer": "Annulla l'attuale ID link2rail"
+          }
+        },
+        "history": {
+          "title": "Storico",
+          "section": {
+            "title": "Storico"
+          }
+        }
+      }
+    },
+    "template": {
+      "overview": {
+        "title": "Panoramica modelli",
+        "button": {
+          "createOrder": "Nuovo ordine",
+          "viewTemplate": "apri"
+        },
+        "filter": {
+          "templateName": "Modello",
+          "ordererSgv": "Cliente",
+          "ordererPartner": "Sede cliente",
+          "shipperSgv": "Mittente",
+          "shipperPartner": "Sede mittente",
+          "demandLocation": "Stazione",
+          "loadRunCountry": "Paese di ricezione",
+          "demandWagonType": "Tipo richiesta"
+        },
+        "table": {
+          "header": {
+            "templateName": "Modello",
+            "ordererSgv": "Cliente",
+            "ordererPartner": "Sede cliente",
+            "shipperSgv": "Mittente",
+            "shipperPartner": "Sede mittente",
+            "createOrder": "Nuovo ordine carri vuoti",
+            "viewTemplate": "Visualizza modello",
+            "editTemplateName": "Rinomina modello"
+          }
+        }
+      },
+      "form": {
+        "rename": {
+          "title": "Rinomina modello {{templateName}}",
+          "inputs": {
+            "customerTemplateName": {
+              "placeholder": "Nome personalizzato",
+              "label": "Nome personalizzato"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Empty-wagon": {
+    "demand-component": {
+      "demand": "Richiesta",
+      "required-field": "*Campo obbligatorio",
+      "placeholder": {
+        "delivery-date-time": "Giorno richiesta",
+        "Number-of-wagons": "Numero di carri",
+        "customer-service": "Commento Servizio clienti",
+        "customer-reference": "Riferimento cliente",
+        "demand-wagon-type": "Tipo richiesta",
+        "receiving-country": "Paese di ricezione",
+        "station-name": "Stazione di ricezione",
+        "transit-railway": "RU di transito",
+        "nhm-code": "Codice NHM",
+        "demand-date": "Giorno richiesta",
+        "time-range": "Ora richiesta"
+      },
+      "demand-date": {
+        "invalid-date": "Selezionare una data successiva.",
+        "missing-date": "Selezionare giorno e ora della richiesta."
+      },
+      "time-range": {
+        "invalid-date": "Selezionare una data successiva."
+      },
+      "wagon-amount": {
+        "error-text": "Deve essere ordinato almeno un carro."
+      }
+    },
+    "Template-view-list": {},
+    "Order-view-list": {
+      "Empty-wagon-order-list": "Panoramica ordini",
+      "Table-header": {
+        "Order-id": "ID ordine MRX-ID",
+        "Order-id-consumer": "MRX-ID",
+        "Internal-order-number": "ID EWD  Modello",
+        "Orderer-customer-id": "Cliente Sede",
+        "Orderer-company-location-number": "Sede",
+        "Shipper-customer-id": "Mittente Sede",
+        "Shipper-company-location-number": "Sede",
+        "Demand-location-commercial-location-country": "Paese luogo richiesta",
+        "Demand-location-commercial-location-name": "Stazione",
+        "Demand-location-commercial-location-number": "Numero stazione",
+        "Demand-location-freight-wagon-location-number": "Numero luogo richiesta",
+        "Demand-location-freight-wagon-location-name": "Nome luogo richiesta",
+        "Load-run-data": "Informazioni sulla corsa di carico",
+        "Demand-wagon-type-wagon-type": "Tipo richiesta",
+        "Demand-wagon-type-wagon-type-code": "Codice tipo richiesta",
+        "Demand-wagon-type-wagon-Type-number": "Numero tipo richiesta",
+        "Number-of-wagon-ordered": "Numero (Previsione)Messa a disposizione",
+        "Number-of-wagon-disposed": "(Previsione) Messa a disposizione",
+        "Status": "Stato",
+        "Origin": "Origine",
+        "Delivery-date": "Giorno richiesta Ora",
+        "Load-run-location-commercial-location-country": "Paese di ricezione",
+        "Load-run-location-commercial-location-number": "Stazione di ricezione",
+        "Transit-railway-undertaking-company-code": "RU di transito",
+        "Transported-goods-NHM-code": "Codice NHM",
+        "Comment-to-customer-service": "Commento Servizio clienti",
+        "Customer-reference": "Riferimento cliente",
+        "Template": "Modello",
+        "Wagon-number": "Numero carro",
+        "Wagon-type-national": "Tipo carro nazionale",
+        "Wagon-type-international": "Tipo carro internazionale",
+        "Wagon-type": "Tipo"
+      }
+    }
+  }
+}

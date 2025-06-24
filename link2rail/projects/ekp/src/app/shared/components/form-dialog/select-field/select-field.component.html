@@ -1,0 +1,24 @@
+
+<span [formGroup]="settings.formGroup">
+    <select 
+        type="text"
+        [id]="settings.id"
+        [name]="fieldName"
+        formControlName="{{settings.formControlName ? settings.formControlName : settings.id}}"
+        [class.invalid-input]="errorCondition()"
+        attr.aria-labelledby="{{settings.id}}-label"
+        title="{{placeholderText}}"
+        (change)="doOnChange($event)"
+        class="elm-input">
+            <option *ngIf="settings.addEmptyOption"></option>
+            <option *ngFor="let option of settings.options" [value]="settings.optionValueProperty ? option[settings.optionValueProperty] : option">{{ displayValue(option) }}</option>
+    </select>
+    <label id="{{settings.id}}-label" class="elm-label" for="{{settings.id}}"
+        aria-hidden="true">
+        {{placeholderText}}
+    </label>
+    <ng-container
+        *ngIf="!settings.hideError && errorCondition()">
+        <small class="input-error">{{settings.i18n.errorText | translate}}</small>
+    </ng-container>
+</span>

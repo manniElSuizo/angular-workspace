@@ -1,0 +1,235 @@
+openapi: "3.0.2"
+
+info:
+  title: Invoice API
+  version: 1.0.0
+tags:
+  - name: Invoice API
+servers:
+  - url: /api/inv/v1
+
+paths:
+  /invoices/search:
+    post:
+      tags:
+        - Invoice API
+      operationId: searchInvoices
+      summary: Returns a list of invoices based on search criteria.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceSummaryRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceSummaryResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '401':
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '403':
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '404':
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '500':
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+
+  /invoices/{debitorNumber}/{invoiceNumber}/pdf:
+    get:
+      tags:
+        - Invoice API
+      operationId: getInvoicePdf
+      summary: Retrieves the invoice PDF by repository and document UUID.
+      parameters:
+        - name: debitorNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: invoiceNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: repositoryUuid
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: documentUuid
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Invoice content in PDF format.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '401':
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '403':
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+        '404':
+          description: Invoice not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "schemas.yaml#/components/schemas/Problem"
+        '500':
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/Problem'
+
+components:
+  schemas:
+    InvoiceSummaryRequest:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/InvoiceSearchParameters"
+        - $ref: "schemas.yaml#/components/schemas/PagingRequest"
+
+    InvoiceSummaryResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            summaries:
+              type: array
+              items:
+                $ref: "#/components/schemas/InvoiceSummary"
+        - $ref: "schemas.yaml#/components/schemas/PagingResponse"
+
+    InvoiceSearchParameters:
+      type: object
+      description: Represents the parameters used for searching invoices.
+      properties:
+        invoiceDateFrom:
+          type: string
+          format: date
+          description: The start date for the invoice search range.
+        invoiceDateTo:
+          type: string
+          format: date
+          description: The end date for the invoice search range.
+        debitorNumbers:
+          type: array
+          items:
+            type: string
+          description: A list of debitor numbers to filter the search.
+        invoiceNumber:
+          type: string
+          description: The specific invoice number to search for.
+        InvoiceTypes:
+          type: array
+          items:
+            type: string
+            enum:
+              - CPI
+              - SAP
+          description: A set of invoice types to filter the search.
+
+    InvoiceSummary:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Unique identifier for the invoice summary.
+        repositoryUuid:
+          type: string
+          description: UUID of the repository where the invoice is stored.
+        invoiceType:
+          type: string
+          enum: [ "CPI", "SAP" ]
+          description: Type of the invoice, e.g., CPI or SAP.
+        invoiceNumber:
+          type: string
+          description: Number assigned to the invoice.
+        currency:
+          type: string
+          description: Currency code for the invoice amounts.
+        debitorNumber:
+          type: string
+          description: Number identifying the debitor.
+        dueDate:
+          type: string
+          format: date
+          description: Due date for the invoice payment.
+        documentName:
+          type: string
+          description: Name of the document associated with the invoice.
+        fileType:
+          type: string
+          description: Type of the file (e.g., PDF, DOCX).
+        grossAmount:
+          type: number
+          format: double
+          description: Gross amount of the invoice.
+        netAmount:
+          type: number
+          format: double
+          description: Net amount of the invoice.
+        invoiceDate:
+          type: string
+          format: date
+          description: Date when the invoice was issued.
+        recipientCompany:
+          type: string
+          description: Name of the company receiving the invoice.
+        referenceInvoiceNumber:
+          type: string
+          description: Reference number for the invoice.
+        totalInvoiceAmount:
+          type: number
+          format: double
+          description: Total amount of the invoice including all charges.
+        vatAmount:
+          type: number
+          format: double
+          description: VAT amount included in the invoice.

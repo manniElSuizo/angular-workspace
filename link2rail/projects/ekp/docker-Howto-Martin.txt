@@ -1,0 +1,17 @@
+ 
+ ng build
+    Damit das "dist" Verzeichnis da ist.
+
+ docker build -t trainorder_frontend .
+    Image bauen
+
+docker run -p 80:8080 -d trainorder_frontend
+    Container starten
+
+docker container ls
+    Container auflisten
+
+docker stop <id eg. f8c3d267b835>
+    Laufenden Container stoppen, nicht mit Namen, sondern ID
+
+docker rm <id eg. f8c3d267b835>        

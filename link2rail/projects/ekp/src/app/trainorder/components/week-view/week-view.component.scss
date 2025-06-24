@@ -1,0 +1,258 @@
+@use 'color';
+
+section {
+    margin: 15px 16px 16px;
+    padding: 30px 18px 30px 30px;
+    background-color:color.$white-color;
+    box-shadow: 1px 1px 3px rgba(color.$black-color, 0.3);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+
+    .controls-calendar {
+        display: flex;
+        align-items: center;
+        width: 1795px;
+
+        img {
+            cursor: pointer;
+        }
+    }
+
+    span {
+        display: inline-block;
+        margin-left: 15px;
+        margin-right: 25px;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    .current-period {
+        font-weight: bold;
+    }
+}
+
+.calendar {
+    // margin-top: 20px;
+
+    table {
+        table-layout: fixed;
+        font-size: 0.9em;
+
+        th {
+            padding: 8px 20px 13px 5px;
+            text-align: center;
+            color:color.$black-color;
+            min-width: 175px;
+            border-bottom: 1px solid color.$black-color;
+            resize: none;
+        }
+
+        tbody {
+            tr:nth-child(odd) {
+                td:nth-of-type(1),
+                td:nth-of-type(2),
+                td:nth-of-type(3) {
+                    background-color:color.$background-grey-color;
+                }
+            }
+
+            td:nth-of-type(9),
+            td:nth-of-type(10) {
+                background: rgba(240, 243, 245, 0.3);
+            }
+
+            td {
+                vertical-align: middle;
+                height: 96px;
+                width: 170px;
+                overflow: unset;
+                resize: none;
+            }
+
+            .train-number {
+                font-weight: bold;
+            }
+
+            .day-cell {
+                position: relative;
+                border: 1px solid color.$light-grey-color;
+                padding: unset;
+            }
+
+            .day-cell:hover {
+                background-color: rgba(color.$black-color, 0.1);
+            }
+            .day-cell:hover summary::before {
+                background-color:color.$light-grey-color;
+            }
+
+            #special-trains,
+            #regular-trains {
+                height: 30px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border-top: 1px solid color.$border-dark-color;
+                border-bottom: 1px solid color.$border-dark-color;
+                background-color:color.$white-color;
+            }
+
+            tr:last-of-type {
+                td,
+                .day-cell {
+                    border-bottom: unset;
+                }
+            }
+        }
+    }
+}
+
+.today {
+    background: #004860;
+    padding: 3px;
+    color:color.$white-color;
+    border-radius: 3px;
+}
+
+.train-info {
+    width: 100%;
+    height: 100%;
+    border-left: 6px solid #004b64;
+    background-color: rgba(0, 106, 150, 0.05);
+    padding: 8px;
+
+
+    .time-block {
+        .time-block-line {
+            display: flex;
+            justify-content: space-between;
+        }
+        div {
+            display: flex;
+
+            &:first-of-type {
+                justify-content: flex-end;
+                align-items: baseline;
+            }
+            &:last-of-type {
+                justify-content: space-between;
+            }
+
+            span {
+                font-size: 14px;
+            }
+
+            span.eta {
+                font-size: 8px;
+                margin-right: 5px;
+            }
+
+            span.eta-time {
+                font-weight: bold;
+            }
+
+            .train-late {
+                color: #ec0016;
+            }
+        }
+        .holiday {
+            width: 18px;
+            height: 18px;
+            margin: 0 33px 8px 0;
+            padding: 0 4px 0 5px;
+            border-radius: 1px;
+            background-color: #004b64;
+            opacity: 0;
+
+            .holiday-text {
+                vertical-align: top;
+                width: 9px;
+                height: 18px;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: normal;
+                color: #fdfdfd;
+                cursor: pointer;
+            }
+        }
+        .holiday-show {
+            opacity: 1;
+        }
+    }
+
+    .progress-bar-block {
+        height: 7px;
+        border-radius: 3px;
+        background-color: #fdfdfd;
+        margin-top: 4px;
+        margin-bottom: 9px;
+
+        .progress-bar {
+            height: 7px;
+            width: 0%;
+            border-radius: 3px;
+            background-color: #63A615;
+        }
+
+        .progress-train-late {
+            background-color: #FFD800;
+        }
+
+        .progress-train-tooLate {
+            background-color: #ec0016;
+        }
+        .progress-train-parked {
+            background-color: #535050;
+        }
+    }
+
+    .icons-block {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        height: 24px;
+
+        & > div {
+            margin-right: 15px;
+        }
+
+        .cmp-overflow-menu summary::before {
+            --icon-glyph: '';
+        }
+
+        .disruption {
+            position: absolute;
+            top: 10px;
+            left: 19px;
+            height: 14px;
+            width: 14px;
+        }
+
+        summary::before {
+            background-color: rgba(0, 106, 150, 0.01);
+            padding: 0;
+            transform: translate(2px, -4px);
+        }
+
+        .cmp-overflow-menu menu {
+            right: -233px;
+        }
+
+        .cmp-overflow-menu menu li button {
+            min-width: 270px;
+            min-height: 50px;
+            overflow: visible;
+            display: block;
+            cursor: pointer;
+        }
+    }
+}
+
+.deactivated {
+    border-left: 6px solid rgb(43, 43, 43);
+    opacity: 0.4;
+}

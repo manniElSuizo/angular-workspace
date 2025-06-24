@@ -1,0 +1,9 @@
+---
+version: v3
+license: LicenseRef-DBISL
+contacts: ServiceTeam-LSO@deutschebahn.com
+confidentiality: internal
+reference-ids:
+  - A-108403
+usage-scenario:
+  - local

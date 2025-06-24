@@ -1,0 +1,22 @@
+<span [formGroup]="settings.formGroup">
+    <input 
+        #inputField
+        class='elm-input'
+        [id]="getId()"
+        [name]="getName()"
+        formControlName="{{settings.formControlName}}"
+        autocomplete="off"
+        [maxlength]="settings.maxLength"
+        [minlength]="settings.minLength"
+        type="text"
+        placeholder="{{placeholderText}}"
+        (keydown)="onNumberOnlyKeydown($event)"
+        (keyup)="onKeyUpNumberOnly($event)"
+        (change)="doOnChange($event)"
+        (blur)="doOnBlur($event)"
+        (input)="doOnInput($event)"
+        attr.aria-labelledby="{{getId()}}-label"
+        [title]="title" />
+    <label class="elm-label" id="{{getId()}}-label"
+        for="{{getId()}}" aria-hidden="true">{{placeholderText}}</label>
+</span>

@@ -1,0 +1,27 @@
+<section class="overview-section" style="width: 100%;">
+    <div class="header-line">
+        <h2>{{ 'inv.invoice.overview.title' | translate }}</h2>
+    </div>
+    <app-invoice-overview-filter
+            (filterChange)="onFilterCriteriaChange($event)"
+    ></app-invoice-overview-filter>
+    <app-overview-filter-control-panel
+            [resultsCount]="totalNumberOfResults"
+            [activeFiltersCount]="activeFilterCount"
+            [isLoading]="isLoading"
+            [downloadInProgress]="downloadInProgress"
+            (resetFilters)="handleResetFilters()"
+            (downloadReport)="handleDownloadReport()">
+    </app-overview-filter-control-panel>
+    <app-invoice-overview-results
+            [tableData]="tableData"
+            (addSortCondition)="onSortConditionsChange($event)"
+            (showSelectedInvoice)="showInvoice($event)"
+    ></app-invoice-overview-results>
+    <app-overview-result-control-panel
+            [numberOfResults]="numberOfResults"
+            [totalNumberOfResult]="totalNumberOfResults"
+            (loadMoreClicked)="loadMoreResults()">
+    </app-overview-result-control-panel>
+
+</section>

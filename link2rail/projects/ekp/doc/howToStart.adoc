@@ -1,0 +1,43 @@
+# Get started as App Developer
+
+## Purpose
+
+You are an App Developer and you want to create your own Angular application based on this template.
+
+## Steps
+
+### Fork from this repository
+
+* go to https://git.tech.rz.db.de/kolt/ri-angular and click on **"fork"**.
+* select your namespace, where to fork.
+* go to your new repository and clone it.
+
+In order to keep your template with ri-angular in sync
+
+set upstream as described there
+
+  git remote add upstream git@ssh.git.tech.rz.db.de:kolt/ri-angular.git
+
+check if
+
+  git remote -v
+
+fetch changes from upstream into "upstream/master" branch
+
+  git fetch upstream
+
+merge changes
+
+  git merge upstream/master
+
+For more information read this https://pages.cms.hu-berlin.de/cms-webtech/gitlab-documentation/docs/sync-fork/
+
+### Change Name of the app
+
+* Search and replace for the application name string `RiWebBase` / `ri-web-base` by yours in following files:
+** `README.md`
+** `angular.json`
+** `package.json`
+** `package-lock.json`
+** `src/manifest.json`
+** ... and probably more

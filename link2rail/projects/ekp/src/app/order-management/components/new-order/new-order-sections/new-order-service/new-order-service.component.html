@@ -1,0 +1,175 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_SERVICE">
+    <form [formGroup]="formGroup">
+        <div class="flex-column">
+            <div id="order-form-header" class="flex-row">
+                <h3>{{ 'New-order.Service.Service-group-header' | translate }}</h3>
+            </div>
+            <div id="array_serviceSpecification_declarations" formArrayName="serviceSpecification">
+                <section *ngFor="let item of serviceSpecification.controls let i = index"
+                    [formGroupName]="i" class="flex-row" style="width: 100%;">
+                    <!--Serviceleistung-->
+                    <div id="productExtraChargeCode" class="fr-flex-1" style="width: 18%;">
+                        <div class="input-field" id="productExtraChargeCode-field" style="width: 100%;">
+                            <select id="productExtraChargeCode" 
+                                    (change)="updateSpecialTreatmentOrder(i)"
+                                    class="elm-input" 
+                                    style="width: 100%;" 
+                                    name="productExtraChargeCode" 
+                                    formControlName="productExtraChargeCode" 
+                                    title="{{'New-order.Service.Placeholder.ProductExtraChargeCode' | translate}}" 
+                                    type="text">
+                                <option value=""></option>
+                                <option [value]="specialTreatment.code" *ngFor="let specialTreatment of specialTreatmentsList">
+                                  {{specialTreatment.name}} ({{specialTreatment.code}})
+                                </option>
+                            </select>
+                            <label class="elm-label" for="productExtraChargeCode">
+                                {{'New-order.Service.Label.ProductExtraChargeCode' | translate}}
+                            </label>
+                            <ng-container
+                            *ngIf="getProductExtraChargeCode(i).errors">
+                            <small class="input-error"
+                                *ngIf="getProductExtraChargeCode(i).errors?.missingProductExtraChargeCode">
+                                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                            
+                        </div>
+                    </div>
+                    <!--BvwNr-->
+                    <div id="authority" class="fr-flex-1" style="width: 18%;">
+                        <div id="authority-field" class="input-field" style="width: 100%;">
+                            <select id="authority-input"
+                                    (change)="updateSpecialTreatmentOrder(i)" 
+                                    class="elm-input" 
+                                    style="width: 100%;" 
+                                    name="authority"
+                                    formControlName="authority" type="text"
+                                    title="{{'New-order.Service.Placeholder.Authority' | translate}}">
+                                <option value=""></option>
+                                <option [value]="authority.uicCompanyCode" *ngFor="let authority of authorityList$ | async">
+                                    {{authority | railAuthority}}
+                                </option>
+                            </select>
+                            <label class="elm-label" for="authority">
+                                {{'New-order.Service.Label.Authority' | translate}}
+                            </label>
+                            <ng-container
+                                *ngIf="getAuthority(i).errors">
+                                <small class="input-error"
+                                    *ngIf="getAuthority(i).errors?.missingServiceAuthority">
+                                    {{ 'New-order.Errors.Bvw-nr-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!--Bahnhof-->
+                    <div id="locationCode" class="fr-flex-1" style="width: 18%;">
+                        <div class="input-field" id="locationCode-field" style="width: 100%;">
+                            <input id="locationCode-{{i}}" class="elm-input"
+                                style="width: 100%;" name="locationCode" formControlName="locationCode" type="text"
+                                autocomplete="off"
+                                placeholder="{{'New-order.Service.Placeholder.LocationCode' | translate}}"
+                                [attr.list]="'datalistLocationCode-' + i"
+                                (input)="onInputLocationCode($event, i)"
+                                (change)="onSelectStation(i)"
+                                (blur)="validateLocationCode($event, i)" />
+                            <label class="elm-label" for="locationCode" aria-hidden="true">
+                                {{'New-order.Service.Label.LocationCode' | translate}}
+                            </label>
+                            <datalist [id]="'datalistLocationCode-' + i">
+                                <option [value]="'('+option.locationCode+') '+ option.name"
+                                    *ngFor="let option of locationCodeAutocomplete[i]">
+                                    {{ '('+option.locationCode+') '+ option.name }}
+                                </option>
+                            </datalist>
+                            <div class="icon-block" (click)="clearSearchInput(i)">
+                                <svg class="icon"
+                                    [ngClass]="getLocationCode(i).value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search" />
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="getLocationCode(i).value ? 'show-icon' : 'hide-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close" />
+                                </svg>
+                            </div>
+                            <ng-container
+                                *ngIf="getLocationCode(i).errors">
+                                <small class="input-error"
+                                    *ngIf="getLocationCode(i).errors?.missingServiceLocationCode">
+                                    {{ 'New-order.Errors.Yard-code-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!--Zahlungsweise-->
+                    <div id="fieldSpecialTreatmentChargingPrepayment" class="fr-flex-1" style="width: 18%;">
+                        <div id="fieldSpecialTreatmentChargingPrepayment-field" class="input-field"
+                            style="width: 100%;">
+                            <select id="specialTreatmentChargingPrepayment-select" 
+                                    (change)="updateSpecialTreatmentOrder(i)"
+                                    class="elm-input"
+                                    style="width: 100%;" name="specialTreatmentChargingPrepayment"
+                                    formControlName="specialTreatmentChargingPrepayment" 
+                                    type="text"
+                                    title="{{'New-order.Service.Placeholder.Prepayment' | translate}}">
+                                <option value=""></option>
+                                <option [value]="prepayment.value" *ngFor="let prepayment of paymentOptions">
+                                    {{prepayment.label | translate}}
+                                </option>
+                            </select>
+                            <label class="elm-label" for="specialTreatmentChargingPrepayment">
+                                {{'New-order.Service.Label.Prepayment' | translate}}
+                            </label>
+                            <ng-container
+                                *ngIf="getSpecialTreatmentChargingPrepayment(i).errors ">
+                                <small class="input-error"
+                                    *ngIf="getSpecialTreatmentChargingPrepayment(i).errors?.missingPaymentType">
+                                    {{ 'New-order.Errors.Type-of-payment-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!--Info-->
+                    <div id="fieldInfo" class="fr-flex-1" style="width: 18%;">
+                        <div class="input-field" id="info-field" style="width: 100%;">
+                            <input class='elm-input' 
+                                   (input)="updateSpecialTreatmentOrder(i)"
+                                   id="info" 
+                                   formControlName="info" 
+                                   type="text"
+                                   placeholder="{{'New-order.Service.Placeholder.Info' | translate}}">
+                            <label class="elm-label" for="info">
+                                {{'New-order.Service.Label.Info' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <!--AddButton-->
+                    <div class="input-padding-10 button-in-row div-with-button-in-row">
+                        <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                            button-name="addConsignorDeclaration" class="elm-buttom icon-margin-top-1rem"
+                            (click)="addLine()"
+                            [disabled]="serviceSpecification.length >= ALLOWED_LENGTH_SERVICE_SPECIFICATION || !editMode  || (railOrder?.templateNumber?.length>0)">
+                            <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                            </svg>
+                        </db-button>
+                    </div>
+                    <!--Löschbutton-->
+                    <div class="button-in-row div-with-button-in-row">
+                        <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                            button-name="removeConsignorDeclaration" class="elm-buttom icon-margin-top-1rem"
+                            (click)="removeLine(i)"
+                            [disabled]="((serviceSpecification.length < 2 && i == 0) || !editMode || (railOrder?.templateNumber?.length>0))">
+                            <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                            </svg>
+                        </db-button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
+</div>

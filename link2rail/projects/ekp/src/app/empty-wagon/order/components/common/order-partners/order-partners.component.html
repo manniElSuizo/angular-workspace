@@ -1,0 +1,59 @@
+<h3>{{ 'ewd.order.form.common.orderPartners.title' | translate }}</h3>
+<form [formGroup]="formGroup">
+    <div class="flex-row">
+        <div style="width: 25%" class="input-field input-padding-10" id="ordererSgv">
+            <input formControlName="ordererSgvControl"
+                   id="ordererSgvInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.orderPartners.inputs.ordererSgv.placeholder' | translate }}*"
+                   [class.invalid-input]="false"
+                   aria-labelledby="ordererSgvLabel"/>
+            <label class="elm-label" id="ordererSgvLabel" for="ordererSgvInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.orderPartners.inputs.ordererSgv.label' | translate }}*
+            </label>
+        </div>
+        <div style="width: 25%" class="input-field input-padding-10" id="ordererPartner">
+            <input formControlName="ordererPartnerControl"
+                   id="ordererPartnerInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.orderPartners.inputs.ordererPartner.placeholder' | translate }}*"
+                   [class.invalid-input]="false"
+                   aria-labelledby="ordererPartnerLabel"/>
+            <label class="elm-label" id="ordererPartnerLabel" for="ordererPartnerInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.orderPartners.inputs.ordererPartner.label' | translate }}*
+            </label>
+        </div>
+        <div style="width: 25%" class="input-field input-padding-10" id="shipperSgv">
+            <input formControlName="shipperSgvControl"
+                   id="shipperSgvInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.orderPartners.inputs.shipperSgv.placeholder' | translate }}"
+                   [class.invalid-input]="false"
+                   aria-labelledby="shipperSgvLabel"/>
+            <label class="elm-label" id="shipperSgvLabel" for="shipperSgvInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.orderPartners.inputs.shipperSgv.label' | translate }}
+            </label>
+        </div>
+        <div style="width: 25%" class="input-field input-padding-10" id="shipperPartner">
+            <input formControlName="shipperPartnerControl"
+                   id="shipperPartnerInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.orderPartners.inputs.shipperPartner.placeholder' | translate }}"
+                   [class.invalid-input]="false"
+                   aria-labelledby="shipperPartnerLabel"/>
+            <label class="elm-label" id="shipperPartnerLabel" for="shipperPartnerInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.orderPartners.inputs.shipperPartner.label' | translate }}
+            </label>
+        </div>
+    </div>
+</form>
+
+

@@ -1,0 +1,241 @@
+<header class="modal-header " style="height: 160px;">
+    <span>{{ 'Order-details-wagon.Dialog-title' | translate }}</span>
+    <h2 style="margin-bottom: 5px;">
+        <strong>{{ 'Order-details-wagon.Order-details.ZAB-order-number' | translate }}:</strong>
+        <span style="padding: 0px 0px 0px 5px;">{{orderKey.orderNumber| orderNumber: orderKey.orderAuthority}}</span>
+    </h2>
+    <h3>
+        <strong>{{ 'Order-details-wagon.Wagon-details.Wagon-number' | translate }}:</strong>
+        <span style="margin-top:5px;padding: 0px 0px 0px 5px;">{{wagonNumber| wagonNumber}}</span>
+    </h3>
+    <a class="close-icon" title="{{'New-order.Main.Tooltip.Close-dialog-label' | translate}}" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <div class="details-info-block">
+        <div class="info-block-part">
+            <div id="Zab-order-status">
+                <div style="width: 65%;">
+                    <strong>
+                        {{ 'Order-details-wagon.Order-details.ZAB-order-status' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="railOrder?.status">{{ railOrder.status | translateOrderStatus }}</div>
+            </div>
+            <div id="Date-of-dispatch">
+                <div style="width: 65%;">
+                    <strong>
+                        {{ 'Order-details-wagon.Order-details.Date-of-dispatch' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="railOrder?.shippingTimestamp">
+                    {{ railOrder.shippingTimestamp | date }}
+                </div>
+            </div>
+            <div id="Sender-reference">
+                <div style="width: 65%;">
+                    <strong>
+                        {{'New-order.Sender-policy.Label.Special-annotations-annotation-of-consignor-description'|translate
+                        }}:
+                    </strong>
+                </div>
+                <div ngif="senderReferences && senderReferences.length > 0">
+                    <ng-container *ngFor="let senderReference of senderReferences">
+                        <p>{{senderReference.identifier}}</p>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="info-block-part">
+            <div id="Additional-commercial-information-discount-code">
+                <div style="width: 65%;">
+                    <strong>
+                        {{'Order-details-wagon.Order-details.Additional-commercial-information-discount-code' |
+                        translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="customerAgreement">{{customerAgreement}}</div>
+            </div>
+            <div id="Exceptional-consignment-permission-nummber">
+                <div style="width: 65%;">
+                    <strong>
+                        {{'Order-details-wagon.Order-details.Exceptional-consignment-permission-nummber' | translate }}:
+                    </strong>
+                </div>
+                <div>{{exceptionalConsignmentsPermissionNumber}}</div>
+            </div>
+            <div id="Receiver-reference">
+                <div style="width: 65%;">
+                    <strong>
+                        {{'New-order.Sender-policy.Label.Customer-reference' | translate}}:
+                    </strong>
+                </div>
+                <div ngif="receiverReferences && receiverReferences.length > 0">
+                    <ng-container *ngFor="let receiverReference of receiverReferences">
+                        <p>{{receiverReference.identifier}}</p>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div *ngFor="let good of goodsList; let goodCounter = index">
+        <div>
+            <h3>{{ 'Order-details-wagon.Good-details.Section-name' | translate}} ({{ goodCounter + 1 }}):</h3>
+        </div>
+        <div class="details-info-block">
+            <div class="info-block-part ">
+                <div id="Good-nhm">
+                    <div style="width: 65%;">
+                        <strong>
+                            {{ 'Order-details-wagon.Good-details.NHM-code-description' | translate }}:
+                        </strong>
+                    </div>
+                    <div>
+                        <span *ngIf="good?.nhmCode">{{good.nhmCode}} </span>
+                        <span *ngIf="good?.nhmDescription">{{good.nhmDescription}}</span>
+                    </div>
+
+                </div>
+                <div id="Good-weight">
+                    <div style="width: 65%;">
+                        <strong>
+                            {{ 'Order-details-wagon.Good-details.Good-weight' | translate}}:
+                        </strong>
+                    </div>
+                    <div *ngIf="good?.weight">{{good?.weight | number:'1.0':browserCultureLang}}</div>
+                </div>
+
+            </div>
+            <div class="info-block-part">
+                <div id="Good-un-nr">
+                    <div style="width: 65%;">
+                        <strong>
+                            {{ 'Order-details-wagon.Good-details.Un-nr' | translate }}:
+                        </strong>
+                    </div>
+                    <div>
+                        <span *ngIf="good?.dangerousGoods?.at(0)?.unNr">
+                            {{good?.dangerousGoods.at(0).unNr}}
+                        </span>
+                        <span *ngIf="good?.dangerousGoods?.at(0)?.description">
+                            {{good?.dangerousGoods?.at(0)?.description}}
+                        </span>
+                    </div>
+                </div>
+                <div id="Customs-reference-number">
+                    <div style="width: 65%;">
+                        <strong>
+                            {{ 'Order-details-wagon.Good-details.Customs-reference-number' | translate }}:
+                        </strong>
+                    </div>
+                    <div *ngIf="good?.customsReferenceNumber">{{good.customsReferenceNumber}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div *ngIf="loadingTacklesWeight">
+        <h3>{{'Order-details-wagon.Loading-tackles.Section-name' | translate}}:</h3>
+
+        <div *ngFor="let tackles of loadingTacklesList; let tacklesCounter = index">
+            <div class="details-info-block">
+                <div class="info-block-part ">
+                    <div id="Tackles-weight">
+                        <div style="width: 65%;">
+                            <strong>
+                                {{ 'Order-details-wagon.Loading-tackles.Loading-tackles-type' | translate}}:
+                            </strong>
+                        </div>
+                        <div *ngIf="tackles.type">
+                            {{ getLoadingTackles(tackles?.type) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="info-block-part">
+                    <div id="Tackles-weight">
+                        <div style="width: 90%;">
+                            <strong>
+                                {{ 'Order-details-wagon.Loading-tackles.Loading-tackles-weight' | translate}}:
+                            </strong>
+                        </div>
+                        <div *ngIf="tackles.weight">{{tackles?.weight | number:'1.0':browserCultureLang}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="details-info-block">
+                <div class="info-block-part "></div>
+                <div class="info-block-part">
+                    <div>
+                        <div style="width: 90%;">
+                            <strong>
+                                {{ 'Order-details-wagon.Loading-tackles.Loading-tackles-total-weight' | translate}}:
+                            </strong>
+                        </div>
+                        <div *ngIf="loadingTacklesWeight"> 
+                            {{ loadingTacklesWeight | number: '1.0':browserCultureLang }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <div>
+        <h3>{{ 'Order-details-wagon.Wagon-details.Section-name'| translate}}:</h3>
+    </div>
+    <div class="details-info-block">
+        <div class="info-block-part">
+            <div id="Wagon-type">
+                <div style="width: 65%;">
+                    <strong>
+                        {{ 'Order-details-wagon.Wagon-details.Wagon-type-label' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="currentVehicleInformation?.technicalAttributes?.internationalFreightWagonClass">
+                    {{currentVehicleInformation?.technicalAttributes?.internationalFreightWagonClass}}
+                </div>
+            </div>
+            <div id="Wagon-length">
+                <div style="width: 65%;">
+                    <strong>
+                        {{ 'Order-details-wagon.Wagon-details.Wagon-length' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="currentWagon?.lengthOfWagon">
+                    {{currentWagon?.lengthOfWagon/1000 | number:'1.2-2':browserCultureLang}}
+                </div>
+            </div>
+        </div>
+        <div class="info-block-part">
+            <div>
+                <div>
+                    <strong>
+                        {{ 'Order-details-wagon.Wagon-details.Tare-weight' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="currentVehicleInformation?.technicalAttributes?.tareWeight">
+                    {{currentVehicleInformation?.technicalAttributes?.tareWeight | number:'1.0':browserCultureLang}}
+                </div>
+            </div>
+            <div>
+                <div>
+                    <strong>
+                        {{ 'Order-details-wagon.Wagon-details.Wagon-total-weight' | translate }}:
+                    </strong>
+                </div>
+                <div *ngIf="totalWeight">
+                    {{totalWeight | number:'1.0':browserCultureLang}}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

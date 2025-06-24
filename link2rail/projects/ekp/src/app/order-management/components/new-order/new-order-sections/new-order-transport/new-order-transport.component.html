@@ -1,0 +1,197 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_TRANSPORT">
+    <form [formGroup]="formGroup">
+        <div class="flex-column">
+            <div>
+                <h3>{{ 'New-order.Transport.Transport-group-header' | translate }}</h3>
+            </div>
+            <div id='transport-section-data' class="orderSectionHeader">
+                <p>{{ 'New-order.Transport.Transport-section-data' | translate }}</p>
+            </div>
+
+            <div id='transport-data-row-1' class="flex-row fr-100-gap-10">
+                <div id="transportationType" class="fr-flex-1" >
+                    <div class="input-field" id="transportationType-field" style="width: 100%;">
+                        <select id="transportationType-select" class="elm-input" style="width: 100%;" name="transportationType"
+                            formControlName="transportationType" type="text"
+                            title="{{ 'New-order.Transport.Label.Transportation-type' | translate }}*" 
+                            [class.invalid-input]="formGroup.get('transportationType')?.errors" 
+                            aria-labelledby="transportationType-label">
+                            <option value=""></option>
+                            <option [ngValue]="transportationType.code" *ngFor="let transportationType of transportationTypeList">
+                                {{transportationType.name}}
+                            </option>
+                        </select>
+                        <label id="transportationType-label" class="elm-label" for="transportationType"
+                            aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Transportation-type' | translate }}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('transportationType').errors">
+                            <small class="input-error" *ngIf="formGroup.get('transportationType').errors?.required">{{
+                                'New-order.Errors.Mode-of-transport-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="typeOfTransportCode" class="fr-flex-1">
+                    <div class="input-field" id="typeOfTransportCode-field" style="width: 100%;">
+                        <select id="typeOfTransportCode-select" style="width: 100%;" class="elm-input" name="typeOfTransportCode"
+                            formControlName="typeOfTransportCode" type="text"
+                            title="{{ 'New-order.Transport.Placeholder.Type-of-transport-code' | translate }}*"
+                            [class.invalid-input]="formGroup.get('typeOfTransportCode')?.errors"
+                            aria-labelledby="typeOfTransportCode-label">
+                            <option value=""></option>
+                            <option [ngValue]="typeOfTransportCode.code" *ngFor="let typeOfTransportCode of typeOfTransportCodeList">
+                                {{typeOfTransportCode.name}}
+                            </option>
+                        </select>
+                        <label id="typeOfTransportCode-label" class="elm-label" for="typeOfTransportCode"
+                            aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Type-of-transport-code' | translate }}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('typeOfTransportCode').errors">
+                            <small class="input-error" *ngIf="formGroup.get('typeOfTransportCode').errors?.required">{{
+                                'New-order.Errors.Mode-of-carriage-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="dangerousgoodLaw" class="fr-flex-1">
+                    <div class="input-field" id="dangerousgoodLaw-field" style="width: 100%;">
+                        <select id="dangerousgoodLaw-select" style="width: 100%;" class="elm-input" name="dangerousgoodLaw"
+                            formControlName="dangerousgoodLaw" type="text"
+                            title="{{ 'New-order.Transport.Label.Dangerous-good-law' | translate }}*"
+                            [class.invalid-input]="formGroup.get('dangerousgoodLaw')?.errors"
+                            aria-labelledby="dangerousgoodLaw-label">
+                            <option *ngFor="let dangerousgoodLaw of dangerousgoodLawList" [ngValue]="dangerousgoodLaw.year">
+                                {{dangerousgoodLaw | dangerousGoodLawPipe}}
+                            </option>
+                        </select>
+                        <label id="dangerousgoodLaw-label" class="elm-label" for="dangerousgoodLaw" aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Dangerous-good-law' | translate }}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('dangerousgoodLaw').errors">
+                            <small class="input-error" *ngIf="formGroup.get('dangerousgoodLaw').errors?.required">
+                                {{ 'New-order.Errors.RID-regulation-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="fr-flex-1">
+                    <div class="input-field" id="coreConfiguration-field" style="width: 100%;">
+                        <select 
+                            class="elm-input"
+                            id="coreConfiguration"
+                            style="width: 100%;"
+                            name="coreConfiguration"
+                            formControlName="coreConfiguration"
+                            type="text"
+                            title="{{ 'New-order.Transport.Label.Core-configuration' | translate }}"
+                            [class.invalid-input]="coreConfiguration?.errors"
+                            aria-labelledby="coreConfiguration-label">
+                            <option></option>
+                            <option [ngValue]="product.code" *ngFor="let product of products">{{product.name}}</option>
+                        </select>
+                        <label id="coreConfiguration-label" class="elm-label" for="coreConfiguration"
+                            aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Core-configuration' | translate }}
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('coreConfiguration').errors">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div id='transport-data-row-2' class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="orderedTrainReference" class="fr-flex-1">
+                    <div id="orderedTrainReference-input-field" style="width: 100%;" class="input-field">
+                        <input id="orderedTrainReference-input" style="width: 100%;" class="elm-input" name="orderedTrainReference"
+                            formControlName="orderedTrainReference" type="text"
+                            placeholder="{{ 'New-order.Transport.Placeholder.Ordered-train-reference' | translate }}"
+                            [class.invalid-input]="formGroup.get('orderedTrainReference')?.errors"
+                            aria-labelledby="orderedTrainReference-label" maxlength="6" />
+                        <label class="elm-label" id="orderedTrainReference-label" for="orderedTrainReference-input"
+                            aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Ordered-train-reference' | translate }}
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('orderedTrainReference').errors">
+                            <small class="input-error" *ngIf="formGroup.get('orderedTrainReference').errors?.notNumerik">
+                                {{'New-order.Errors.Trannumber-not-numerical' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="formGroup.get('orderedTrainReference').errors?.toLength">
+                                {{'New-order.Errors.Trainnumber-too-long' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Zollüberwachung  -->
+                 <!-- placeholder="{{ 'New-order.Transport.Placeholder.Customs-data-customs-descriptor' | translate }}"-->
+                <div id="customsDataCustomsDescriptor" class="fr-flex-1">
+                    <div id="customsDataCustomsDescriptor-input-field" style="width: 100%;" class="input-field">
+                        <select id="customsDataCustomsDescriptor-input" style="width: 100%;" class="elm-input"
+                            name="customsDataCustomsDescriptor" formControlName="customsDataCustomsDescriptor"
+                            type="text"
+                            [class.invalid-input]="formGroup.get('customsDataCustomsDescriptor')?.invalid && formGroup.get('customsDataCustomsDescriptor')?.touched"
+                            aria-labelledby="customsDataCustomsDescriptor-label" maxlength="1" >
+                            <option value=""></option>
+                            <option [value]="CustomsDescriptor.code" *ngFor="let CustomsDescriptor of CustomsDescriptorList">
+                                {{CustomsDescriptor.translation}}</option>
+                        </select>
+                        <label class="elm-label" id="customsDataCustomsDescriptor-label"
+                            for="customsDataCustomsDescriptor-input" aria-hidden="true">
+                            {{'New-order.Transport.Label.Customs-data-customs-descriptor' | translate}}
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('customsDataCustomsDescriptor').errors">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <!--Gültiges Recht-->
+                <div id="consignmentNoteTypeOfConsignment" class="fr-flex-1">
+                    <div class="input-field" id="consignmentNoteTypeOfConsignment-field" style="width: 100%;">
+                        <select id="consignmentNoteTypeOfConsignment-select" style="width: 100%;" class="elm-input"
+                            name="consignmentNoteTypeOfConsignment" formControlName="consignmentNoteTypeOfConsignment"
+                            type="text"
+                            title="{{ 'New-order.Transport.Placeholder.Consignment-note-type-of-consignment' | translate }}*"
+                            [class.invalid-input]="formGroup.get('consignmentNoteTypeOfConsignment')?.errors"
+                            aria-labelledby="consignmentNoteTypeOfConsignment-label">
+                            <option [value]="consignmentType.code" *ngFor="let consignmentType of consignmentTypesList">
+                                {{consignmentType.translation}}</option>
+                        </select>
+                        <label id="consignmentNoteTypeOfConsignment-label" class="elm-label"
+                            for="consignmentNoteTypeOfConsignment" aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Consignment-note-type-of-consignment' | translate }}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('consignmentNoteTypeOfConsignment').errors">
+                            <small class="input-error" *ngIf="formGroup.get('consignmentNoteTypeOfConsignment').errors?.required">
+                                {{ 'New-order.Errors.Applicable-law-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                
+                <div id="dummy" class="fr-flex-1">
+                    <div class="input-field" style="visibility: hidden;">
+                        <input class="elm-input" type="text">
+                        <label id="consignmentNoteTypeOfConsignment-label" class="elm-label"
+                            for="consignmentNoteTypeOfConsignment" aria-hidden="true">
+                            {{ 'New-order.Transport.Label.Consignment-note-type-of-consignment' | translate }}
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

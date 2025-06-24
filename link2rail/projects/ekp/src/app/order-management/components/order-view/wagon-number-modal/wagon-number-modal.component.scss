@@ -1,0 +1,33 @@
+.flex-start {
+  display: flex;
+  align-items: flex-start
+}
+
+.textarea-container {
+  display: flex; /* Use flexbox to align label and textarea side by side */
+  flex-direction: row; /* Arrange items in a row */
+  align-items: flex-start; /* Align items at the top */
+  width: 100%;
+  gap: 10px; /* Add some space between label and textarea */
+}
+
+.textarea-label {
+  font-weight: bold; /* Optional: Add bold text for emphasis */
+  font-size: 14px; /* Optional: Adjust label font size */
+  color: #333; /* Optional: Change the label text color */
+  white-space: nowrap; /* Prevent label text from wrapping */
+  width: 150px; /* Set a fixed width for the label */
+  margin-top: 7px;
+}
+
+.no-border-horizontal-resize {
+  border: none; /* Removes the border */
+  resize: vertical; /* Allows resizing only vertically */
+  overflow-y: auto; /* Adds vertical scrolling if the content exceeds the height */
+  height: 120px; /* Fixed height for the textarea */
+  width: 100%; /* Ensure it fills the available width */
+  padding: 0.5em; /* Optional: Add padding for better visual */
+  box-sizing: border-box; /* Ensures padding doesn't affect the element's total size */
+  background: transparent; /* Optional: Make background transparent */
+  outline: none; /* Remove focus outline */
+}

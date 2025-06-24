@@ -1,0 +1,39 @@
+<app-side-navigation *ngIf="isMenuOpened" (closeMenu)="closeMenu()"></app-side-navigation>
+<header class="rea-header" role="banner">
+  <div class="left-side-block">
+    <div class="hamburger-menu">
+      <input type="checkbox" name="hamburger-menu" id="hamburger-menu" [(ngModel)]="isMenuOpened">
+      <svg class="icon action-icon" viewBox="0 0 25 25">
+        <use xlink:href="assets/icons/icons.svg#hamburger-menu" />
+      </svg>
+    </div>
+    <div class="cmp-brand">
+      <a routerLink="/gzp/trainorder/home" title="Home" rel="home">
+        <img src="assets/img/db_logo_50.svg" alt="" class="elm-image is-logo" style="width:50px;">
+      </a>
+      <span id="app-name" class="is-site-name">link<FONT COLOR="#FF0000">2</FONT>rail</span>
+      <span class="is-site-slogan"></span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="(showCustomerSelect | async) && (permissionService.isTMUser())">
+    <div style="display: flex; align-items: center; padding: inherit;">
+      <app-customer-select #customer_select></app-customer-select>
+    </div>
+  </ng-container>
+  
+  <div class="rea-meta" style="margin: 0 1% 0 0;">
+    <ul *ngIf="isLoggedIn();" class="cmp-metanavigation">
+      <li class="username">
+        <a title="User" style="font-weight: bold">User: </a>
+        <a title="User" >{{getNickName()}}</a>
+      </li>
+    </ul>
+    <app-locale></app-locale>
+    <ul class="cmp-metanavigation">
+      <li *ngIf="isLoggedIn()" >
+        <a id="loginBtn" class="elm-link" rel="account" [href]="logoutUri">{{'logout' | translate}}</a>
+      </li>
+    </ul>
+  </div>
+</header>

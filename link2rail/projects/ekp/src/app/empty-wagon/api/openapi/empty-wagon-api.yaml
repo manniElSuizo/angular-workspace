@@ -1,0 +1,998 @@
+openapi: "3.0.2"
+info:
+  title: Empty wagon API
+  version: "1.0"
+tags:
+  - name: Empty wagon order
+  - name: Empty wagon order template
+servers:
+  - url: /api/ewd/v1
+
+paths:
+  /orders:
+
+    post:
+      tags:
+        - Empty wagon order
+      description: Create a new empty wagon order.
+        For each combination of demand location, demand type, and demand time, a separate EWD order will be created.
+      operationId: createEmptyWagonOrders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderCreationRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderCreationResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/search:
+    post:
+      tags:
+        - Empty wagon order
+      description: search for orders
+      operationId: searchEmptyWagonOrders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderSummaryRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderSummaryResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/order-id/{orderId}:
+    get:
+      tags:
+        - Empty wagon order
+      operationId: getEmptyWagonOrdersByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Order"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/order-id/{orderId}/cancel:
+    patch:
+      tags:
+        - Empty wagon order
+      operationId: cancelEmptyWagonOrdersByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderModificationResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/{orderIdConsumer}:
+    get:
+      tags:
+        - Empty wagon order
+      operationId: getEmptyWagonOrderByOrderIdConsumer
+      parameters:
+        - name: orderIdConsumer
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+    patch:
+      tags:
+        - Empty wagon order
+      parameters:
+        - name: orderIdConsumer
+          in: path
+          schema:
+            type: string
+          required: true
+      operationId: modifyEmptyWagonOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderModificationRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderModificationResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/{orderIdConsumer}/cancel:
+    patch:
+      tags:
+        - Empty wagon order
+      parameters:
+        - name: orderIdConsumer
+          in: path
+          schema:
+            type: string
+          required: true
+      operationId: cancelEmptyWagonOrder
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderModificationResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /templates:
+    get:
+      tags:
+        - Empty wagon order template
+      description: get all templates based on user rights configuration.
+      operationId: getAllTemplates
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Template"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /templates/search:
+    post:
+      tags:
+        - Empty wagon order template
+      description: search for templates. Returns list of template summary information.
+      operationId: searchTemplates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplateSummaryRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateSummaryResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /templates/{templateName}:
+    get:
+      tags:
+        - Empty wagon order template
+      description: Get template by template name.
+      operationId: getTemplateByTemplateName
+      parameters:
+        - name: templateName
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Template"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+    patch:
+      tags:
+        - Empty wagon order template
+      description: Update customer template name  template by template name.
+      operationId: updateCustomerTemplateName
+      parameters:
+        - name: templateName
+          in: path
+          schema:
+            type: string
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerTemplateName:
+                  type: string
+                  maxLength: 50
+      responses:
+        "200":
+          description: Successful operation.
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+components:
+  schemas:
+    OrderCreationRequest:
+      type: object
+      properties:
+        templateName:
+          description: Name of the template to be used for the order request.
+          type: string
+          example: "Benteler Steel"
+          maxLength: 40
+        isDraft:
+          type: boolean
+          default: false
+        demands:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/OrderDemand"
+      required:
+        - demandLocation
+        - demandType
+        - templateName
+
+    OrderCreationResponse:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: IDs of the empty wagon order.
+          example: "EW1000032"
+
+    OrderModificationRequest:
+      type: object
+      properties:
+        demandDateTime:
+          description: Desired date and time of empty wagon delivery.
+          type: string
+          format: date-time
+          example: "2018-12-12T09:37:42Z"
+        numberOfWagons:
+          description: Number of wagons to be ordered.
+          type: integer
+          format: int32
+          example: 3
+          minimum: 1
+          maximum: 999
+        commentCustomer:
+          description: Comment addressed to the customer service.
+          type: string
+          example: "Bitte vollständige Anzahl disponieren oder stornieren"
+          maxLength: 200
+        customerReference:
+          description: Reference number for the orders chosen by the customer.
+          type: string
+          example: "AX14735"
+        loadRunLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CommercialLocation'
+        transitRailwayUndertaking:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/TransitRailwayUndertaking'
+        nhm:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/NHM'
+      required:
+        - numberOfWagons
+        - demandDateTime
+
+    OrderModificationResponse:
+      type: object
+      properties:
+        orderIdConsumer:
+          type: string
+        status:
+          $ref: "empty-wagon-common.yaml#/components/schemas/Status"
+
+    OrderSummaryRequest:
+      allOf:
+        - $ref: "#/components/schemas/SummaryRequest"
+        - type: object
+          properties:
+            deliveryDateTimeFrom:
+              description: Demand date from.
+              type: string
+              format: date-time
+              example: "2024-01-01T01:01:00.00000Z"
+            deliveryDateTimeTo:
+              description: Demand date from.
+              type: string
+              format: date-time
+              example: "2024-01-01T23:59:59.99999Z"
+            origin:
+              type: array
+              items:
+                type: string
+                example: "INTERNET"
+                description: Origin of original order.
+            status:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/Status"
+            reference:
+              type: string
+              description: Search reference. OrderId, OrderIdConsumer or OrderIdInternal.
+        - $ref: "common-schemas.yaml/#/components/schemas/PagingRequest"
+
+    OrderSummaryResponse:
+      allOf:
+        - type: object
+          properties:
+            summaries:
+              type: array
+              items:
+                $ref: "#/components/schemas/OrderSummary"
+        - $ref: "common-schemas.yaml/#/components/schemas/PagingResponse"
+
+    SummaryRequest:
+      allOf:
+        - type: object
+          properties:
+            templateName:
+              type: array
+              description: Name of template.
+              items:
+                type: string
+                example: 'Benteler Steel'
+                maxLength: 40
+            demandLocations:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/CommercialLocation"
+            demandWagonTypes:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/DemandWagonType"
+            ordererSgvs:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/IdNameType"
+            ordererPartners:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/IdNameType"
+            loadRunCountryCodeIso:
+              type: array
+              items:
+                type: string
+                example: 'DE'
+                maxLength: 2
+
+    TemplateSummaryRequest:
+      allOf:
+        - $ref: "#/components/schemas/SummaryRequest"
+        - type: object
+          properties:
+            shipperSgvs:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/IdNameType"
+            shipperPartners:
+              type: array
+              items:
+                $ref: "empty-wagon-common.yaml#/components/schemas/IdNameType"
+        - $ref: "common-schemas.yaml/#/components/schemas/PagingRequest"
+
+    TemplateSummaryResponse:
+      allOf:
+        - type: object
+          properties:
+            summaries:
+              type: array
+              items:
+                $ref: "#/components/schemas/TemplateSummary"
+        - $ref: "common-schemas.yaml/#/components/schemas/PagingResponse"
+
+    OrderDemandType:
+
+      allOf:
+        - $ref: "empty-wagon-common.yaml#/components/schemas/DemandType"
+        - type: object
+          properties:
+            numberOfWagons:
+              description: Number of wagons to be ordered.
+              type: integer
+              format: int32
+              example: 3
+              minimum: 1
+              maximum: 999
+            customerReference:
+              description: Reference number for the orders to be created chosen by the customer.
+              type: string
+              example: "AX007645"
+              maxLength: 50
+            commentToCustomerService:
+              description: Comment addressed to the customer service.
+              type: string
+              example: "Bitte vollständige Anzahl disponieren oder stornieren"
+              maxLength: 200
+            assessment:
+              type: boolean
+              default: false
+            shipperAuthorization:
+              type: boolean
+              default: false
+          required:
+            - demandWagonType
+            - numberOfWagons
+
+    OrderDemand:
+      type: object
+      properties:
+        demandLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/DemandLocation'
+
+        demandDateTime:
+          description: Demand date and time.
+          type: string
+          format: date-time
+          example: "2018-12-12T09:37:42Z"
+        demandTypes:
+          type: array
+          minimum: 1
+          items:
+            $ref: '#/components/schemas/OrderDemandType'
+      required:
+        - demandLocation
+        - demandTypes
+        - demandDateTime
+
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: ID of the order.
+          example: "EW0123465"
+        orderIdConsumer:
+          type: string
+          description: internal Id of the order in link2rail
+          example: "20000001"
+        internalOrderNumber:
+          type: string
+          description: Internal Number of the order.
+          example: "20201126-10-00001"
+        templateName:
+          description: Name of the template that was used for original order request.
+          type: string
+          example: "Benteler Steel"
+        orderer:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CustomerInformation"
+        shipper:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CustomerInformation"
+        demandLocation:
+          $ref: "empty-wagon-common.yaml#/components/schemas/DemandLocation"
+        demandWagonType:
+          $ref: "empty-wagon-common.yaml#/components/schemas/DemandWagonType"
+        numberOfWagonsOrdered:
+          type: integer
+          example: 2
+          description: Number of ordered wagons.
+        numberOfWagonsDisposed:
+          maximum: 999.9
+          multipleOf: 0.1
+          description: Forecasted number of wagons which will be disposed.
+        status:
+          $ref: "empty-wagon-common.yaml#/components/schemas/Status"
+        origin:
+          type: string
+          example: "INTERNET"
+          description: Origin of original order.
+        deliveryDateTime:
+          description: Desired date and time of empty wagon delivery.
+          type: string
+          format: date-time
+          example: "2018-12-12T09:37:42Z"
+        loadRunLocation:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CommercialLocation"
+        transitRailwayUndertaking:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/TransitRailwayUndertaking'
+        nhm:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/NHM'
+        commentCustomer:
+          type: string
+          description: Comment addressed to customer service.
+          example: "Bitte vollständige Anzahl disponieren oder stornieren"
+        commentDisponent:
+          type: string
+          description: Comment addressed to customer service.
+          example: "Bitte vollständige Anzahl disponieren oder stornieren"
+        customerReference:
+          description: Reference number for the orders chosen by the customer.
+          type: string
+          example: "AX14735"
+        wagons:
+          description: Information about the wagons which will be disposed (forecast). This information might change until the final delivery.
+          type: array
+          items:
+            $ref: "empty-wagon-common.yaml#/components/schemas/Wagon"
+        statusHistory:
+          type: array
+          items:
+            $ref: "empty-wagon-common.yaml#/components/schemas/StatusHistory"
+        deficiencyReasons:
+          type: array
+          items:
+            $ref: "empty-wagon-common.yaml#/components/schemas/DeficiencyReason"
+      required:
+        - orderId
+        - templateName
+        - orderer
+        - demandLocation
+        - demandWagonType
+        - numberOfWagonsOrdered
+        - status
+        - origin
+
+    OrderSummary:
+      type: object
+      description: order summary
+      properties:
+        orderId:
+          type: string
+          description: ID of the order.
+          example: "EW0123465"
+        orderIdConsumer:
+          type: string
+          description: internal Id of the order in link2rail
+          example: "20000001"
+        internalOrderNumber:
+          type: string
+          description: Internal Number of the order.
+          example: "20201126-10-00001"
+        templateName:
+          description: Name of the template that was used for original order request.
+          type: string
+          example: "Benteler Steel"
+        orderer:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CustomerInformation"
+        shipper:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CustomerInformation"
+        demandLocation:
+          $ref: "empty-wagon-common.yaml#/components/schemas/DemandLocation"
+        demandWagonType:
+          $ref: "empty-wagon-common.yaml#/components/schemas/DemandWagonType"
+        numberOfWagonsOrdered:
+          type: integer
+          example: 2
+          description: Number of ordered wagons.
+        numberOfWagonsDisposed:
+          maximum: 999.9
+          multipleOf: 0.1
+          description: Forecasted number of wagons which will be disposed.
+        status:
+          $ref: "empty-wagon-common.yaml#/components/schemas/Status"
+        origin:
+          type: string
+          example: "INTERNET"
+          description: Origin of original order.
+        deliveryDateTime:
+          description: Desired date and time of empty wagon delivery.
+          type: string
+          format: date-time
+          example: "2018-12-12T09:37:42Z"
+        loadRunLocation:
+          $ref: "empty-wagon-common.yaml#/components/schemas/CommercialLocation"
+        transitRailwayUndertaking:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/TransitRailwayUndertaking'
+        nhm:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/NHM'
+        commentCustomer:
+          type: string
+          description: Comment addressed to customer service.
+          example: "Bitte vollständige Anzahl disponieren oder stornieren"
+        commentDisponent:
+          type: string
+          description: Comment addressed to customer service.
+          example: "Bitte vollständige Anzahl disponieren oder stornieren"
+        customerReference:
+          description: Reference number for the orders chosen by the customer.
+          type: string
+          example: "AX14735"
+        isEditable:
+          type: boolean
+          description: Flag indicating whether the order can be updated
+        isCancelable:
+          type: boolean
+          description: Flag indicating whether the order can be canceled
+    Template:
+      type: object
+      properties:
+        templateName:
+          type: string
+          description: Name of template.
+          example: 'Benteler Steel'
+          maxLength: 40
+        customerTemplateName:
+          type: string
+          description: Name of template, defined by customer.
+        orderer:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CustomerInformation'
+        shipper:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CustomerInformation'
+        demand:
+          type: array
+          minimum: 1
+          items:
+            $ref: '#/components/schemas/TemplateDemand'
+      required:
+        - orderer
+        - templateName
+        - demand
+
+    TemplateDemand:
+      type: object
+      properties:
+        demandLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/DemandLocation'
+        demandTypes:
+          type: array
+          minimum: 1
+          items:
+            $ref: 'empty-wagon-common.yaml#/components/schemas/DemandType'
+      required:
+        - demandLocation
+        - demandTypes
+
+    TemplateSummary:
+      type: object
+      properties:
+        templateName:
+          type: string
+          description: Name of template.
+          example: 'Benteler Steel'
+          maxLength: 40
+        customerTemplateName:
+          type: string
+          description: customer name of template.
+        orderer:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CustomerInformation'
+        shipper:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CustomerInformation'
+        demand:
+          type: array
+          minimum: 1
+          items:
+            $ref: '#/components/schemas/TemplateDemand'
+        isReadOnly:
+          type: boolean
+

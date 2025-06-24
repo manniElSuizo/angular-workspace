@@ -1,0 +1,96 @@
+@import "variables";
+
+@font-face {
+	font-family: "#{$icomoon-font-family}";
+	src: url("#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?3djyx7")
+			format("truetype"),
+		url("#{$icomoon-font-path}/#{$icomoon-font-family}.woff?3djyx7")
+			format("woff"),
+		url("#{$icomoon-font-path}/#{$icomoon-font-family}.svg?3djyx7##{$icomoon-font-family}")
+			format("svg");
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: "#{$icomoon-font-family}" !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ic-32-outline-calendar {
+	&:before {
+		content: $icon-ic-32-outline-calendar;
+	}
+}
+.icon-ic-32-outline-cloud {
+	&:before {
+		content: $icon-ic-32-outline-cloud;
+	}
+}
+.icon-ic-32-outline-dashboard {
+	&:before {
+		content: $icon-ic-32-outline-dashboard;
+	}
+}
+.icon-ic-32-outline-document {
+	&:before {
+		content: $icon-ic-32-outline-document;
+	}
+}
+.icon-ic-32-outline-download {
+	&:before {
+		content: $icon-ic-32-outline-download;
+	}
+}
+.icon-ic-32-outline-edit {
+	&:before {
+		content: $icon-ic-32-outline-edit;
+	}
+}
+.icon-ic-32-outline-home {
+	&:before {
+		content: $icon-ic-32-outline-home;
+	}
+}
+.icon-ic-32-outline-list-L {
+	&:before {
+		content: $icon-ic-32-outline-list-L;
+	}
+}
+.icon-ic-32-outline-list-M {
+	&:before {
+		content: $icon-ic-32-outline-list-M;
+	}
+}
+.icon-ic-32-outline-list-S {
+	&:before {
+		content: $icon-ic-32-outline-list-S;
+	}
+}
+.icon-ic-32-outline-questionmark {
+	&:before {
+		content: $icon-ic-32-outline-questionmark;
+	}
+}
+.icon-ic-32-outline-upload {
+	&:before {
+		content: $icon-ic-32-outline-upload;
+	}
+}
+.icon-ic-32-outline-bin {
+	&:before {
+		content: $icon-ic-32-outline-bin;
+	}
+}

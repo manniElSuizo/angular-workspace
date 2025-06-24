@@ -1,0 +1,282 @@
+<header class="modal-header">
+    <h2>{{ 'Order-Management.Quick-entry' | translate }}</h2>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="close()">
+        <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <form [formGroup]="fastEntryForm" autocomplete="off">
+        <!-- Shipping Time Group-->
+        <div class="flex-row" style="justify-content: space-between;">
+            <div class="input-field">
+                <app-el-s-autocomplete
+                        [autocompleteResultList]="templateResultList"
+                        [displayNameTransform]="transformTemplateName()"
+                        [fieldName]="'template'"
+                        [formGroup]="fastEntryForm"
+                        [placeholder]="'New-order.Main.Placeholder.Order-code' | translate"
+                        [title]="'New-order.Main.Placeholder.Order-code' | translate"
+                >
+                </app-el-s-autocomplete>
+                <div *ngIf="!isValidTemplate">
+                    <ng-container>
+                        <small class="input-error" >
+                            {{'New-order.Errors.Invalid-template' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="mandatory-text">
+                <p>*{{'New-order.Main.Label.Required-field' | translate }}</p>
+            </div>
+        </div>
+        
+        <div formGroupName="consignor">
+            <div class="flex-row">
+                <h3>{{ 'New-order.Consignee-consignor.Consignor-consignor-group' | translate }}</h3>
+            </div>
+            <div class="flex-row sub-section-header">{{ 'New-order.Consignee-consignor.Consignor-section-sender' | translate }}</div>
+            <div class="flex-row">
+                <div class="input-field">
+                        <app-input-field
+                            [settings]="{
+                                formControlName: 'name',
+                                id: 'consignor-name',
+                                formControl: null,
+                                formGroup: consignor,
+                                i18n: {
+                                    label: 'New-order.Consignee-consignor.Label.Consignor-customer-id'| translate
+                                }
+                            }">
+                        </app-input-field>
+                </div>
+                <div class="input-field">
+                        <app-input-field
+                            [settings]="{
+                                formControlName: 'partner',
+                                id: 'consignor-partner',
+                                formGroup: consignor,
+                                i18n: {
+                                    label: 'New-order.Consignee-consignor.Label.Consignor-partner-id' | translate
+                                }
+                            }">
+                        </app-input-field>
+                </div>
+            </div>
+            <div class="flex-row sub-section-header">{{ 'New-order.Consignee-consignor.Consignee-section-receiver' | translate }}</div>
+            <div class="flex-row">
+                <div class="input-field">
+                        <app-input-field
+                            [settings]="{
+                                formControlName: 'authorityOfCustomerId',
+                                formGroup: consignee,
+                                i18n: {
+                                    label: 'New-order.Consignee-consignor.Placeholder.Party-customerid-authority-of-customerId' | translate
+                                }
+                            }">
+                        </app-input-field>
+                </div>
+                <div class="input-field">
+                        <app-input-field
+                            [settings]="{
+                                formControlName: 'sgv',
+                                formGroup: consignee,
+                                i18n: {
+                                    label: 'New-order.Consignee-consignor.Label.Consignee-customer-id' | translate
+                                }
+                            }">
+                        </app-input-field>
+                </div>
+                <div class="input-field">
+                        <app-input-field
+                            [settings]="{
+                                formControlName: 'name',
+                                formGroup: consignee,
+                                i18n: {
+                                    label: 'New-order.Consignee-consignor.Placeholder.Party-name' | translate
+                                }
+                            }">
+                        </app-input-field>
+                </div>
+            </div>
+        </div>
+        
+        <div class="train-data-head span-two">
+            <h3>{{ 'New-order.Pickup-delivery.Pickup-delivery-group-header' | translate }}</h3>
+        </div>
+        <div class="flex-row sub-section-header">{{ 'New-order.Pickup-delivery.Label.Pickup' | translate }}</div>
+        <div formGroupName="acceptancePoint" class="flex-row">
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'authority',
+                            formGroup: acceptancePoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Pickup-country' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'locationName',
+                            formGroup: acceptancePoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Pickup-station' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'pointOfLoading',
+                            formGroup: acceptancePoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Pickup-sealoadingpoint' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="input-field" formGroupName="shippingDateTime">
+                <input
+                    id="date"
+                    class="elm-input"
+                    name="date"
+                    formControlName="date"
+                    type="date"
+                    placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Shipping-date' | translate }}*"
+                    [class.invalid-input]="date?.invalid||shippingTimestamp?.invalid"
+                    aria-labelledby="date-label"
+                    (change)="onChangeshippingDateTime()" />
+                <label class="elm-label" id="date-label" for="date" aria-hidden="true">
+                    {{'New-order.Pickup-delivery.Label.Shipping-date' | translate}}*
+                </label>
+                <ng-container *ngIf="date?.invalid ||shippingTimestamp?.invalid">
+                    <small class="input-error" *ngIf="shippingTimestamp?.errors?.dateTimeInPast">{{
+                        'New-order.Errors.Bookingtime-in-past' | translate }}
+                    </small>
+                    <small class="input-error" *ngIf="date?.errors?.required">{{
+                        'Shared.Errors.Field-is-required-error-text' | translate }}
+                    </small>
+                </ng-container>
+                 <ng-container *ngIf="isShippingDateInPast && !shippingTimestamp?.invalid">
+                    <small class="input-error">{{ 'New-order.Errors.Orderdate-in-past' | translate }} </small>
+                </ng-container> 
+            </div>
+            <div class="input-field" formGroupName="shippingDateTime">
+                <input 
+                    id="time"
+                    name="time"
+                    class="elm-input"
+                    formControlName="time"
+                    type="time"
+                    placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Shipping-time' | translate }}*"
+                    [class.invalid-input]="time?.invalid"
+                    aria-labelledby="time-label"
+                    (change)="onChangeshippingDateTime()" />
+                <label class="elm-label" id="time-label" for="time" aria-hidden="true">
+                    {{'New-order.Pickup-delivery.Label.Shipping-time' | translate}}*
+                </label>
+                <ng-container *ngIf="time?.invalid">
+                    <small class="input-error" *ngIf="time?.errors?.required">{{
+                        'Shared.Errors.Field-is-required-error-text' | translate }}
+                    </small>
+                </ng-container>
+            </div>
+        </div>
+        <div class="flex-row sub-section-header">{{ 'New-order.Pickup-delivery.Label.Delivery' | translate }}</div>
+        <div formGroupName="acceptancePoint" class="flex-row">
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'authority',
+                            formGroup: deliveryPoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Delivery-country' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'locationName',
+                            formGroup: deliveryPoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Delivery-station' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'pointOfUnloading',
+                            formGroup: deliveryPoint,
+                            i18n: {
+                                label: 'New-order.Pickup-delivery.Placeholder.Delivery-sealoadingpoint' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+        </div>
+        
+        <div class="train-data-head span-two">
+            <h3>{{ 'New-order.Wagon-information.Group-header' | translate }}</h3>
+        </div>
+        <div class="flex-row sub-section-header">{{ 'New-order.Wagon-information.wagon-data' | translate }}</div>
+        <app-wagon-information [fastEntryForm]="fastEntryForm" [railOrder]="railOrder" [validationMode]="validationMode" (updateRailOrder)="updateRailOrder($event)"></app-wagon-information>
+        
+        <div class="train-data-head span-two">
+            <h3>5. {{'New-order.Main.Menu.Sender-policy' | translate }}</h3>
+        </div>
+        <div formGroupName="externalReferences" class="flex-row">
+            <div class="input-field">
+                    <app-input-field
+                        [settings]="{
+                            formControlName: 'type',
+                            id: 'type',
+                            formGroup: externalReferences,
+                            i18n: {
+                                label: 'New-order.Sender-policy.Label.Special-annotations-annotation-of-consignor-description' | translate
+                            }
+                        }">
+                    </app-input-field>
+            </div>
+        </div>
+    </form>
+</main>
+
+<footer>
+    <div class="elm-progress" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+    </div>
+    <div class="flex-row" [formGroup]="fastEntryForm">
+        <input id="separateConsignmentNotes" name="separateConsignmentNotes" formControlName="separateConsignmentNotes" type="checkbox" class="elm-checkbox">
+        <label for="separateConsignmentNotes">{{ 'New-order.Main.Label.Singel-consignment-note' | translate }}</label>
+    </div>
+    <div class="flex-row flex-row-footer">
+        <div>
+            <a class="close-icon" title="{{ 'Shared.Cancel-button-label' | translate }}" mat-dialog-close>
+                <db-button type="button">{{ 'Shared.Cancel-button-label' | translate }}</db-button>
+            </a>
+        </div>
+        <div class="button-navigation">
+            <db-button class="elm-buttom" variant="brand-primary" type="button" [disabled]="loadingInProgress" (click)="getCurrentConsignmentNote()">
+                {{'New-order.Main.Button.Consignment-note-view' | translate }}
+            </db-button>
+            <db-button class="elm-buttom" variant="brand-primary" type="button" [disabled]="loadingInProgress || !isValidTemplate" (click)="order()">
+                {{ 'New-order.Main.Button.Save-order' | translate }}
+            </db-button>
+            <db-button class="elm-buttom" variant="brand-primary" type="button" [disabled]="loadingInProgress || !isValidTemplate" (click)="book()">
+                {{ 'New-order.Main.Button.Book' | translate }}
+            </db-button>
+        </div>
+    </div>
+</footer>

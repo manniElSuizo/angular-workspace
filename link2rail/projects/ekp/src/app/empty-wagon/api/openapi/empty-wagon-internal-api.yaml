@@ -1,0 +1,857 @@
+openapi: "3.0.2"
+info:
+  title: Empty wagon internal API
+  version: "1.0"
+tags:
+  - name: Empty wagon order internal
+  - name: Empty wagon order internal template
+  - name: Empty wagon order internal masterdata
+
+servers:
+  - url: /api/ewd/v1
+
+paths:
+  /masterdata/is-working-day:
+    post:
+      tags:
+        - Empty wagon order internal masterdata
+      description: Checks if a date is a working day for the commercial location
+      operationId: isWorkingDay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MasterdataDateForCommercialLocationRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /masterdata/next-working-day:
+    post:
+      tags:
+        - Empty wagon order internal masterdata
+      description: Returns the next working day for the commercial location
+      operationId: getNextWorkingDay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MasterdataDateForCommercialLocationRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date
+                example: '2025-01-03'
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /masterdata/previous-working-day:
+    post:
+      tags:
+        - Empty wagon order internal masterdata
+      description: Returns the previous working day for the commercial location
+      operationId: getPreviousWorkingDay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MasterdataDateForCommercialLocationRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date
+                example: '2025-01-03'
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /demand-date-times/latest-customer-order-date:
+    post:
+      tags:
+        - Empty wagon order internal masterdata
+      description: get latest customer order date time for demand date
+      operationId: getLatestCustomerOrderTime
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LatestCustomerOrderDateTimeRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                description: Latest .
+                type: string
+                format: date-time
+                example: "2024-01-01T01:01:00.00000Z"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+  /demand-date-times/search:
+    post:
+      tags:
+        - Empty wagon order internal masterdata
+      description: search for demand date and times
+      operationId: searchMasterDataDemandDateTimes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DemandDateTimesRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DemandDateTimesResponse"
+        400:
+          description: Bad Request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "common-schemas.yaml#/components/schemas/Problem"
+
+  /orders/template-names:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of order templates from existing orders
+      operationId: getTemplateNamesFromOrders
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of template names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /orders/orderers/sgvs:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of orderer SGV information from existing orders
+      operationId: getOrdererSgvInformationFromOrders
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of sgv id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /orders/orderers/partners:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of orderer partner information from existing orders
+      operationId: getOrdererPartnerInformationFromOrders
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of partner id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /orders/demand-locations:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of demand-locations from existing orders
+      operationId: getDemandLocationsFromOrders
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of demand commercial locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "empty-wagon-common.yaml#/components/schemas/CommercialLocation"
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /orders/demand-wagon-types:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of demand wagon types from existing orders
+      operationId: getDemandWagonTypesFromOrders
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: an array of demand wagon types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "empty-wagon-common.yaml#/components/schemas/DemandWagonType"
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /orders/load-run-countries:
+    get:
+      tags:
+        - Empty wagon order internal
+      summary: Returns a list of existing load run country iso codes and names
+      operationId: getLoadRunCountries
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of partner id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+
+  /templates/template-names:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of template names with customer templates names
+      operationId: getTemplateNamesFromTemplate
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+        - name: isCreateOnly
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        200:
+          description: An array of template names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/shippers/sgvs:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of shipper SGV information from existing templates
+      operationId: getShipperSgvInformationFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of sgv id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/shippers/partners:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of shipper partner information from existing orders
+      operationId: getShipperPartnerInformationFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of partner id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/orderers/sgvs:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of orderer SGV information from existing templates
+      operationId: getOrdererSgvInformationFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of sgv id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/orderers/partners:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of orderer partner information from existing orders
+      operationId: getOrdererPartnerInformationFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of partner id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/demand-locations:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of demand-locations from existing templates
+      operationId: getDemandLocationsFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of demand commercial locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "empty-wagon-common.yaml#/components/schemas/CommercialLocation"
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+
+  /templates/demand-wagon-types:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of demand wagon types from existing templates
+      operationId: getDemandWagonTypesFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: an array of demand wagon types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "empty-wagon-common.yaml#/components/schemas/DemandWagonType"
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+  /templates/load-run-countries:
+    get:
+      tags:
+        - Empty wagon order internal template
+      summary: Returns a list of existing load run country iso codes and names
+      operationId: getLoadRunCountriesFromTemplates
+      parameters:
+        - name: query
+          in: query
+          description: query string.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: An array of partner id, name paar
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'empty-wagon-common.yaml#/components/schemas/IdNameType'
+        400:
+          description: Bad Request. Invalid params supplied
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        401:
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+        500:
+          description: Error(s) occurred while processing the request
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'common-schemas.yaml#/components/schemas/Problem'
+components:
+  schemas:
+    MasterdataDateForCommercialLocationRequest:
+      type: object
+      properties:
+        date:
+          description: date.
+          type: string
+          format: date
+          example: "2024-01-01"
+        commercialLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/CommercialLocation'
+      required:
+        - date
+    LatestCustomerOrderDateTimeRequest:
+      type: object
+      properties:
+        deliveryDateTime:
+          description: Demand date.
+          type: string
+          format: date-time
+          example: "2024-01-01T01:01:00.00000Z"
+        demandLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/DemandLocation'
+      required:
+        - deliveryDateTime
+        - demandLocation
+    DemandDateTimesRequest:
+      type: object
+      properties:
+        deliveryDateTimeFrom:
+          description: Demand date from.
+          type: string
+          format: date-time
+          example: "2024-01-01T01:01:00.00000Z"
+        deliveryDateTimeTo:
+          description: Demand date from.
+          type: string
+          format: date-time
+          example: "2024-01-01T23:59:59.99999Z"
+        demandLocation:
+          $ref: 'empty-wagon-common.yaml#/components/schemas/DemandLocation'
+      required:
+        - deliveryDateTimeFrom
+        - deliveryDateTimeTo
+        - demandLocation
+
+    DemandDateTimesResponse:
+      type: object
+      properties:
+        demandDateTimes:
+          type: array
+          items:
+            type: string
+            format: date-time
+            example: "2024-01-01T23:59:59.99999Z"

@@ -1,0 +1,43 @@
+{
+  "intermodal": {
+    "shared": {
+      "property": {
+        "loadingUnit": "Ladeeinheit",
+        "loadingUnits": "Ladeeinheiten",
+        "loadingUnitIdentifier": "LE-Zeichen",
+        "loadingUnitNumber": "LE-Nummer",
+        "trainNumber": "Zugnummer",
+        "consignor": "Absender",
+        "consignee": "Empfänger",
+        "shippingDateFrom": "Versanddatum (von)",
+        "shippingDateTo": "Versanddatum (bis)",
+        "departureStation": "Versandbahnhof",
+        "arrivalStation": "Empfangsahnhof",
+        "wagonNumber": "Wagennummer",
+        "status": "Status",
+        "currentLocation": "Aktueller Standort",
+        "referenceOrder": "Ref. Auftrag",
+        "lpkOrdernumber": "LPK-Auftragsnummer"
+      }
+    },
+    "loadingUnits": {
+      "overview": {
+        "title": "Übersicht Ladeeinheiten",
+        "table": {
+          "header": {
+            "loadingUnitIdentifier": {
+              "text": "LE-<br>Zeichen"
+            },
+            "referenceOrder": {
+              "text": "Ref.<br>Auftrag"
+            },
+            "lpkOrdernumber": {
+              "text": "LPK-<br>Auftragsnummer"
+            }
+          }
+        },
+        "downloadCsv": {}
+      }
+    }
+  }
+}

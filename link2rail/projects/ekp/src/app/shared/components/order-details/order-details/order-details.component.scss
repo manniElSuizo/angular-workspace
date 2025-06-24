@@ -1,0 +1,86 @@
+hr {
+    background-color: #c8cdd2;
+    display: block;
+    height: 1px;
+}
+
+.details-h2-normal {
+    font-weight: normal;
+}
+
+.details-info-block {
+    display: flex;
+
+    .info-block-part {
+        width: 100%;
+
+        &>div {
+            display: flex;
+
+            div {
+                width: 100%;
+                text-align: left;
+                margin: 5px 0;
+            }
+
+            p {
+                width: 100%;
+                text-align: left;
+                margin: 0px 0;
+            }
+        }
+
+        &:first-of-type {
+            margin-right: 10%;
+        }
+
+        .small-info {
+            font-style: italic;
+            color: #AFB4BB;
+        }
+    }
+}
+
+.input-field {
+    select {
+        font-size: 20px;
+        font-weight: bold;
+        height: 52px;
+        margin: 0.5em 1em 1em 0;
+        padding: 14px 16px 14px 17px;
+        background-color: white;
+        border-color: lightgrey;
+        border-bottom: none;
+        width: 99%;
+    }
+}
+
+tbody {
+    tr td:first-of-type {
+        font-weight: bold;
+    }
+}
+
+.disruption {
+    display: flex;
+    background: #fad2d6;
+    margin: 20px 0 20px 0;
+    padding: 20px;
+
+    .disruption-red-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        float: left;
+        width: 5%;
+        color: #ec0016;
+    }
+
+    div:last-of-type {
+        margin-left: 1px;
+    }
+}
+
+.trainAffectectByConstruction {
+    font-size: 1.3rem;
+    font-weight: bold;
+}

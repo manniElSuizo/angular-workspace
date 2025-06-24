@@ -1,0 +1,33 @@
+<header class="modal-header">
+  <h3 *ngIf="!data.userDeactivated else userDeactivatedHeader" class="elm-headline">
+    <strong>{{'User-management-component.Confirmation.Cancel-UserHeader' | translate}}</strong>
+  </h3>
+
+  <ng-template #userDeactivatedHeader>
+    <h3 class="elm-headline">
+      <strong>{{'User-management-component.Confirmation.Activate-UserHeader' | translate}}</strong>
+    </h3>
+  </ng-template>
+
+  </header>
+  <main class="modal-main">
+    <form>
+      <div>
+        <div>
+          <div *ngIf="!data.userDeactivated else userDeactivatedBody" class="modal-body">
+            <br>{{'User-management-component.Confirmation.Cancel-User' | translate}}
+          </div>
+
+          <ng-template #userDeactivatedBody>
+            <div class="modal-body">
+              <br>{{'User-management-component.Confirmation.Activate-User' | translate}}
+            </div>
+          </ng-template>
+          <div class="button-group">
+            <button class="elm-button" data-variant="primary" type="button" mat-dialog-close (click)="delete()">{{'Shared.Confirmations.Yes' | translate}}</button>
+            <button class="elm-button" data-variant="secondary" type="button" mat-dialog-close (click)="cancel()">{{'Shared.Confirmations.No' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>

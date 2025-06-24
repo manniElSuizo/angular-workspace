@@ -1,0 +1,272 @@
+<section class="side-navigation-block" style="overflow: auto;">
+    <div class="icon-block">
+        <svg class="icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#hamburger-menu"/>
+        </svg>
+        <svg class="icon action-icon" viewBox="0 0 25 25" (click)="emitCloseMenu()">
+            <use xlink:href="assets/icons/icons.svg#close"/>
+        </svg>
+    </div>
+    <!-- Menü -->
+    <h2 style="margin-top: 0;">{{ 'Navigation.Menu-title' | translate }}</h2>
+    <nav>
+        <ul>
+            <!-- Startseite  -->
+            <li>
+                <a routerLink="/gzp/trainorder/home" routerLinkActive="active-link">
+                    <i data-icon="home" data-icon-variant="24-outline"></i>
+                    <span>
+            {{ 'Navigation.Home-page' | translate }}
+          </span>
+                </a>
+            </li>
+
+            <!-- NEW Order TEST -->
+            <!--li *ngIf="permissionService.hasPermission('wagon-view-list') | async ">
+              <a routerLink="" routerLinkActive="active-link">
+                <svg class="icon" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons-menue.svg#wagon-empty" />
+                </svg>
+                <span (click)="openPopupNewOrderDetails()">
+                  {{ 'Navigation.New-Order' | translate }}
+                </span>
+              </a>
+            </li-->
+
+            <!-- Empty Wagon -->
+            <li *ngIf="(permissionService.hasPermission('empty-wagon-order-list') | async )"
+                class="expandable-menu-item">
+                <input type="checkbox" class="expand-more">
+                <!-- TODO: -->
+                <div class="expandable-menu-title" routerLink="/empty-wagon" routerLinkActive="active-link">
+                    <!--  -->
+                    <svg class="icon" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons-menue.svg#wagon-empty"/>
+                    </svg>
+                    <span>
+            {{ 'Navigation.Empty-wagon' | translate }}
+          </span>
+                </div>
+                <i data-icon="expand-more" class="expand-more" data-icon-variant="20-outline"></i>
+                <i data-icon="expand-less" class="expand-less" data-icon-variant="20-outline"></i>
+                <div class="nested-items">
+                    <a *ngIf="(permissionService.hasPermission('empty-wagon-order-list') | async )"
+                       routerLink="/empty-wagon/empty-wagon-order-list" routerLinkActive="active-link">
+          <span>
+            {{ 'Navigation.Empty-wagon-order-list' | translate }}
+          </span>
+                    </a>
+                    <a *ngIf="(permissionService.hasPermission(null, [authorization.READ_EWD]) | async )"
+                       routerLink="/empty-wagon/empty-wagon-template-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Empty-wagon-template-list' | translate }}
+            </span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- Order -->
+            <li *ngIf="(permissionService.hasPermission('order-management-view') | async )"
+                class="expandable-menu-item">
+                <input type="checkbox" class="expand-more">
+                <!-- TODO: -->
+                <div class="expandable-menu-title" routerLink="/order-management" routerLinkActive="active-link">
+                    <!--  -->
+                    <svg class="icon" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons-menue.svg#order"/>
+                    </svg>
+                    <span>
+            {{ 'Navigation.Order-management' | translate }}
+          </span>
+                </div>
+                <i data-icon="expand-more" class="expand-more" data-icon-variant="20-outline"></i>
+                <i data-icon="expand-less" class="expand-less" data-icon-variant="20-outline"></i>
+                <div class="nested-items">
+                    <a *ngIf="(permissionService.hasPermission('order-management-order-list') | async )"
+                       routerLink="/order-management/order-management-order-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Order-management-order-list' | translate }}
+            </span>
+                    </a>
+                    <a *ngIf="(permissionService.hasPermission('order-management-order-list') | async )"
+                       routerLink="/order-management/order-management-order-code-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Order-management-order-code-list' | translate }}
+            </span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- Track & Trace -->
+            <!-- TODO: -->
+            <li *ngIf="(permissionService.hasPermission('tracktrace') | async )" class="expandable-menu-item">
+                <input type="checkbox" class="expand-more">
+                <!-- TODO: -->
+                <div class="expandable-menu-title" routerLink="/customer-portal/wagonview"
+                     routerLinkActive="active-link">
+                    <!--  -->
+                    <svg class="icon" viewBox="0 0 32 32">
+                        <use xlink:href="assets/icons/icons-menue.svg#TrackAndTrace"/>
+                    </svg>
+                    <span>
+            {{ 'Navigation.Track-trace' | translate }}
+          </span>
+                </div>
+                <i data-icon="expand-more" class="expand-more" data-icon-variant="20-outline"></i>
+                <i data-icon="expand-less" class="expand-less" data-icon-variant="20-outline"></i>
+                <div class="nested-items">
+                    <a *ngIf="permissionService.hasPermission('wagon-view-list') | async "
+                       routerLink="/customer-portal/wagonview/wagon-view-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Wagon-overview' | translate }}
+            </span>
+                    </a>
+                    <a *ngIf="(permissionService.hasPermission('wagonholder') | async )" class="expandable-menu-item"
+                       routerLink="/track-trace/wagonholder/list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Wagonholderview' | translate }}
+            </span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- Invoice -->
+
+            <li *ngIf="(permissionService.hasPermission('invoice') | async )" class="expandable-menu-item">
+
+                <a class="expandable-menu-title" routerLink="/invoice/invoice-overview"
+                   routerLinkActive="active-link">
+                    <svg class="icon" viewBox="0 0 32 32">
+                        <use xlink:href="assets/icons/invoice.svg#invoice"/>
+                    </svg>
+                    <span>
+                        {{ 'Navigation.Invoice-overview' | translate }}
+                    </span>
+                </a>
+            </li>
+
+            <!-- Zugübersicht -->
+            <li
+                    *ngIf="(permissionService.hasPermission('trains-list-view') | async )|| (permissionService.hasPermission('trains-calendar-view') | async)"
+                    class="expandable-menu-item">
+                <input type="checkbox" class="expand-more">
+                <!-- TODO: -->
+                <div class="expandable-menu-title" routerLink="/gzp/trainorder" routerLinkActive="active-link">
+                    <!--  -->
+                    <svg class="icon" viewBox="0 0 100 100">
+                        <use xlink:href="assets/icons/icons-menue.svg#train"/>
+                    </svg>
+                    <span>
+            {{ 'Navigation.Train-management' | translate }}
+          </span>
+                </div>
+                <i data-icon="expand-more" class="expand-more" data-icon-variant="20-outline"></i>
+                <i data-icon="expand-less" class="expand-less" data-icon-variant="20-outline"></i>
+                <div class="nested-items">
+                    <!-- Listenansicht -->
+                    <a *ngIf="(permissionService.hasPermission('trains-list-view') | async )"
+                       routerLink="/gzp/trainorder/trains-list-view" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.List-view' | translate }}
+            </span>
+                    </a>
+                    <!-- Wochenansicht -->
+                    <a *ngIf="(permissionService.hasPermission('trains-week-view') | async )"
+                       routerLink="/gzp/trainorder/trains-week-view" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Week-view' | translate }}
+            </span>
+                    </a>
+                    <!-- Monatsansicht -->
+                    <a *ngIf="(permissionService.hasPermission('trains-month-view') | async )"
+                       routerLink="/gzp/trainorder/trains-month-view" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Month-view' | translate }}
+            </span>
+                    </a>
+                    <!-- Bestellübersicht -->
+                    <a *ngIf="(permissionService.hasPermission('order') | async )" routerLink="/gzp/trainorder/order"
+                       routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Orders-overview' | translate }}
+            </span>
+                    </a>
+                    <!-- Vorlagenübersicht -->
+                    <a *ngIf="(permissionService.hasPermission('order-templates') | async )"
+                       routerLink="/gzp/trainorder/order-templates" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Order-templates' | translate }}
+            </span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- Stammdatenverwaltung -->
+            <li *ngIf="(permissionService.hasPermission('user-management') | async )" class="expandable-menu-item">
+                <input type="checkbox" class="expand-more">
+                <!-- TODO: -->
+                <div class="expandable-menu-title" routerLink="/user-management/user-list"
+                     routerLinkActive="active-link">
+                    <!--  -->
+                    <svg class="icon" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons-menue.svg#user-management"/>
+                    </svg>
+                    <span>
+            {{ 'Navigation.Masterdata-management' | translate }}
+          </span>
+                </div>
+                <i data-icon="expand-more" class="expand-more" data-icon-variant="20-outline"></i>
+                <i data-icon="expand-less" class="expand-less" data-icon-variant="20-outline"></i>
+                <div class="nested-items">
+                    <a routerLink="/user-management/user-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.User-management' | translate }}
+            </span>
+                    </a>
+                    <a routerLink="/user-management/profile-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Customer-profiles' | translate }}
+            </span>
+                    </a>
+                    <a routerLink="/user-management/user-group-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.User-groups' | translate }}
+            </span>
+                    </a>
+                    <a routerLink="/user-management/customer-group-list" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Customer-groups' | translate }}
+            </span>
+                    </a>
+                    <a routerLink="/user-management/authorization-matrix" routerLinkActive="active-link">
+            <span>
+              {{ 'Navigation.Authorization-Matrix' | translate }}
+            </span>
+                    </a>
+                    <a (click)="openSystemInformationModal()" style="cursor: pointer">
+            <span>
+              {{ 'Navigation.System-information' | translate }}
+            </span>
+                    </a>
+                    <!-- a routerLink="/customer-portal/wagonview/example" routerLinkActive="active-link">
+                      <span>
+                        Verteiltes Formular
+                      </span>
+                    </a -->
+                </div>
+            </li>
+            <li>
+            </li>
+            <!-- li>
+                    <a routerLink="/gzp/trainorder/roundtrip" routerLinkActive="active-link">
+                      <svg class="icon" viewBox="0 0 25 25">
+                          <use xlink:href="assets/icons/icons.svg#round-trip" />
+                      </svg>
+                      <span>
+                        {{ 'Navigation.Roundtrip' | translate }}
+                      </span>
+                    </a>
+                  </li -->
+        </ul>
+    </nav>
+</section>

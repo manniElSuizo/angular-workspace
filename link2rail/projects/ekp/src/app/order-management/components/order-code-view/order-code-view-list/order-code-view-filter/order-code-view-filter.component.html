@@ -1,0 +1,61 @@
+<div style="width: 100%">
+    <form [formGroup]="filterForm" style="width: 100%">
+        <div class="main-block main-block-mragin-top-diff" style="width: 100%">                
+         
+            
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParameterstemplateNumber" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mstc></app-multiselect-autocomplete>
+            </div>
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignor" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsigner></app-multiselect-autocomplete>
+            </div>
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSending" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msss></app-multiselect-autocomplete>
+            </div>
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignee" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsignee></app-multiselect-autocomplete>
+            </div>
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceiving" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msrs></app-multiselect-autocomplete>
+            </div>
+            
+        </div>
+        <div class="main-block main-block-mragin-top-diff" style="margin: -15px 0 0 0">
+        
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersNHM"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msnhm></app-multiselect-autocomplete>
+            </div>
+        
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersUN"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msun></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                    [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSendingStationCountryCode"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mssendingstationcountrycode>
+                </app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                    [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceivingStationCountryCode"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msreceivingstationcountrycode>
+                </app-multiselect-autocomplete>
+            </div>
+        </div>
+    </form>
+</div>
+<app-overview-filter-control-panel
+        [resultsCount]="totalNumberOfOrdersfound"
+        [activeFiltersCount]="activeFilterCount"
+        [downloadInProgress]="downloadInProgress"
+        [isLoading]="loadingInProgress$"
+        (resetFilters)="resetFilterConditions()"
+        (downloadReport)="saveCompleteListToCSV()">
+</app-overview-filter-control-panel>
+

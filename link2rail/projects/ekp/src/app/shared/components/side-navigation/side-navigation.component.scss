@@ -1,0 +1,125 @@
+@use 'color';
+
+.side-navigation-block {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 290px;
+    height: 100vh;
+    background-color:color.$white-color;
+    z-index: 9999;
+    box-shadow: 1px 1px 3px #00000030;
+
+    h2 {
+        padding-left: 16px;
+    }
+}
+
+.icon-block {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 16px;
+    .icon {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+nav ul {
+    li {
+        border-bottom: 1px solid #D4D5D7;
+
+
+        svg {
+            margin-right: 10px;
+        }
+
+        a {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-decoration: none;
+            padding-left: 16px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            i {
+                margin-right: 10px;
+            }
+            &:hover {
+                background-color: #F7F7F7;
+            }
+        }
+
+    }
+
+    .expandable-menu-item {
+        position: relative;
+
+        .expandable-menu-title {
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            &:hover {
+                background-color: #F7F7F7;
+            }
+        }
+
+        i {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 10px;
+            right: 6px;
+        }
+
+        input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 44px;
+            cursor: pointer;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .expand-less {
+            display: none;
+        }
+
+        input[type="checkbox"]:hover ~ .expandable-menu-title {
+            background-color: #F7F7F7;
+        }
+
+        input[type="checkbox"]:checked ~ .expand-less {
+            display: block;
+        }
+
+        input[type="checkbox"]:checked ~ .expand-more {
+            display: none;
+        }
+
+        input[type="checkbox"]:checked ~ .nested-items {
+            display: block;
+        }
+
+        .nested-items {
+            display: none;
+            a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 50px;
+            }
+        }
+
+    }
+}
+
+.active-link {
+    font-weight: bold;
+}
+

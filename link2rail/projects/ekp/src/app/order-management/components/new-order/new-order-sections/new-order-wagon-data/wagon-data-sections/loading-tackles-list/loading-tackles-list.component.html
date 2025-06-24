@@ -1,0 +1,121 @@
+<div [formGroup]="formGroup" style="width: 100%">
+
+  <ng-container formArrayName="loadingTacklesList">
+    <ng-container *ngFor="let item of loadingTacklesList.controls let i = index" [formGroupName]="i">
+
+      <div class="flex-column">
+        <div class="flex-row">
+
+          <div id="numberOfLoadingTackles" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' id="numberOfLoadingTackles-input"
+              formControlName="numberOfLoadingTackles"
+              placeholder="{{'New-order.Wagon-information.Placeholder.Number' | translate}}" 
+              title="{{'New-order.Wagon-information.Placeholder.Number' | translate}}" 
+              [class.invalid-input]="getNumberOfLoadingTackles(i)?.errors"
+              type="number"
+              [max]="99"
+              [min]="0"
+              aria-labelledby="numberOfLoadingTackles-input" 
+               style="width: 100%" />
+            <label for="numberOfLoadingTackles" class="elm-label">
+              {{'New-order.Wagon-information.Label.Number' | translate}}
+            </label>
+            <ng-container *ngIf="getNumberOfLoadingTackles(i)?.errors">
+              <small class="input-error" *ngIf="getNumberOfLoadingTackles(i)?.errors?.numberTooLarge">
+                {{ 'New-order.Errors.Count-of-loading-trackles-missing' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getNumberOfLoadingTackles(i)?.errors?.numberRequired">
+                {{ 'New-order.Errors.Count-of-loading-trackles-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div id="type" class="input-field input-padding-10" style="width: 25%">
+            <select id="type-input" class="elm-input" name="type-input"
+              formControlName="type" type="text"
+              title="{{'New-order.Wagon-information.Placeholder.Type' | translate}}"
+              [class.invalid-input]="getType(i)?.errors"
+              aria-labelledby="type-input-label">
+              <option value=""></option>
+              <option [value]="tackleType.code" *ngFor="let tackleType of loadingTackles">
+                {{tackleType.name}}
+              </option>
+            </select>
+            <label for="type" class="elm-label">
+              {{'New-order.Wagon-information.Label.Type' | translate}}
+            </label>
+            <ng-container *ngIf="getType(i)?.errors">
+              <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getType(i)?.errors?.typeRequired">{{
+                'New-order.Errors.Type-of-loading-trackle-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div id="identifier" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' id="identifier-input" 
+              formControlName="identifier"
+              placeholder="{{'New-order.Wagon-information.Placeholder.Identification-marking' | translate}}" 
+              title="{{'New-order.Wagon-information.Placeholder.Identification-marking' | translate}}"
+              type="text"
+              aria-labelledby="identifier-input" 
+               maxlength="15" 
+               style="width: 100%" />
+            <label for="identifier" class="elm-label">
+              {{'New-order.Wagon-information.Label.Identification-marking' | translate}}
+            </label>
+          </div>
+
+          <div id="weight" class="input-field input-padding-10" style="width: 25%">
+            <app-numeric-input
+              [settings]="{
+                formGroup: getLoadingTacklesAt(i),
+                formControlName: 'weight',
+                i18n: {
+                  label: 'New-order.Wagon-information.Placeholder.Weight-kg'
+                },
+              }"
+            ></app-numeric-input>
+            <ng-container  *ngIf="getWeight(i).errors">
+              <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getWeight(i).errors?.weightRequired">{{
+                'New-order.Errors.Weight-of-loading-trackle-missing' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getWeight(i).errors?.wagonWeightTooHigh">{{
+                'New-order.Errors.Total-weight-of-loading-trackles-gt-600' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div style="width: 135px" class="flex-row">
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                button-name="addServiceInformation" class="elm-buttom icon-margin-top-1rem" (click)="addNewLine()"
+                [disabled]="loadingTacklesList.length >= 99 || (railOrder?.templateNumber?.length>0) || !editMode">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                </svg>
+              </db-button>
+            </div>
+
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                button-name="removeConsignorDeclaration" class="elm-buttom icon-margin-top-1rem" (click)="removeLine(i)"
+                [disabled]="(railOrder?.templateNumber?.length>0) || !editMode">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                </svg>
+              </db-button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+  </ng-container>
+</div>

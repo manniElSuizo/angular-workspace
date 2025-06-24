@@ -1,0 +1,30 @@
+<section class="overview-section">
+    <div class="header-line">
+        <h2>{{ 'ewd.template.overview.title' | translate }}</h2>
+    </div>
+    <app-template-overview-filter
+            (filterChange)="onFilterCriteriaChange($event)"
+    ></app-template-overview-filter>
+    <app-overview-filter-control-panel
+            [resultsCount]="totalNumberOfResults"
+            [activeFiltersCount]="activeFilterCount"
+            [isLoading]="isLoading"
+            [downloadInProgress]="downloadInProgress"
+            (resetFilters)="handleResetFilters()"
+            (downloadReport)="handleDownloadReport()">
+    </app-overview-filter-control-panel>
+    <app-template-overview-results
+            [tableData]="tableData"
+            (addSortCondition)="sortResults()"
+            (refresh)="refresh()"
+    >
+    </app-template-overview-results>
+    <app-overview-result-control-panel
+            [numberOfResults]="numberOfResults"
+            [totalNumberOfResult]="totalNumberOfResults"
+            (loadMoreClicked)="loadMoreResults()">
+
+    </app-overview-result-control-panel>
+
+
+</section>

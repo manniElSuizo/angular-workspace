@@ -1,0 +1,16 @@
+<header class="modal-header">
+    <div>
+        <p>{{ 'Order-component.Details.Header' | translate}}: <span *ngIf="orderDetails.orderStatus.includes('CANCEL')">Abbestellung</span><span *ngIf="!orderDetails.orderStatus.includes('CANCEL')">Bestellung</span></p>
+    </div>
+    <h2>
+        <strong>{{ orderNumber }}</strong>
+    </h2>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <app-order-details [orderDetails]="orderDetails"></app-order-details>
+</main>

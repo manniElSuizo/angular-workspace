@@ -1,0 +1,137 @@
+@use 'color';
+
+section {
+    margin: 15px 16px 16px;
+    padding: 20px 20px;
+    background-color:color.$white-color;
+    box-shadow: 1px 1px 3px rgba(color.$black-color, 0.3);
+}
+
+.orderlist_tbody {
+    overflow: auto
+}
+
+.header-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls-block {
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-end;
+    padding: 10px 13px 10px 0px;
+
+    h3 {
+      margin: 0;
+    }
+
+    div {
+      margin: 5px 10px;
+
+      select {
+        min-width: 150px;
+        max-width: 250px;
+      }
+    }
+
+    .sort-block {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-end;
+
+        i {
+          margin-bottom: 5px;
+        }
+      }
+
+      .download-block * {
+        cursor: pointer;
+      }
+}
+
+.cmp-pagination ol {
+  text-align: right;
+}
+
+.list-table {
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 8%), 0 5px 30px 0 rgb(0 0 0 / 5%);
+
+    th {
+        padding: 10px 10px 10px 0px;
+    }
+
+    th:first-child {
+        padding: 10px 0px 10px 10px;
+    }
+
+    th:last-child {
+        padding: 10px 10px 10px 0px;
+    }
+
+    tbody {
+        .white-row {
+            background-color:color.$white-color;
+            &:hover {
+                background-color:color.$light-grey-color
+            }
+        }
+
+        & > tr:not(.white-row) {
+            background-color:color.$background-grey-color;
+            &:hover {
+                background-color:color.$light-grey-color
+            }
+        }
+
+        .td_icon_center {
+            text-align: center;
+            vertical-align: middle;
+            align-content: center;
+            height: 50px; width: 50px;
+        }
+
+        .td_padding_firstCol {
+            padding-left: 10px;
+        }
+
+        .td_padding {
+            padding-right:10px;
+            word-wrap: break-word;
+        }
+
+        .wagonlist-row td {
+            padding: 0;
+            height: 52px;
+        }
+
+        .deactivated-row {
+            opacity: 0.4;
+        }
+
+        .td_date{
+            padding: 0;
+            text-align: center;
+        }
+
+        .vertical-align {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left {
+            text-align: left;
+            flex: 1;
+        }
+        .right {
+            text-align: right;
+            flex: 1;
+        }
+    }
+}

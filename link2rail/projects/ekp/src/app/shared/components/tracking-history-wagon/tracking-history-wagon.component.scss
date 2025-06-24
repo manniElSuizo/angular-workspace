@@ -1,0 +1,132 @@
+@use 'color';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+    height: 190px;
+}
+
+body{
+  max-height: 1200;
+}
+
+.currentDate {
+  min-width: 135px;
+}
+
+.table-header{
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background-color:color.$white-color;
+}
+
+.history-control-block {
+    padding: 15px;
+
+    h4 {
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    input {
+      margin-right: 5px;
+    }
+
+    .selected-option {
+      font-weight: bold;
+    }
+  }
+
+  .history-table-block {
+    padding: 0px 2px 15px 15px;
+
+  }
+
+  .cmp-table {
+      width: 100%;
+
+    th {
+      padding-top: 23px;
+      padding-bottom: 23px;
+      background:color.$white-color;
+    }
+
+    tr:nth-child(odd) {
+        background-color: color.$background-grey-color;
+      }
+
+    tbody td {
+      text-align: left;
+      vertical-align: middle;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      overflow: unset;
+    }
+
+    tbody tr:first-of-type {
+      td:first-of-type{
+        //font-weight: bold;
+        .first-event {
+          color:color.$black-color;
+        }
+      }
+    }
+
+    tbody tr td:first-of-type {
+
+      img {
+        width: 25px;
+        height: 25px;
+      }
+
+      .icon {
+        position: relative;
+      }
+
+      .first-event {
+        color: #646973;
+      }
+
+      .icon:not(.last-event):after {
+        position: absolute;
+        content: '';
+        width: 2px;
+        height: 20px;
+        background: #6B707A;
+        left: 11px;
+        bottom: -23px;
+      }
+    }
+
+    tbody tr:last-of-type {
+      td:first-of-type{
+        //font-weight: bold;
+        .icon::after{
+          content: none;
+        }
+        .first-event {
+          color:color.$black-color;
+        }
+      }
+    }
+
+    .flex-td {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  .modal-main {
+    max-height: calc(100vh - 294px);
+  }
+
+  .modal-main-trackinghistory {
+    padding: 0px 5px 0px 5px;
+  }

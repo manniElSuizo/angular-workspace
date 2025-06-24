@@ -1,0 +1,140 @@
+<div style="width: 100%">
+  <form [formGroup]="filterForm" style="width: 100%">
+    <div class="main-block main-block-margin-top-diff" style="margin-top: -25px; width: 100%">
+          <!-- Wagennummer -->
+          <div class="input-field" style="padding: 0 5px 0 0">
+            <input formControlName="wagonNumber"
+                   style="width: 100%"
+                   type="text"    
+                   placeholder="{{ 'Order-Management.order-view-filter.Wagon-number' | translate }}"
+                   name="wagonNumber" 
+                   id="wagonNumber" 
+                   class="elm-input" 
+                   type="text"
+                   maxlength="15"
+                   (change)="onChangeFilter($event);" />
+            <label class="elm-label" for="wagonNumber">
+                {{ 'Order-Management.order-view-filter.Wagon-number' | translate }}
+            </label>
+          </div>
+          
+          <!-- Versanddatum (von) -->
+          <div class="input-field" style="padding: 0 5px 0 0">
+            <input formControlName="shippingDateFrom" 
+                   style="width: 100%"
+                   type="date"
+                   placeholder="{{ 'Order-Management.order-view-filter.Shipping-date-from' | translate }}"
+                   name="shippingDateFrom"
+                   id="shippingDateFrom" 
+                   class="elm-input" 
+                   (change)="onChangeFilter($event)" />
+            <label class="elm-label" id="shippingDateFrom-label" for="shippingDateFrom" aria-hidden="true">
+              {{'Order-Management.order-view-filter.Shipping-date-from' | translate}}
+            </label>                   
+          </div>
+
+          <!-- Versanddatum (bis) -->
+          <div class="input-field" style="padding: 0 5px 0 0">
+            <input formControlName="shippingDateTo" 
+                   type="date"
+                   placeholder="{{ 'Order-Management.order-view-filter.Shipping-date-to' | translate }}"
+                   name="shippingDateTo"
+                   id="shippingDateTo" 
+                   class="elm-input" 
+                   (change)="onChangeFilter($event)" />
+            <label class="elm-label" id="shippingDateTo-label" for="shippingDateTo" aria-hidden="true">
+              {{'Order-Management.order-view-filter.Shipping-date-to' | translate}}
+            </label>                   
+          </div>
+
+          <!-- Versandbahnhof -->
+          <div class="input-field">
+            <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSending" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msss>
+            </app-multiselect-autocomplete>
+          </div>
+          <!-- Empfangsbahnhof -->
+          <div class="input-field">
+              <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceiving" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msrs>
+              </app-multiselect-autocomplete>
+          </div>    
+    </div>
+
+    <div class="main-block main-block-margin-top-diff" style="margin: -15px 0 0 0">
+
+      <!-- ZAB-Auftragsnummer -->      
+      <div class="input-field" style="padding: 0 5px 0 0">
+        <input 
+            formControlName="zabOrderNumber" 
+            autocomplete="off"
+            placeholder="{{ 'Order-Management.order-view-list.Zab-order-number' | translate }}" 
+            type="text"
+            name="zabOrderNumber" 
+            id="zabOrderNumber" 
+            class="elm-input" 
+            maxlength="20"
+            (change)="onChangeFilter($event)" />
+        <label class="elm-label" for="zabOrderNumber">
+            {{'Order-Management.order-view-list.Zab-order-number' |translate }}
+        </label>                
+    </div>
+
+      <!-- ZAB-Auftragsstatus -->
+      <div class="input-field" style="padding: 0 5px 0 0">
+        <app-multiselect-autocomplete [allowSearchFilter]="false" [multiselectAutocompleteParameters]="multiselectAutocompleteParametersRailOrderStatus" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msrailorderstatus>
+        </app-multiselect-autocomplete>
+      </div>   
+
+      <!-- Auftragscode -->
+      <div class="input-field" style="padding: 0 5px 0 0">
+        <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersOrderTemplateNumbers" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msordertemplatenames>
+        </app-multiselect-autocomplete>
+      </div>
+
+      <!-- Versender -->
+      <div class="input-field">
+        <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignor" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsigner>
+        </app-multiselect-autocomplete>
+      </div>
+
+      <!-- Empfänger -->
+      <div class="input-field">
+          <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignee" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsignee>
+          </app-multiselect-autocomplete>
+      </div>
+    </div> 
+
+    <div class="main-block main-block-margin-top-diff" style="margin: 0 0 0 0">
+      <div class="input-field" style="padding: 0 0 0 0; margin: 0 15px 0 5px">
+        <!-- Auftragsart -->
+        <app-multiselect-autocomplete [allowSearchFilter]="false" [singleSelection]="false" [multiselectAutocompleteParameters]="multiselectAutocompleteParametersRailOrderStage" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msrailorderstage></app-multiselect-autocomplete>
+      </div>
+        <!-- CustomerReference -->
+      <div class="input-field" style="padding: 0 5px 0 0">
+        <input formControlName="reference"
+                style="width: 100%"
+                type="text"
+                placeholder="{{ 'Order-Management.order-view-filter.customerReference' | translate }}"
+                name="reference" 
+                id="reference" 
+                class="elm-input" 
+                type="text"
+                maxlength="35"
+                (change)="onChangeFilter($event);" />
+        <label class="elm-label" for="reference">
+            {{ 'Order-Management.order-view-filter.customerReference' | translate }}
+        </label>
+      </div>
+       <div class="input-field">
+            <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSendingStationCountryCode" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mssendingstationcountrycode>
+            </app-multiselect-autocomplete>
+        </div>
+        <div class="input-field">
+            <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceivingStationCountryCode" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msreceivingstationcountrycode>
+            </app-multiselect-autocomplete>
+        </div>
+    </div>
+  </form>
+</div>
+<app-overview-filter-control-panel [resultsCount]="totalNumberOfOrders" [activeFiltersCount]="activeFilterCount" [downloadInProgress]="downloadInProgress"
+  [isLoading]="isLoading" (resetFilters)="resetFilterConditions()" (downloadReport)="saveCompleteListToCSV()">
+</app-overview-filter-control-panel>

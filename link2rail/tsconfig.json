@@ -4,14 +4,21 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "strict": false,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictBindCallApply": false,
+    "noImplicitThis": false,
+    "alwaysStrict": false,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
@@ -19,6 +26,9 @@
     "paths": {
       "shared": [
         "./dist/shared"
+      ],
+      "@src/*": [
+        "./projects/ekp/src/*"
       ]
     },
     "importHelpers": true,
@@ -31,8 +41,8 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }

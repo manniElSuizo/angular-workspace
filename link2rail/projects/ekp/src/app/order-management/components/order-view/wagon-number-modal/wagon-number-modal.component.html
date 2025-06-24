@@ -1,0 +1,35 @@
+<div *ngIf="railOrder" class="flex-column">
+  
+  <div id="header" style="background-color: lightgray; padding: 1em 1em 0 0" class="flex-column">
+    <div class="flex-row">
+      <div style="flex-grow: 1;"></div>
+      <div>
+        <a class="close-icon" title="{{'Shared.Close-dialog' | translate}}" mat-dialog-close>
+          <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="flex-column" style="padding: 0 0 1em 2em">
+      <div>{{'Order-Management.order-view-list.Zab-order-number' | translate}}</div>
+      <div style="font-size: 115%"><b>{{railOrder.orderKey.orderNumber| orderNumber:railOrder.orderKey.orderAuthority }}</b></div>
+    </div>
+  </div>
+  
+  <div id="body" style="padding: 2em" class="flex-row">
+    
+      <div class="flex-start textarea-container">
+        <label for="wagon-number-list" class="textarea-label">
+          {{ 'Tracking-history-wagon.Wagon-number' | translate }}
+        </label>
+      <textarea 
+        id="wagon-number-list"
+        class="no-border-horizontal-resize"
+        title="{{'Tracking-history-wagon.Wagon-number' | translate}}"
+        rows="6" 
+        cols="50" 
+        [value]="formattedWagonNumbers" 
+        readonly>
+      </textarea>
+    </div>

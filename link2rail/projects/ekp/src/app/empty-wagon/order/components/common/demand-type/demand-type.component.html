@@ -1,0 +1,128 @@
+<div [formGroup]="formGroup" style="width: 100%">
+    <div style="width: 100%">
+
+        <div class="flex-column" style="width: 100%">
+            <div class="flex-row" style="width: 100%">
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <input formControlName="demandWagonTypeControl"
+                           type="text"
+                           class="elm-input"
+                           placeholder="{{ 'ewd.order.form.common.demandType.inputs.demandWagonType.placeholder' | translate }}"
+                           id="demandWagonType"/>
+                    <label class="elm-label" for="demandWagonType" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandType.inputs.demandWagonType.label' | translate }}
+                    </label>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <input formControlName="wagonAmountControl"
+                           type="number"
+                           step="1"
+                           class="elm-input"
+                           placeholder="{{ 'ewd.order.form.common.demandType.inputs.wagonAmount.placeholder' | translate }}*"
+                           id="wagonAmount"
+                           (change)="checkMaxNumberOfWagonExceeded()"
+                    />
+                    <label class="elm-label" for="wagonAmount" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandType.inputs.wagonAmount.label' | translate }}*
+                    </label>
+                    <small *ngIf="isMaxNumberOfWagonExceeded$.getValue()"
+                           class="input-info"
+                           style="margin-left: 10px">
+                        {{
+                            'ewd.order.form.common.demandType.infos.maxNumberOfWagonExceeded' | translate:
+                                {maxNumberOfWagon: maxNumberOfWagon}
+                        }}
+                    </small>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <input formControlName="commentToCustomerServiceControl"
+                           maxlength="200"
+                           type="text"
+                           class="elm-input"
+                           placeholder="{{ 'ewd.order.form.common.demandType.inputs.commentToCustomerService.placeholder' | translate }}"
+                           id="commentToCustomerService"/>
+                    <label class="elm-label" for="commentToCustomerService" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandType.inputs.commentToCustomerService.label' | translate }}
+                    </label>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <input formControlName="customerReferenceControl"
+                           maxlength="50"
+                           type="text"
+                           class="elm-input"
+                           placeholder="{{ 'ewd.order.form.common.demandType.inputs.customerReference.placeholder' | translate }}"
+                           id="customerReference"/>
+                    <label class="elm-label" for="customerReference" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandType.inputs.customerReference.label' | translate }}
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="flex-row">
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <div class="input-field" style="width: 100%">
+                        <select id="countryCode"
+                                class="elm-input"
+                                style="width: 100%;"
+                                formControlName="countryCodeControl"
+                                type="text"
+                                title="{{ 'ewd.order.form.common.demandType.inputs.countryCode.placeholder' | translate }}"
+                                (change)="onChangeCountryCode($event)">
+                            <option></option>
+                            <option *ngFor="let country of countries$ | async"
+                                    [value]="country.uicCountryCode">{{ country | country }}
+                            </option>
+                        </select>
+                        <label class="elm-label" for="countryCode" aria-hidden="true">
+                            {{ 'ewd.order.form.common.demandType.inputs.countryCode.label' | translate }}
+                        </label>
+                    </div>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <app-el-s-autocomplete
+                            [displayNameTransform]="commercialLocationSummaryPipe.transform"
+                            [formGroup]="formGroup"
+                            [fieldName]="'loadRunLocationControl'"
+                            [placeholder]="('ewd.order.form.common.demandType.inputs.loadRunLocation.placeholder' | translate)"
+                            [title]="('ewd.order.form.common.demandType.inputs.loadRunLocation.label' | translate)"
+                            [autocompleteResultList]="commercialLocationSummariesPickupStations"
+                            [otherConfig]="{ doNotDedup: true }"
+                            (doRequestSelectionListItems)="loadRunLocationStations($event)"
+                            (onSelectItem)="onSelectLoadRunLocation($event)">
+                    </app-el-s-autocomplete>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <app-autocomplete [formGroup]="formGroup"
+                                      [fieldName]="'transitRailwayControl'"
+                                      [placeholder]="('ewd.order.form.common.demandType.inputs.transitRailway.placeholder' | translate)"
+                                      [title]="('ewd.order.form.common.demandType.inputs.transitRailway.placeholder' | translate)"
+                                      [label]="('ewd.order.form.common.demandType.inputs.transitRailway.label' | translate)"
+                                      [autocompleteResultList]="transitRailwayAutocompleteResultList"
+                                      (doRequestSelectionListItems)="requestTransitRailWayListItems($event)"
+                                      (onSelectItem)="onSelectTransitRailWayListItem($event)">
+                    </app-autocomplete>
+                </div>
+
+                <div style="width: 25%" class="input-field input-padding-10">
+                    <app-autocomplete [formGroup]="formGroup"
+                                      [fieldName]="'nhmCodeControl'"
+                                      [placeholder]="('ewd.order.form.common.demandType.inputs.nhmCode.placeholder' | translate)"
+                                      [title]="('ewd.order.form.common.demandType.inputs.nhmCode.placeholder' | translate)"
+                                      [label]="('ewd.order.form.common.demandType.inputs.nhmCode.label' | translate)"
+                                      [maxInputLength]="1024"
+                                      [autocompleteResultList]="nhmCodeAutocompleteResultList"
+                                      (doRequestSelectionListItems)="requestNhmCodeListItems($event)"
+                                      (onSelectItem)="onSelectNhmCodeListItem($event)">
+                    </app-autocomplete>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<header class="modal-header">
+  <h3 class="elm-headline">
+    <strong>{{'Shared.Confirmations.Cancel-OrderHeader' | translate}}</strong>
+  </h3>
+</header>
+<main class="modal-main">
+  <form>
+    <div>
+      <div>
+        <div style="text-align:center">
+          <br>{{'Shared.Confirmations.Cancel-Order' | translate}}
+        </div>
+        <div class="button-group">
+          <db-button variant="brand-primary" type="button" (click)="decision(true)" style="margin-right: 1em">{{'Shared.Confirmations.Yes' | translate}}</db-button>
+          <db-button variant="secondary-solid" type="button" (click)="decision(false)">{{'Shared.Confirmations.No' | translate}}</db-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</main>

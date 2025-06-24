@@ -1,0 +1,176 @@
+<div class="main">
+  <div class="header-line">
+    <h2>{{ 'Navigation.Customer-profiles' | translate }}</h2> 
+    <div class="additional-buttons-block">
+    </div>
+  </div>
+  <!-- Filter START -->
+  <div>
+      <form [formGroup]="filterForm">
+        <div class="radio-buttons flex-row">
+          <div style="margin-right: 1em">
+            <input type="radio" class="elm-radio" id="input-all" formControlName="profileStatusType" value="{{ProfileStatusType.ALL}}" (change)="doFilter()">
+            <label class="elm-label" for="radio01">{{ 'Profile-list-component.RadioAll' | translate }}</label>
+          </div><div style="margin-right: 1em">
+            <input type="radio" class="elm-radio" id="input-complete" formControlName="profileStatusType" value="{{ProfileStatusType.COMPLETE}}" (change)="doFilter()">
+            <label class="elm-label" for="radio02">{{ 'Profile-list-component.RadioComplete' | translate }}</label>
+          </div><div style="margin-right: 1em">
+            <input type="radio" class="elm-radio" id="input-incomplete" formControlName="profileStatusType" value="{{ProfileStatusType.INCOMPLETE}}" (change)="doFilter()">
+            <label class="elm-label" for="radio03">{{ 'Profile-list-component.RadioIncomplete' | translate }}</label>
+          </div><div>
+            <input type="radio" class="elm-radio" id="input-notcreated" formControlName="profileStatusType" value="{{ProfileStatusType.NOT_CREATED}}" (change)="doFilter()">
+            <label class="elm-label" for="radio04">{{ 'Profile-list-component.RadioNotCreated' | translate }}</label>
+          </div>
+        </div>
+        <div class="main-block">
+          <div class="input-field">
+            <input
+              autocomplete="off"
+              formControlName="customerName"
+              type="text"
+              class="elm-input"
+              placeholder="{{ 'Profile-list-component.customerName-SGV-No' | translate }}"
+              name="customerName"
+              id="customerName"
+              list="datalist-customerName"
+              (input)="getSgvIdsList($event)"
+              (change)="selectSgvId($event)"/>
+            <label class="elm-label" for="customerName" aria-hidden="true" id="customerName-label">
+              {{ 'Profile-list-component.customerName-SGV-No' | translate }}
+            </label>
+            <datalist id="datalist-customerName">
+              <option *ngFor="let option of sgvAutoComplete">{{ option | customerSgvName}}</option>
+            </datalist>
+            <div class="icon-block" (click)="clearSearchInput()">
+              <svg class="icon" [ngClass]="filterForm.get('customerName')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#search" />
+              </svg>
+              <svg class="icon" [ngClass]="filterForm.get('customerName')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close" />
+              </svg>
+            </div>            
+          </div>
+        </div>
+        <div class="controls-block">
+          <span>
+            <h3>{{ 'Shared.Results-label' | translate }} ({{ profilesLength }})</h3>
+          </span>
+          <span>
+            <div class="right-block">
+              <span>
+                <div class="change-info" *ngIf="activeChanges === 1">
+                  {{ activeChanges }} {{ 'User-management-component.ProfileChange' | translate }}
+                </div>
+                <div class="change-info" *ngIf="activeChanges > 1">
+                  {{ activeChanges }} {{ 'User-management-component.ProfileChanges' | translate }}
+                </div>
+              </span>
+              <span>
+                <db-button *ngIf="(userManagementService.hasUpdatePermission() | async )" variant="brand-primary" type="button" style="margin: 0 10px; cursor: pointer;" (click)="openChangedProfilesModal()" [disabled]="activeChanges === 0">
+                    {{ 'Profile-list-component.save-label' | translate }}
+                </db-button>
+              </span>
+              <span>
+                <db-button variant="secondary" type="button" (click)="reload()" [disabled]="activeChanges === 0">
+                    {{ 'Profile-list-component.reset-label' | translate }}
+                </db-button>
+              </span>
+            </div>
+          </span>
+        </div>
+      </form>
+    </div>
+    <!-- Filter END   -->
+    <ng-container>
+    <div class="controls">
+    </div>
+    
+    <!-- Profile List START -->
+    <section>
+
+      <div class="profiles-table">
+        <div class="elm-progress" style="height: 0px; margin-top: -5px; padding-bottom: 5px;" *ngIf="loadingInProgress">
+          <progress id="progress-label-07"></progress>
+        </div>
+        <form *ngIf="profileFormGroup" [formGroup]="profileFormGroup">
+          <table class="list-table">
+            <thead class="table-header">
+              <tr>
+                <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of tableHeaders">
+                  <div>
+                    <div>
+                      <span>{{ header.text }}</span>
+                    </div>
+                    <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                      <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                      <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                    </span>
+                  </div>              
+                </th>
+                <th style="width: 20px;"></th>
+              </tr>
+            </thead>
+  
+            <tbody *ngIf="customerProfileList " style="overflow: auto;">
+              <ng-container *ngFor="let customerProfile of customerProfileList; let i = index">
+                <tr class="order-row" [class.white-row]="i % 2 === 0">
+                  <td  style="width: 10px; padding: 0;">
+                    <a  *ngIf="customerProfile.changed" style="cursor: default;">
+                      <svg viewBox="0 0 25 25" class="icon">
+                        <use xlink:href="assets/icons/icons.svg#redInfo" />
+                      </svg>
+                    </a>
+                  </td>
+                  <!--<td style="text-align: right; width: 10px; padding: 0;">
+                    <span *ngIf="customerProfile.customerProfileId && !isComplete(customerProfile)">
+                      <a title="{{ 'User-management-component.Incomplete' | translate }}"  style="cursor: default;">
+                        <svg viewBox="0 0 25 25" class="icon">
+                          <use xlink:href="assets/icons/icons.svg#yellowWarning" />
+                        </svg>
+                      </a>
+                    </span>
+                    <span *ngIf="customerProfile.customerProfileId && isComplete(customerProfile)">
+                      <a title="{{ 'User-management-component.Complete' | translate }}" style="cursor: default;">
+                        <svg viewBox="0 0 25 25" class="icon">
+                          <use xlink:href="assets/icons/icons.svg#complete" />
+                        </svg>
+                      </a>
+                    </span>
+                  </td>-->
+                  <td>{{customerProfile.sgv.customerName}}</td>
+                  <td style="text-align: center;">{{customerProfile.sgv.marketAreaCustomerNumber}}</td>
+                  <td>{{customerProfile.sgv.sgvId}}</td>
+                  <td>{{customerProfile.sgv.companyLocationNumber}}</td>
+                  <td class="input-field">
+                    <select id="{{customerProfile.id}}_tomGroup" formControlName="{{customerProfile.id}}_tomGroup"> 
+                      <option [ngValue]=""></option>
+                      <option *ngFor="let tg of tomGroups" [ngValue]="tg.id">{{tg.groupName}}</option>
+                    </select>
+                    <!--<small class="input-error" *ngIf="customerProfile.customerProfileId && !this.profileFormGroup.get(customerProfile.id + '_tomGroup')?.value">{{ 'Shared.Errors.TOMGroup-Missing' | translate }}</small>-->
+                  </td>
+                  <td class="no-op">
+                    <span>
+                      <a title="{{ 'edit' | translate }}">
+                        <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="openProfileModal(customerProfile)">
+                          <use xlink:href="assets/icons/icons.svg#edit" />
+                        </svg>
+                      </a>
+                    </span>
+                  </td>
+                </tr>
+              </ng-container>
+      
+            </tbody>
+          </table>
+        </form>        
+      </div>
+      <div class="bottom-controls">
+        <button style="cursor: pointer;" *ngIf="totalProfiles && (totalProfiles || 0) > profilesLength" class="load-btn" (click)="loadMore()">{{ 'Shared.Load-more-button-label' | translate }}</button>
+      </div>
+      <div>
+        <strong>{{ profilesLength }} {{'Shared.Of' | translate}} {{ totalProfiles }}</strong>
+      </div>
+    </section>
+    <!-- Profile List END   -->
+    </ng-container>
+  </div>

@@ -1,0 +1,47 @@
+.rea-header {
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.username{
+    padding-bottom: 0.5625rem;
+    padding-top: 0.5625rem;
+    pointer-events: none;
+}
+
+.left-side-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .hamburger-menu {
+        width: 32px;
+        height: 32px;
+        margin-right: 20px;
+        
+        #hamburger-menu {
+            position: absolute;
+            cursor: pointer;
+            opacity: 0;
+            width: 32px;
+            height: 32px
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+
+    .cmp-brand {
+        padding-top: 0 !important;
+    }
+
+    .cmp-brand .elm-image .is-logo{
+
+        width: 50px !important;
+        
+    }
+        
+}

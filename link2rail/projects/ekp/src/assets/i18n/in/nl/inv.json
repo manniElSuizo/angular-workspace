@@ -1,0 +1,30 @@
+{
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Factuurweergave",
+        "filter": {
+          "dateFrom": "Datum (van)",
+          "dateTo": "Datum (tot)",
+          "debitorNumber": "Debiteurnummer",
+          "invoiceNumber": "Factuurnummer"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Factuurnummer",
+            "invoiceDate": "Factuurdatum",
+            "referenceInvoiceNumber": "Ref. factuurnummer",
+            "recipientCompany": "Bedrijfsnaam",
+            "debitorNumber": "Debiteurnummer",
+            "dueDate": "Vervaldatum",
+            "currency": "Valuta",
+            "netAmount": "Nettobedrag",
+            "vatAmount": "Btw-bedrag",
+            "grossAmount": "Brutobedrag",
+            "link": "PDF-link"
+          }
+        }
+      }
+    }
+  }
+}

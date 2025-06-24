@@ -1,0 +1,31 @@
+
+   <table class="list-table">
+    <thead class="table-header">
+        <tr>
+        <th scope="col" [title]="header.text" *ngFor="let header of tableHeaders">
+            <div>
+            <div>
+                <span>{{ header.text }}</span>
+            </div>
+            </div>
+        </th>
+        </tr>
+    </thead>
+    <div class="elm-progress" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+    </div>
+    <tbody *ngIf="userAuth?.authorizations" style="overflow: auto;">
+        <ng-container *ngFor="let auth of userAuth.authorizations; let i = index">
+        <tr [class.white-row]="i % 2 === 0"  >
+            <td>{{auth.customer}}</td>
+            <td>{{auth.customerGroup}}</td>
+            <td>{{auth.userGroup}}</td>
+            <td>{{auth.authorizationRole}}</td>
+            <td>{{auth.authorization}}</td>
+            <td>{{getCustomerRoles(auth)}}</td>
+            <td>{{auth.relatedCustomer}}<br>{{auth.relatedCustomerRole}}</td>
+        </tr>
+        </ng-container>
+    </tbody>
+</table>
+

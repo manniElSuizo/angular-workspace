@@ -1,0 +1,130 @@
+<div #dgs class="dialog-container">
+  <header class="modal-header-sticky">
+      <h2>{{ 'New-order.Wagon-information.Dangerous-Goods-Selection-Dialog.Group-header' | translate }}</h2>
+
+      <a class="close-icon" title="{{'Shared.Close-dialog' | translate}}"  (click)="cancel()">
+          <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+              <use xlink:href="assets/icons/icons.svg#close" />
+          </svg>
+      </a>
+  </header>
+
+  <!-- Main Content (Scrollable) -->
+  <main id="sectionMainDgs" style="overflow-y: auto;">
+    <div id='wagon-information-row-1' class="flex-row" style="flex-direction: column; margin-left: 31px; width: 90%;">
+      <h3>{{'New-order.Wagon-information.Show-section-dangerous-goods' | translate}}</h3>
+    </div>    
+    <div [formGroup]="formGroup" style="margin: 0 30px 0 30px"> 
+      <div id="unNr" class="input-field input-padding-10" style="width: 50%">
+        <app-autocomplete [formGroup]="formGroup"
+                          [fieldName]="autocompleteFieldName"
+                          [placeholder]="('New-order.Wagon-information.Placeholder.UN-number' | translate)"
+                          [title]="('New-order.Wagon-information.Placeholder.UN-number' | translate)"
+                          [label]="('New-order.Wagon-information.Placeholder.UN-number' | translate)"
+                          [autocompleteResultList]="autocompleteResultList"
+                          (doRequestSelectionListItems)="requestSelectionListItems($event)"
+                          (onSelectItem)="onSelectAutocompleteItem($event)">
+        </app-autocomplete>        
+      </div>
+
+      <div class="grid-container">
+        <div *ngFor="let item of currentlyVisableDangerousGoods; let i = index">
+          <div class="grid-item" id="item_{{i}}" (click)="selectDangerousGoodItem(i, item)" [ngClass]="highlight(i)">
+            <div class="flex-row">
+              <div>Gefahrgutnummer:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.dangerousGoodsNumber}}</div>
+            </div>
+            <div class="flex-row">
+              <div>UN-Nummer:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.unCode}}</div>
+            </div>
+            <div class="flex-row">
+              <div>Stoffbeschreibung:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.description}}</div>
+            </div>
+            <div class="flex-row">
+              <div>Klasse:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.dangerousGoodsClass}}</div>
+            </div>
+            <div class="flex-row">
+              <div>Verpackungsgruppe:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.packingGroup}}</div>
+            </div>
+            <div class="flex-row">
+              <div>Gef.Gut Zettel 1/2/3/4:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.dangerLabel1 }} {{ item.dangerLabel2 }} </div>
+            </div>
+            <div class="flex-row">
+              <div>Info:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.dangerLabelInformation}}</div>
+            </div>
+            <div class="flex-row">
+              <div>Nummer:</div>
+              <div style="flex: 1"></div>
+              <div>{{ item.tremcardNumber}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="footer" style="position: absolute; bottom: 20px; width: 96%" class="flex-row">
+        
+        <div>
+          <db-button class="elm-buttom" variant="brand-primary" type="button" (click)="cancel()">
+             {{ 'New-order.Main.Button.Cancel' | translate }}
+          </db-button>
+        </div>
+
+        <div style="flex: 1" class="center-content">
+          <div class="flex-row" *ngIf="totalPages > 1">
+            <div *ngIf="previousIsActive()">
+              <db-button class="elm-buttom" variant="brand-primary" type="button" (click)="previous()">
+                <i data-icon="chevron-left" data-icon-variant="24-outline"></i> 
+              </db-button>
+            </div>
+            <div *ngIf="!previousIsActive()">
+              <db-button class="elm-buttom" variant="disabled" type="button">
+                <i data-icon="chevron-left" data-icon-variant="24-outline"></i> 
+              </db-button>
+            </div>
+            <div style="margin: 10px 20px 0 20px">{{ (currentPage +1) }} {{ 'New-order.Wagon-information.Dangerous-Goods-Selection-Dialog.Page-index' | translate }} {{ totalPages }}</div>
+            <div *ngIf="nextIsActive()">
+              <db-button class="elm-buttom" variant="brand-primary" type="button" (click)="next()">
+                <i data-icon="chevron-right" data-icon-variant="24-outline"></i> 
+              </db-button>
+            </div>
+            <div *ngIf="!nextIsActive()">
+              <db-button class="elm-buttom" variant="disabled" type="button">
+                <i data-icon="chevron-right" data-icon-variant="24-outline"></i> 
+              </db-button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="selectedIndex > -1">
+          <db-button class="elm-buttom" variant="brand-primary" type="button" (click)="confirm()">
+            <svg class="icon mouse-pointer remove-icon">
+                <use xlink:href="assets/icons/icons.svg#confirm" />
+            </svg> {{ 'Shared.Confirm' | translate }}
+          </db-button>
+        </div>
+
+        <div *ngIf="selectedIndex === -1">
+          <db-button class="elm-buttom" variant="disabled" type="button">
+            <svg class="icon mouse-pointer remove-icon">
+                <use xlink:href="assets/icons/icons.svg#confirm" />
+            </svg> {{ 'Shared.Confirm' | translate }}
+          </db-button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>

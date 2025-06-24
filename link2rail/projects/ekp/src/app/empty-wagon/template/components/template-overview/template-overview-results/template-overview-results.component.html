@@ -1,0 +1,75 @@
+<section>
+    <div id="list-view" style="width: 100%; min-width: 1820px">
+        <table class="list-table">
+            <thead class="table-header">
+            <tr>
+                <ng-container *ngFor="let header of tableHeaders">
+                    <th scope="col" [style.min-width]="header.minWidth" [style.text-align]="header.textAlign"
+                        [title]="header.headerText">
+                        <div class="flex-row">
+                            <span [innerHtml]="header.headerText"></span>
+                            <span class="sort-icons-block" *ngIf="header.sortable"
+                                  (click)="onClickSortField(header.fieldName)">
+                                    <div class="sort-descending"
+                                         [class.active-sort]="getSortedCondition(header.fieldName) && getSortedCondition(header.fieldName)?.asc"></div>
+                                    <div class="sort-ascending"
+                                         [class.active-sort]="getSortedCondition(header.fieldName) && !getSortedCondition(header.fieldName)?.asc"></div>
+                                </span>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let templateSummary of tableData; let i = index" [class.white-row]="i % 2 === 0">
+                <td>
+                    <div>{{ templateSummary.templateName }}</div>
+                    <div>{{ templateSummary.customerTemplateName }}</div>
+                </td>
+                <td>
+                    <div>{{ templateSummary.orderer.sgvName }}</div>
+                    <div>{{ templateSummary.orderer.sgvId }}</div>
+                </td>
+                <td>
+                    <div>{{ templateSummary.orderer.partnerName }}</div>
+                    <div>{{ templateSummary.orderer.partnerId }}</div>
+                </td>
+
+                <td>
+                    <div>{{ templateSummary.shipper?.sgvName }}</div>
+                    <div>{{ templateSummary.shipper?.sgvId }}</div>
+                </td>
+                <td>
+                    <div>{{ templateSummary.shipper?.partnerName }}</div>
+                    <div>{{ templateSummary.shipper?.partnerId }}</div>
+                </td>
+                <td>
+                    <div style="width: 100%; text-align: center;" (click)="viewTemplate(templateSummary.templateName)">
+                        <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                            <use xlink:href="assets/icons/icons.svg#form-icon"/>
+                        </svg>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="!templateSummary.isReadOnly"
+                         (click)="editTemplate(templateSummary.templateName, templateSummary.customerTemplateName)"
+                         style="width: 100%; text-align: center;">
+                        <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                            <use xlink:href="assets/icons/icons.svg#edit"/>
+                        </svg>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="!templateSummary.isReadOnly" style="width: 100%; text-align: center;"
+                         (click)="createOrder(templateSummary.templateName)">
+                        <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                            <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle"/>
+                        </svg>
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,86 @@
+@use 'color';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+  height: 190px;
+}
+
+body {
+  max-height: 1200;
+}
+
+.currentDate {
+  min-width: 135px;
+}
+
+.table-header {
+  position: sticky;
+  bottom: 0;
+  background-color:color.$white-color;
+}
+
+
+.history-table-block {
+  padding: 0px 10px 15px 10px;
+}
+
+.cmp-table {
+  width: 90%;
+
+  th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background:color.$white-color;
+  }
+
+  tr:nth-child(odd) {
+    background-color:color.$background-grey-color;
+  }
+
+  tbody td {
+    text-align: left;
+    vertical-align: middle;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    overflow: unset;
+  }
+
+  tbody tr:first-of-type {
+    td:first-of-type {
+      .first-event {
+        color:color.$black-color;
+      }
+    }
+  }
+
+
+  tbody tr:last-of-type {
+    td:first-of-type {
+      .icon::after {
+        content: none;
+      }
+      .first-event {
+        color:color.$black-color;
+      }
+    }
+  }
+
+  .flex-td {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.modal-main {
+  max-height: calc(100vh - 294px);
+}
+
+.modal-main-trackinghistory {
+  padding: 0px 5px 0px 5px;
+}

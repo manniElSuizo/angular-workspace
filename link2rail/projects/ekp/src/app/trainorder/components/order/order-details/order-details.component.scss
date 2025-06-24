@@ -1,0 +1,47 @@
+.order-details-area {
+  overflow-y: auto;
+  display: grid;
+  gap: 0.5em;
+  
+  .block-title {
+      font-size: 1.1em;
+      font-weight: bold;
+  }  
+  
+  .column {
+      float: left;
+  }
+  
+  .left {
+      width: 45%;
+  }
+    
+  .right {
+      width: 55%;
+  }
+  }
+  
+  .details-info-block {
+  display: flex;
+  padding-left: 30px;
+  padding-right: 30px;
+  
+      .info-block-part {
+          width: 90%;
+  
+          & > div {
+          display: flex;
+  
+          div {
+              width: 100%;
+              text-align: left;
+              margin: 5px 0;
+          }
+          }
+  
+          &:first-of-type {
+          margin-right: 10%;
+          }
+      }
+  }
+  

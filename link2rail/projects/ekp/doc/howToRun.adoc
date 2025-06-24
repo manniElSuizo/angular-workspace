@@ -1,0 +1,35 @@
+# How To Run
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
+
+## Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Production
+
+The repository comes with a Dockerfile, that configures an nginx to serve the app. While the nginx config was meant for production purposes, you should check if it meets your needs. You can build and test the container locally by running.
+
+`docker build -t ri-angular . && docker run -p 8080:4200 ri-angular`
+
+The included .gitlab-ci.yml deploys this docker image into an OpenShift namespace.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to start the development server and execute the end-to-end tests via [Cypress](https://cypress.io)
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

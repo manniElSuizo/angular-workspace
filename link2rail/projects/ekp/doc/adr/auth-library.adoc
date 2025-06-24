@@ -1,0 +1,53 @@
+# Architecture Decision Record: OIDC Library
+
+Date: 2019-07-18
+
+## State
+
+Prove of Concept
+
+## Kontext
+
+We need to implement the authentication/authorization based on
+OpendID Connect (OIDC) protocol, which is an extension on oauth2 standard.
+
+There are multiple options
+
+* selfmade
+* Javascript library: https://github.com/IdentityModel/oidc-client-js
+* Alternative libraries:;
+** https://github.com/andreassolberg/jso
+** https://github.com/zalando-stups/oauth2-client-js
+** https://github.com/salte-auth/salte-auth
+** https://auth0.com/docs/libraries/auth0js/v9
+** http://www.passportjs.org/docs/oauth/
+
+The solution must be compatible with [DB WebSSO](https://db-planet.deutschebahn.com/workspaces/secure-access-services/apps/wiki/sso/list/view/ae52fb7b-9109-4948-bd18-022334af7dd2)
+
+## Decision
+
+The second option: `oidb-client.js` was chosen, because:
+
+* it is one of two certified js client libs by openid.net
+see -> https://openid.net/developers/certified/
+
+* it is already used in business hub
+https://git.tech.rz.db.de/dbs-businesshub/bh-infra/product-dashboard/merge_requests/84/diffs
+
+The first option to implement it by myself, was not taken because:
+
+* it should support "authorization code flow" for public client (= without server),
+which is more complex in browser than for confidential client (= with server)
+* so that potential risk to introduce security flaws is high
+
+Other alternatives were dropped because of missing openid.net certification.
+
+## Deciders
+
+Waldemar Schäfer
+
+## References
+
+Thread in "Frag die Architektur Gilde" in MS Teams:
+
+https://teams.microsoft.com/l/message/19:7479853bb7954cb286c2ccfebbfac4b7@thread.skype/1559730107272?tenantId=a1a72d9c-49e6-4f6d-9af6-5aafa1183bfd&groupId=fce87098-99b2-4f0a-95e5-5464bfc58d79&parentMessageId=1559730107272&teamName=Architekturgilde&channelName=Frag%20die%20Architekturgilde&createdTime=1559730107272

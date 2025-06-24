@@ -1,0 +1,30 @@
+<header class="modal-header">
+    <span>{{ 'NHM-Code-Details.Good-type' | translate }}</span>
+    <h2 *ngIf="nhmCodeDetails.orderNumber">
+        <strong>{{ 'Order-component.Table-header.Order-number' | translate}} {{ nhmCodeDetails.orderNumber }}</strong>
+    </h2>
+    <h2 *ngIf="nhmCodeDetails.zabOrderNumber">
+        <strong>{{ 'Railorder-summary-component.Table-header.Order-number' | translate}} {{ nhmCodeDetails.zabOrderNumber | orderNumber }}</strong>
+    </h2>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <table class="list-table">
+        <thead class="table-header">
+            <tr>
+                <th style="min-width: 152px;">{{ 'NHM-Code-Details.NHM-Code' | translate }}</th>
+                <th>{{ 'NHM-Code-Details.Description' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let nhmCode of nhmCodeDetails.nhmCodes">
+                <td>{{ nhmCode.nhmCode }}</td>
+                <td>{{ nhmCode.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+</main>

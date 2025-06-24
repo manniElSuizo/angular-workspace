@@ -1,0 +1,179 @@
+@use 'color';
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+.modal-header {
+    position: relative;
+    background:color.$background-color-light;
+    padding: 10px 20px;
+    margin: 0;
+    height: 120px;
+
+    span {
+        font-weight: normal;
+    }
+
+    h2 {
+        margin-top: 16px;
+    }
+
+    .close-icon {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+    }
+}
+
+.modal-main {
+    //max-height: calc(110vh - 294px);
+    //min-height: calc(110vh - 294px);
+    overflow-y: auto;
+
+    /* Allow scrolling if content overflows */
+    padding: 10px 20px;
+}
+
+.details-info-block {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.info-block-part-left {
+    width: 50%;
+    padding: 5px;
+}
+
+.info-block-part-left-suitable-for-running {
+    display:flex;
+    width: 50%;
+    padding: 0px 5px
+
+}
+.info-block-part-damage {
+    width: 100%;
+    padding: 0px 5px
+}
+
+
+.info-block-part-right {
+    width: 50%;
+    padding: 5px;
+}
+
+.info-block-part-left>div,
+.info-block-part-right>div {
+    display: flex;
+    //align-items:start;
+    margin: 5px 0;
+}
+.sep {    background-color: #f5f5f5;
+    border: none;
+    display: block;
+    height: 2px;
+    margin: 1rem 0;
+}
+
+.label-left {
+    font-weight: bold;
+    width: 200px;
+    margin-right: 10px;
+    display:inline-flex;
+    /* Space between label and value */
+}
+
+.capture-left {
+    font-weight: bold;
+    width: 200px;
+    margin-right: 10px;
+    /* Space between label and value */
+    font-size: larger;
+
+}
+
+.capture-left-speed-class {
+    font-weight: bold;
+    width: 200px;
+    margin: 30px 0px;
+    /* Space between label and value */
+    font-size: larger;
+
+}
+
+.capture-right {
+    font-weight: bold;
+    width: 250px;
+    margin-right: 10px;
+    /* Space between label and value */
+    font-size: larger;
+}
+
+.label-right {
+    font-weight: bold;
+    width: 320px;
+    margin-right: 10px;
+    /* Space between label and value */
+}
+
+.value {
+    font-weight: normal;
+    text-align: left;
+    /* Aligns the value to the right */
+    white-space: nowrap;
+    /* Prevents wrapping if the value is long */
+    flex: 1;
+    /* Allows the value to grow */
+}
+.suitableForRunnig {
+    font-weight: normal;
+    text-align: left;
+    /* Aligns the value to the right */
+    white-space: nowrap;
+    width: 200px;
+}
+
+#sep1,
+#sep2,
+#sep3 {
+    border: none;
+    border-top: 1px solid #ccc;
+    /* Light gray color for the line */
+    margin: 1rem 0rem !important;
+    width: 100%;
+}
+
+.table-container {
+    display: table;
+    width: 100%;
+}
+
+.dynamic-width-table {
+    width: 100%;
+}
+/*
+.dynamic-width-table th
+ td {
+    word-wrap: break-word;
+}
+*/
+.int-loadlimit-before-country {
+    margin-top: 10px;
+}
+
+.int-loadlimit-table-speed-limit-label {
+    width: 55px;
+}
+
+.int-loadlimit-table-speed-limit-value {
+    width: 30px;
+}
+
+.int-loadlimit-table-label-right {
+    font-weight: bold;
+    width: 320px;
+    margin-right: 10px;
+    /* Space between label and value */
+}

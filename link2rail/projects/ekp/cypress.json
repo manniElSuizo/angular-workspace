@@ -1,0 +1,21 @@
+{
+  "integrationFolder": "cypress/integration",
+  "supportFile": "cypress/support/index.ts",
+  "videosFolder": "cypress/videos",
+  "screenshotsFolder": "cypress/screenshots",
+  "pluginsFile": "cypress/plugins/index.js",
+  "fixturesFolder": "cypress/fixtures",
+  "baseUrl": "http://localhost:4200",
+  "chromeWebSecurity": false,
+  "browser": "chrome",
+  "env": {
+    "login_user_management_url": "https://oauth-tmsx.test.service.deutschebahn.com/api/user",
+    "login_username": "tmp_ri_angular_user",
+    "login_password": "myunsecurepassword",
+    "login_firstname": "Max",
+    "login_lastname": "Mustermann",
+    "login_groups": "Testuser",
+    "login_mail": "max.mustermann@deutschebahn.com",
+    "login_lifetime": 600
+  }
+}

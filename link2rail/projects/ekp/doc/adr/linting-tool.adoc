@@ -1,0 +1,20 @@
+# Architecture Decision Record: Linting Tool
+
+Date: 2021-04-29
+
+## State
+
+Decided
+
+## Kontext
+
+The Angular Team removed the support for TSLint static code analyzing using codelyzer with Angular 10.
+TSLint isn't further developed as the common Tools used for JavaScript linting ESLint has grown, evolved and supports TypeScript as well.
+
+## Decision
+
+Since ESLint is the most used linting tool (reference: link:https://2020.stateofjs.com/en-US/other-tools/#utilities[stateofjs.com 2020 survey]), and the Angular team strongly recommends using ESLint but doesn't provide an out-of-the-box migration, a manuel migration from TSLint to ESlint has been done.
+
+## Deciders
+
+Danny Koppenhagen

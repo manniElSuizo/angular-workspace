@@ -1,0 +1,30 @@
+{
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Invoice view",
+        "filter": {
+          "dateFrom": "Date (from)",
+          "dateTo": "Date (to)",
+          "debitorNumber": "Accounts receivable number",
+          "invoiceNumber": "Invoice number"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Invoice number",
+            "invoiceDate": "Invoice date",
+            "referenceInvoiceNumber": "Ref. invoice number",
+            "recipientCompany": "Recipient company",
+            "debitorNumber": "Accounts receivable number",
+            "dueDate": "Due date",
+            "currency": "Currency",
+            "netAmount": "Net amount",
+            "vatAmount": "VAT amount",
+            "grossAmount": "Gross amount",
+            "link": "PDF link"
+          }
+        }
+      }
+    }
+  }
+}

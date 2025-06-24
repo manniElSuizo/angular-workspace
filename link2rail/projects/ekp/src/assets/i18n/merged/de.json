@@ -1,0 +1,2365 @@
+{
+  "app-name": "RiWebBase",
+  "Title": "link2rail",
+  "error-403": "Sie sind nicht autorisiert. Bitte zuerst anmelden.",
+  "error-404": "Die Seite konnte nicht gefunden werden.",
+  "error": "Fehler",
+  "instance": "Instanz",
+  "yes": "ja",
+  "no": "nein",
+  "de": "deutsch",
+  "en": "englisch",
+  "SPECIAL_TRAIN": "Sonderzug",
+  "page": "Seite",
+  "help": "Hilfe",
+  "login": "Anmelden",
+  "logout": "Abmelden",
+  "change-language": "zu {{ language }} wechseln",
+  "welcome": "Willkommen zu Train Order",
+  "login-required": "Bitte zuerst anmelden",
+  "fields-required": "Bitte Pflichtfelder füllen!",
+  "user-exists": "Benutzer existiert bereits!",
+  "compliance": "Datenschutz",
+  "imprint": "Impressum",
+  "contact": "Kontakt",
+  "aboutUs": "Über uns",
+  "feedback": "Feedback",
+  "restricted-page": "Diese Seite ist nur für angemeldete User erreichbar",
+  "customer-select": "Kundenname/SGV Nr.",
+  "partnerId-select": "Partner-ID",
+  "customer-select-all": "Kundenname/SGV Nr. (alle)",
+  "saveOrderTemplate": "Vorlage speichern",
+  "copyTrainId": "Train-ID kopieren",
+  "currentLocation": "Tracking aufrufen",
+  "orderSpecialTrain": "Bestellung auslösen",
+  "cancelRegularTrain": "Abbestellung auslösen",
+  "editOrderTemplate": "Vorlage modifizieren",
+  "deleteOrderTemplate": "Vorlage löschen",
+  "orderTemplate-SPECIAL_TRAIN": "Flextrain",
+  "orderTemplate-REGULAR_TRAIN": "Plantrain",
+  "train-SPECIAL_TRAIN": "Sonderzug",
+  "train-REGULAR_TRAIN": "Regelzug",
+  "Customer-Profile-Label": "Kundenprofil",
+  "TOM-Group-Label": "TOM-Gruppe",
+  "history": "Historie aufrufen",
+  "modify": "Modifizieren",
+  "cancel": "Abbestellen",
+  "edit": "Bearbeiten",
+  "delete": "Löschen",
+  "copy": "Kopieren",
+  "deactivate": "deaktivieren",
+  "reactivate": "reaktivieren",
+  "UNDEFINED": "-",
+  "ORDER_ACQUIRED": "Bestellung erfasst",
+  "ORDER_IN_VALIDATION": "Bestellung in Prüfung",
+  "ORDER_ACCEPTED": "Bestellung angenommen",
+  "ORDER_DECLINED_WITH_ALTERNATIVE": "Bestellung abgelehnt mit Alternative",
+  "ORDER_DECLINED": "Bestellung abgelehnt",
+  "TRAIN_TOO_LATE": "Zug ist mehr als 60 min verspätet",
+  "TRAIN_LATE": "Zug ist weniger als 60 min verspätet",
+  "TRAIN_ON_TIME": "Zug ist pünktlich",
+  "ALTERNATIVE_ACCEPTED": "Alternative angenommen",
+  "ALTERNATIVE_DECLINED": "Alternative abgelehnt",
+  "REDUCTION_ACCEPTED": "Mengenreduzierung angenommen",
+  "CANCELLATION_ACQUIRED": "Abbestellung in Prüfung",
+  "CANCELLATION_IN_VALIDATION": "Abbestellung in Prüfung",
+  "CANCELLATION_DECLINED": "Abbestellung abgelehnt",
+  "PLANNING_OFFER_AVAILABLE": "Planungsergebnis liegt vor",
+  "CANCELED": "Abbestellung angenommen",
+  "ERROR": "Fehler",
+  "ordered": "bestellt",
+  "canceled": "abbestellt",
+  "IDLE": "Leerlauf",
+  "LOAD": "Lastlauf",
+  "Manual-button-label": "Benutzerhandbuch",
+  "Download-manual-button-label": "Benutzerhandbuch herunterladen",
+  "Release-info-label": "Release Notes",
+  "Download-release-button-label": "Release Notes herunterladen",
+  "Support": "Unterstützung",
+  "DEPARTURE": "Abfahrt",
+  "ARRIVAL": "Ankunft",
+  "Navigation": {
+    "Menu-title": "Menü",
+    "Home-page": "Startseite",
+    "Order-management": "Order",
+    "Order-management-order-list": "Auftragsübersicht",
+    "Order-management-order-code-list": "Auftragscodeübersicht",
+    "Empty-wagon": "Empty Wagon",
+    "Empty-wagon-order-list": "Bestellübersicht",
+    "Empty-wagon-template-list": "Vorlagenübersicht",
+    "Trains-orders": "Zugübersicht",
+    "Calendar-view": "Kalenderansicht",
+    "Week-view": "Wochenansicht",
+    "Month-view": "Monatsansicht",
+    "List-view": "Listenansicht",
+    "My-order-templates": "Meine Bestellvorlagen",
+    "Order-templates": "Vorlagenübersicht",
+    "Roundtrip": "Roundtrip",
+    "Contract-agreements": "Vertragsvereinbarungen",
+    "Orders-list": "Bestellungen",
+    "Track-trace": "Track&Trace",
+    "Wagon-overview": "Wagenübersicht",
+    "Wagonholderview": "Wagenhaltersicht",
+    "Orders-overview": "Bestellübersicht",
+    "New-Order": "Neue Bestellung",
+    "User-management": "Benutzerverwaltung",
+    "Masterdata-management": "Stammdatenverwaltung",
+    "Customer-profiles": "Kundenprofile",
+    "User-groups": "Benutzergruppen",
+    "System-information": "Systeminformationen",
+    "Train-management": "Train Management",
+    "Authorization-Matrix": "Berechtigungs-Matrix",
+    "Customer-groups": "Landesgesellschaften",
+    "Invoice-overview": "Rechnungssicht"
+  },
+  "Home": {
+    "Empty-wagon-text": "Senden Sie uns Ihre Leerwagenanfragen und greifen Sie auf Bestellvorlagen zurück.",
+    "Order-management-text": "Beauftragen Sie Ihre Transporte mit Hilfe von Auftragsvorlagen.",
+    "Track-trace-text": "Informieren Sie sich zum Aufenthaltsort Ihrer Sendungen.",
+    "Train-management-text": "Erhalten Sie einen Überblick über Ihr Zugprogramm und tracken Sie Ihre Züge. Außerdem können Sie Züge be- und abbestellen.",
+    "list-view-text": "Erhalten Sie einen Überblick über Ihr gesamtes Zugprogramm, nutzen Sie die Tracking Möglichkeiten und nehmen Sie Abbestellungen vor.",
+    "calendar-view-text": "Erhalten Sie einen kalendarischen Überblick über Ihr gesamtes Zugprogramm, nutzen Sie die Tracking Möglichkeiten und nehmen Sie Abbestellungen vor.",
+    "week-view-text": "Erhalten Sie einen kalen-darischen Wochenüberblick über Ihr gesamtes Zug-programm, nutzen Sie Tracking Möglichkeiten und nehmen Sie Abbestellungen vor.",
+    "month-view-text": "Erhalten Sie einen Monatsüberblick über Ihr gesamtes Zugprogramm inkl. Bestellungen, nutzen Sie Tracking Möglichkeiten und nehmen Sie Abbestellungen vor.",
+    "orders-list-text": "Erhalten Sie eine Übersicht über Ihre Be- und Abbestellungen inkl. Statusupdates und nehmen Sie Bestellungen und Abbestellungen vor.",
+    "order-templates-text": "Erhalten Sie eine Übersicht über Ihre Bestellvorlagen und nehmen Sie Flextrain-Bestellungen vor."
+  },
+  "ControlMultiSelect": {
+    "searchPlaceholderText": "Suche",
+    "noDataAvailablePlaceholderText": "Keine Daten verfügbar"
+  },
+  "Documentation-component": {
+    "Details": {
+      "Header": "Informationen und Hilfe"
+    }
+  },
+  "Feedback-component": {
+    "Details": {
+      "Header": "Ihr Feedback an uns",
+      "First-line": "Vielen Dank, dass Sie uns ein Feedback geben möchten. Die Teilnahme erfolgt freiwillig.",
+      "Second-line": "Es werden technisch notwendige Cookies gesetzt. Weitere Informationen finden Sie in unseren",
+      "Data-protection-notice": "Datenschutzhinweisen",
+      "Hint": "Hinweis",
+      "First-hint-text": "Bitte beachten Sie: Sie erhalten keine Antwort auf Ihr Feedback.",
+      "Second-hint-text": "Bitte geben Sie keine personenbezogenen Daten wie Name, Auftragsnummer etc. an."
+    },
+    "Label": {
+      "Close-button-label": "Abbrechen",
+      "Feedback-button-label": "Weiter"
+    }
+  },
+  "System-information-component": {
+    "Header-label": "Systeminformationen",
+    "From-label": "vom",
+    "Support-text": "Auf dieser Seite finden Sie hilfreiche Unterlagen zum Thema link2rail Portal. Sollten Sie weitere Rückfragen haben, steht Ihnen der link2rail-support unter 00800 5555 4433 montags bis freitags von 7 bis 16 Uhr oder unter link2rail@deutschebahn.com gerne zur Verfügung."
+  },
+  "Footer": {
+    "Back-to-top-button-label": "Nach oben"
+  },
+  "ewd": {
+    "shared": {
+      "status": {
+        "canceled": "storniert",
+        "created": "bestellt",
+        "dispatched": "Bestellung disponiert",
+        "draft": "Entwurf angelegt",
+        "draftRemoved": "Entwurf gelöscht",
+        "inProcess": "in Bearbeitung",
+        "isTransmitted": "wird übertragen",
+        "partialCancellation": "(Teil-) Ausfall",
+        "rejected": "abgelehnt",
+        "transmitted": "übertragen",
+        "transmitFailed": "Übertragung fehlgeschlagen"
+      }
+    },
+    "order": {
+      "overview": {
+        "title": "Bestellübersicht",
+        "button": {
+          "createOrder": "Neue Bestellung",
+          "modifyOrder": "bearbeiten",
+          "cancelOrder": "stornieren",
+          "viewOrder": "öffnen"
+        },
+        "filter": {
+          "dateFrom": "Datum (von)",
+          "dateTo": "Datum (bis)",
+          "ordererSgv": "Kunde",
+          "ordererPartner": "Standortnummer des Kunden",
+          "demandLocation": "Bahnstelle",
+          "loadRunCountry": "Empfangsland",
+          "demandWagonType": "Bedarfstyp",
+          "status": "Status",
+          "searchReference": "Suche (Bestell-ID, link2rail-ID, Referenz)",
+          "origin": "Herkunft"
+        },
+        "table": {
+          "header": {
+            "orderId": {
+              "text": "Bestell-ID<br>link2rail-ID",
+              "title": "Bestell-ID, link2rail-ID"
+            },
+            "internalOrderNumber": {
+              "text": "Vorlage<br>EWD-ID",
+              "title": "Vorlage, EWD-ID"
+            },
+            "orderer": {
+              "text": "Kunde<br>Standort",
+              "title": "Kunde, Standort"
+            },
+            "shipper": {
+              "text": "Verlader<br>Standort",
+              "title": "Verlader, Standort"
+            },
+            "demandLocation": {
+              "text": "Bahnstelle",
+              "title": "Bahnstelle"
+            },
+            "freightWagonLocation": {
+              "text": "Bedarfsort<br>Land",
+              "title": "Bedarfsort, Land"
+            },
+            "demandWagonType": {
+              "text": "Bedarfstyp",
+              "title": "Bedarfstyp"
+            },
+            "numberOfWagon": {
+              "text": "Anzahl<br> vsl. Gestellung",
+              "title": "Anzahl, vsl. Gestellung"
+            },
+            "status": {
+              "text": "Status",
+              "title": "Status"
+            },
+            "origin": {
+              "text": "Herkunft",
+              "title": "Herkunft"
+            },
+            "demandDateTime": {
+              "text": "Bedarfstag<br>Zeit",
+              "title": "Bedarfstag -zeit"
+            },
+            "loadRunInformation": {
+              "text": "Lastlauf-<br>angaben",
+              "title": "Lastlaufangaben"
+            },
+            "customerCommentsToService": {
+              "text": "Bemerkung<br>Kundenservice",
+              "title": "Bemerkung Kundenservice"
+            },
+            "customerReference": {
+              "text": "Kundenreferenz",
+              "title": "Kundenreferenz"
+            },
+            "menu": {
+              "text": "",
+              "title": ""
+            }
+          },
+          "menu": {
+            "loadRunInformation": {
+              "title": "Lastlaufangaben",
+              "countryCodeUic": "Empfangsland",
+              "locationNumber": "Empfangsbahnstelle",
+              "transitRailwayUndertakingCode": "Transit EVU",
+              "nhmCode": "NHM Code"
+            }
+          },
+          "downloadCsv": {
+            "orderId": "Bestell-ID",
+            "templateName": "link2rail-ID",
+            "internalOrderNumber": "Vorlage",
+            "orderIdConsumer": "EWD-ID",
+            "ordererSgvId": "Kunde",
+            "ordererPartnerId": "Standort",
+            "shipperSgvId": "Verlader",
+            "shipperPartnerId": "Standort",
+            "demandLocationCountry": "Land",
+            "freightWagonLocation": "Bedarfsort",
+            "numberOfWagonsOrdered": "Anzahl",
+            "numberOfWagonsDisposed": "Gestellung",
+            "demandDateTime": "Bedarfstag",
+            "customerCommentsToService": "Bemerkung Kundenservice"
+          }
+        }
+      },
+      "form": {
+        "common": {
+          "orderTemplate": {
+            "required": "*Pflichtfeld",
+            "inputs": {
+              "templateName": {
+                "placeholder": "Vorlage",
+                "label": "Vorlage"
+              }
+            }
+          },
+          "orderPartners": {
+            "title": "Besteller",
+            "inputs": {
+              "ordererSgv": {
+                "placeholder": "Kunde",
+                "label": "Kunde"
+              },
+              "ordererPartner": {
+                "placeholder": "Standort Kunde",
+                "label": "Standort Kunde"
+              },
+              "shipperSgv": {
+                "placeholder": "Verlader",
+                "label": "Verlader"
+              },
+              "shipperPartner": {
+                "placeholder": "Standort Verlader",
+                "label": "Standort Verlader"
+              }
+            }
+          },
+          "demandLocation": {
+            "inputs": {
+              "commercialLocation": {
+                "placeholder": "Bahnstelle",
+                "label": "Bahnstelle"
+              },
+              "freightWagonLocation": {
+                "placeholder": "Bedarfsort",
+                "label": "Bedarfsort"
+              }
+            }
+          },
+          "demandTime": {
+            "title": "Bedarf",
+            "inputs": {
+              "demandDate": {
+                "placeholder": "Bedarfstag",
+                "label": "Bedarfstag"
+              },
+              "demandTime": {
+                "placeholder": "Bedarfszeit",
+                "label": "Bedarfszeit"
+              }
+            },
+            "errors": {
+              "demandDate": {
+                "required": "Bitte Bedarfstag eingeben.",
+                "isMinDateNotMet": "Der Bedarfstag liegt vor dem erforderlichen Mindestdatum {{ minDemandDate }}.",
+                "isMaxDateExceeded": "Der Bedarfstag darf nicht später als {{ maxDemandDate }} sein.",
+                "nonWorkingDay": "Der Bedarfstag ist kein Arbeitstag."
+              },
+              "demandTime": {
+                "required": "Bitte Bedarfszeit eingeben",
+                "expired": "Die Frist für die Bestellungen ist am {{ latestCustomerOrderDateTime}} abgelaufen."
+              },
+              "demandTypesArray": {
+                "invalidWagonCount": "Es muss mindestens ein Wagen bestellt werden."
+              }
+            }
+          },
+          "demandType": {
+            "inputs": {
+              "demandWagonType": {
+                "placeholder": "Bedarfstyp",
+                "label": "Bedarfstyp"
+              },
+              "wagonAmount": {
+                "placeholder": "Wagenanzahl",
+                "label": "Wagenanzahl"
+              },
+              "commentToCustomerService": {
+                "placeholder": "Bemerkung Kundenservice",
+                "label": "Bemerkung Kundenservice"
+              },
+              "customerReference": {
+                "placeholder": "Kundenreferenz",
+                "label": "Kundenreferenz"
+              },
+              "countryCode": {
+                "placeholder": "Empfangsland",
+                "label": "Empfangsland"
+              },
+              "loadRunLocation": {
+                "placeholder": "Empfangsbahnstelle",
+                "label": "Empfangsbahnstelle"
+              },
+              "transitRailway": {
+                "placeholder": "Transit EVU",
+                "label": "Transit EVU"
+              },
+              "nhmCode": {
+                "placeholder": "NHM Code",
+                "label": "NHM Code"
+              }
+            },
+            "infos": {
+              "maxNumberOfWagonExceeded": "Die maximale Anzahl von Wagen {{ maxNumberOfWagon }} wurde überschritten."
+            }
+          }
+        },
+        "creation": {
+          "title": "Neue Bestellung",
+          "titleForTemplate": "Vorlage",
+          "button": {}
+        },
+        "modification": {
+          "button": {}
+        },
+        "cancellation": {
+          "title": "Bestellung stornieren",
+          "message": "Möchten Sie die aktuell ausgewählte Teilbestellung oder die gesamte Bestellung stornieren?",
+          "button": {
+            "cancelOrderId": "Gesamte Bestellung stornieren",
+            "cancelOrderIdConsumer": "Aktuelle link2rail-ID stornieren"
+          }
+        },
+        "history": {
+          "title": "Historie",
+          "section": {
+            "title": "Historie"
+          }
+        }
+      }
+    },
+    "template": {
+      "overview": {
+        "title": "Vorlagenübersicht",
+        "button": {
+          "createOrder": "Neue Bestellung",
+          "viewTemplate": "öffnen"
+        },
+        "filter": {
+          "templateName": "Vorlage",
+          "ordererSgv": "Kunde",
+          "ordererPartner": "Standort Kunden",
+          "shipperSgv": "Verlader",
+          "shipperPartner": "Standort Verlader",
+          "demandLocation": "Bahnstelle",
+          "loadRunCountry": "Empfangsland",
+          "demandWagonType": "Bedarfstyp"
+        },
+        "table": {
+          "header": {
+            "templateName": "Vorlage",
+            "ordererSgv": "Kunde",
+            "ordererPartner": "Standort Kunden",
+            "shipperSgv": "Verlader",
+            "shipperPartner": "Standort Verlader",
+            "createOrder": "Neue Leerwagenbestellung",
+            "viewTemplate": "Vorlage einsehen",
+            "editTemplateName": "Vorlage umbenennen"
+          }
+        }
+      },
+      "form": {
+        "rename": {
+          "title": "Vorlage {{templateName}} umbenennen",
+          "inputs": {
+            "customerTemplateName": {
+              "placeholder": "Benutzerdefinierter Name",
+              "label": "Benutzerdefinierter Name"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Empty-wagon": {
+    "demand-component": {
+      "demand": "Bedarf",
+      "required-field": "*Pflichtfeld",
+      "placeholder": {
+        "delivery-date-time": "Bedarfstag",
+        "Number-of-wagons": "Wagenanzahl",
+        "customer-service": "Bemerkung Kundenservice",
+        "customer-reference": "Kundenreferenz",
+        "demand-wagon-type": "Bedarfstyp",
+        "receiving-country": "Empfangsland",
+        "station-name": "Empfangsbahnstelle",
+        "transit-railway": "Transit EVU",
+        "nhm-code": "NHM Code",
+        "demand-date": "Bedarfstag",
+        "time-range": "Bedarfszeit"
+      },
+      "demand-date": {
+        "invalid-date": "Bitte wählen Sie einen späteren Zeitpunkt.",
+        "missing-date": "Bitte wählen Sie Bedarfstag und Bedarfszeit."
+      },
+      "time-range": {
+        "invalid-date": "Bitte wählen Sie einen späteren Zeitpunkt."
+      },
+      "wagon-amount": {
+        "error-text": "Es muss mindestens ein Wagen bestellt werden."
+      }
+    },
+    "Template-view-list": {},
+    "Order-view-list": {
+      "Empty-wagon-order-list": "Bestellübersicht",
+      "Table-header": {
+        "Order-id": "Bestell-ID MRX-ID",
+        "Order-id-consumer": "MRX-ID",
+        "Internal-order-number": "EWD-ID  Vorlage",
+        "Orderer-customer-id": "Kunde Standort",
+        "Orderer-company-location-number": "Standort",
+        "Shipper-customer-id": "Verlader Standort",
+        "Shipper-company-location-number": "Standort ",
+        "Demand-location-commercial-location-country": "Bedarfsort Land",
+        "Demand-location-commercial-location-name": "Bahnstelle",
+        "Demand-location-commercial-location-number": "Bahnstelle Nummer",
+        "Demand-location-freight-wagon-location-number": "Bedarfsort Nummer",
+        "Demand-location-freight-wagon-location-name": "Bedarfsort Name",
+        "Load-run-data": "Lastlaufangaben",
+        "Demand-wagon-type-wagon-type": "Bedarfstyp",
+        "Demand-wagon-type-wagon-type-code": "Bedarfstyp Code",
+        "Demand-wagon-type-wagon-Type-number": "Bedarfstyp Nummer",
+        "Number-of-wagon-ordered": "Anzahl (Prognose)Gestellung",
+        "Number-of-wagon-disposed": "(Prognose) Gestellung",
+        "Status": "Status",
+        "Origin": "Herkunft",
+        "Delivery-date": "Bedarfstag Zeit",
+        "Load-run-location-commercial-location-country": "Empfangsland",
+        "Load-run-location-commercial-location-number": "Empfangsbahnstelle",
+        "Transit-railway-undertaking-company-code": "Transit EVU",
+        "Transported-goods-NHM-code": "NHM Code",
+        "Comment-to-customer-service": "Bemerkung Kundenservice",
+        "Customer-reference": "Kundenreferenz",
+        "Template": "Vorlage",
+        "Wagon-number": "Wagennummer",
+        "Wagon-type-national": "Wagengattung national",
+        "Wagon-type-international": "Wagengattung international",
+        "Wagon-type": "Bauart"
+      }
+    }
+  },
+  "intermodal": {
+    "shared": {
+      "property": {
+        "loadingUnit": "Ladeeinheit",
+        "loadingUnits": "Ladeeinheiten",
+        "loadingUnitIdentifier": "LE-Zeichen",
+        "loadingUnitNumber": "LE-Nummer",
+        "trainNumber": "Zugnummer",
+        "consignor": "Absender",
+        "consignee": "Empfänger",
+        "shippingDateFrom": "Versanddatum (von)",
+        "shippingDateTo": "Versanddatum (bis)",
+        "departureStation": "Versandbahnhof",
+        "arrivalStation": "Empfangsahnhof",
+        "wagonNumber": "Wagennummer",
+        "status": "Status",
+        "currentLocation": "Aktueller Standort",
+        "referenceOrder": "Ref. Auftrag",
+        "lpkOrdernumber": "LPK-Auftragsnummer"
+      }
+    },
+    "loadingUnits": {
+      "overview": {
+        "title": "Übersicht Ladeeinheiten",
+        "table": {
+          "header": {
+            "loadingUnitIdentifier": {
+              "text": "LE-<br>Zeichen"
+            },
+            "referenceOrder": {
+              "text": "Ref.<br>Auftrag"
+            },
+            "lpkOrdernumber": {
+              "text": "LPK-<br>Auftragsnummer"
+            }
+          }
+        },
+        "downloadCsv": {}
+      }
+    }
+  },
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Rechnungssicht",
+        "filter": {
+          "dateFrom": "Datum (von)",
+          "dateTo": "Datum (bis)",
+          "debitorNumber": "Debitorennummer",
+          "invoiceNumber": "Rechnungsnummer"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Rechnungsnummer",
+            "invoiceDate": "Rechnungsdatum",
+            "referenceInvoiceNumber": "Ref. Rechnungsnummer",
+            "recipientCompany": "Firmenname",
+            "debitorNumber": "Debitorennummer",
+            "dueDate": "Fälligkeit",
+            "currency": "Währung",
+            "netAmount": "Nettobetrag",
+            "vatAmount": "Ust. Betrag",
+            "grossAmount": "Bruttobetrag",
+            "link": "PDF Link"
+          }
+        }
+      }
+    }
+  },
+  "Order-Management": {
+    "Quick-entry": "Schnellerfassung",
+    "Shared": {
+      "Template-name": "Auftragscode-Name",
+      "Errors": {
+        "Order-template-name-validation": "Template Name zu lang"
+      }
+    },
+    "Rail-order-cancellation": {
+      "Confirmation-text": "Sind Sie sicher, dass Sie diese/n Buchung/Auftrag stornieren möchten?"
+    },
+    "order-view-list": {
+      "orderID": "ZAB-Auftragsnummer Auftragscode",
+      "Zab-order-number": "ZAB-Auftragsnummer",
+      "order-state": "ZAB-Auftragsstatus",
+      "template-name": "Auftragscode",
+      "railorderstage": "Auftragsart",
+      "shippingTime": "Versanddatum",
+      "railOrderStatus": "Letzter Status",
+      "status": "ZAB-Status",
+      "sendingStation": "Versandbahnhof",
+      "receivingStation": "Empfangsbahnhof",
+      "consignorName": "Absender",
+      "consigneeName": "Empfänger",
+      "waggonamount": "Wagen (Anzahl)",
+      "order": "Auftrag einsehen",
+      "consignmentNote": "Frachtbrief",
+      "title": "Auftragsübersicht",
+      "warning-title": "Die Buchung verfällt demnächst oder ist bereits verfallen.",
+      "new-order": "Neuer Auftrag",
+      "search": "Suche",
+      "Download-CSV": {
+        "consigneeName": "Empfaenger"
+      },
+      "Context-Menu": {
+        "Edit": "Editieren (Komplettieren)",
+        "Cancel": "Storno",
+        "Subsequent-disposition": "Nachträgliche Verfügung"
+      },
+      "no-wagon-number-message": "Wagennummer nicht verfügbar"
+    },
+    "order-view-last-status": {
+      "Header": "Statushistorie zu ZAB-Auftragsnummer",
+      "Section": "Historie"
+    },
+    "order-view-filter": {
+      "Wagon-number": "Wagennummer",
+      "Shipping-date-from": "Versanddatum (von)",
+      "Shipping-date-to": "Versanddatum (bis)",
+      "sending-station": "Versandbahnhof",
+      "receiving-station": "Empfangsahnhof",
+      "noDataAvailablePlaceholderText": "Keine Daten verfügbar",
+      "rail-order-status": {
+        "CAPTURED": "Z - Zwischengespeichert",
+        "ACCEPTED": "V - Vorgebucht",
+        "SUBMITTED": "B - Bereit",
+        "ACTIVE": "A - Aktiv",
+        "CLOSED": "G - Geschlossen",
+        "CANCELLED": "U - Gelöscht"
+      },
+      "rail-order-stage": {
+        "TRANSPORT_ORDER": "Transportaufträge",
+        "BOOKING": "Buchungen",
+        "DRAFT": "Entwürfe",
+        "ALL": "Alle",
+        "DANGEROUS_GOODS": "Gefahrgutaufträge"
+      },
+      "customerReference": "Referenz",
+      "senderIsoCountryCode": "Versandland",
+      "deliveryIsoCountryCode": "Empfangsland"
+    },
+    "Order-code-view-list": {
+      "title": "Auftragscodeübersicht",
+      "Table-header": {
+        "Order-code-name": "Auftragscode/ Auftragscode-Name",
+        "Consignor-name": "Absender",
+        "Sending-station": "Versandbahnhof",
+        "Point-of-loading-name": "Versandladeplatz",
+        "Consignee-name": "Empfänger",
+        "Receiving-station": "Empfangsbahnhof",
+        "Point-of-unloading-name": "Empfangsladeplatz",
+        "NHM-code-description": "NHM-Code",
+        "UN-number-description": "UN-Code (Beschreibung)",
+        "Consignment-note-view": "Auftragscode in Frachtbriefansicht"
+      },
+      "Context-Menu": {
+        "Create-order": "Auftrag erstellen",
+        "Rename-order-code": "Auftragscode umbenennen",
+        "Investigate-order-code": "Auftragscode einsehen"
+      },
+      "Download-CSV": {
+        "Consignee-name": "Empfaenger",
+        "Order-code-name": "Auftragscode-Name",
+        "Order-code-name-code": "Auftragscode",
+        "CANCELLED": "U - Geloescht"
+      }
+    },
+    "Order-code-view-filter": {
+      "Place-holder": {
+        "Template-number": "Auftragscode",
+        "Template-name": "Auftragscode-Name",
+        "Consignor-name": "Absender",
+        "Sending-country": "Versandland",
+        "Sending-station": "Versandbahnhof",
+        "Consignee-name": "Empfänger",
+        "Receiving-country": "Empfangsland",
+        "Receiving-station": "Empfangsbahnhof",
+        "NHM-code": "NHM-Code",
+        "UN-number": "UN-Code",
+        "senderIsoCountryCode": "Versandland",
+        "deliveryIsoCountryCode": "Empfangsland"
+      },
+      "Label": {
+        "Template-number": "Auftragscode",
+        "Template-name": "Auftragscode-Name",
+        "Consignor-name": "Absender",
+        "Sending-country": "Versandland",
+        "Sending-station": "Versandbahnhof",
+        "Consignee-name": "Empfänger",
+        "Receiving-country": "Empfangsland",
+        "Receiving-station": "Empfangsbahnhof",
+        "NHM-code": "NHM-Code",
+        "UN-number": "UN-Code",
+        "senderIsoCountryCode": "Versandland",
+        "deliveryIsoCountryCode": "Empfangsland"
+      }
+    },
+    "Order-code": {
+      "Rename": "Auftragscode umbenennen"
+    }
+  },
+  "Order-details": {
+    "Partner-id": "Partner-ID",
+    "Customer-language": "Kundensprache",
+    "Reference": "Referenz",
+    "Order-reason": "Sonstige Angaben",
+    "Cancel-reason": "Abbestellgrund",
+    "Customer-reference": "Ihre Kundenreferenz (Nr./Name)",
+    "Date": "Datum",
+    "Sending-date": "Versanddatum",
+    "Sending-data": "Versand",
+    "Sender": "Versender",
+    "Receiver": "Empfänger",
+    "Sending-station": "Versandbahnhof",
+    "Receiving-station": "Empfangsbahnhof",
+    "Sending-working-direction": "Arbeitsrichtung Versand",
+    "Receiving-working-direction": "Arbeitsrichtung Empfang",
+    "NHM-code": "NHM-Code",
+    "Dangerous-good": "UN-Bezeichnung",
+    "Earliest-handover": "Früheste Übergabe",
+    "Latest-handover": "Späteste Übergabe",
+    "Earliest-delivery": "Früheste Zustellung",
+    "Latest-delivery": "Späteste Zustellung",
+    "Wagon-count": "Anzahl Wagen",
+    "Netto-weight": "Nettogewicht (t)",
+    "Weight": "Bruttogewicht (t)",
+    "Planned-weight": "geplantes Nettogewicht (t)",
+    "Planned-length": "geplante Länge (m)",
+    "Order-group-header": "Besteller",
+    "Customer-language-label": "Kundensprache",
+    "Customer-reference-group-header": "Referenz/Bestellgrund",
+    "Receiver-group-header": "Empfang",
+    "Sending-station-label": "Versandbahnhof",
+    "Sending-gwp-label": "Güterwagenstellplatz Versand",
+    "Loader-label": "Verlader",
+    "Unloader-label": "Entlader",
+    "First-carrier-label": "Erster Beförderer",
+    "Last-carrier-label": "Letzter Beförderer",
+    "Receiving-station-label": "Empfangsbahnhof",
+    "Receiving-gwp-label": "Güterwagenstellplatz Empfang",
+    "Handover-group-header": "Übergabewunsch",
+    "Earliest-handover-label": "Früheste Übergabe (Datum/Uhrzeit)",
+    "Latest-handover-label": "Späteste Übergabe (Datum/Uhrzeit)",
+    "Delivery-group-header": "Zustellwunsch",
+    "Earliest-delivery-label": "Früheste Zustellung (Datum/Uhrzeit)",
+    "Latest-delivery-label": "Späteste Zustellung (Datum/Uhrzeit)",
+    "Cargo-group-header": "Ladung",
+    "Number-of-wagons-label": "Anzahl Wagen",
+    "Planned-weight-label": "Nettogewicht (t)",
+    "Wagon-type-label": "Wagengattung",
+    "Dangerous-good-label": "UN-Bezeichnung",
+    "Dangerous-good-class-label": "Gefahrgutklasse",
+    "BzaNr-label": "BZA-Nummer",
+    "Misc-info-header": "Sonstiges",
+    "Other-information-header": "Sonstige Angaben",
+    "Train-data-header": "Zugparameter",
+    "Shipping-Time-header": "Verkehrstag",
+    "Transporterroute-header": "Befördererroute",
+    "Train-type": "Zugart",
+    "TomGroup": "TOM-Gruppe",
+    "operationalId": "Betriebsbild-ID",
+    "CommercialService": "Kommerzielle Zusatzleistung",
+    "BorderStation": "Grenzbahnhof",
+    "Carrier-label": "Beförderer",
+    "Start-station-label": "Versandbahnhof",
+    "Target-station-label": "Empfangsbahnhof",
+    "Transport-group-header": "Angaben zur Ladung",
+    "ShippingTime-group-header": "Angaben zu Verkehrstagen",
+    "ShippingTime-group-header2": "Angaben zum Verkehrstag",
+    "OrderReason-group-header": "Bestellgrund / Sonstige Angaben",
+    "OrderDateTime": "Bestellzeitpunkt",
+    "OrdererEmailadress": "E-Mail des Bestellers",
+    "CancellationDateTime": "Abbestellzeitpunkt",
+    "CancellationEmailadress": "E-Mail des Abbestellers",
+    "Train-information": "Angaben zum Zug",
+    "Train-vmax-label": "Max. km/h",
+    "kv-profil-p2": "KV-Profil (P2)",
+    "kv-profil-c2": "KV-Profil (C2)",
+    "kv-profil-p3": "KV-Profil (P3)",
+    "kv-profil-c3": "KV-Profil (C3)"
+  },
+  "New-order": {
+    "Tooltip": {
+      "Remove-entry": "Eintrag löschen",
+      "Add-entry": "Neuen Eintrag hinzufügen",
+      "Edit-entry": "Eintrag editieren",
+      "Copy-entry": "Eintrag kopieren"
+    },
+    "Main": {
+      "Dialog-title": "Neuer Auftrag",
+      "Order": "ZAB-Auftrag",
+      "Unlock-template-code": "Auftragscode entsperren",
+      "Menu": {
+        "Consignee-consignor": "Absender / Empfänger",
+        "Pickup-delivery": "Ablieferung / Übernahme",
+        "Transport": "Transport",
+        "Wagon-data": "Wagen",
+        "Commercial": "Kommerziell",
+        "Service": "Serviceleistung",
+        "Sender-policy": "Absendererklärung"
+      },
+      "Button": {
+        "Next": "Weiter",
+        "Back": "Zurück",
+        "Cancel": "Abbrechen",
+        "Save-draft": "Entwurf speichern",
+        "Save-order": "Auftrag speichern",
+        "Consignment-note-view": "Frachtbriefansicht",
+        "Book": "Vorbuchen"
+      },
+      "Label": {
+        "Order-code": "Auftragscode",
+        "Required-field": "Pflichtfeld",
+        "Singel-consignment-note": "Einzelfrachtbriefe erstellen"
+      },
+      "Placeholder": {
+        "Order-code": "Auftragscode"
+      },
+      "Tooltip": {
+        "Close-dialog-label": "Dialog schließen"
+      }
+    },
+    "Consignee-consignor": {
+      "Consignor-consignor-group": "1. Absender/Empfänger",
+      "Consignor-section-sender": "Absender",
+      "Consignor-section-loader": "Belader",
+      "Consignor-section-freightpayer-consignor": "Frachtzahler Versand",
+      "Consignor-section-freightpayer-consignee": "Frachtzahler Empfang",
+      "Show-section-details-loading-party": "weitere Eingaben anzeigen (Absender / Frachtzahler Versand / Belader)",
+      "Hide-section-details-loading-party": "weitere Eingaben ausblenden (Absender / Frachtzahler Versand / Belader)",
+      "Consignee-section-receiver": "Empfänger",
+      "Consignee-section-unloader": "Entlader",
+      "Show-section-details-unloading-party": "weitere Eingaben anzeigen (Empfänger / Frachtzahler Empfang / Entlader)",
+      "Hide-section-details-unloading-party": "weitere Eingaben ausblenden (Empfänger / Frachtzahler Empfang / Entlader)",
+      "Freight-payer-for-dispatch": "",
+      "Label": {
+        "Consignor-customer-id": "Kunde",
+        "Consignee-customer-id": "Kundennummer",
+        "Consignor-partner-id": "Standort",
+        "Party-customerid-sgv": "Kundennummer",
+        "Party-customerid-authority-of-customerId": "BVW",
+        "Party-customerid-authority-of-customerId-required": "BVW*",
+        "Party-name": "Name",
+        "Party-comment": "Info",
+        "Party-vatid": "Ust.-ID",
+        "Party-address-zipcode": "PLZ",
+        "Party-address-city": "Ort",
+        "Party-address-street": "Straße",
+        "Party-address-country": "Land",
+        "Party-contact-person-name": "Ansprechpartner",
+        "Party-contact-person-tel": "Telefon",
+        "Party-contact-person-fax": "Fax",
+        "Party-contact-person-email": "E-mail"
+      },
+      "Placeholder": {
+        "Consignor-customer-id": "Kunde",
+        "Consignee-customer-id": "Kundennummer",
+        "Consignor-partner-id": "Standort",
+        "Party-customerid-sgv": "Kundennummer",
+        "Party-customerid-authority-of-customerId": "BVW",
+        "Party-customerid-authority-of-customerId-required": "BVW*",
+        "Party-name": "Name",
+        "Party-comment": "Info",
+        "Party-vatid": "Ust.-ID",
+        "Party-address-zipcode": "PLZ",
+        "Party-address-city": "Ort",
+        "Party-address-street": "Straße",
+        "Party-address-country": "Land",
+        "Party-contact-person-name": "Ansprechpartner",
+        "Party-contact-person-tel": "Telefon",
+        "Party-contact-person-fax": "Fax",
+        "Party-contact-person-email": "E-mail"
+      },
+      "Errors": {},
+      "Consignee-consignor-group": ""
+    },
+    "Pickup-delivery": {
+      "Pickup-delivery-group-header": "2. Ablieferung/Übernahme",
+      "Show-section-details-pickup-location": "weitere Eingaben anzeigen (Übernahmeort)",
+      "Hide-section-details-pickup-location": "weitere Eingaben ausblenden (Übernahmeort)",
+      "Show-section-details-delivery-location": "weitere Eingaben anzeigen (Ablieferungsort)",
+      "Hide-section-details-delivery-location": "weitere Eingaben ausblenden (Ablieferungsort)",
+      "Label": {
+        "Pickup": "Übernahme",
+        "Delivery": "Ablieferung",
+        "Shipping-date": "Bereitstellungsdatum-Versand",
+        "Shipping-time": "Uhrzeit",
+        "Pickup-country": "Land",
+        "Pickup-station": "Bahnstelle",
+        "Pickup-sealoadingpoint": "Seeladestelle",
+        "Pickup-location-info": "Zusatzinformation",
+        "Pickup-location-code": "Übernahmeort Code",
+        "Pickup-location-text": "Übernahmeort Text",
+        "Delivery-country": "Land",
+        "Delivery-station": "Bahnstelle",
+        "Delivery-sealoadingpoint": "Seeladestelle",
+        "Delivery-location-info": "Zusatzinformation",
+        "Delivery-location-code": "Abliefungsort Code",
+        "Delivery-location-text": "Abliefungsort Text"
+      },
+      "Placeholder": {
+        "Shipping-date": "Bereitstellungsdaum-Versand",
+        "Shipping-time": "Uhrzeit",
+        "Pickup-country": "Land",
+        "Pickup-station": "Bahnstelle",
+        "Pickup-sealoadingpoint": "Seeladestelle",
+        "Pickup-location-info": "Zusatzinformation",
+        "Pickup-location-code": "Übernahmeort Code",
+        "Pickup-location-text": "Übernahmeort Text",
+        "Delivery-country": "Land",
+        "Delivery-station": "Bahnstelle",
+        "Delivery-sealoadingpoint": "Seeladestelle",
+        "Delivery-location-info": "Zusatzinformation",
+        "Delivery-location-code": "Abliefungsort Code",
+        "Delivery-location-text": "Abliefungsort Text"
+      }
+    },
+    "Transport": {
+      "Transport-group-header": "3. Transport",
+      "Transport-section-data": "Transportdaten",
+      "Label": {
+        "Transportation-type": "Beförderungsart",
+        "Type-of-transport-code": "Transportart",
+        "Dangerous-good-law": "RID-Recht",
+        "Core-configuration": "Produkt",
+        "Ordered-train-reference": "Zugnummer",
+        "Customs-data-customs-descriptor": "Zollüberwachung",
+        "Consignment-note-type-of-consignment": "Gültiges Recht"
+      },
+      "Placeholder": {
+        "Transportation-type": "Beförderungsart",
+        "Type-of-transport-code": "Transportart",
+        "Dangerous-good-law": "RID-Recht",
+        "Core-configuration": "Produkt",
+        "Ordered-train-reference": "Zugnummer",
+        "Customs-data-customs-descriptor": "Zollüberwachung",
+        "Consignment-note-type-of-consignment": "Gültiges Recht"
+      }
+    },
+    "Wagon-information": {
+      "Header-wagon-information": "Wageninformation",
+      "Show-section-additional-input": "weitere Eingaben",
+      "Hide-section-additional-input": "weitere Eingaben",
+      "Show-section-dangerous-goods": "Gefahrgutdaten",
+      "Hide-section-dangerous-goods": "Gefahrgutdaten",
+      "Show-section-customer-reference": "Kundenreferenz",
+      "Hide-section-customer-reference": "Kundenreferenz",
+      "Show-section-sealing": "Plomben",
+      "Hide-section-sealing": "Plomben",
+      "Show-section-loading-tackles": "Lademittel",
+      "Hide-section-loading-tackles": "Lademittel",
+      "Show-section-authorization-list": "Genehmigungsnummern",
+      "Hide-section-authorization-list": "Genehmigungsnummern",
+      "Group-header": "4. Wagen",
+      "wagon-data": "Wagendaten",
+      "goods-data": "Gutdaten",
+      "emptyPackingUnitCode": "Leer",
+      "Label": {
+        "Select-item": "Auswählen",
+        "Number-of-wagons": "Gesamtanzahl der Wagen:",
+        "Import-wagon-information": "Wagendatenimport",
+        "Import-wagon-hint": "Hinweis",
+        "Import-wagon-copy-info": "Bitte kopieren Sie die bnötigte Anzahl an Positionen bevor Sie den Wagendatenimport starten.",
+        "Import-wagon-wagon-data": "Wagendaten",
+        "Import-wagon-start-import": "Import starten",
+        "Import-wagon-table-id": "ID",
+        "Import-wagon-table-first-nhm-and-name": "1.NHM-Nr./Name",
+        "Import-wagon-additional-info": "Zusatzinfo",
+        "Import-wagon-loading-status": "Ladestatus",
+        "Import-wagon-button-accept": "Übernehmen",
+        "Import-wagon-button-cancel": "Abbrechen",
+        "Import-wagon-button-delete": "löschen",
+        "Wagon-number": "Wagennummer",
+        "Wagon-good-weight": "Gewicht (kg)",
+        "First-good-weight": "Gewicht (kg)",
+        "Wagon-type": "Wagengattung",
+        "First-good-additional-description": "Zusatzinfo zum 1. Gut",
+        "First-good-nhm-code": "1. NHM",
+        "Loading-status": "Ladestatus",
+        "Customs-tariff-no": "Zolltarif-Nr.",
+        "Additional-information": "Zusatzinfo",
+        "Dangerous-goods-data": "Gefahrgutdaten",
+        "UN-number": "UN-Nummer",
+        "Special-provision": "Sondervorschrift",
+        "Select-dangerous-good": "Gefahrgut auswählen",
+        "Empty-packaging-tank-wagon": "Leerverp/Kesselwagen",
+        "Explosive-mass": "Netto-Explosivmasse (kg)",
+        "Transport-ban": "Transportverbot",
+        "Waste": "Abfall",
+        "Tremcard-is-available-to-DB": "Unfallmerkblatt liegt DB vor",
+        "Additional-information-not-specified-elsewhere": "Zusatzinfo NAG",
+        "Further-details": "Weitere Angaben",
+        "Danger-no": "Gefahrgutnummer",
+        "Description-of-content": "Stoffbeschreibung",
+        "Class": "Klasse",
+        "Packing-group": "Verpackungsgruppe",
+        "DG-note-1-to-4": "Gef.Gut Zettel 1/2/3/4",
+        "Information": "Info",
+        "No": "Nummer",
+        "Customer-reference": "Kundenreferenz",
+        "Seals": "Plomben",
+        "Type": "Art",
+        "Loading tackle": "Lademittel",
+        "Number": "Anzahl",
+        "Identification-marking": "Kennzeichen",
+        "Weight-kg": "Gewicht (kg)",
+        "Approval-numbers": "Genehmigungsnummern",
+        "Ric-ru": "EIU/EVU",
+        "Bza-permit-no": "AS-Nummer",
+        "Total-weight": "Gesamtgewicht (kg)",
+        "NHM-code": "NHM-Code",
+        "Unit": "Volumeneinheit Gut",
+        "Volume": "Volumen",
+        "Additional-declaration-code": "Extra/Schrotttext",
+        "Packing-units-type": "Verpackung",
+        "Packing-units-Description": "Anzahl",
+        "WasteId": "AVV Schlüssel",
+        "Customs-reference-number": "Zolltarif-Nr.",
+        "Additional-declaration": "Zusatzinfo",
+        "External-reference-subType": "MRN-Klasse",
+        "External-reference-identifier": "MRN-Nummer",
+        "Bza-number": "BZA-Nummer"
+      },
+      "Placeholder": {
+        "Select-item": "Auswählen",
+        "Number-of-wagons": "Gesamtanzahl der Wagen:",
+        "Wagon-number": "Wagennummer",
+        "Wagon-good-weight": "Gewicht (kg)",
+        "First-good-weight": "Gewicht (kg)",
+        "Wagon-type": "Wagengattung",
+        "First-good-additional-description": "Zusatzinfo zum 1. Gut",
+        "First-good-nhm-code": "1. NHM",
+        "Loading-status": "Ladestatus",
+        "Customs-tariff-no": "Zolltarif-Nr.",
+        "Additional-information": "Zusatzinfo",
+        "Dangerous-goods-data": "Gefahrgutdaten",
+        "UN-number": "UN-Nummer",
+        "Special-provision": "Sondervorschrift",
+        "Empty-packaging-tank-wagon": "Leerverp/Kesselwagen",
+        "Explosive-mass": "Netto-Explosivmasse",
+        "Transport-ban": "Transportverbot",
+        "Waste": "Abfall",
+        "Tremcard-is-available-to-DB": "Unfallmerkblatt liegt DB vor",
+        "Additional-information-not-specified-elsewhere": "Zusatzinfo NAG",
+        "Further-details": "Weitere Angaben",
+        "Danger-no": "Gefahrgutnummer",
+        "Description-of-content": "Stoffbeschreibung",
+        "Class": "Klasse",
+        "Packing-group": "Verpackungsgruppe",
+        "DG-note-1-to-4": "Gef.Gut Zettel 1/2/3/4",
+        "Information": "Info",
+        "No": "Nummer",
+        "Customer-reference": "Kundenreferenz",
+        "Seals": "Plomben",
+        "Type": "Art",
+        "Loading tackle": "Lademittel",
+        "Number": "Anzahl",
+        "Identification-marking": "Kennzeichen",
+        "Weight-kg": "Gewicht (kg)",
+        "Approval-numbers": "Genehmigungsnummern",
+        "Ric-ru": "EIU/EVU",
+        "Bza-permit-no": "AS-Nummer",
+        "Total-weight": "Gesamtgewicht",
+        "NHM-code": "NHM-Code",
+        "Unit": "Volumeneinheit Gut",
+        "Volume": "Volumen",
+        "Additional-declaration-code": "Extra/Schrotttext",
+        "Packing-units-type": "Verpackung",
+        "Packing-units-Description": "Anzahl",
+        "WasteId": "AVV Schlüssel",
+        "Customs-reference-number": "Zolltarif-Nr.",
+        "Additional-declaration": "Zusatzinfo",
+        "External-reference-subType": "MRN-Klasse",
+        "External-reference-identifier": "MRN-Nummer",
+        "Bza-number": "BZA-Nummer"
+      },
+      "Dangerous-Goods-Selection-Dialog": {
+        "Group-header": "Gefahrgut auswählen",
+        "Page-index": "von"
+      }
+    },
+    "Commercial": {
+      "group-header": "5. Kommerziell",
+      "Show-section-details-additional-prepayment": "weitere Eingaben",
+      "Hide-section-details-additional-prepayment": "weitere Eingaben",
+      "Show-section-details-commercial-specification": "Kommerzielle Bedingungen",
+      "Hide-section-details-commercial-specification": "Kommerzielle Bedingungen",
+      "Show-section-details-additional-commercial-information": "Weitere kommerzielle Angaben",
+      "Hide-section-details-additional-commercial-information": "Weitere kommerzielle Angaben",
+      "Show-section-details-annotation-of-consignor-description": "Absendervermerke für den Empfänger",
+      "Hide-section-details-annotation-of-consignor-description": "Absendervermerke für den Empfänger",
+      "Show-section-details-db-internal": "für DB interne Kunden",
+      "Hide-section-details-db-internal": "für DB interne Kunden",
+      "Show-sectional-invoicing": "Transitfakturierung",
+      "Hide-sectional-invoicing": "Transitfakturierung",
+      "Placeholder": {
+        "prepayment-note": "Frankaturvermerk",
+        "product-extra-charge-code": "einschl. Nebengebührencodes",
+        "prepayment-up-to-authority": "Frachtübernahme bis/ab einschl. Land",
+        "prepayment-up-to-border-description": "einschl. Land/Bst-Nr.",
+        "description": "Beschreibung",
+        "selection": "Auswahl",
+        "additional_info": "Beschreibung",
+        "loading-authorisation": "Verladebewilligung",
+        "additional_commercial_information_nhm_code": "Vereinbarte NHM-Nr.",
+        "additional_commercial_information_contract_number": "Vertragsnummer (national)",
+        "additional_commercial_information_discount_code": "Kundenabkommen (international)",
+        "additional_commercial_information_value_of_commodity_price": "Wert des Gutes",
+        "additional_commercial_information_value_of_commodity_currency": "Währung",
+        "additional_commercial_information_value_of_delivery_price": "Interesse an der Lieferung",
+        "additional_commercial_information_value_of_delivery_currency": "Währung",
+        "annotaion-of-consignor-description": "weitere Absendererklärungen für den Empfänger",
+        "external-reference-identifier": "Rahmenkostenstelle",
+        "external-reference-consignment_number": "Auftragskurznummer",
+        "consignmentnote-consignment-number": "Versandnummer",
+        "executing-carrier-ru-code": "Strecke / Land",
+        "sectional-invoicing-carrier-code": "durch Beförderer"
+      }
+    },
+    "Service": {
+      "Service-group-header": "6. Serviceleistung",
+      "Label": {
+        "ProductExtraChargeCode": "Serviceleistung",
+        "Authority": "BVW",
+        "LocationCode": "Bahnhof",
+        "Prepayment": "Zahlungsweise",
+        "Info": "Info"
+      },
+      "Placeholder": {
+        "ProductExtraChargeCode": "Serviceleistung",
+        "Authority": "BVW",
+        "LocationCode": "Bahnhof",
+        "Prepayment": "Zahlungsweise",
+        "Info": "Info"
+      }
+    },
+    "Sender-policy": {
+      "Sender-policy-group-header": "7. Absendererklärung",
+      "Sender-policy-declaration-group": "Erklärung des Absenders",
+      "Show-section-attached-documents": "Bereich Beilagen anzeigen",
+      "Hide-section-attached-documents": "Bereich Beilagen ausblenden",
+      "Show-section-takeover-conditions-sea-freight-group": "Bereich Seefracht anzeigen",
+      "Hide-section-takeover-conditions-sea-freight-group": "Bereich Seefracht ausblenden",
+      "Label": {
+        "Special-annotations-annotation-of-consignor-description": "Absenderreferenz",
+        "Special-annotations-additional-declaration-of-Carrier": "Empfängerreferenz",
+        "Customer-reference": "Kundenreferenz",
+        "Special-annotations-consignor-declarations-code": "Auswahl",
+        "Special-annotations-consignor-declarations-description": "Beschreibung",
+        "Consignmentnote-consignor-declaration-additional-information": "Weitere Absendererklärungen",
+        "Attached-documents": "Beilagen",
+        "Attached-document-number-of-originals": "Anzahl",
+        "Attached-document-code": "Beilagenart",
+        "Attached-document-description": "Beschreibung",
+        "Attached-document-reference-number": "Begleitpapier-/Referenznummer",
+        "Attached-document-date-of-issue": "Datum",
+        "Takeover-conditions-sea-freight-group": "Seefracht",
+        "Takeover-conditions-type-of-takeover": "Herkunft/Empfang",
+        "Takeover-conditions-takeover": "Empfang",
+        "Takeover-conditions-ship-owner": "Reeder",
+        "Takeover-conditions-ship-name": "Schiff",
+        "Takeover-conditions-origin-port": "Hafen",
+        "Takeover-conditions-arrival-date": "Ankunftsdatum",
+        "Takeover-conditions-arrival-time": "Uhrzeit",
+        "Handover-conditions-handover": "Herkunft",
+        "Handover-conditions-ship-owner": "Reeder",
+        "Handover-conditions-ship-name": "Schiff",
+        "Handover-conditions-destination-port": "Hafen",
+        "Handover-conditions-departure-date": "Abfahrtsdatum",
+        "Handover-conditions-departure-time": "Uhrzeit"
+      },
+      "Placeholder": {
+        "Special-annotations-annotation-of-consignor-description": "Absenderreferenz",
+        "Special-annotations-additional-declaration-of-Carrier": "Empfängerreferenz",
+        "Special-annotations-consignor-declarations-code": "Auswahl",
+        "Special-annotations-consignor-declarations-description": "Beschreibung",
+        "Consignmentnote-consignor-declaration-additional-information": "Weitere Absendererklärungen",
+        "Attached-documents": "Beilagen",
+        "Attached-document-number-of-originals": "Anzahl",
+        "Attached-document-code": "Beilagenart",
+        "Attached-document-description": "Beschreibung",
+        "Attached-document-reference-number": "Begleitpapier-/Referenznummer",
+        "Attached-document-date-of-issue": "Datum",
+        "Takeover-conditions-sea-freight-group": "Seefracht",
+        "Takeover-conditions-type-of-takeover": "Herkunft/Empfang",
+        "Takeover-conditions-ship-owner": "Reeder",
+        "Takeover-conditions-ship-name": "Schiff",
+        "Takeover-conditions-origin-port": "Hafen",
+        "Takeover-conditions-arrival-date": "Ankunftsdatum",
+        "Takeover-conditions-arrival-time": "Uhrzeit",
+        "Handover-conditions-handover": "Herkunft",
+        "Handover-conditions-ship-owner": "Reeder",
+        "Handover-conditions-ship-name": "Schiff",
+        "Handover-conditions-destination-port": "Hafen",
+        "Handover-conditions-departure-date": "Abfahrtsdatum",
+        "Handover-conditions-departure-time": "Uhrzeit",
+        "Handover-conditions-type-of-handover": "Herkunft/Empfang"
+      }
+    },
+    "Errors": {
+      "Invalid-template": "Der Auftragscode enthält nicht befüllte Pflichtfelder, bitte Auftragscode entsperren und Pflichtfelder befüllen.",
+      "Consignor-customerno-missing": "Bitte fügen Sie die Kundennummer des Absenders ein.",
+      "Consignor-location-missing": "Bitte fügen Sie die Standortnummer des Absenders ein!",
+      "Freightpayer-dispatch-customerno-missing": "Die Kombination Kundennummer/PLZ für den Frachtzahler Versand ist nicht gültig!",
+      "Freightpayer-dispatch-zipcode-missing": "Die Kombination Kundennummer/PLZ für den Frachtzahler Versand ist nicht gültig!",
+      "Loading-party-customerno-missing": "Die Kombination Kundennummer/PLZ für den Belader ist nicht gültig!",
+      "Loading-party-zipcode-missing": "Die Kombination Kundennummer/PLZ für den Belader ist nicht gültig!",
+      "Consignee-customerno-missing": "Die Kundennummer für den Empfänger ist ungültig!",
+      "Consignee-name-missing": "Bitte fügen Sie den Namen des Empfängers ein.",
+      "Consignee-zipcode-missing": "Bitte fügen Sie die PLZ des Empfängers ein.",
+      "Five-digits-german-zipcode": "Für Deutschland muss im Empfänger eine 5-stellige PLZ angegeben werden.",
+      "Consignee-location-missing": "Bitte fügen Sie den Ort des Empfängers ein.",
+      "Consignee-country-missing": "Bitte fügen Sie das Land für den Empfänger ein.",
+      "Freightpayer-receipt-customerno-missing": "Die Kombination Kundennummer/PLZ für den Frachtzahler Empfang ist nicht gültig!",
+      "Freightpayer-receipt-zipcode-missing": "Die Kombination Kundennummer/PLZ für den Frachtzahler Empfang ist nicht gültig!",
+      "Unloading-party-customerno-missing": "Die Kombination Kundennummer/PLZ für den Entlader ist nicht gültig!",
+      "Unloading-party-zipcode-missing": "Die Kombination Kundennummer/PLZ für den Entlader ist nicht gültig!",
+      "Point-of-loading-country-missing": "Bitte fügen Sie das Land der Übernahme ein.",
+      "Point-of-loading-location-code-missing": "Bitte fügen Sie die Bahnstelle der Übernahme ein.",
+      "Maritime-point-of-loading-missing": "Bitte fügen Sie die Seeladestelle der Übernahme ein.",
+      "Point-of-unloading-country-missing": "Bitte fügen Sie das Land der Ablieferung ein.",
+      "Point-of-unloading-location-code-missing": "Bitte fügen Sie die Bahnstelle der Ablieferung ein.",
+      "Maritime-point-of-unloading-missing": "Bitte fügen Sie die Seeladestelle des Ablieferungsortes ein.",
+      "Bookingdate-in-past": "Die Buchung kann nicht ausgeführt werden da das Bereitstellungsdatum in der Vergangenheit liegt!",
+      "Orderdate-in-past": "Der Zeitpunkt zur Bereitstellung für den Versand liegt in der Vergangenheit.",
+      "Bookingtime-in-past": "Die Buchung kann nicht ausgeführt werden da das Bereitstellungsdatum in der Vergangenheit liegt!",
+      "Ordertime-in-past": "Der Zeitpunkt zur Bereitstellung für den Versand liegt in der Vergangenheit.",
+      "Mode-of-transport-missing": "Bitte fügen Sie die Transportart ein.",
+      "Mode-of-carriage-missing": "Bitte fügen Sie die Art der Beförderung des Transports ein.",
+      "Trainnumber-too-long": "Bitte geben Sie eine Zugnummer mit maximal 6 Zeichen ein.",
+      "Trannumber-not-numerical": "Bitte geben sie eine numerische Zugnummer ein.",
+      "RID-regulation-missing": "Bitte wählen Sie ein RID Recht.",
+      "Totoal-number-of-wagons-missing": "Bitte geben Sie die Gesamtanzahl der Wagen an.",
+      "Applicable-law-missing": "Bitte wählen Sie ein gültiges Recht aus.",
+      "Wagon-no-invalid": "Bitte geben Sie eine gültige Wagennummer an.",
+      "Wagon-no-duplicate": "Die Wagennummer {{ wagonNumber }} wurde mehrfach erfasst, bitte erfassen Sie jede Wagennummer nur einfach.",
+      "Wagon-on-already-in-other-order": "Die Wagennummer {{ wagonNumber }} befindet sich zum Zeitpunkt des Versandes bereits in einem anderen Auftrag.",
+      "Checksum-invalid-for-wagon-no": "Der Check der Prüfziffer war nicht erfolgreich! Bitte geben Sie eine valide 12-stellige Wagennummer ein.",
+      "Wagon-category-missing": "Bitte geben Sie die Wagengattung ein.",
+      "Weight-not-numerical": "Bitte geben Sie eine Zahl als Gewicht an.",
+      "No-decimal-for-weight": "Bitte geben Sie eine Ganzzahl ohne Nachkommastellen als Gewicht an.",
+      "Loading-status-missing": "Bitte geben Sie den Ladestatus ein.",
+      "Nhm-code-missing": "Bitte geben Sie einen NHM-Code an.",
+      "Goodweight-missing": "Bitte fügen Sie das Gewicht des Gutes ein.",
+      "Volume-missing": "Bitte fügen Sie das Volumen des Gutes ein.",
+      "Volume-unit-missing": "Bitte fügen Sie die Einheit des Volumens ein.",
+      "Type-of-packaging-missing": "Bitte fügen Sie die Art der Verpackung ein",
+      "Packaging-count-missing": "Bitte fügen Sie die Anzahl der Verpackungen ein.",
+      "AVV-missing": "Bitte fügen Sie die AVV des Gutes ein.",
+      "Tarrif-number-too-long": "Die Zolltarif-Nr. darf nicht länger sein als 8 Ziffern.",
+      "Tarrif-number-not-numerical": "Die Zolltarif-Nr. muss nummerisch sein.",
+      "Combination-requires-additional-info": "Zusatzinformation ist in dieser Kombination ein Pflichtfeld.",
+      "Appropriate-specification-missing": "Bitte wählen Sie zum Transport mit Gefahrgut und Ladestatus Leer die passende Angabe im Feld 'Leer Verp/ Kesselwagen'",
+      "Dangerous-goods-class-missing": "Gefahrgut ohne Klasse angegeben.",
+      "Net-explosive-mass-missing": "Bitte geben Sie die NettoExplosionsmasse ein!",
+      "Additional-info-nag-missing": "Bitte geben Sie die Zusatzinformationen (NAG) ein!",
+      "Seal-number-missing": "Der Auftrag enthält Plomben ohne Nummer! Bitte Plombennummer ausfüllen, oder Plombe entfernen!",
+      "Count-of-loading-trackles-missing": "Bitte fügen Sie die Anzahl der Lademittel ein.",
+      "Type-of-loading-trackle-missing": "Bitte fügen Sie eine Art des Lademittels ein.",
+      "Weight-of-loading-trackle-missing": "Bitte fügen Sie das Gewicht des Lademittels ein.",
+      "Total-weight-of-loading-trackles-gt-600": "Das angegebenen Gewicht überschreitet den erlauben Maximalwert (600 t)!",
+      "Eiu-or-Evu-missing": "Der EIU-Code und die Genehmigungsnummer müssen angegeben werden. Bitte vervollständigen Sie Ihre Eingabe.",
+      "AS-no-missing": "Der EIU-Code und die Genehmigungsnummer müssen angegeben werden. Bitte vervollständigen Sie Ihre Eingabe.",
+      "AS-no-duplicate-on-wagon": "Die gleiche AS-Nummer darf nur einmal pro Wagen verwendet werden.",
+      "Type-of-specificaton-missing": "Bitte fügen Sie den Typ der Bedingung ein.",
+      "Description-of-specification-missing": "Bitte fügen Sie die Beschreibung der Bedingung ein.",
+      "Contract-no-invalid-cecksum": "Die Vertragsnummer hat eine falsche Prüfziffer.",
+      "Contract-no-not-numerical": "Bitte geben sie eine numerische Vertragsnummer ein.",
+      "Delivery-terms-note-missing": "Frankaturvermerk muss gefüllt sein.",
+      "Delivery-terms-note-invalid": "Kombination Ablieferungs- / Übernahmeland und Frankaturvermerk nicht gültig.",
+      "Ancillary-charge-code-missing": "Nebengebuehrencode muss gefüllt werden.",
+      "Acceptance-of-freight-country-missing": "Frachtübernahme bis/ab einschließlich Land muss gefüllt sein.",
+      "Acceptance-of-freight-rail-yard-missing": "Bahnstelle muss gefüllt sein.",
+      "Bvw-nr-missing": "Bitte fügen Sie die BvwNr ein.",
+      "Yard-code-missing": "Bitte fügen Sie die Bahnhofsnummer ein.",
+      "Type-of-payment-missing": "Bitte fügen Sie eine Zahlungsweise ein.",
+      "Consignor-declaration-code-missing": "Bitte wählen Sie eine Absendererklärung aus.",
+      "Consignor-declaration-description-missing": "Bitte fügen Sie die Beschreibung der Erklärung des Absenders ein.",
+      "Port-seafreight-missing": "Bitte fügen Sie den Hafen ein.",
+      "Attached-document-type-missing": "Bitte geben Sie die Art der Beilage ein.",
+      "Sectional-invoicing-executing-carrier-code": "Bitte geben Sie den Beförderer an.",
+      "MRN-invalid-format": "Die MRN Nummer hat ein ungüliges Format!",
+      "Sender-policy-description-missing": "Bitte fügen Sie die Beschreibung der Erklärung des Absenders ein.",
+      "Import-wagoncount-high": "Wagenanzahl größer 99 Wagen!",
+      "Import-additional-info-length": "Die Zusatzinfo zum Gut darf maximal 300 Zeichen betragen.",
+      "Import-errors": "Prüfen Sie Ihre Eingaben.",
+      "Import-wagonnumber-format": "Bitte geben Sie eine nummerische Wagennummer (12 Stellen) an.",
+      "Import-wagonnumber-luhn": "Der Check der Prüfziffer war nicht erfolgreich! Bitte geben Sie eine valide 12-stellige Wagennummer ein.",
+      "Import-wagonnumber-duplicate": "Achtung, Sie haben die Wagennummer bereits verwendet!",
+      "Import-weight-numeric": "Bitte geben Sie eine Zahl als Gewicht an.",
+      "Import-weight-decimal": "Bitte geben Sie Ganzzahl ohne Nachkommastellen als Gewicht an.",
+      "Import-nhmcode": "Bitte geben Sie einen gültigen NHM-Code an.",
+      "Import-loadingstate": "Bitte achten sie auf die Schreibweise Beladen/Leer Aktueller Wert: {{ loadingState }}",
+      "Import-weightWhenEmpty": "Bitte ändern Sie den Ladestatus auf Beladen, da Gewichte vorhanden sind.",
+      "Import-nrm-class": "Die MRN-Klasse ist ungültig. Aktueller Wert: {{ mrnClass }}",
+      "Import-mrnnumber-format": "Die MRN Nummer hat ein ungüliges Format!",
+      "Import-mrnnumber-missing": "Die Erfassung einer MRN-Nummer ohne Angabe der MRN-Klasse ist nicht zulässig."
+    },
+    "Mrn": {
+      "01": "vgVV (vereinfachtes Eisenbahnversandverfahren)",
+      "02": "T2 Korridor Schweiz",
+      "03": "NCTS, Regelversandverfahren",
+      "04": "EU-Exportverfahren, am Ort der Übernahme zur Beförderung beendet",
+      "05": "EU-Exportverfahren, an der EU-Außengrenze beendet",
+      "06": "Carnet TIR",
+      "07": "Carnet ATA",
+      "08": "Form 302",
+      "09": "Sonstige"
+    }
+  },
+  "TypeOfConsignment": {
+    "CIM": "CIM Internationaler Transport",
+    "CUV": "CUV",
+    "NAT": "Nationaler Transport"
+  },
+  "CustomsDescriptor": {
+    "A": "Ausfuhrverfahren",
+    "D": "Zollüberwachung",
+    "K": "Zollüberwachung Kunde gibt Frachtbrief",
+    "N": "Keine Zollüberwachung"
+  },
+  "Order-details-wagon": {
+    "Dialog-title": "Auftragsdetails",
+    "Order-details": {
+      "ZAB-order-number": "ZAB Auftragsnummer",
+      "ZAB-order-status": "ZAB Status",
+      "Date-of-dispatch": "Versanddatum",
+      "Additional-commercial-information-discount-code": "Kundenabkommen",
+      "Exceptional-consignment-permission-nummber": "BZA-Nummer"
+    },
+    "Wagon-details": {
+      "Section-name": "Wagendaten",
+      "Wagon-number": "Wagennummer",
+      "Tare-weight": "Wagengewicht (kg)",
+      "Wagon-type-label": "Wagengattung",
+      "Wagon-length": "Wagenlänge (m)",
+      "Wagon-total-weight": "Gesamtgewicht (kg)"
+    },
+    "Loading-tackles": {
+      "Section-name": "Lademittel",
+      "Loading-tackles-type": "Lademittelart",
+      "Loading-tackles-weight": "Lademittelgewicht (kg)",
+      "Loading-tackles-total-weight": "Gewicht der Ladademittel (kg)"
+    },
+    "Good-details": {
+      "Section-name": "Gutdaten",
+      "NHM-code-description": "NHM Code",
+      "Customs-reference-number": "Zoll-Nummer",
+      "Good-weight": "Gewicht (kg)",
+      "Un-nr": "UN-Nummer"
+    }
+  },
+  "Vehicle-details-dialog": {
+    "Dialog-title": "Wagendetails",
+    "Load-limit-panel": "Lastgrenzraster",
+    "Additonal-load-limit-panel": "Zusatzlastgrenzraster",
+    "Vehicle-number": "Wagennummer:",
+    "Technical-attibuts": {
+      "International-freightWagon-class": "Gattungszeichen (int.):",
+      "National-freightWagon-class": "Gattungszeichen (nat.):",
+      "Type-of-construction": "Wagenbauart:",
+      "Intermodal-relevant": "Hochbedarf:",
+      "Tare-weight": "Wagengewicht (kg):",
+      "Length-over-buffers": "Länge über Puffer (m):",
+      "Maximum-speed-loaded": "Höchstgeschwindigkeit beladen (km/h):",
+      "Maximum-speed-empty": "Höchstgeschwindigkeit leer (km/h):"
+    },
+    "Current-state": {
+      "Suitable-for-running": "Lauffähigkeit:",
+      "Vehicle-keeper-code": "Wagenhalter Nummer:",
+      "Vehicle-keeper-marking": "Wagenhalter Kurzbezeichnung:"
+    },
+    "Damage": {
+      "Damage-type": "Schadcode:",
+      "Damage-cause-code": "Schadcodebeschreibung:"
+    },
+    "Revision": {
+      "Date-next-revision": "Revisionsfrist:"
+    },
+    "Load-limit-pattern": {
+      "Country-code": "Land:",
+      "Y-Type": {
+        "Line-category": "Streckenklasse:",
+        "X-Type": {
+          "Speed-limit": "Geschwindigkeitsklasse:",
+          "Asterisks": "Sterne:"
+        }
+      }
+    }
+  },
+  "common": {
+    "components": {
+      "multiSelect": {
+        "error": "Fehler beim Laden",
+        "search": "Suche",
+        "select": "Auswählen",
+        "noDataAvailable": "Keine Daten verfügbar"
+      },
+      "form": {
+        "button": {
+          "close": "Schließen",
+          "cancel": "Abbrechen",
+          "send": "Senden"
+        }
+      },
+      "overview": {
+        "button": {
+          "loadMore": "Mehr laden"
+        },
+        "link": {
+          "showAll": "Alle anzeigen",
+          "resetAllFilters": "Alle Filter zurücksetzen"
+        },
+        "results": "Einträge ({{resultsCount}})",
+        "activeFilters": "{{activeFiltersCount}} Filter aktiv",
+        "resetAllFilters": "Alle Filter zurücksetzen",
+        "resultsOf": "{{resultsCount}} von {{totalResultsCount}}",
+        "resultCountExceeds": "Bitte beachten Sie, dass maximal 10.000 Datensätze exportiert werden können und passen Sie die Filter entsprechend an.",
+        "downloadHint": "Der Download kann je nach Filteranzahl verzögert starten."
+      }
+    }
+  },
+  "Shared": {
+    "Of": "von",
+    "Country": "Land",
+    "Payment-transfer": "Überweisung",
+    "Payment-prepayed": "Freibetrag",
+    "Close-dialog": "Dialog schließen",
+    "Loading-state-empty": "Leer",
+    "Loading-state-loaded": "Beladen",
+    "Confirm": "Bestätigen",
+    "Train-Chain": "Zugkette",
+    "Next-label": "Weiter",
+    "New-order-button-label": "Neue Bestellung",
+    "Weekly-monthly-programm-button-label": "Wochen-/Monatsprogramm (.xml)",
+    "New-order-header": "Neue Bestellung",
+    "Search-button-label": "Suchen",
+    "Reset-button-label": "Zurücksetzen",
+    "Sort-by-label": "Sortieren nach...",
+    "Primary-sort-label": "Primärsortierung",
+    "Secondary-sort-label": "Sekundärsortierung",
+    "Items-pro-page-label": "Ergebnisse pro Seite",
+    "Results-label": "Einträge",
+    "Date-label": "Datum",
+    "Date-time-label": "Datum / Uhrzeit",
+    "Location-label": "Ort",
+    "Hour-label": "Uhr",
+    "Event-label": "Event",
+    "Today-label": "Heute",
+    "Monday-label": "Montag",
+    "Tuesday-label": "Dienstag",
+    "Wednesday-label": "Mittwoch",
+    "Thursday-label": "Donnerstag",
+    "Friday-label": "Freitag",
+    "Saturday-label": "Samstag",
+    "Sunday-label": "Sonntag",
+    "Minute-short-label": "MIN",
+    "Cancel-button-label": "Abbrechen",
+    "Accept-button-label": "Übernehmen",
+    "Send-button-label": "Senden",
+    "Next-button-label": "Weiter",
+    "Back-button-label": "Zurück",
+    "Save-button-label": "Speichern",
+    "xmlUpload-button-label": "Datei hochladen",
+    "chooseFile": "Datei auswählen",
+    "sendOrder-button-label": "Bestellung senden",
+    "Close-button-label": "Schließen",
+    "Train-details-empty": "Leerlauf",
+    "Train-details-loaded": "Lastlauf",
+    "Train-cancelled": "Zug abbestellt",
+    "Train-cancelled-pending": "Abbestellung in Prüfung",
+    "Train-storno-cash": "Stornierungsentgelt fällt ggf. an",
+    "Required-field": "*Pflichtfeld",
+    "German": "Deutsch",
+    "English": "Englisch",
+    "French": "Französisch",
+    "Italian": "Italienisch",
+    "Polish": "Polnisch",
+    "Sending-station": "Versandbahnhof",
+    "Receiving-station": "Empfangsbahnhof",
+    "File-upload-success": "Upload erfolgreich!",
+    "Confirmations": {
+      "Change-Header": "Änderungen bestätigen",
+      "Cancel-OrderHeader": "Vorgang abbrechen",
+      "Cancel-Order": "Möchten Sie den Vorgang abbrechen?",
+      "Yes": "Ja",
+      "No": "Nein"
+    },
+    "Error": "Fehler",
+    "Info": "Information",
+    "Instance": "Referenz",
+    "Errors": {
+      "401": "Sie sind nicht angemeldet. Bitte melden Sie sich an.",
+      "403": "Sie haben keine Berechtigung, diese Seite zu sehen.",
+      "404": "Die angeforderte Seite wurde nicht gefunden.",
+      "Generic": "Es ist ein Fehler aufgetreten. Wir arbeiten bereits daran. Bitte versuchen Sie es später erneut.",
+      "Filename": "Der Name der Datei muss einen Unterstrich enthalten, der den Namen des Dokuments und die Versionsnummer trennt. Beispiel: Handbuch_1.3.15.pdf",
+      "No-Data": "Keine Daten",
+      "Username-exists-error-text": "Benutzername existiert bereits!",
+      "Groupname-exists-error-text": "Gruppenname existiert bereits für diesen Kunden!",
+      "Customerprofile-not-exists-error-text": "Kundenprofil existiert nicht!",
+      "Field-is-required-error-text": "Feld darf nicht leer sein.",
+      "Field-is-limited-on-1000": "Bitte beachten: Das Feld ist auf 1000 Zeichen begrenzt!",
+      "Field-is-notFound-error-text": "ungültige Eingabe.",
+      "Field-is-phone-error-text": "Telefon-Nr. hat kein gültiges Format.",
+      "Field-is-email-error-text": "E-Mail Adresse hat kein gültiges Format.",
+      "Natural-number-error-text": "Darf nur eine natürliche Zahl sein",
+      "More-than-zero-error-text": "Der neue Wert muss größer 0 sein",
+      "Max-date-error-text": "Datum sollte nicht nach dem 31.12.2100 liegen",
+      "Min-date-error-text": "Versanddatum darf nicht in der Vergangenheit liegen",
+      "Should-be-less-than": "Der neue Wert muss geringer als {{ num }} sein",
+      "No-reduction-of-wagons-nor-weight": "Es wurde weder Anzahl Wagen noch Gewicht reduziert",
+      "Stations-autocomplete-error-text": "Keine Suchergebnisse vorhanden",
+      "Earliest-handover-before-latest-handover-error-text": "Die früheste Übergabe muss vor der spätesten Übergabe liegen",
+      "Earliest-handover-before-earliest-delivery-error-text": "Die früheste Zustellung muss nach der frühesten Übergabe liegen",
+      "Earliest-delivery-before-latest-delivery-error-text": "Die früheste Zustellung muss vor der spätesten Zustellung liegen",
+      "Earliest-handover-before-shipmentDate-error-text": "Das Versanddatum muss vor der frühesten Zustellung liegen",
+      "Incorrect-date-error-text": "Ungültiges Datum",
+      "date-from-before-date-to": "Zeitraum (Von) muss vor Zeitraum (Bis) liegen",
+      "Valid-until-before-valid-from-error-text": "Gültig bis muss nach gültig vor liegen",
+      "General-technical-error": "Sehr geehrter Kunde, es ist ein technischer Fehler aufgetreten. Bitte kontaktieren Sie den Support per E-Mail oder Telefon.",
+      "Month-program-file-wrong": "Fehlerhaftes Wochen-/Monatsprogramm",
+      "NoProfileFound": "kein Profil gefunden!",
+      "TOMGroup-Missing": "TOM-Gruppe fehlt!",
+      "Role-Missing": "mind. 1 Rolle fehlt!",
+      "no-data": "Keine Suchergebnisse vorhanden",
+      "check-input": "Eingabe prüfen",
+      "fetch-user-manual": "Das Benutzerhandbuch konnte nicht geladen werden",
+      "fetch-release-notes": "Die Release notes konnten nicht geladen werden",
+      "download-file": "Die Datei konnte nicht heruntergeladen werden",
+      "no-files": "Es konnten keine Dateien gefunden werden",
+      "Invalid-number": "Bitte geben Sie einen numerischen Wert ein.",
+      "Max-length": "Der Wert darf nicht länger als {{ num }} Zeichen sein.",
+      "Min-length": "Der Wert darf nicht kürzer als {{ num }} Zeichen sein."
+    },
+    "Load-more-button-label": "Mehr laden",
+    "Admin-label": "Administrator",
+    "Customerservice-label": "Kundenservice",
+    "Customerservice-Templates-label": "KS Vorlagen",
+    "Customer-label": "Besteller",
+    "Sender-label": "Versender",
+    "Receiver-label": "Empfänger",
+    "ADM": "Administrator",
+    "CS": "Kundenservice",
+    "CST": "KS Vorlagen",
+    "ORD": "Besteller",
+    "SDR": "Versender",
+    "REC": "Empfänger",
+    "Role-Header": "Rollen anpassen",
+    "SuitableForRunnigType": {
+      "Fully-operational": "0 - Uneingeschränkt lauffähig",
+      "Immediate-repair-needed": "1 - Sofort aussetzen zur Reparatur",
+      "Immediate_unloading-needed": "2 - Sofort aussetzen - zurechtladen",
+      "Limited-operational-mws": "3 - Begrenzt lauffähig – MWS",
+      "Must-not-be-moved": "4 - Darf nicht bewegt werden",
+      "Limited-operational": "5 - Begrenzt lauffähig",
+      "Restricted-operational": "6 - Eingeschränkt lauffähig"
+    },
+    "RailorderStatus": {
+      "CLOSED": "G - Geschlossen",
+      "ACTIVE": "A - Aktiv",
+      "SUBMITTED": "B - Bereit",
+      "CANCELLED": "U - Gelöscht",
+      "ACCEPTED": "V - Vorgebucht",
+      "CAPTURED": "Z - Zwischengespeichert",
+      "INVALID": "Ungültig"
+    },
+    "RailorderInternalStatus": {
+      "WAITING": "In Warteposition",
+      "TRANSMITTED": "Wurde übermittelt",
+      "EXPIRED": "Buchung verfallen",
+      "CAPTURED": "Zwischengespeichert",
+      "ACCEPTED": "Gebucht",
+      "DRAFT": "Entwurf erfasst",
+      "SUBMITTED": "Bereit",
+      "ACTIVE": "Aktiv",
+      "CLOSED": "Geschlossen",
+      "CANCELLED": "Gelöscht",
+      "INVALID": "Invalid",
+      "CANCELLED-download": "Geloescht",
+      "TRANSMITTED-download": "Wurde uebermittelt"
+    },
+    "WagonTrackingEventType": {
+      "LOCATION_CHANGE": "Standortänderung",
+      "ACTIVATION": "Aktivierung",
+      "DEPARTURE": "Abfahrt",
+      "PASSTHROUGH": "Durchfahrt",
+      "ARRIVAL": "Ankunft",
+      "COMPLETION": "Erledigung",
+      "HANDOVER": "Übergabe",
+      "TAKEOVER": "Übernahme",
+      "FORCEDCOMPLETION": "Zwangserledigung",
+      "PARKING": "Transportplanstatus geparkt",
+      "PRENOTIFICATION": "Hermes30-Vormeldung",
+      "LOADING": "Beladung",
+      "UNLOADING": "Entladung",
+      "TRANSPORTSTART": "Transportstart",
+      "SHOCK": "Stoss"
+    }
+  },
+  "New-order-page": {
+    "Order-group-header": "Besteller",
+    "Orderer-label": "Besteller*",
+    "Partner-id-label": "Partner-ID",
+    "Customer-language-label": "Kundensprache",
+    "Customer-reference-group-header": "Referenz/Bestellgrund",
+    "Customer-reference-label": "Kundenreferenz (Nr./Name)",
+    "Order-reason-label": "Bestellgrund",
+    "Shipment-date-header": "Datum",
+    "Shipment-date-label": "Versanddatum*",
+    "Shipment-date-label-orderDetails": "Versanddatum",
+    "Sender-group-header": "Versand",
+    "Sender-label": "Versender",
+    "Receiver-group-header": "Empfang",
+    "Receiver-label": "Empfänger",
+    "Sending-station-label": "Versandbahnhof",
+    "Sending-gwp-label": "Güterwagenstellplatz Versand",
+    "Loader-label": "Verlader",
+    "Unloader-label": "Entlader",
+    "First-carrier-label": "Erster Beförderer",
+    "Last-carrier-label": "Letzter Beförderer",
+    "Receiving-station-label": "Empfangsbahnhof*",
+    "Receiving-gwp-label": "Güterwagenstellplatz Empfang",
+    "Sending-working-direction-label": "Arbeitsrichtung Versand",
+    "Receiving-working-direction-label": "Arbeitsrichtung Empfang",
+    "Handover-group-header": "Übergabewunsch",
+    "Earliest-handover-label": "Früheste Übergabe (Datum/Uhrzeit)",
+    "Latest-handover-label": "Späteste Übergabe (Datum/Uhrzeit)",
+    "Delivery-group-header": "Zustellwunsch",
+    "Earliest-delivery-label": "Früheste Zustellung (Datum/Uhrzeit)",
+    "Latest-delivery-label": "Späteste Zustellung (Datum/Uhrzeit)",
+    "Cargo-group-header": "Ladung",
+    "Number-of-wagons-label": "Anzahl Wagen",
+    "Net-weight-label": "Nettogewicht (t)",
+    "Gross-weight-label": "Bruttogewicht (t)",
+    "Train-length-label": "Zuglänge (m)",
+    "Train-vmax-label": "Max. km/h",
+    "NHM-code-label": "NHM-Code",
+    "Wagon-type-label": "Wagengattung",
+    "Dangerous-good-label": "UN-Bezeichnung",
+    "Dangerous-good-class-label": "Gefahrgutklasse",
+    "BzaNr-label": "BZA-Nummer",
+    "Misc-info-header": "Sonstiges",
+    "Misc-info-label": "Weitere Angaben zur Bestellung",
+    "Required-fields-text": "*Pflichtangaben",
+    "Send-order-button-label": "Bestellung senden",
+    "Other-information-header": "Sonstige Angaben",
+    "Order-data-header": "Bestelldaten",
+    "Train-data-header": "Zugparameter",
+    "Shipping-Time-header": "Verkehrstage",
+    "From-template-nr": "aus Vorlagennr. ",
+    "ChooseTemplate": "Vorlage auswählen:",
+    "Transporterroute-header": "Befördererroute",
+    "Train-type": "Zugart",
+    "TomGroup": "TOM-Gruppe",
+    "operationalId": "Betriebsbild-ID",
+    "CommercialService": "Kommerzielle Zusatzleistung",
+    "BorderStation": "Grenzbahnhof",
+    "Carrier-label": "Beförderer",
+    "Start-station-label": "Versandbahnhof",
+    "Target-station-label": "Empfangsbahnhof",
+    "Transport-group-header": "Angaben zur Ladung",
+    "ShippingTime-group-header": "Angaben zu Verkehrstagen",
+    "ShippingTime-group-header2": "Angaben zum Verkehrstag",
+    "OrderReason-group-header": "Bestellgrund / Sonstige Angaben",
+    "AddTransportGroup": " Weitere Ladung hinzufügen",
+    "AddShippingTimeGroup": " Weiteren Verkehrstag hinzufügen",
+    "Cargo-information": "Angaben zur Ladung",
+    "kv-profil-p2": "KV-Profil: P2",
+    "kv-profil-c2": "KV-Profil: C2",
+    "kv-profil-p3": "KV-Profil: P3",
+    "kv-profil-c3": "KV-Profil: C3",
+    "Train-information": "Angaben zum Zug",
+    "Train-number": "Zugnummer"
+  },
+  "Capacity-reduction": {
+    "Capacity-reduction-header": "Mengenreduzierung",
+    "Adjustment-header": "Anpassung",
+    "Number-of-wagons-label": "Anzahl Wagen",
+    "Planned-weight-label": "Geplantes Netto-Gewicht (t)",
+    "Other-information-label": "Sonstige Angaben",
+    "Order-summary": "Zusammenfassung der Bestellung",
+    "Modify-button-label": "Modifizieren"
+  },
+  "Month-view-page": {
+    "Overview-title": "Monatsansicht",
+    "Train-number-label": "Zugnummer",
+    "Shipping-station-placeholder": "Versandbahnhof (Name)",
+    "Receiving-station-placeholder": "Empfangsbahnhof (Name)",
+    "Shipping-station-label": "Versandbahnhof",
+    "Receiving-station-label": "Empfangsbahnhof",
+    "Order-received": "Bestellung erfasst",
+    "Order-in-review": "Bestellung in Prüfung",
+    "Order-canceled": "Bestellung abgelehnt",
+    "Train-on-time": "Zug ist pünktlich",
+    "Train-late": "Zug ist weniger als 60 Minuten verspätet",
+    "Train-too-late": "Zug ist mehr als 60 Minuten verspätet",
+    "Train-cancellation-acquired": "Abbestellung in Prüfung",
+    "Train-cancelled": "Zug wurde abbestellt",
+    "Load-more-button-label": "Mehr laden",
+    "Train-number-title": "Zugnummer",
+    "Filter-active": "Filter aktiv",
+    "Filter-reset-label": "Alle Filter zurücksetzen",
+    "Order-accepted": "Bestellung angenommen",
+    "Order-declined": "Bestellung abgelehnt",
+    "Order-in-validation": "Bestellung in Prüfung",
+    "Order-acquired": "Bestellung erfasst"
+  },
+  "NHM-Code-Details": {
+    "Good-type": "Gutart",
+    "NHM-Code": "NHM-Code",
+    "Description": "Warenbezeichnung"
+  },
+  "Order-view-page": {
+    "Overview-title": "Zugübersicht",
+    "Hide-search-label": "Suchkriterien ausblenden",
+    "Order-status-label": "Bestellstatus",
+    "Train-id-label": "Train ID",
+    "Operational-mode-label": "Last-/Leerlauf",
+    "Start-date-label": "Startdatum",
+    "Roundtrip-name-label": "Umlauf (Name)",
+    "Train-number-label": "Zugnummer",
+    "Current-train-number-label": "Aktuelle Zugnummer",
+    "Train-number-short-label": "Zugnr.",
+    "Current-train-number-short-label": "Aktuelle Zugnr.",
+    "IDLE-Loaded-label": "Last-/",
+    "IDLE-Empty-label": "Leerlauf",
+    "openTrainDetails": "Zugdetails anzeigen",
+    "Client-number-label": "Kundenreferenz",
+    "Train-number-title": "Zugnummer",
+    "Event-type-label": "Abgestellt",
+    "Sending-date-label": "Plan-Abfahrt",
+    "Actual-sending-date-label": "Ist-Abfahrt",
+    "ETA-label": "Plan-Ankunft",
+    "Actual-arrival-label": "Ist-Ankunft",
+    "Product-type-label": "Produktart",
+    "Shipping-station-placeholder": "Versandbahnhof (Name)",
+    "Receiving-station-placeholder": "Empfangsbahnhof (Name)",
+    "Shipping-station-label": "Versandbahnhof",
+    "Receiving-station-label": "Empfangsbahnhof",
+    "Train-status-label": "Bestellstatus",
+    "Train-cancel-label": "Abbestellgrund",
+    "cancellationFee-CSV-label": "Stornogebuehr",
+    "Time-period-from-label": "Zeitraum (Von)",
+    "Time-period-to-label": "Zeitraum (Bis)",
+    "Order-id-label": "TOM-ID/Bestell ID",
+    "Production-date-label": "Produktionsdatum",
+    "Actual-position-header": "Aktueller Standort",
+    "Failure-reason-header": "Ausfallgrund",
+    "Tracking-history-header": "Tracking",
+    "Tracking-remark-icon-header": "Bemerkung",
+    "History-header": "Historie",
+    "Modify-header": "Bearbeiten",
+    "Wagon-list-header": "Wagenliste",
+    "Disruption-label": "Störung",
+    "Costumer-service-comment-label": "Bemerkung Kundenservice",
+    "Comment": "Bemerkung Kunde",
+    "Order-modify-button-label": "Bestellung modifizieren",
+    "Train-modify-button-label": "Zug modifizieren",
+    "Order-cancel-button-label": "Bestellung abbestellen",
+    "Train-cancel-button-label": "Zug abbestellen",
+    "Train-status-history-header": "Historie Zugstatus",
+    "Filter-block-show-label": "Filter einblenden",
+    "Filter-block-hide-label": "Filter ausblenden",
+    "Filter-reset-label": "Alle Filter zurücksetzen",
+    "Filter-active": "Filter aktiv",
+    "Download-complete-list-button-label": "Ganze Liste",
+    "Download-filtered-list-button-label": "Gefilterte Liste",
+    "Show-all-button-label": "Alle anzeigen",
+    "Load-more-button-label": "Mehr laden",
+    "delayInMinutes-label": "Delta-Ankunft in min",
+    "Train-remarks-page": {
+      "Train-remarks-header": "Externe Bemerkungen"
+    },
+    "Train-details-page": {
+      "Train-id-label": "Train-ID",
+      "Order-status-label": "Bestellstatus",
+      "Cancel-reason-label": "Abbestellgrund",
+      "Current-train-number-label": "Aktuelle Zugnummer",
+      "Client-number-label": "Kundenreferenz",
+      "Train-info-header": "Zugdetails",
+      "Train-type-label": "Zugart",
+      "Customer-goal-label": "Kundenziel",
+      "Order-date-label": "Bestellzeitpunkt",
+      "TOM-id-Order-id-label": "Bestell-ID",
+      "Shipping-station-label": "Versandbahnhof",
+      "Receiving-station-label": "Empfangsbahnhof",
+      "SGV-number-label": "SGV-Nummer",
+      "Actual-departure-label": "Abfahrt IST",
+      "Planned-departure-label": "Abfahrt SOLL",
+      "Actual-arrival-label": "Ankunft IST",
+      "Planned-arrival-label": "Ankunft SOLL",
+      "Annual-plan-label": "Jahresfahrplan",
+      "Daily-plan-label": "Taggesscharfer Plan",
+      "Operational-id-label": "Betriebsbild-ID",
+      "Corridor-label": "Korridor",
+      "Comment-to-order-label": "Anmerkung zur Bestellung",
+      "Acceptance-deadline-current-label": "Annahmeschluss IST",
+      "Acceptance-deadline-target-label": "Annahmeschluss SOLL",
+      "Provisioning-time-current-label": "Bereitstellungszeit IST",
+      "Provisioning-time-target-label": "Bereitstellungszeit SOLL",
+      "Loading-deadline-label": "Ladeschluss",
+      "Crane-time-label": "Kranzeit",
+      "Normal-train-option": "Regelzug",
+      "Special-train-option": "Sonderzug",
+      "Planned-train-option": "Geplant",
+      "Active-train-option": "Aktiv",
+      "Accomplished-train-option": "Durchgeführt",
+      "Canceled-train-option": "Ausgefallen",
+      "max-length-label": "Max. Länge (m)",
+      "max-weight-label": "Max. Last (t)",
+      "max-speed-label": "Max. Geschwindigkeit (km/h)",
+      "bza-number-label": "BZA-Nummer",
+      "Orderer-label": "Besteller",
+      "originally": "ursprünglich",
+      "affected-section": "Betroffener Abschnitt",
+      "construction-time": "Dauer der Baustelle",
+      "construction-impact": "Auswirkung",
+      "estimated-arrival": "vsl. Ankunft",
+      "CANCELLATION_ACQUIRED": "Abbestellung in Prüfung",
+      "CANCELLATION_IN_VALIDATION": "Abbestellung in Prüfung",
+      "CANCELLATION_DECLINED": "Abbestellung abgelehnt",
+      "CANCELED": "abbestellt",
+      "train-affected-by-one-construction-site": "Der Zug ist von einer Baustelle betroffen:",
+      "train-affected-by-two-construction-sites": "Der Zug ist von zwei Baustellen betroffen:",
+      "train-affected-by-three-construction-sites": "Der Zug ist von drei Baustellen betroffen:",
+      "train-affected-by-n-constructionSites": "Zug ist von ' {{cnt}} ' Baustellen betroffen:",
+      "train-affected-by-constructionSites": "Zug ist von Baustellen betroffen:"
+    },
+    "Tracking-history-page": {
+      "Tracking-history-header": "Tracking Historie",
+      "Schedule-label": "Fahrplan",
+      "Manual-eta-label": "Manuelle ETA-Prognose",
+      "Parked-label": "Abgestellt",
+      "Daily-schedule-radio-button-label": "Tagesscharfer Plan",
+      "Yearly-schedule-radio-button-label": "Jahresfahrplan",
+      "Location-table-header": "Ort",
+      "Date-table-header": "Datum",
+      "Planned-time-table-header": "Plan-Zeiten",
+      "Real-time-table-header": "Ist-Zeiten",
+      "Relative-position-table-header": "Relativlage",
+      "Delay-reason-table-header": "Verspätungsgrund",
+      "Event-table-header": "Event",
+      "PRE_CARRIAGE": "Vorlauf",
+      "TRAVEL_POINT": "",
+      "POST_TRANSPORT": "Nachlauf",
+      "DEPARTURE": "Abfahrt",
+      "ARRIVAL": "Ankunft",
+      "PASSTHROUGH": "Durchfahrt",
+      "STABLING": "abstellen",
+      "CONTINUATION": "Weiterfahrt",
+      "DELAY": "Verzögerung",
+      "REMARK": "REMARK",
+      "MAJOR_DISRUPTION": "Großstörung",
+      "START_WAGON_INSPECTION": "Start Wagenuntersuchung",
+      "HANDOVER_UNLOADER": "Übergabe Entlader",
+      "END_TRAIN_FORMATION_EMPTY_TRAIN": "Ende Zugbildung (Leerzug)",
+      "END_WAGON_INSPECTION": "Fertigmeldung Wagenuntersuchung",
+      "TRAIN_TRACTION": "Zug ist bespannt",
+      "HANDOVER_LOADER": "Übergabe Belader",
+      "HANDOVER_TO_DBC": "Übergabe an DBC",
+      "HANDOVER_FROM_DBC": "Übergabe von DBC",
+      "ARRIVAL_PLACE_OF_UNLOADING": "Ankunft Entladestelle",
+      "LOADING_PREPARATION": "Vorbereitung Beladung",
+      "START_LOADING": "Start Ladevorgang",
+      "END_LOADING": "Ende Ladevorgang",
+      "UNLOADING_PREPARATION": "Vorbereitung Entladung",
+      "START_UNLOADING": "Start Entladevorgang",
+      "END_UNLOADING": "Ende Entladevorgang",
+      "DEPARTURE_FROM_DEPOT": "Abfahrt ab Werk",
+      "DEPARTURE_TO_DEPOT": "Abfahrt zum Werk",
+      "REMARKS": "Bemerkungen",
+      "PLAN_CURRENT_TIME": "Plan- und Ist-Zeiten",
+      "Train-number": "Zugnummer",
+      "DATE_TIME": "Datum und Uhrzeit",
+      "COMMENT": "Bemerkung"
+    }
+  },
+  "Order-component": {
+    "Filter-block": "Filter",
+    "Title": "Bestellübersicht",
+    "RadioAll": "Alle anzeigen",
+    "RadioOrders": "Bestellungen",
+    "RadioCancellations": "Abbestellungen",
+    "Title1": "Bestellungen",
+    "Result": "Einträge",
+    "Order-sent": "Bestellung gesendet",
+    "More-Train-Number": "mehrere Zugnummern vorhanden",
+    "Table-header": {
+      "Order-number": "Bestellnummer",
+      "Order-status": "Bestellstatus",
+      "Customer-reference": "Kundenreferenz",
+      "Customer-name-sgv-nr": "Kundenname/SGV Nr.",
+      "Order-details": "Bestelldetails",
+      "Shipping-date": "Versanddatum",
+      "Train-Number": "Zugnr.",
+      "Shipping-station": "Versandbahnhof",
+      "Receiving-station": "Empfangsbahnhof",
+      "NHM-Code": "NHM-Code",
+      "Length-in-m": "Länge (m)",
+      "Length-in-m-csv": "Laenge (m)",
+      "Amount-in-tons": "Brutto-Gewicht (t)",
+      "History": "Statushistorie aufrufen",
+      "Modify": "Modifizieren",
+      "Save-as-draft": "Als Vorlage speichern",
+      "Order-number-tooltip": "Bestelldetails anzeigen"
+    },
+    "Filter": {
+      "Shipping-date-from-label": "Versanddatum (von)",
+      "Shipping-date-to-label": "Versanddatum (bis)"
+    },
+    "Context-menu": {
+      "Modify": "Mengenreduzierung",
+      "Cancel": "Abbestellung"
+    },
+    "Cancellation": {
+      "Cancellation": "Abbestellung",
+      "Reason": "Abbestellgrund",
+      "Other-Indications": "Sonstige Angaben",
+      "Reason-placeholder": "Grund der Abbestellung, ...",
+      "Order-resumen": "Zusammenfassung der Bestellung",
+      "Cancelled": "Abbestellung gesendet",
+      "Reduced": "Menge reduziert",
+      "Service-Hint": "Bei der Abbestellung können gemäß ALB oder abweichender vertraglicher Vereinbarung Stornierungsentgelte anfallen.",
+      "Roundtrip-info": "Der Zug {{ trainNumber }} bildet einen Umlauf mit:",
+      "Confirmation-roundtrip-next-train": "Möchten Sie den zum Zugumlauf gehörenden Zug {{ trainNumber }} für den {{ startDate }} ebenfalls abbestellen?"
+    },
+    "Details": {
+      "Header": "Bestelldetails"
+    }
+  },
+  "Railorder-summary-component": {
+    "Dialog-header": "Wagenliste",
+    "Table-header": {
+      "Wagon-number": "Wagen-Nummer",
+      "Wagon-type": "Wagen-Gattung",
+      "Shipping-date": "Versand-Datum",
+      "Consignor": "Asender",
+      "Consignee": "Empfänger",
+      "Good-type": "Gutart",
+      "Cargo-weight": "Ladungs- gewicht (t)",
+      "Vehicle-weight": "Wagen- gewicht (t)",
+      "Total-weight": "Gesamt- gewicht (t)",
+      "Number-of-axis": "Anzahl Achsen",
+      "Length": "Wagen- länge (m)",
+      "Order-number": "ZAB-AuftragsNr."
+    },
+    "Table-footer": {
+      "Number-of-wagons": "Anzahl Wagen:"
+    },
+    "Tooltip": {
+      "Number-of-Axis": "Gesamtzahl Achsen",
+      "Sum-cargo-weight": "Ladungsgewicht (t)",
+      "Sum-total-weight": "Ist-Gewicht (t):",
+      "Sum-length": "Ist-Länge (m):",
+      "Close-dialog-label": "Dialog schließen"
+    }
+  },
+  "Calendar-view-page": {
+    "From-date-label": "Von",
+    "Calendar-week-label": "Kalenderwoche (KW)",
+    "Calendar-week-short-label": "KW",
+    "Current-week-label": "Aktuelle KW",
+    "Regular-trains-header": "Regelzüge",
+    "Special-trains-header": "Sonderzüge",
+    "Menu-button-1-label": "Zug modifizieren",
+    "Menu-button-2-label": "Zug abbestellen",
+    "Menu-button-3-label": "Als Kopiervorlage",
+    "Menu-button-4-label": "Vorlage speichern",
+    "Holiday-icon-text": "F",
+    "openTrainDetails": "Zugdetails"
+  },
+  "Order-templates-component": {
+    "Title": "Bestellvorlagen",
+    "Title-order-tempalte": "Bestellvorlage",
+    "Template-id": "Vorlagennummer",
+    "Template-nr": "Vorlagennr.",
+    "Template-name": "Vorlagenname",
+    "Train-type": "Zugart",
+    "Sender": "Versender",
+    "Loaded-empty": "Beladen/Leer",
+    "Orderer-sgv": "Besteller/SGV-Nr.",
+    "Orderer-partnerId": "Partner-ID",
+    "Sender-sgv": "Versender/SGV-Nr.",
+    "Sender-partnerId": "Partner-ID",
+    "wagonStoringPositionSender": "Güterwagenstellplatz Versand",
+    "Loader-sgv": "Verlader/SGV-Nr.",
+    "Loader-partnerId": "Partner-ID",
+    "First-carrier": "Erster Beförderer",
+    "Work-direction-send": "Arbeitsrichtung Versand",
+    "Receiver": "Empfänger",
+    "Show-details": "Vorlagendetails anzeigen",
+    "Receiver-sgv": "Empfänger/SGV-Nr.",
+    "Receiver-partnerId": "Partner-ID",
+    "wagonStoringPositionReceiver": "Güterwagenstellplatz Empfang",
+    "Unloader-sgv": "Entlader/SGV-Nr.",
+    "Unloader-partnerId": "Partner-ID",
+    "Last-carrier": "Letzter Beförderer",
+    "Work-direction-receive": "Arbeitsrichtung Empfang",
+    "Train-Type": "Zugart",
+    "Train-Type-Regular": "Plantrain",
+    "Train-Type-Special": "Flextrain",
+    "Main-carrier": "Hauptfrachtführer",
+    "MarketSegment": "Marktbereich",
+    "TomGroup": "TOM-Gruppe",
+    "operationalId": "Betriebsbild-ID",
+    "CommercialService": "Kommerzielle Zusatzleistung",
+    "BorderStation": "Grenzbahnhof",
+    "ValidFrom": "Gültig von",
+    "ValidUntil": "Gültig bis",
+    "Valid-from": "Gültig von",
+    "Valid-to": "Gültig bis",
+    "Transporterroute-group-header": "Angaben zur Befördererroute ",
+    "Carrier": "Beförderer",
+    "FirstCarrier": "Erster Beförderer",
+    "LastCarrier": "Letzter Beförderer",
+    "Startstation": "Versandbahnhof",
+    "Endstation": "Empfangsbahnhof",
+    "AddTransporterrouteGroup": " Weitere Befördererroute hinzufügen",
+    "New-order-template": {
+      "Save-button": "Vorlage speichern",
+      "Next-button": "> Weiter",
+      "Header": "Neue Bestellvorlage",
+      "Shipping-header": "Versand",
+      "Receiving-header": "Empfang",
+      "Misc-header": "Sonstiges",
+      "Transporterroute-header": "Befördererroute",
+      "Train-data-header": "Zugparameter",
+      "AddTransportrouteGroup": "weitere Befördererroute hinzufügen"
+    },
+    "Edit-order-template": "Bestellvorlage modifizieren",
+    "Delete-order-template": {
+      "Confirmation-button": "Ja",
+      "Cancellation-button": "Nein",
+      "Dialog-text-prefix": "Möchten Sie die Vorlage",
+      "Dialog-text-suffix": "wirklich löschen?",
+      "Confirmation-text": "Vorlage gelöscht"
+    },
+    "Save-confirmation": "Bestellvorlage gespeichert",
+    "Save-confirmation-id": "Bestellvorlage gespeichert: {{ templateId }}"
+  },
+  "Wagonholder-component": {
+    "Overview-title": "Wagenhaltersicht",
+    "Tooltip": {
+      "Open-wagon-details": "Öffne Wagendetails für Wagen: "
+    },
+    "Table-header": {
+      "Wagonkeeper": "Wagenhalter",
+      "Wagonnumber": "Wagennummer",
+      "Wagoncategory": "Gattung",
+      "Trackingstatus": "Trackingstatus",
+      "Trackingstatusdate": "Datum",
+      "Country": "Land",
+      "Location": "Standort",
+      "Runability": "Lauffähigkeit",
+      "Damagecode": "Schadcode"
+    },
+    "Vehiclekeeper-filter": {
+      "Vehicle-keeper": "Wagenhalter",
+      "Vehicle-number": "Wagennummer",
+      "Vehicle-type": "Wagengattung",
+      "Runnability": "Lauffähigkeit",
+      "Damage-Code": "Schadcode",
+      "Location-country": "Standort Land",
+      "Location": "Standort"
+    }
+  },
+  "Tracking-history-wagon": {
+    "Title": "Tracking Historie",
+    "Overview-title": "Tracking Historie",
+    "ZAB-order-number": "ZAB Auftragsnummer:",
+    "Wagon-number": "Wagennummer:",
+    "Table-header": {
+      "Event": "Event",
+      "Location": "Standort",
+      "Real-time": "Ist-Zeiten",
+      "Train-number": "Zugnummer"
+    }
+  },
+  "Wagon-overview": {
+    "Overview-title": "Wagenübersicht",
+    "Table-header": {
+      "Wagon-number": "Wagennummer",
+      "Date-of-dispatch": "Versanddatum",
+      "Expected-arrival": "Vsl. Ankunft",
+      "Forwarding-yard": "Versandbahnhof",
+      "Destination-yard": "Empfangsbahnhof",
+      "Consignor": "Absender",
+      "Consignee": "Empfänger",
+      "Event": "Event",
+      "Location": "Aktueller Standort",
+      "Zab-order-number": "ZAB Auftrags- nummer"
+    },
+    "Tooltip": {
+      "Loaded": "Wagen beladen",
+      "Empty": "Wagen leer",
+      "Damage-limited-runablity": "Wagen eingeschränkt lauffähig",
+      "Damage-no-runablity": "Wagen nicht lauffähig",
+      "Duration-target": "Laufzeitziel:",
+      "No-duration-target": "Kein Laufzeitziel vorhanden",
+      "Tracking-history-wagon": "Tracking Historie",
+      "Order-details": "Auftragsdetails"
+    },
+    "CSV-export": {
+      "Actual-receiving-date-label": "Ist-Ankunft",
+      "Actual-sending-date-label": "Ist-Abfahrt",
+      "Additional-commercial-information-discount-code": "Kundenabkommen",
+      "Annotation-of-consignor-description": "Absenderreferenz",
+      "Bza-number": "BZA-Nummer",
+      "Consignee": "Empfaenger",
+      "Customs-tariff-no": "Zollnummer",
+      "Current-train-number-label": "Aktuelle Zugnummer",
+      "Customer-reference": "Kundenreferenz",
+      "Damage-code": "Schadcode",
+      "Damage-code-description": "Schadcode Beschreibung",
+      "Damage-limited-runablity": "Wagen eingeschraenkt lauffaehig",
+      "Damage-no-runablity": "Wagen nicht lauffaehig",
+      "First-train-number-label": "Erste Zugnummer",
+      "Forwarding-yard-number": "Versandbahnhof Nummer",
+      "Loaded": "Wagen beladen",
+      "Location-status": "Aktueller Standort Status",
+      "Location-time": "Aktueller Standort Zeit",
+      "Netto-weight": "Nettogewicht",
+      "NHM-code-description": "Warenbezeichnung",
+      "NHM-code-label": "NHM-Code",
+      "Receiver-customer-number": "Empfaengernummer",
+      "Receiving-country": "Empfangsland",
+      "Receiving-station-number": "Empfangsbahnhof Nummer",
+      "Runablity": "Lauffaehigkeit",
+      "Sender-customer-number": "Absendernummer",
+      "Sending-country": "Versandland",
+      "Status": "ZAB-Status",
+      "Tare-weight": "Wagengewicht",
+      "Template-name": "Auftragscode",
+      "Wagon-type-label": "Wagengattung",
+      "Weight": "Bruttogewicht",
+      "Zab-order-number": "ZAB Auftragsnummer",
+      "Location-country": "Standort Land"
+    },
+    "Filter": {
+      "Place-holder": {
+        "Wagon-number": "Wagennummer",
+        "Date-of-dispatch-from": "Versanddatum (von)",
+        "Date-of-dispatch-to": "Versanddatum (bis)",
+        "Incoming-by": "Im Zulauf bis",
+        "Zab-order-number": "Auftragsnummer",
+        "Sending-station": "Versandbahnhof (Name)",
+        "Receiving-station": "Empfangsbahnhof (Name)",
+        "Location": "Aktueller Standort",
+        "NHM-code": "NHM Code",
+        "Consignor": "Absender (Name/SGV-Nr.)",
+        "Consignee": "Empfänger (Name/SGV-Nr.)",
+        "Loading-state": "Ladezustand wählen",
+        "customerReference": "Referenz",
+        "senderIsoCountryCode": "Versandland",
+        "deliveryIsoCountryCode": "Empfangsland"
+      },
+      "Label": {
+        "Wagon-number": "Wagennummer",
+        "Date-of-dispatch-from": "Versanddatum (von)",
+        "Date-of-dispatch-to": "Versanddatum (bis)",
+        "Incoming-by": "Im Zulauf bis",
+        "Zab-order-number": "Auftragsnummer",
+        "Sending-station": "Versandbahnhof",
+        "Receiving-station": "Empfangsbahnhof",
+        "Location": "Aktueller Standort",
+        "NHM-code": "NHM Code",
+        "Consignor": "Absender (Name/SGV-Nr.)",
+        "Consignee": "Empfänger (Name/SGV-Nr.)",
+        "Loading-state": "Ladezustand",
+        "Loading-state-loaded": "Beladen",
+        "Loading-state-empty": "Leer",
+        "customerReference": "Referenz",
+        "senderIsoCountryCode": "Versandland",
+        "deliveryIsoCountryCode": "Empfangsland"
+      },
+      "ControlMultiSelect": {
+        "searchPlaceholderText": "Suche",
+        "noDataAvailablePlaceholderText": "Keine Daten verfügbar"
+      }
+    }
+  },
+  "User-management-component": {
+    "copy-auth": "User-Berechtigungen verwenden",
+    "User-profile": "Benutzerprofil",
+    "Wagon-keeper-assignment": "Wagenhalter Zuordnung",
+    "Accounts-receivable-numbers-assignment": "Debitorennummern Zuordnung",
+    "User-edit-header": "Benutzerzuordnung (Kundenservice)",
+    "Usergroup-edit-header": "Benutzergruppe",
+    "Customergroup-edit-header": "Landesgesellschaft",
+    "Customerprofile-edit-header": "Kundenprofil",
+    "New-user-label": "neuer Benutzer",
+    "New-user-group-label": "neue Benutzergruppe",
+    "New-customer-group-label": "neue Landesgesellschaft",
+    "User-edit-usergroup": "Benutzergruppe",
+    "market-area-customer-label": "Marktbereichskunde",
+    "customername_sgv_no": "Kundenname/SGV-Nr.",
+    "Partner-id-label": "Partner-ID",
+    "Adjust-roles-label": "Rollen anpassen",
+    "notAssignedProfiles-label": "nicht zugeordnete Profile",
+    "assignedProfiles-label": "zugeordnete Profile",
+    "User-username-label": "Benutzername*",
+    "User-data-label": "Benutzerdaten",
+    "User-role-label": "Benutzerrolle",
+    "User-salutation-label": "Anrede",
+    "User-type-label": "Benutzer-Typ*",
+    "User-name-label": "Vorname",
+    "User-surname-label": "Nachname",
+    "User-email-label": "Email",
+    "User-secondaryEmail-label": "alternative Email",
+    "User-phone-label": "Telefonnummer",
+    "User-salutation-none": "keine Angabe",
+    "User-salutation-female": "Frau",
+    "User-salutation-male": "Herr",
+    "User-role-admin": "Admin",
+    "User-role-ks": "Kundenservice",
+    "User-role-ks-template": "KS-Vorlage",
+    "User-groups-label": "Benutzergruppen",
+    "Customer-profile-label": "Kundenprofil",
+    "RadioAll": "alle User",
+    "RadioInternal": "interne User",
+    "RadioExternal": "externe User",
+    "username": "Benutzername",
+    "Role-label": "Interne Rollen*",
+    "SearchPlaceholderText": "Suchen",
+    "NoDataAvailablePlaceholderText": "Keine Daten gefunden",
+    "Customergroup-label": "Landesgesellschaften",
+    "AccountsreceivableNumber": "Debitorennummern",
+    "UserAuthorizations": "Berechtigungen",
+    "Add-usergroup-label": "Benutzergruppe hinzufügen",
+    "Delete-usergroups-label": "Alle Benutzergruppe löschen",
+    "Set-primary-group": "Als primäre Gruppe setzen",
+    "UserGroup": {
+      "customer": "Kunde",
+      "sgvNo": "SGV-Nr.",
+      "partnerId": "Partner-ID",
+      "customerName": "Kundenname",
+      "custNo": "Marktbereichskd.-Nr.",
+      "groupName": "Gruppenname",
+      "roles": "Rollen",
+      "searchPlaceholder": "Kunde/Gruppe",
+      "users": "Benutzerzuordnung",
+      "role": "Rolle",
+      "profileRole": "Kundenprofil",
+      "relationRole": "Kundenbeziehung",
+      "Confirmation": {
+        "Save-confirmation": "Benutzergruppe gespeichert",
+        "Delete-confirmation": "Benutzergruppe gelöscht",
+        "Delete-confirmation-header": "Benutzergruppe löschen",
+        "Delete-confirmation-body": "Soll die Benutzergruppe gelöscht werden? Alle zugeordneten Benutzer verlieren die Gruppenzugehörigkeit."
+      }
+    },
+    "CustomerGroup": {
+      "groupName": "Name",
+      "userGroups": "Anzahl Benutzergruppen",
+      "searchPlaceholder": "Landesgesellschaft",
+      "Confirmation": {
+        "Save-confirmation": "Landesgesellschaft gespeichert",
+        "Delete-confirmation": "Landesgesellschaft gelöscht",
+        "Delete-confirmation-header": "Landesgesellschaft löschen",
+        "Delete-confirmation-body": "Soll die Landesgesellschaft gelöscht werden? Alle zugeordneten Benutzer verlieren die Zugehörigkeit."
+      }
+    },
+    "Profile": {
+      "customer-label": "Kunde",
+      "sgv-label": "SGV-Nr.",
+      "site-label": "Standort",
+      "tomgroup-label": "TOM-Gruppe",
+      "grantor-relation-label": "Freigegebene Kundenbeziehungen",
+      "grantee-relation-label": "Erhaltene Kundenbeziehungen",
+      "relation-grantor": "Freigebender Kunde",
+      "relation-grantee": "Berechtigter Kunde",
+      "relation-name": "Beziehung",
+      "Confirmation": {
+        "Save-confirmation": "Kundenprofil gespeichert"
+      }
+    },
+    "Auth": {
+      "CustomerGroup": "Landesges.",
+      "UserGroup": "Gruppe",
+      "Role": "Rolle",
+      "Authorization": "Berechtigung",
+      "Module": "Modul",
+      "Customer": "Kunde",
+      "CustomerRoles": "Kundenrolle(n)",
+      "RelatedCustomer": "Kundenbeziehung"
+    },
+    "AccUser": {
+      "type": "Benutzerart",
+      "role": "Benutzerrolle",
+      "name": "Benutzername",
+      "active-usergroups": "aktive Gruppen",
+      "num-customergroups": "aktive Landes-Ges.",
+      "num-wagon-keepers": "aktive Wagenhalter",
+      "num-accountsreceivablenumber": "aktive Debitoren-Nr.",
+      "market-area-client-number": "Marktbereichskd.-Nr.",
+      "sgv": "SGV-Nr.",
+      "partnerId": "Partner-ID",
+      "customer-name": "Kundenname",
+      "last-activity": "Letze Aktivität"
+    },
+    "Confirmation": {
+      "Save-confirmation": "Benutzer gespeichert",
+      "Cancel-UserHeader": "Benutzer deaktivieren",
+      "Cancel-User": "Möchten Sie diesen Benutzer im Train Management wirklich deaktivieren?",
+      "Activate-UserHeader": "Benutzerdaten aktivieren",
+      "Activate-User": "Möchten Sie diesen Benutzer im Train Management wirklich aktivieren?",
+      "Delete-groups-confirmation-header": "Benutzergruppen entfernen",
+      "Delete-groups-confirmation-body": "Sollen alle zugeordneten Benutzergruppen wirklich entfernt werden?"
+    },
+    "ProfileChanges": " ungespeicherte Änderungen!",
+    "ProfileChange": " ungespeicherte Änderung!",
+    "Incomplete": "unvollständig",
+    "Complete": "vollständig"
+  },
+  "Profile-list-component": {
+    "Save-confirmation": "Kundenprofil gespeichert",
+    "RadioAll": "alle anzeigen",
+    "RadioComplete": "mit TOM-Gruppe",
+    "RadioIncomplete": "ohne TOM-Gruppe",
+    "RadioNotCreated": "ohne Profil",
+    "customerName-SGV-No": "Kundenname/SGV-Nr.",
+    "save-label": "speichern",
+    "reset-label": "zurücksetzen",
+    "CustProfile.custNo": "Marktbereichskundennummer",
+    "CustProfile.sgvNo": "SGV-Nr.",
+    "CustProfile.partnerId": "Partner-ID",
+    "CustProfile.assignments": "Zuordnungen",
+    "CustProfile.tomGroup": "TOM-Gruppe",
+    "CustProfile.orderer": "Besteller",
+    "CustProfile.sender": "Versender",
+    "CustProfile.receiver": "Empfänger",
+    "CustProfile.customerName": "Kundenname"
+  }
+}

@@ -1,0 +1,180 @@
+<div class="main">
+  <div class="header-line">
+    <h2>{{ 'Navigation.User-management' | translate }}</h2>
+    <div class="additional-buttons-block">
+    </div>
+  </div>
+  <!-- Filter START -->
+  <div #test>
+    <form [formGroup]="filterForm">
+      <div class="radio-buttons flex-row">
+        <div style="margin-right: 1em">
+          <input type="radio" class="elm-radio" id="input-all" formControlName="userSelectionType" value="{{AccUserTypeFilter.ALL}}" (change)="doFilter()">
+          <label class="elm-label" for="radio01">{{ 'User-management-component.RadioAll' | translate }}</label>
+        </div><div style="margin-right: 1em">
+          <input type="radio" class="elm-radio" id="input-internal" formControlName="userSelectionType" value="{{AccUserTypeFilter.INTERNAL}}" (change)="doFilter()">
+          <label class="elm-label" for="radio02">{{ 'User-management-component.RadioInternal' | translate }}</label>
+        </div><div>
+          <input type="radio" class="elm-radio" id="input-external" formControlName="userSelectionType" value="{{AccUserTypeFilter.EXTERNAL}}" (change)="doFilter()">
+          <label class="elm-label" for="radio03">{{ 'User-management-component.RadioExternal' | translate }}</label>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="flex-row">       
+          <div class="flex-column">
+            <div class="input-field">
+              <input formControlName="username" type="text" class="elm-input" placeholder="{{ 'User-management-component.username' | translate }}" name="username" id="username" />
+              <label class="elm-label" for="username" aria-hidden="true" id="username-label">
+                {{ 'User-management-component.username' | translate }}
+              </label>
+            </div>
+          </div>
+          <div class="flex-column">
+            <div class="input-field" style="width: 400px;">
+              <input
+                autocomplete="off"
+                formControlName="customerProfile"
+                type="text"
+                class="elm-input"
+                placeholder="{{ 'User-management-component.Customer-profile-label' | translate }}"
+                name="customerProfile"
+                id="customerProfile"
+                list="datalist-customerProfile"
+                (input)="getCustomerList($event)"
+                (change)="selectCustomer($event)"/>
+              <label class="elm-label" for="customerProfile" aria-hidden="true" id="customerProfile-label">
+                {{ 'User-management-component.Customer-profile-label' | translate }}
+              </label>
+              <ng-container *ngIf="filterForm.controls.customerProfile.invalid && filterForm.controls.customerProfile.touched || !this.customerProfileExists">
+                  <small class="input-error" *ngIf="!this.customerProfileExists">{{
+                      'Shared.Errors.Customerprofile-not-exists-error-text' | translate
+                      }}
+                  </small>
+              </ng-container>
+              <datalist id="datalist-customerProfile">
+                <option *ngFor="let option of customerAutoComplete">{{ getCustomer(option)}}</option>
+              </datalist> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="controls-block">
+        <span>
+          <h3>{{ 'Shared.Results-label' | translate }} ({{ userListLength }})</h3>
+        </span>
+        <span>
+          <div>
+            <db-button *ngIf="(userManagementService.hasCreatePermission() | async )" variant="brand-primary" type="button" style="margin: 0 10px;" (click)="openUserModal()">
+                <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'User-management-component.New-user-label' | translate }}
+            </db-button>
+          </div>
+        </span>
+      </div>
+    </form>
+  </div>
+  <!-- Filter END   -->
+  <ng-container>
+  <div class="controls">
+  </div>
+  <!-- Users List START -->
+  <div>
+
+    <div class="elm-progress" style="height: 0px; margin-top: -5px; padding-bottom: 5px;" *ngIf="loadingInProgressOverAll">
+      <progress id="progress-label-07"></progress>
+    </div>
+    <table class="list-table">
+      <thead class="table-header">
+        <tr>
+          <!--<th style="width: 50px;"></th>-->
+          <th scope="col" [title]="header.text" *ngFor="let header of tableHeaders" [style.width]="header.width? header.width : 'auto'">
+            <div>
+              <div>
+                <span>{{ header.text }}</span>
+              </div>
+              <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+              </span>
+            </div>
+          </th>
+          <th style="width: 100px;"></th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="userList" style="overflow: auto;">
+        <ng-container *ngFor="let user of userList; let i = index">
+          <tr [class.white-row]="i % 2 === 0" [class.deactivated-row]="user.deactivated">
+            <!--<td>
+              <span *ngIf="(userManagementService.hasChangeAuthPermission() | async )">
+                <a title="{{ 'User-management-component.copy-auth' | translate }}" (click)="setCustomUser(user.userName)">
+                  <i data-icon="play" class="play" data-icon-variant="24-outline"></i>
+                </a>
+              </span>
+            </td>-->
+            <td>{{user.userType}}</td>
+            <td>{{getRoles(user)}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.lastLogin | dateTime}}</td>
+            <td *ngIf="user.numActiveGroups != '0' else empty" style="text-align: center; margin: 0 3em 0 0">{{user.numActiveGroups}}</td>
+            <td *ngIf="user.numCustomerGroups != '0' else empty" style="text-align: center; margin: 0 3em 0 0">{{user.numCustomerGroups}}</td>
+            <td *ngIf="user.numWagonKeepers != '0' else empty" style="text-align: center; margin: 0 3em 0 0">{{user.numWagonKeepers}}</td>
+            <td *ngIf="user.numAccountsReceivableNumbers != '0' else empty" style="text-align: center; margin: 0 3em 0 0">{{user.numAccountsReceivableNumbers}}</td>
+            <ng-template #empty>
+              <td></td>
+            </ng-template>
+            <td style="text-align: center; margin: 0 3em 0 0">{{user.sgv?.marketAreaCustomerNumber}}</td>
+            <td style="text-align: center; margin: 0 3em 0 0">{{user.sgv?.sgvId}}</td>
+            <td style="text-align: center; margin: 0 3em 0 0">{{user.sgv?.companyLocationNumber}}</td>
+            <td>{{user.sgv?.customerName}}</td>
+            <td class="no-op">
+              <div class="flex-row">                
+                <div class="flex-column">
+                  <span>
+                    <a *ngIf="!user.deactivated" title="{{ 'edit' | translate }}" (click)="openUserModal(user.userId)">
+                      <i data-icon="edit" class="edit" data-icon-variant="24-outline"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a *ngIf="!user.deactivated && (userManagementService.hasDeletePermission() | async )" title="{{ 'deactivate' | translate }}" (click)="deleteUserData(user.userId, user.deactivated)">
+                      <i data-icon="delete" class="delete" data-icon-variant="24-outline"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a *ngIf="user.deactivated && (userManagementService.hasUpdatePermission() | async )" title="{{ 'reactivate' | translate }}" (click)="deleteUserData(user.userId,  user.deactivated)">
+                      <svg viewBox="0 0 25 25" class="icon mouse-pointer">
+                        <use xlink:href="assets/icons/icons.svg#undo" />
+                      </svg>
+                    </a>
+                  </span>
+                </div>
+                <div class="flex-column">
+                  <span *ngIf="(userManagementService.hasCreatePermission() | async )">
+                    <a title="{{ 'copy' | translate }}" (click)="openUserModal(user.userId, true)">
+                      <i data-icon="duplicate" class="duplicate" data-icon-variant="24-outline"></i>
+                    </a>
+                  </span>
+                  <span *ngIf="(userManagementService.hasChangeAuthPermission() | async )">
+                    <a title="{{ 'User-management-component.copy-auth' | translate }}" (click)="setCustomUser(user.userName)">
+                      <i data-icon="play" class="play" data-icon-variant="24-outline"></i>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    
+    <div class="elm-progress" *ngIf="progressState === ProgressState.LOADING">
+      <progress id="progress-label-07"></progress>
+    </div>
+  </div>
+  <div class="bottom-controls">
+    <button *ngIf="totalUsers && (totalUsers || 0) > userListLength" class="load-btn" (click)="loadMore()">{{ 'Shared.Load-more-button-label' | translate }}</button>
+  </div>
+  <div>
+    <strong>{{ userListLength }} {{'Shared.Of' | translate}} {{ totalUsers }}</strong>
+  </div>
+  </ng-container>
+</div>

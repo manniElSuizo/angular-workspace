@@ -1,0 +1,188 @@
+<header class="modal-header">
+    <h2>
+        <strong>{{ 'User-management-component.Usergroup-edit-header' | translate }}</strong>
+    </h2>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="openConfirmationModal()">
+        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+    <p *ngIf="groupId">
+        ID: {{ groupId }}
+    </p>
+</header>
+<main class="modal-main" style="overflow: hidden">
+    <form [formGroup]="formGroup" autocomplete="false" [class.loading]="loadingSave">
+        <div class="grid-container">
+            <div class="grid-item tabs" style="min-height: calc(100vh - 392px);">
+                <div class="tabs-item" id="groupDataHead">
+                    <a class="elm-link " (click)="changeTab(0)">
+                        {{'User-management-component.Usergroup-edit-header' | translate }}
+                    </a>
+                </div>
+                <!--<div class="tabs-line" *ngIf="group?.groupId"></div>
+                <div class="tabs-item"*ngIf="group?.groupId" id="userReferences">
+                    <a class="elm-link " (click)="changeTab(1)">
+                        {{ 'User-management-component.UserGroup.users' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line" *ngIf="group?.groupId"></div>
+                <div class="tabs-item"*ngIf="group?.groupId" id="authorizations">
+                    <a class="elm-link " (click)="changeTab(2)">
+                        {{ 'User-management-component.UserAuthorizations' | translate }}
+                    </a>
+                </div>-->
+            </div>
+            <div class="grid-item">
+                <div class="tab-header">
+                    <span class="tab-title">1. {{'User-management-component.Usergroup-edit-header' | translate }}</span>
+                    <span class="RequiredField" id="required-field">{{'Shared.Required-field' | translate}}</span>
+                </div>
+                <div class="input-block-complete" id="groupData">
+
+                    <div class="flex-row">                
+                        <div class="flex-column" style="width: 50%">
+                        <!--START: USERNAME -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputUserGroupName">
+                                <input formControlName="groupname"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.UserGroup.groupName' | translate }}"
+                                        name="groupname"
+                                        id="groupname"
+                                        aria-labelledby="groupname-label"
+                                        (change)="checkUserGroup()"
+                                        [style.cursor]="groupId ? 'default' : null"
+                                        [class.invalid-input]="formGroup.controls.groupname.invalid && formGroup.controls.groupname.touched || this.userGroupNameExists"
+                                />
+                                <label class="elm-label" for="groupname" aria-hidden="true" id="user-name-label">{{ 'User-management-component.UserGroup.groupName' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.groupname.invalid && formGroup.controls.groupname.touched || this.userGroupNameExists">
+                                    <small class="input-error" *ngIf="formGroup.controls.groupname.errors?.required">{{'Shared.Errors.Field-is-required-error-text' | translate}}</small>
+                                    <small class="input-error" *ngIf="this.userGroupNameExists">{{
+                                        'Shared.Errors.Groupname-exists-error-text' | translate
+                                        }}
+                                    </small>
+                                </ng-container>
+                                <div class="elm-progress" *ngIf="loadingInProgress">
+                                    <progress id="progress-label-07"></progress>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column" style="width: 50%">
+                            <div class="input-field">
+                                <input
+                                  formControlName="customerProfile"
+                                  type="text"
+                                  class="elm-input"
+                                  placeholder="{{ 'User-management-component.Customer-profile-label' | translate }}"
+                                  name="customerProfile"
+                                  id="customerProfile"
+                                  list="datalist-customerProfile"
+                                  [readOnly]="groupId"
+                                  (input)="getCustomerList($event)"
+                                  (change)="selectCustomer($event)"/>
+                                <label class="elm-label" for="customerProfile" aria-hidden="true" id="customerProfile-label">
+                                  {{ 'User-management-component.Customer-profile-label' | translate }}
+                                </label>
+                                <ng-container *ngIf="formGroup.controls.customerProfile.invalid && formGroup.controls.customerProfile.touched || !this.customerProfileExists">
+                                    <small class="input-error" *ngIf="formGroup.controls.customerProfile.errors?.required">{{'Shared.Errors.Field-is-required-error-text' | translate}}</small>
+                                    <small class="input-error" *ngIf="!this.customerProfileExists">{{
+                                        'Shared.Errors.Customerprofile-not-exists-error-text' | translate
+                                        }}
+                                    </small>
+                                </ng-container>
+                                <datalist id="datalist-customerProfile">
+                                  <option *ngFor="let option of customerAutoComplete">{{ getCustomer(option)}}</option>
+                                </datalist> 
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--END: USERNAME -->
+
+                    <div class="dashed-line"></div>
+
+                    <!-- START: ROLES -->
+                    <!--<h3>{{ 'User-management-component.UserGroup.roles' | translate }}</h3> -->
+                    <div class="flex-column" style="width: 60%">
+                        <table class="list-table">
+                            <thead class="table-header">
+                                <th style="width: 10px;"></th>
+                                <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of tableHeaders">
+                                    <div>
+                                    <div>
+                                        <span>{{ header.text }}</span>
+                                    </div>
+                                    <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                                        <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                        <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                                    </span>
+                                    </div>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let module of listModules()">
+                                    <tr class="module-header"><td colspan="4">{{module}}</td></tr>
+                                    
+                                    <tr *ngFor="let role of getModuleRoles(module)">
+                                        <td></td>
+                                        <td>{{role.description}}</td>
+                                        <td style="text-align: center;"><input
+                                            type="checkbox"
+                                            id="role_{{role.id}}"
+                                            name="role_{{role.id}}"
+                                            [checked]="isRoleAssigned(role, false)"
+                                            (change)="onRoleChange($event, role, false)"
+                                        /></td>
+                                        <td style="text-align: center;"><input *ngIf="role.isRelationRelevant"
+                                            type="checkbox"
+                                            id="role_{{role.id}}_rel"
+                                            name="role_{{role.id}}_rel"
+                                            [checked]="isRoleAssigned(role, true)"
+                                            (change)="onRoleChange($event, role, true)"
+                                        /></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        
+                        </table>
+                    </div>
+                </div>  
+            </div>
+
+            
+            <!-- START: BUTTON-LINE -->
+            <div class="grid-item">
+            </div>
+            <div class="flex-row">        
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-left">
+                        <div class="left-aligned">
+                            <db-button *ngIf="(userManagementService.hasDeletePermission() | async ) && groupId" variant="secondary" type="button" (click)="deleteUserGroup()">
+                                {{ 'delete' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>     
+                <div class="flex-column elm-progress"  style="width: 20%">
+                    <progress *ngIf="loadingSave" id="progress-label-07"></progress>
+                </div>       
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-right">
+                        <div class="right-aligned">
+                            <db-button *ngIf="(userManagementService.hasCreatePermission() | async ) || (userManagementService.hasUpdatePermission() | async )" variant="brand-primary" type="button" (click)="doSaveUserGroup()" [disabled]="formGroup.invalid || this.userNameExists">
+                                {{ 'Shared.Save-button-label' | translate }}
+                            </db-button>
+                        <!-- /div>
+                        <div -->
+                            <db-button variant="secondary" type="button" (click)="openConfirmationModal()">
+                                {{ 'Shared.Cancel-button-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: BUTTON-LINE -->
+        </div>
+    </form>
+</main>

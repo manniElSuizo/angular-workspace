@@ -1,0 +1,24 @@
+<header class="modal-header">
+    <h3 class="elm-headline">
+      <strong>{{'New-order.Main.Order' | translate}} {{railOrder.orderKey.orderNumber}}</strong>
+    </h3>
+  </header>
+  <main class="modal-main">
+    <form>
+      <div>
+        <div>
+          <div style="text-align:center">
+            <br>{{'Order-Management.Rail-order-cancellation.Confirmation-text' | translate}}
+          </div>
+          <div class="button-group">
+            <db-button variant="brand-primary" type="button" (click)="decision(true)" style="margin-right: 1em;">
+                <span style="width: 46px;">{{'Shared.Confirmations.Yes' | translate}}</span>
+            </db-button>
+            <db-button variant="secondary-solid" type="button" (click)="decision(false)">
+                <span style="width: 46px;">{{'Shared.Confirmations.No' | translate}}</span>
+            </db-button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>

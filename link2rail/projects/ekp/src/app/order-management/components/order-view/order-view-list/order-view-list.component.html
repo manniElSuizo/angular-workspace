@@ -1,0 +1,145 @@
+
+<section>
+  <div class="header-line">
+      <h2>{{ 'Order-Management.order-view-list.title' | translate }}</h2>
+      <div style="flex: 1"></div>
+      <div style="padding: 0 10px 20px 0;" *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async); else newOrderDisabled">
+        <db-button variant="brand-primary" (click)="openNewOrderModal()">
+            <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'Order-Management.order-view-list.new-order' | translate }}
+        </db-button>
+      </div>
+      <ng-template #newOrderDisabled>
+        <div style="padding: 0 10px 20px 0; cursor: default;">
+            <db-button variant="brand-primary" disabled="true">
+                <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'Order-Management.order-view-list.new-order' | translate }}
+            </db-button>
+        </div>
+      </ng-template>
+  </div>
+  <div style="width: 100%">
+    <app-order-view-filter></app-order-view-filter>
+  </div>
+  <div id="list-view" style="width: 100%; min-width: 1820px">
+    <div class="elm-progress" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+    </div>
+    <table class="list-table">
+        <thead class="table-header">
+            <tr>    
+                <ng-container *ngFor="let header of tableHeaders">
+                    <th scope="col" [style.min-width]="header.minWidth" [style.text-align]="header.textAlign" [title]="header.headerText">
+                        <div class="flex-row">
+                            <span>{{header.headerText}}<br/>{{header.headerTextrow2}} </span>                 
+                           
+                            <span class="sort-icons-block" *ngIf="header.sortable" (click)="sortTable(header.fieldName)">
+                                <div class="sort-descending" [class.active-sort]="sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                                <div class="sort-ascending" [class.active-sort]="!sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                            </span>
+                        </div>
+                    </th>
+                </ng-container> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let railOrder of railOrders; let i = index" [class.white-row]="i % 2 === 0"  >
+                <td>{{railOrder.orderKey.orderNumber| orderNumber:railOrder.orderKey.orderAuthority }}<br>{{railOrder.templateNumber}}</td>
+                <td>{{railOrder.shippingTime | dateTime }}</td>
+                <td>
+                    <div *ngIf="showWarningRed(railOrder)"><img src="assets/icons/Warning_Red.svg" style="width: 25px" title="{{ 'Order-Management.order-view-list.warning-title' | translate }}" /></div>
+                    <div *ngIf="showWarningOrange(railOrder)"><img src="assets/icons/Warning_Orange.svg" style="width: 25px" title="{{ 'Order-Management.order-view-list.warning-title' | translate }}" /></div>
+                </td>
+                <td> 
+                    <div class="pointer" (click)="onOpenLastStatusModal(railOrder)">
+                        <a> {{railOrder.railOrderStatus | translateOrderInternalStatus}}</a>
+                    </div>
+                </td>
+                <td>{{translatedRailOrderStatus(railOrder.zabStatus)}}</td>   
+                <td>{{railOrder.sendingStation}} </td>
+                <td>{{railOrder.receivingStation}} </td>
+                <td>{{railOrder.consignorName}}</td>
+                <td style="word-break: break-word;">{{railOrder.consigneeName}}</td>
+                <td>
+                    <div style="width: 100%; text-align: center;">
+                        <div *ngIf="railOrder.wagonNumbers?.length > 0; else noWagonNumbers" class="tooltip pointer" (click)="onOpenWagonNumberModal(railOrder)" style="text-align: center; padding-top: 5px; font-weight: bold; font-size: 75%; min-height: 30px; max-width: 30px; border: 2px solid black; border-radius: 50%;">
+                            {{ getWagonAmount(railOrder) }}
+                            <span class="tooltiptext">
+                                <ng-container *ngFor="let wagonNumber of railOrder.wagonNumbers">
+                                    <span>{{ formatWagonNumber(wagonNumber) }}<br/></span>
+                                </ng-container>
+                            </span>
+                        </div>
+                        <ng-template #noWagonNumbers>
+                            <div class="tooltip" style="text-align: center; padding-top: 5px; font-weight: bold; font-size: 75%; min-height: 30px; max-width: 30px; border: 2px solid black; border-radius: 50%; cursor: default;">
+                                {{ getWagonAmount(railOrder) }}
+                                <span class="tooltiptext">{{'Order-Management.order-view-list.no-wagon-number-message' | translate}}</span>
+                            </div>
+                        </ng-template>
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100%; margin-left: 20px;">
+                        <div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" (click)="goTo(Destination.ORDER_DETAILS, railOrder)" class="pointer">
+                            <use xlink:href="assets/icons/icons.svg#form-icon" />
+                            </svg>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100%; margin-left: 20px;">
+                        <div *ngIf="permissionService.hasPermission(null, [authorization.WRITE_OM]); else notActive" 
+                            (click)="goTo(Destination.CONSIGMENT_NOTE, railOrder)" class="pointer" style="cursor: pointer">
+                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" fill-rule="evenodd">
+                                <path d="M11 2c.28 0 .53.094.719.313l4 4a.915.915 0 0 1 .28.687v1a1 1 0 0 1-1 1h-5c-.561 0-1-.469-1-1V4H4v16H9a1 1 0 0 1 0 2H3c-.562 0-1-.437-1-1V3c0-.562.438-1 1-1h8zM7 16a1 1 0 1 1-.001 2 1 1 0 0 1 0-2zm1-4c.563 0 1 .437 1 1 0 .562-.437 1-1 1H7c-.562 0-1-.438-1-1 0-.563.438-1 1-1h1zm3-7.594V7h2.594L11 4.406z" fill="#282D37"/>
+                                <path stroke="#282D37" stroke-width="2" stroke-linejoin="round" d="M11 11h11v6H11z"/>
+                                <path stroke="#282D37" stroke-width="2" stroke-linecap="round" d="M11 19.5h11"/>
+                                <path d="M14 21a1 1 0 0 0 1-1h1a2 2 0 1 1-4 0h1a1 1 0 0 0 1 1zM19 21a1 1 0 0 0 1-1h1a2 2 0 1 1-4 0h1a1 1 0 0 0 1 1z" fill="#282D37" fill-rule="nonzero"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="permissionService.hasPermission(null, [authorization.WRITE_OM]); else notActive" 
+                        (click)="openMenu($event, railOrder)">
+                        <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                            <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                        </svg>
+                    </div>
+                    <ng-template #notActive>
+                        <div style="opacity: 0.4;">
+                            <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                                <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                            </svg>
+                        </div>
+                    </ng-template>
+                </td>           
+            </tr>
+        </tbody>
+    </table>
+
+    
+    <div *ngIf="filter?.showLoadMoreButton$ | async" class="bottom-controls">    
+        <button class="load-btn" 
+            (click)="loadMore()">
+            {{ 'Order-view-page.Load-more-button-label' | translate }}
+        </button>
+    </div>
+    <div>
+        <strong>{{ railOrders?.length }} {{'Shared.Of' | translate}} {{ filter?.totalNumberOfElements$ | async  }}</strong>
+    </div>
+  </div>
+</section>
+
+<app-popup-menu>
+    <div class="items">
+        <p *ngIf="selectedRailOrder" (click)="goTo(Destination.EDIT)" [class.disabeled-menu]="!doCompletion() || !(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async)"> {{ 'Order-Management.order-view-list.Context-Menu.Edit' | translate }}</p>
+        <p *ngIf="selectedRailOrder" (click)="goTo(Destination.CANCEL)" [class.disabeled-menu]="!doCancellation() || !(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async)"> {{ 'Order-Management.order-view-list.Context-Menu.Cancel' | translate }}</p>
+        <!--p (click)="goTo(Destination.SUBSEQUENT_DISPOSITION)" style="cursor: default; opacity: 0.4;"> {{ 'Order-Management.order-view-list.Context-Menu.Subsequent-disposition' | translate }}</p -->
+    </div>
+</app-popup-menu>
+
+
+
+

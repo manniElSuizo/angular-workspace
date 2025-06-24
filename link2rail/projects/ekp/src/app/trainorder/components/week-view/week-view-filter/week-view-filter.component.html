@@ -1,0 +1,115 @@
+<div #test>
+  <div class="controls">
+      <div class="controls-calendar">
+          <svg class="icon mouse-pointer" viewBox="0 0 25 25" (click)="jumpWeek(false)">
+              <use xlink:href="assets/icons/icons.svg#chevron-left"/>
+          </svg>
+          <svg class="icon mouse-pointer" viewBox="0 0 25 25" (click)="jumpWeek()">
+              <use xlink:href="assets/icons/icons.svg#chevron-right"/>
+          </svg>
+          <span class="current-period">{{ daysOfWeek.monday.date | date: 'dd.MMMM' }} - {{ daysOfWeek.sunday.date | date: 'dd.MMMM yyyy' }} ({{ 'Calendar-view-page.Calendar-week-short-label' | translate }} {{ daysOfWeek.monday.date | date: 'ww' }})</span>
+          <a (click)="jumpToCurrentWeek()" style="cursor: pointer">{{ 'Calendar-view-page.Current-week-label' | translate }}</a>
+      </div>
+  </div>
+  <form class="main-block" [formGroup]="filterForm">
+      <div class="input-field">
+          <input
+              formControlName="trainNumber"
+              autocomplete="off"
+              placeholder="{{ 'Order-view-page.Train-number-title' | translate }}"
+              type="text"
+              name="train-number"
+              id="train-number"
+              class="elm-input"
+              maxlength="5"
+              list="datalisttrain-number" />
+          <label class="elm-label" for="train-number">{{ 'Order-view-page.Train-number-title' | translate }}</label>
+          <datalist id="datalisttrain-number">
+              <option [value]="option" *ngFor="let option of trainnumbers">{{ option }}</option>
+          </datalist>
+          <div class="icon-block" (click)="clearSearchInput('trainNumber')">
+              <svg class="icon" [ngClass]="filterForm.get('trainNumber')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#search" />
+              </svg>
+              <svg class="icon" [ngClass]="filterForm.get('trainNumber')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#close" />
+              </svg>
+          </div>
+      </div>
+      <div class="input-field">
+          <input
+              formControlName="sendingStation"
+              autocomplete="off"
+              type="text"
+              class="elm-input"
+              placeholder="{{ 'Order-view-page.Shipping-station-placeholder' | translate }}"
+              name="sending-station"
+              id="sending-station"
+              list="datalistsending-station"
+              [class.invalid-input]="sendingStation.touched && sendingStation.invalid"
+              (input)="autocompleteInputChanged($event)"              
+          />
+          <label class="elm-label" for="sending-station" aria-hidden="true" id="sending-station-label">{{
+              'Order-view-page.Shipping-station-placeholder' | translate
+          }}</label>
+          <datalist id="datalistsending-station">
+              <option [value]="option.name" *ngFor="let option of sendingStationsAutocomplete">{{ option.name }}</option>
+          </datalist>
+          <div class="icon-block" (click)="clearSearchInput('sendingStation')">
+              <svg class="icon" [ngClass]="filterForm.get('sendingStation')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#search" />
+              </svg>
+              <svg class="icon" [ngClass]="filterForm.get('sendingStation')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#close" />
+              </svg>
+          </div>
+          <small class="input-error" *ngIf="sendingStation.errors?.stationError">{{
+              'Shared.Errors.Stations-autocomplete-error-text' | translate
+          }}</small>
+      </div>
+      <div class="input-field">
+          <input
+              formControlName="receivingStation"
+              autocomplete="off"
+              type="text"
+              class="elm-input"
+              placeholder="{{ 'Order-view-page.Receiving-station-placeholder' | translate }}"
+              name="receiving-station"
+              id="receiving-station"
+              list="datalistreceiving-station"
+              [class.invalid-input]="receivingStation.touched && receivingStation.invalid"
+              (input)="autocompleteInputChanged($event)"              
+          />
+          <label class="elm-label" for="receiving-station" aria-hidden="true" id="receiving-station-label">
+              {{ 'Order-view-page.Receiving-station-placeholder' | translate }}
+          </label>
+          <datalist id="datalistreceiving-station">
+              <option [value]="option.name" *ngFor="let option of receivingStationsAutocomplete">{{ option.name }}</option>
+          </datalist>
+          <div class="icon-block" (click)="clearSearchInput('receivingStation')">
+              <svg class="icon" [ngClass]="filterForm.get('receivingStation')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#search" />
+              </svg>
+              <svg class="icon" [ngClass]="filterForm.get('receivingStation')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#close" />
+              </svg>
+          </div>
+          <small class="input-error" *ngIf="receivingStation.errors?.stationError">{{
+              'Shared.Errors.Stations-autocomplete-error-text' | translate
+          }}</small>
+      </div>
+  </form>
+</div>
+
+<div class="controls-block">
+  <div class="controls-block">
+      <h3>{{ 'Shared.Results-label' | translate }} {{ numberOfTrains }}</h3>
+      <div *ngIf="activeFilterAmount() > 0" class="filter-active-all tbl-header-filter-reset-download">
+        <span><strong>{{ activeFilterAmount() }} {{ 'Month-view-page.Filter-active' | translate }}</strong> |</span>
+        <span class="filter-reset" (click)="resetFilterConditions()">
+            {{ 'Month-view-page.Filter-reset-label' | translate }}
+            <i name="filter-reset" class="filter-reset" data-icon="close" data-icon-variant="24-outline"></i>
+        </span>
+    </div>
+  </div>
+</div>

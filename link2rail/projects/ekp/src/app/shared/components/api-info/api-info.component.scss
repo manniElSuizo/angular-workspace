@@ -1,0 +1,26 @@
+
+.button-group {
+    padding-top: 5%;
+    text-align: center;
+    button {
+        width: 135px;
+        margin-left: 30px;
+        margin-right: 5px;
+
+        &:last-of-type {
+            margin-right: unset;
+        }    
+    }
+}
+
+.modal-header {
+    padding-top: 1px;
+    padding-left: 30px;
+    height: 70px;
+
+    .close-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+}

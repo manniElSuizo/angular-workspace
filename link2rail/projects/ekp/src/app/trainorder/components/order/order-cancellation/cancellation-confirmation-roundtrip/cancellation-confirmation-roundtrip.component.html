@@ -1,0 +1,10 @@
+<main class="modal-main">
+    <div style="text-align: center;">
+        <i data-icon="done" data-icon-variant="24-outline" style="color: #408335; padding-right: 10px;"></i> {{ 'Order-component.Cancellation.Cancelled' | translate }}
+    </div>
+    <div style="text-align: center; padding-top: 3em;">{{ 'Order-component.Cancellation.Confirmation-roundtrip-next-train' | translate : { trainNumber: nextTrainToCancel.trainNumber, startDate: nextTrainToCancel.productionDate | date } }}</div>
+    <div class="button-group" style="text-align: center; padding-top: 2em;">
+      <db-button variant="brand-primary" type="button" style="margin-right: 1em; width: 65px; display: inline-grid;" (click)="doCancel()">{{'Shared.Confirmations.Yes' | translate}}</db-button>
+      <db-button variant="secondary-solid" type="button" style="width: 65px; display: inline-grid;" (click)="closeConfirmation()">{{'Shared.Confirmations.No' | translate}}</db-button>
+    </div>
+</main>

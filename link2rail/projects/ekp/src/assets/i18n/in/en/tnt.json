@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Wagon Holder",
+        "Tooltip": {
+            "Open-wagon-details": "Open wagon details for wagon:"
+        },
+        "Table-header": {
+            "Wagonkeeper": "Wagon keeper",
+            "Wagonnumber": "Wagon number",
+            "Wagoncategory": "Type of wagon",
+            "Trackingstatus": "Tracking Status",
+            "Trackingstatusdate": "Date",
+            "Country": "Country",
+            "Location": "Location",
+            "Runability": "Runnability",
+            "Damagecode": "Damage code"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Wagon keeper",
+            "Vehicle-number": "Wagon number",
+            "Vehicle-type": "Type of wagon",
+            "Runnability": "Runnability",
+            "Damage-Code": "Damage code",
+            "Location-country": "Location country",
+            "Location": "Location"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Tracking history",
+        "Overview-title": "Tracking history",
+        "ZAB-order-number": "Order number:",
+        "Wagon-number": "Wagon number:",
+        "Table-header": {
+            "Event": "Event",
+            "Location": "Location",
+            "Real-time": "Actual times",
+            "Train-number": "Train number"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Wagonoverview",
+        "Table-header": {
+            "Wagon-number": "Wagon number",
+            "Date-of-dispatch": "Date of dispatch",
+            "Expected-arrival": "Expected arrival",
+            "Forwarding-yard": "Forwarding yard",
+            "Destination-yard": "Destination yard",
+            "Consignor": "Consignor",
+            "Consignee": "Consignee",
+            "Event": "Event",
+            "Location": "Current Location",
+            "Zab-order-number": "Order number"
+        },
+        "Tooltip": {
+            "Loaded": "Wagon loaded",
+            "Empty": "Wagon empty",
+            "Damage-limited-runablity": "Wagon limited operable",
+            "Damage-no-runablity": "Wagon not operable",
+            "Duration-target": "Runtime target:",
+            "No-duration-target": "No runtime target available",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Actual arrival",
+            "Actual-sending-date-label": "Actual departure",
+            "Additional-commercial-information-discount-code": "Customer agreement",
+            "Annotation-of-consignor-description": "Consignor reference",
+            "Bza-number": "BZA number",
+            "Consignee": "Consignee",
+            "Customs-tariff-no": "Customs tariff number",
+            "Current-train-number-label": "Current train number",
+            "Customer-reference": "Customer reference",
+            "Damage-code": "Damage code",
+            "Damage-code-description": "Damage code description",
+            "Damage-limited-runablity": "Wagon limited operable",
+            "Damage-no-runablity": "Wagon not operable",
+            "First-train-number-label": "First train number",
+            "Forwarding-yard-number": "Forwarding yard number",
+            "Loaded": "Wagon loaded",
+            "Location-status": "Current location state",
+            "Location-time": "Current location time",
+            "Netto-weight": "Net weight",
+            "NHM-code-description": "NHM code description",
+            "NHM-code-label": "NHM code",
+            "Receiver-customer-number": "Receiver customer number",
+            "Receiving-country": "Receiving country",
+            "Receiving-station-number": "Receiving station number",
+            "Runablity": "Runnability",
+            "Sender-customer-number": "Sender customer number",
+            "Sending-country": "Sending country",
+            "Status": "ZAB status",
+            "Tare-weight": "Tare weight",
+            "Template-name": "Template name",
+            "Wagon-type-label": "Wagon type",
+            "Weight": "Gross weight",
+            "Zab-order-number": "Order number",
+            "Location-country": "Location country"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Wagon number",
+                "Date-of-dispatch-from": "Shipping date (from)",
+                "Date-of-dispatch-to": "Shipping date (to)",
+                "Incoming-by": "Incoming by",
+                "Zab-order-number": "Order number",
+                "Sending-station": "Forwarding yard",
+                "Receiving-station": "Destination yard",
+                "Location": "Current Location",
+                "NHM-code": "NHM Code",
+                "Consignor": "Consignor",
+                "Consignee": "Consignee",
+                "Loading-state": "Loading status",
+                "customerReference": "Reference",
+                "senderIsoCountryCode": "Sending country",
+                "deliveryIsoCountryCode": "Receiving country"
+            },
+            "Label": {
+                "Wagon-number": "Wagon number",
+                "Date-of-dispatch-from": "Shipping date (from)",
+                "Date-of-dispatch-to": "Shipping date (to)",
+                "Incoming-by": "Incoming by",
+                "Zab-order-number": "Order number",
+                "Sending-station": "Forwarding yard",
+                "Receiving-station": "Destination yard",
+                "Location": "Current Location",
+                "NHM-code": "NHM Code",
+                "Consignor": "Consignor",
+                "Consignee": "Consignee",
+                "Loading-state": "Loading status",
+                "Loading-state-loaded": "Loaded",
+                "Loading-state-empty": "Empty",
+                "customerReference": "Reference",
+                "senderIsoCountryCode": "Sending country",
+                "deliveryIsoCountryCode": "Receiving country"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Search",
+                "noDataAvailablePlaceholderText": "No data available"
+            }
+        }
+    }
+}

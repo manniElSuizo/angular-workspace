@@ -1,0 +1,108 @@
+<header class="modal-header">
+    <span>{{ 'Tracking-history-wagon.Overview-title' | translate }}</span>
+
+    <h2>
+        <strong>{{ 'Tracking-history-wagon.ZAB-order-number' | translate }} </strong>
+        <span>{{orderNumber | orderNumber: orderAuthority}}</span>
+    </h2>
+
+    <h3><strong>{{ 'Tracking-history-wagon.Wagon-number' | translate }} </strong>
+        <span>{{wagonNumber| wagonNumber}}</span>
+    </h3>
+
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main-trackinghistory modal-main">
+
+    <span class="modal-tab">
+        <div class="history-table-block">
+            <table class="cmp-table list-table">
+                <thead>
+                    <tr>
+                        <th [width]="175" scope="col">{{ 'Tracking-history-wagon.Table-header.Event' | translate }}</th>
+                        <th [width]="375" scope="col">{{ 'Tracking-history-wagon.Table-header.Location' | translate }}</th>
+                        <th scope="col">
+                            <div class="flex-row">
+                                <span>{{ 'Tracking-history-wagon.Table-header.Real-time' | translate }}</span>
+                                <span class="sort-icons-block" (click)="sortTable()">
+                                    <div class="sort-descending"
+                                        [class.active-sort]="sortConditions?.asc && sortConditions?.field === 'eventDateTime'"></div>
+                                    <div class="sort-ascending"
+                                        [class.active-sort]="!sortConditions?.asc && sortConditions?.field === 'eventDateTime'"></div>
+                                </span>
+                            </div>
+                        </th>
+                        <th [width]="150" scope="col">{{ 'Tracking-history-wagon.Table-header.Train-number' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of wagonTrackingHistory; let i = index;">
+                        <tr>
+                            <td class="flex-td">
+                                <ng-container *ngIf="sortConditions?.asc">
+                                    <div class="icon first-event" *ngIf="i == 0 && item.event == 'DEPARTURE'">
+                                        <svg viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#start" />
+                                        </svg>
+                                    </div>
+                                    <div class="icon"
+                                        *ngIf="(i < wagonTrackingHistory.length - 1 && i !== 0) || (i == wagonTrackingHistory.length - 1 && item.event !== 'ARRIVAL')">
+                                        <svg viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#stop" />
+                                        </svg>
+                                    </div>
+                                    <div class="icon last-event"
+                                        *ngIf="i == wagonTrackingHistory.length - 1 && item.event == 'ARRIVAL'">
+                                        <svg viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#destination" />
+                                        </svg>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="!sortConditions?.asc">
+                                    <div class="icon last-event" *ngIf="i == 0 && item.event == 'ARRIVAL'">
+                                        <svg viewBox="0 0 25 25">
+                                            
+                                            <use xlink:href="assets/icons/icons.svg#destination" />
+                                        </svg>
+                                    </div>
+                                    <div class="icon"
+                                        *ngIf="(i < wagonTrackingHistory.length - 1 && i !== 0) || (i == wagonTrackingHistory.length - 1 && item.event !== 'ARRIVAL')">
+                                        <svg viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#stop" />
+                                        </svg>
+                                    </div>
+                                    <div class="icon first-event"
+                                        *ngIf="i == wagonTrackingHistory.length - 1 && item.event == 'DEPARTURE'">
+                                        <svg viewBox="0 0 25 25">
+                                            <use xlink:href="assets/icons/icons.svg#start" />
+                                        </svg>
+                                    </div>
+                                </ng-container>
+                                <span
+                                    [ngClass]="item.event == 'DEPARTURE' || item.event == 'ARRIVAL' ? 'first-event' : ''">{{
+                                    item.event | translateWagonStatus}}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span>{{item.infrastructureLocation.locationName}} </span>
+                                <span *ngIf="item.infrastructureLocation.countryCode">&nbsp;({{item.infrastructureLocation.countryCode}})</span>
+                            </td>
+                            <td>
+                                <span>{{item.eventDateTime | dateTime}} </span>
+                            </td>
+                            <td>
+                                <span>{{item.trainNumber}} </span>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </span>
+
+</main>

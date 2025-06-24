@@ -1,0 +1,38 @@
+<header class="modal-header">
+  <h2>
+    <strong>{{ 'Documentation-component.Details.Header' | translate}}</strong>
+  </h2>
+  <a class="close-icon" title="Close the dialog" (click)="close()">
+    <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+        <use xlink:href="assets/icons/icons.svg#close" />
+    </svg>
+  </a>
+</header>
+
+
+<mat-tab-group style="width: 100%">
+  <mat-tab label="{{ 'Support' | translate }}">
+      <div class="flex-column">
+          <div class="center-content">
+              <img src="assets/img/link-2-rail-support.PNG" alt="Link to Rail Support">
+          </div>
+          <div class="center-content" style="margin: 3em 0 0 0">
+              <div style="text-align: center; width: 75%">
+                  <b>{{ 'System-information-component.Support-text' | translate }}</b>
+              </div>
+          </div>
+      </div>
+  </mat-tab>
+  <mat-tab>
+      <ng-template mat-tab-label>
+          <span (click)="manualInfoSelected()">{{ 'Manual-button-label' | translate }}</span>
+      </ng-template>
+      <app-user-manual #manual></app-user-manual>
+  </mat-tab>
+  <mat-tab>
+      <ng-template mat-tab-label>
+          <span (click)="releaseInfoSelected()">{{ 'Release-info-label' | translate }}</span>
+      </ng-template>
+      <app-release-information #release></app-release-information>
+  </mat-tab>        
+</mat-tab-group>

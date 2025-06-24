@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Vue du détenteur du wagon",
+        "Tooltip": {
+            "Open-wagon-details": "Ouvrir les détails du wagon pour le wagon:"
+        },
+        "Table-header": {
+            "Wagonkeeper": "Détenteurs de wagons",
+            "Wagonnumber": "WagNuméro de wagon",
+            "Wagoncategory": "Type de voiture",
+            "Trackingstatus": "Statut de suivi",
+            "Trackingstatusdate": "Date",
+            "Country": "Pays",
+            "Location": "Site",
+            "Runability": "Aptitude à la marche",
+            "Damagecode": "Code d'erreur"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Détenteurs de wagons",
+            "Vehicle-number": "WagNuméro de wagon",
+            "Vehicle-type": "Type de voiture",
+            "Runnability": "Aptitude à la marche",
+            "Damage-Code": "Code d'erreur",
+            "Location-country": "Site Pays",
+            "Location": "Site"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Tracking Historie",
+        "Overview-title": "Tracking Historie",
+        "ZAB-order-number": "Numéro de commande ZAB:",
+        "Wagon-number": "Numéro de wagon:",
+        "Table-header": {
+            "Event": "Événement",
+            "Location": "Lieut",
+            "Real-time": "Temps réels",
+            "Train-number": "Numéro de train"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Vue d'ensemble des wagons",
+        "Table-header": {
+            "Wagon-number": "Numéro de wagon",
+            "Date-of-dispatch": "Date d'expédition",
+            "Expected-arrival": "Arrivée prévisible",
+            "Forwarding-yard": "Gare expéditrice",
+            "Destination-yard": "Gare destinataire",
+            "Consignor": "Expéditeur",
+            "Consignee": "Destinataire",
+            "Event": "Événement",
+            "Location": "Emplacement actuel",
+            "Zab-order-number": "Numéro de commande"
+        },
+        "Tooltip": {
+            "Loaded": "Wagon chargé",
+            "Empty": "Wagon vide",
+            "Damage-limited-runablity": "Wagon limité fonctionnel",
+            "Damage-no-runablity": "Wagon non fonctionnel",
+            "Duration-target": "Objectif de temps de fonctionnement",
+            "No-duration-target": "Aucun objectif de temps de fonctionnement disponible",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Arrivée réelle",
+            "Actual-sending-date-label": "Départ réel",
+            "Additional-commercial-information-discount-code": "Accord client",
+            "Annotation-of-consignor-description": "Référence de l'expéditeur",
+            "Bza-number": "Numéro BZA",
+            "Consignee": "Destinataire",
+            "Customs-tariff-no": "Numéro tarifaire douanier",
+            "Current-train-number-label": "Numéro de train actuel",
+            "Customer-reference": "Référence client",
+            "Damage-code": "Code de dommage",
+            "Damage-code-description": "Description du code de dommage",
+            "Damage-limited-runablity": "Wagon limité fonctionnel",
+            "Damage-no-runablity": "Wagon non fonctionnel",
+            "First-train-number-label": "Premier numéro de train",
+            "Forwarding-yard-number": "Numéro de gare expéditrice",
+            "Loaded": "Wagon chargé",
+            "Location-status": "Statut de l'emplacement actuel",
+            "Location-time": "Heure de l'emplacement actuel",
+            "Netto-weight": "Poids net",
+            "NHM-code-description": "Description du code NHM",
+            "NHM-code-label": "Code NHM",
+            "Receiver-customer-number": "Numéro de client destinataire",
+            "Receiving-country": "Pays de réception",
+            "Receiving-station-number": "Numéro de gare destinataire",
+            "Runablity": "Aptitude à la marche",
+            "Sender-customer-number": "Numéro de client expéditeur",
+            "Sending-country": "Pays d'expédition",
+            "Status": "Statut ZAB",
+            "Tare-weight": "Poids à vide",
+            "Template-name": "Nom du modèle",
+            "Wagon-type-label": "Type de wagon",
+            "Weight": "Poids brut",
+            "Zab-order-number": "Numéro de commande",
+            "Location-country":"Site Pays"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Numéro de wagon",
+                "Date-of-dispatch-from": "Date d'expédition (de)",
+                "Date-of-dispatch-to": "Date d'expédition (à)",
+                "Incoming-by": "En acheminement jusqu'à",
+                "Zab-order-number": "Numéro de commande",
+                "Sending-station": "Gare expéditrice",
+                "Receiving-station": "Gare destinataire",
+                "Location": "Emplacement actuel",
+                "NHM-code": "Code NHM",
+                "Consignor": "Expéditeur",
+                "Consignee": "Destinataire",
+                "Loading-state": "État de chargement",
+                "customerReference": "Référence",
+                "senderIsoCountryCode": "Pays d'expédition",
+                "deliveryIsoCountryCode": "Pays de destination"
+            },
+            "Label": {
+                "Wagon-number": "Numéro de wagon",
+                "Date-of-dispatch-from": "Date d'expédition (de)",
+                "Date-of-dispatch-to": "Date d'expédition (à)",
+                "Incoming-by": "En acheminement jusqu'à",
+                "Zab-order-number": "Numéro de commande",
+                "Sending-station": "Gare expéditrice",
+                "Receiving-station": "Gare destinataire",
+                "Location": "Emplacement actuel",
+                "NHM-code": "Code NHM",
+                "Consignor": "Expéditeur",
+                "Consignee": "Destinataire",
+                "Loading-state": "État de chargement",
+                "Loading-state-loaded": "Chargé",
+                "Loading-state-empty": "Vide",
+                "customerReference": "Référence",
+                "senderIsoCountryCode": "Pays d'expédition",
+                "deliveryIsoCountryCode": "Pays de destination"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Recherche",
+                "noDataAvailablePlaceholderText": "Aucune donnée disponible"
+            }
+        }
+    }
+}

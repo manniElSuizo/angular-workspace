@@ -1,0 +1,31 @@
+<header class="modal-header">
+  <h3 class="elm-headline">
+    <strong>{{'Shared.Confirmations.Change-Header' | translate}}</strong>
+  </h3>
+</header>
+<main class="modal-main">
+  <form>
+    <div>
+      <div>
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 25%; text-align: center;"><b>{{ 'Customer-Profile-Label' | translate }}</b></td>
+            <td style="width: 37,5%; text-align: center;"><b>{{ 'TOM-Group-Label' | translate }}</b></td>
+          </tr>
+
+          <tr *ngFor="let profileItem of profiles">
+            <td><div style="text-align: center; margin: 0 0 0 2em">{{profileItem.sgvId}}  /  {{profileItem.companyLocationNumber}}</div></td>
+            <td><div style="text-align: center; margin: 0 0 0 2em">{{getGroupName(profileItem.tomGroupId)}}</div></td>   
+          </tr>
+        </table>
+        <div class="button-group flex-row">
+          <div style="margin-right: 1em">
+            <db-button variant="brand-primary" type="button" (click)="close(true)">{{'Shared.Save-button-label' | translate}}</db-button>
+          </div><div>
+            <db-button variant="secondary" type="button" (click)="close(false)">{{'Shared.Cancel-button-label' | translate}}</db-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</main>

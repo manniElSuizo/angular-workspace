@@ -1,0 +1,110 @@
+---
+include:
+  - https://bahnhub.tech.rz.db.de/artifactory/rgbs-generic-stage-dev-local/release/0.77.0-20210319123516-ae3e389-pipeship-pipeline.yaml
+
+variables:
+  ARTIFACTORY_RELEASE_ENV: "release"
+  LSL_JOB_DISABLED: 'true' # disable super linter
+  DEFAULT_NODE_IMAGE: docker-hub-remote.bahnhub.tech.rz.db.de/cypress/browsers:node14.16.0-chrome90-ff88
+
+# build the application artifacts
+build_application:
+  image: $DEFAULT_NODE_IMAGE
+  variables:
+    HTTP_PROXY: 'http://webproxy.comp.db.de:8080'
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+    CYPRESS_INSTALL_BINARY: 0
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    untracked: false
+    paths:
+      - dist
+
+# run angular lint integration
+lint_angular:
+  stage: validate
+  tags:
+    - build
+  image: $DEFAULT_NODE_IMAGE
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    HTTP_PROXY: 'http://webproxy.comp.db.de:8080'
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+    CYPRESS_INSTALL_BINARY: 0
+  script:
+    - npm ci
+    - npm run lint
+  allow_failure: false
+
+# execute unit tests
+test_application:
+  tags:
+    - test
+  stage: build_n_test_app
+  image: $DEFAULT_NODE_IMAGE
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    HTTP_PROXY: 'http://webproxy.comp.db.de:8080'
+    CHROME_BIN: '/usr/bin/google-chrome'
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+  cache:
+    # Disable cache, because this container
+    # image will use a different local user
+    # and break the cache on other jobs
+    policy: pull
+  script:
+    - npm ci --no-optional
+    - npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+# execute e2e tests in a local environment (local app server started)
+test_application_e2e_local_server:
+  tags:
+    - test
+  stage: build_n_test_app
+  image: $DEFAULT_NODE_IMAGE
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    HTTP_PROXY: 'http://webproxy.comp.db.de:8080'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/google-chrome'
+  cache:
+    # Disable cache, because this container
+    # image will use a different local user
+    # and break the cache on other jobs
+    policy: pull
+  script:
+    - npm ci --no-optional
+    - npm run e2e -- --headless --watch=false
+
+# run e2e tests in temp created isolated deployed environment
+automatic_test_run:
+  image: $DEFAULT_NODE_IMAGE
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    HTTP_PROXY: 'http://webproxy.comp.db.de:8080'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/google-chrome'
+  script:
+    - export CYPRESS_BASE_URL=$(cat ${APPLICATION_URL_FILE})
+    - npm ci
+    - npm run cypress:run
+  # in order to get this working, you need a valid production configuration for your DB Web SSO IDP
+  # "allow_failure" should be removed / set to "false" afterwards
+  # See: /doc/howToAuth.adoc (Section: Make Production ready)
+  allow_failure: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .npm
+      - cache/Cypress
+      - node_modules
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos/**/*.mp4
+      - cypress/screenshots/**/*.png
+    expire_in: 1 day

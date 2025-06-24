@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Vista per detentore di carri",
+        "Tooltip": {
+            "Open-wagon-details": "Apri i dettagli del vagone per il vagone:"
+        },
+        "Table-header": {
+            "Wagonkeeper": "Detentore di carri",
+            "Wagonnumber": "Numero del carro",
+            "Wagoncategory": "Categoria di carro",
+            "Trackingstatus": "Trackingstatus",
+            "Trackingstatusdate": "Datum",
+            "Country": "Paese",
+            "Location": "Posizione",
+            "Runability": "Posizione",
+            "Damagecode": "Codice danno"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Detentore di carri",
+            "Vehicle-number": "Numero del carro",
+            "Vehicle-type": "Categoria di carro",
+            "Runnability": "Posizione",
+            "Damage-Code": "Codice danno",
+            "Location-country": "Ubicazione paese",
+            "Location": "Posizione"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Monitoraggio della cronologia",
+        "Overview-title": "Monitoraggio della cronologia",
+        "ZAB-order-number": "Numero d'ordine ZAB:",
+        "Wagon-number": "Numero del carro:",
+        "Table-header": {
+            "Event": "Evento",
+            "Location": "Luogo",
+            "Real-time": "Tempi effettivis",
+            "Train-number": "Numero del treno"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Panoramica dei carri",
+        "Table-header": {
+            "Wagon-number": "Numero del carro",
+            "Date-of-dispatch": "Data di spedizione",
+            "Expected-arrival": "Arrivo stimato",
+            "Forwarding-yard": "Stazione mittente",
+            "Destination-yard": "Stazione destinataria",
+            "Consignor": "Mittente",
+            "Consignee": "Destinatario",
+            "Event": "Evento",
+            "Location": "Posizione attuale",
+            "Zab-order-number": "Numero dell'ordine"
+        },
+        "Tooltip": {
+            "Loaded": "Carro caricato",
+            "Empty": "Carro vuoto",
+            "Damage-limited-runablity": "Carro limitato funzionante",
+            "Damage-no-runablity": "Carro non funzionante",
+            "Duration-target": "Obiettivo di runtime:",
+            "No-duration-target": "Nessun obiettivo di runtime disponibile",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Arrivo effettivo",
+            "Actual-sending-date-label": "Partenza effettiva",
+            "Additional-commercial-information-discount-code": "Accordo cliente",
+            "Annotation-of-consignor-description": "Riferimento del mittente",
+            "Bza-number": "Numero BZA",
+            "Consignee": "Destinatario",
+            "Customs-tariff-no": "Numero tariffa doganale",
+            "Current-train-number-label": "Numero del treno attuale",
+            "Customer-reference": "Riferimento cliente",
+            "Damage-code": "Codice danno",
+            "Damage-code-description": "Descrizione del codice danno",
+            "Damage-limited-runablity": "Carro limitato funzionante",
+            "Damage-no-runablity": "Carro non funzionante",
+            "First-train-number-label": "Primo numero del treno",
+            "Forwarding-yard-number": "Numero della stazione mittente",
+            "Loaded": "Carro caricato",
+            "Location-status": "Stato posizione attuale",
+            "Location-time": "Ora posizione attuale",
+            "Netto-weight": "Peso netto",
+            "NHM-code-description": "Descrizione del codice NHM",
+            "NHM-code-label": "Codice NHM",
+            "Receiver-customer-number": "Numero cliente destinatario",
+            "Receiving-country": "Paese destinatario",
+            "Receiving-station-number": "Numero della stazione destinataria",
+            "Runablity": "Corribilità",
+            "Sender-customer-number": "Numero cliente mittente",
+            "Sending-country": "Paese di spedizione",
+            "Status": "Stato ZAB",
+            "Tare-weight": "Peso a vuoto",
+            "Template-name": "Nome del modello",
+            "Wagon-type-label": "Tipo di carro",
+            "Weight": "Peso lordo",
+            "Zab-order-number": "Numero d'ordine",
+            "Location-country":"Ubicazione paese"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Numero del carro",
+                "Date-of-dispatch-from": "Data di spedizione (da)",
+                "Date-of-dispatch-to": "Data di spedizione (a)",
+                "Incoming-by": "In arrivo entro il",
+                "Zab-order-number": "Numero dell'ordine",
+                "Sending-station": "Stazione mittente",
+                "Receiving-station": "Stazione destinataria",
+                "Location": "Posizione attuale",
+                "NHM-code": "Codice NHM",
+                "Consignor": "Mittente",
+                "Consignee": "Destinatario",
+                "Loading-state": "Stato di carico",
+                "customerReference": "Riferimento",
+                "senderIsoCountryCode": "Paese mittente",
+                "deliveryIsoCountryCode": "Paese destinatario"
+            },
+            "Label": {
+                "Wagon-number": "Numero del carro",
+                "Date-of-dispatch-from": "Data di spedizione (da)",
+                "Date-of-dispatch-to": "Data di spedizione (a)",
+                "Incoming-by": "In arrivo entro il",
+                "Zab-order-number": "Numero dell'ordine",
+                "Sending-station": "Stazione mittente",
+                "Receiving-station": "Stazione destinataria",
+                "Location": "Posizione attuale",
+                "NHM-code": "Codice NHM",
+                "Consignor": "Mittente",
+                "Consignee": "Destinatario",
+                "Loading-state": "Stato di carico",
+                "Loading-state-loaded": "Caricato",
+                "Loading-state-empty": "Vuoto",
+                "customerReference": "Riferimento",
+                "senderIsoCountryCode": "Paese mittente",
+                "deliveryIsoCountryCode": "Paese destinatario"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Ricerca",
+                "noDataAvailablePlaceholderText": "Keine Daten verfügbar"
+            }
+        }
+    }
+}

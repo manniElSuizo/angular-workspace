@@ -1,0 +1,61 @@
+@import '../../../styles.scss';
+
+
+.main {
+  tbody tr {
+        &:hover {
+            background-color:  #D7DCE1;
+        }
+  }
+  width: 1843px;
+  min-height: calc(100vh - 162px);
+  margin: 15px 16px 16px;
+  padding: 30px 18px 30px 30px;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px rgb(0 0 0 / 30%);
+  cursor: default;
+}
+
+.header_group {
+  text-align: center;
+}
+
+table.list-table {
+  border: none;
+}
+
+
+.group-end {
+  border-right: 2px solid black;;
+}
+
+.list-table {
+  overflow: auto;
+  display: block;
+}
+.list-table td {
+  text-align: center;
+}
+
+th.rotate {
+  height: 280px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform:
+        translate(13px, 0px)
+        rotate(270deg);
+  translate: -8px 110px;
+  width: 30px;
+}
+
+td {
+  border-right: 1px solid lightgrey;
+}
+
+td.module {
+    background: white;
+    border-top: 1px solid lightgrey;
+}
+

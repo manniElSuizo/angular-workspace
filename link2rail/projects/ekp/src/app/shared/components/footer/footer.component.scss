@@ -1,0 +1,70 @@
+@use 'color';
+
+footer.rea-footer {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 0;
+}
+
+.scroll-to-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #282d37;
+    text-align: center;
+    position: fixed;
+    bottom: 75px;
+    right: 33px;
+    opacity: 0;
+    visibility: hidden;
+
+    width: 170px;
+    height: 44px;
+    margin: 19px 0 1px 53px;
+    padding: 12px 30px;
+    border-radius: 4px;
+    background-color:color.$border-light-color;
+    //&:hover{};
+    cursor: pointer;
+}
+
+.show-scrollTop {
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+    visibility: visible;
+    box-shadow: 0.2rem 0.2rem 1.2rem 0 rgb(0 0 0 / 30%);
+}
+
+.hide-scrollTop {
+    opacity: 1;
+    transition: opacity .8s ease-out-in;
+    visibility: hidden;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,20 @@
+<form [formGroup]="wagonKeeperForm">
+    <div class="input-field">
+        <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParams" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #wkmsac></app-multiselect-autocomplete>
+    </div>
+    <div style="width: 70%;">
+        <h3>{{'User-management-component.Wagon-keeper-assignment' | translate}}</h3>
+        <ul>
+            <li *ngFor="let wk of selectedWagonKeepers" style="display: flex; justify-content: space-between;">
+                <div>{{wk.value}}</div>
+                <div (click)="removeWagonKeeper(wk.key)" style="margin-left: 30px" class="icon mouse-pointer">
+                    <a *ngIf="!user.deactivated" title="{{ 'deactivate' | translate }}">
+                        <svg viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#delete" />
+                        </svg>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>

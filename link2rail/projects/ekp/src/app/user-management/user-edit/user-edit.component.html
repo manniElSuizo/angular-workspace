@@ -1,0 +1,349 @@
+<header class="modal-header">
+    <h2>
+        <strong>{{ 'User-management-component.User-edit-header' | translate }}</strong>
+    </h2>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="openConfirmationModal()">
+        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+    <p *ngIf="userId">
+        ID: {{ userId }}
+    </p>
+    <p *ngIf="copiedUser?.userId">
+        Kopiert von: {{copiedUser.userName }}
+    </p>
+</header>
+<main class="modal-main" style="overflow: hidden">
+    <form [formGroup]="formGroup" autocomplete="false" [class.loading]="loadingSave">
+        <div class="grid-container">
+            <div class="grid-item tabs" style="min-height: calc(100vh - 392px);">
+                <div class="tabs-item" id="userDataHead">
+                    <a class="elm-link " (click)="changeTab(0)">
+                        {{'User-management-component.User-profile' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="wagonKeeperHead">
+                    <a class="elm-link " (click)="changeTab(1)">
+                        {{ 'Wagonholder-component.Table-header.Wagonkeeper' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line"></div>
+                <div class="tabs-item" id="accountsReceivableNumberHead">
+                    <a class="elm-link " (click)="changeTab(2)">
+                        {{ 'User-management-component.AccountsreceivableNumber' | translate }}
+                    </a>
+                </div>
+                <div class="tabs-line" *ngIf="user?.userId"></div>
+                <div class="tabs-item" id="userAuthorizationsHead" *ngIf="user?.userId" [class.disabled-input] = "user.authorizationsChanged">
+                    <a class="elm-link " (click)="changeTab(3)">
+                        {{ 'User-management-component.UserAuthorizations' | translate }}
+                    </a>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="tab-header">
+                    <span class="tab-title">1. {{'Benutzerprofil' | translate }}</span>
+                    <span class="RequiredField" id="required-field">{{'Shared.Required-field' | translate}}</span>
+                </div>
+                <div class="input-block-complete" id="userData">
+                    <h3>{{ 'User-management-component.User-data-label' | translate }}</h3>
+
+                    <div class="flex-row">                
+                        <div class="flex-column" style="width: 50%">
+                            <!--START: USERNAME -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputUserName">
+                                <input formControlName="username"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-username-label' | translate }}"
+                                        name="username"
+                                        id="username"
+                                        aria-labelledby="username-label"
+                                        (change)="checkUser()"
+                                        [readOnly]="userId"
+                                        [style.cursor]="userId ? 'default' : null"
+                                        [class.invalid-input]="formGroup.controls.username.invalid && formGroup.controls.username.touched || this.userNameExists"
+                                />
+                                <label class="elm-label" for="user-name" aria-hidden="true" id="user-name-label">{{ 'User-management-component.User-username-label' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.username.invalid && formGroup.controls.username.touched || this.userNameExists">
+                                    <small class="input-error" *ngIf="formGroup.controls.username.errors?.required">{{'Shared.Errors.Field-is-required-error-text' | translate}}</small>
+                                    <small class="input-error" *ngIf="this.userNameExists">{{
+                                        'Shared.Errors.Username-exists-error-text' | translate
+                                        }}
+                                    </small>
+                                </ng-container>
+                                <div class="elm-progress" *ngIf="loadingInProgress">
+                                    <progress id="progress-label-07"></progress>
+                                </div>
+                            </div>
+                            
+                             <!-- USER-ROLE-->
+                            <div class="input-field" [hidden]="!isInternalUser">
+                                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersRole" (formFieldEventEmitter)="setAuthorizationsChanged(true)" #mssr></app-multiselect-autocomplete>
+                            </div>
+                        </div>
+
+                        <div class="flex-column" style="width: 50%">
+                            <!-- USER-TYPE-->
+                            <div class="input-field" id="inputUserType">
+                                <select class="elm-input" type="text" name="usertype" id="usertype" formControlName="usertype"  [hidden]="userId">
+                                    <option value=""></option>
+                                    <option *ngFor="let userType of userTypes"
+                                            [value]="userType">
+                                            {{userType}}
+                                    </option>
+                                </select>
+                                <label *ngIf="!userId" class="elm-label" for="usertype" aria-hidden="true" id="usertype-label">{{ 'User-management-component.User-type-label' | translate }}</label>
+                                <ng-container
+                                *ngIf="formGroup.controls.usertype.invalid && formGroup.controls.usertype.touched">
+                                <small class="input-error" *ngIf="formGroup.controls.usertype.errors?.required">
+                                    {{'Shared.Errors.Field-is-required-error-text' | translate}}
+                                </small>
+                                </ng-container>
+                                <input [hidden]="!userId" formControlName="usertypeReadonly"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-type-label' | translate }}"
+                                        name="usertypeReadonly"
+                                        id="usertypeReadonly"
+                                        aria-labelledby="usertypeReadonly-label"
+                                        [readOnly]="userId"
+                                        [style.cursor]="userId ? 'default' : null"
+                                />
+                                <label *ngIf="userId" class="elm-label" for="usertypeReadonly" aria-hidden="true" id="usertypeReadonly-label">{{ 'User-management-component.User-type-label' | translate }}</label>
+                            </div>
+
+                            <!-- CustomerGroup-->
+                            <div class="input-field" [hidden]="!isInternalUser">
+                                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersCustomerGroup" (formFieldEventEmitter)="setAuthorizationsChanged(true)" #mssg></app-multiselect-autocomplete>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END: USERNAME -->
+
+                    <div class="dashed-line"></div>
+
+                    <!-- START: LEFT SIDE-->
+                    <div class="flex-row">                
+                        
+                        <div class="flex-column" style="width: 50%">
+                            
+                            <!-- SALUTATION-->
+                            <div class="input-field">
+                                <select class="elm-input" type="text" name="salutation" id="salutation" formControlName="salutation">
+                                    <option value=""></option>
+                                    <option>{{ 'User-management-component.User-salutation-none' | translate }}</option>
+                                    <option>{{ 'User-management-component.User-salutation-female' | translate }}</option>
+                                    <option>{{ 'User-management-component.User-salutation-male' | translate }}</option>
+                                </select>
+                                <label class="elm-label" for="salutation" aria-hidden="true" id="salutation-label">{{ 'User-management-component.User-salutation-label' | translate }}</label>
+                            </div>
+
+                            <!-- FIRSTNAME-->
+                            <div class="input-field">
+                                <input formControlName="firstname"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-name-label' | translate }}"
+                                        name="firstname"
+                                        id="firstname"
+                                        aria-labelledby="firstname-label"
+                                />
+                                <label class="elm-label" for="firstname" aria-hidden="true" id="firstname-label">{{ 'User-management-component.User-name-label' | translate }}</label>
+                            </div>
+
+                            
+
+                            <!-- EMAIL -->
+                            <div class="input-field">
+                                <input formControlName="email"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-email-label' | translate }}"
+                                        name="email"
+                                        id="email"
+                                        aria-labelledby="email-label"
+                                        [class.invalid-input]="formGroup.controls.email.invalid && formGroup.controls.email.touched"
+                                />
+                                <label class="elm-label" for="email" aria-hidden="true" id="email-label">{{ 'User-management-component.User-email-label' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.email.invalid && formGroup.controls.email.touched">
+                                    <small class="input-error" *ngIf="formGroup.controls.email.errors?.pattern">{{
+                                        'Shared.Errors.Field-is-email-error-text' | translate
+                                    }}</small>
+                                </ng-container>
+                            </div>
+
+                            <!-- PHONE -->
+                            <div class="input-field">
+                                <input formControlName="phone"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-phone-label' | translate }}"
+                                        name="phone"
+                                        id="phone"
+                                        aria-labelledby="phone-label"
+                                        [class.invalid-input]="formGroup.controls.phone.invalid && formGroup.controls.phone.touched"
+                                />
+                                <label class="elm-label" for="phone" aria-hidden="true" id="phone-label">{{ 'User-management-component.User-phone-label' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.phone.invalid && formGroup.controls.phone.touched">
+                                    <small class="input-error" *ngIf="formGroup.controls.phone.errors?.pattern">{{
+                                        'Shared.Errors.Field-is-phone-error-text' | translate
+                                    }}</small>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                        <!-- END: LEFT SIDE-->
+                        
+                        <!-- ANFANG: RECHTE SEITE-->
+                        <div class="flex-column" style="width: 50%;">
+                            <div class="input-field">
+                                <input type="text" class="elm-input" [ngStyle]="{ visibility: 'hidden'}"/>
+                            </div>
+                            <!-- LASTNAME -->
+                            <div class="input-field">
+                                <input formControlName="lastname"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-surname-label' | translate }}"
+                                        name="surname"
+                                        id="surname"
+                                        aria-labelledby="surname-label"
+                                />
+                                <label class="elm-label" for="surname" aria-hidden="true" id="user-surname-label">{{ 'User-management-component.User-surname-label' | translate }}</label>
+                            </div>
+                            
+                            <!-- SECOND EMAIL -->
+                            <div class="input-field">
+                                <input formControlName="secondaryEmail"
+                                        type="text"
+                                        class="elm-input"
+                                        placeholder="{{ 'User-management-component.User-secondaryEmail-label' | translate }}"
+                                        name="secondaryEmail"
+                                        id="secondaryEmail"
+                                        aria-labelledby="secondaryEmail-label"
+                                        [class.invalid-input]="formGroup.controls.secondaryEmail.invalid && formGroup.controls.secondaryEmail.touched"
+                                />
+                                <label class="elm-label" for="secondaryEmail" aria-hidden="true" id="secondaryEmail-label">{{ 'User-management-component.User-secondaryEmail-label' | translate }}</label>
+                                <ng-container *ngIf="formGroup.controls.secondaryEmail.invalid && formGroup.controls.secondaryEmail.touched">
+                                    <small class="input-error" *ngIf="formGroup.controls.secondaryEmail.errors?.pattern">{{
+                                        'Shared.Errors.Field-is-email-error-text' | translate
+                                    }}</small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- ENDE: RECHTE SEITE-->
+                    </div>         
+
+                    <div class="dashed-line"></div>
+
+                    <!-- START: USER-GROUPS -->
+                    <div class="flex-row">
+                        <div class="flex-column" style="width: 33%">
+                            <h3>{{ 'User-management-component.User-groups-label' | translate }}</h3>
+                        </div>
+                        <div class="flex-column" style="width: 33%; text-align: right;">
+                            <db-button variant="secondary" type="button" (click)="deleteUserGroups()">
+                                <i data-icon="delete" data-icon-variant="24-outline"></i> {{ 'User-management-component.Delete-usergroups-label' | translate }}
+                            </db-button>
+                        </div>
+                        <div class="flex-column" style="width: 33%; text-align: right;">
+                            <db-button variant="secondary" type="button" (click)="openUserGroupModal()">
+                                <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'User-management-component.Add-usergroup-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                    <table class="list-table">
+                        <thead class="table-header">
+                          <tr>
+                            <th style="width: 40px;"></th>
+                            <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of groupTableHeaders">
+                              <div>
+                                <div>
+                                  <span>{{ header.text }}</span>
+                                </div>
+                                <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                                  <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                  <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                                </span>
+                              </div>
+                            </th>
+                            <th style="width: 40px;"></th>
+                          </tr>
+                        </thead>
+                  
+                        <tbody *ngIf="user?.groups" style="overflow: auto;">
+                          <ng-container *ngFor="let group of user.groups; let i = index">
+                            <tr [class.white-row]="i % 2 === 0" title="{{getGroupInfo(group)}}" >
+                                <td class="no-op">
+                                    <span>
+                                      <a title="{{ 'User-management-component.Set-primary-group' | translate }}" [class.primary-group]="user.primaryGroupId && group.groupId == user.primaryGroupId" [class.user-group]="!user.primaryGroupId || group.groupId != user.primaryGroupId">
+                                        <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="setPrimaryGroup(group)">
+                                            <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                                        </svg>
+                                      </a>
+                                    </span>
+                                  </td>
+                                <td>{{getGroupCustomer(group)}}</td>
+                                <td>{{group.groupName}}</td>
+                                <td class="no-op" style="text-align: right;">
+                                <span>
+                                    <a title="{{ 'delete' | translate }}">
+                                    <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="removeUserGroup(group)">
+                                        <use xlink:href="assets/icons/icons.svg#delete" />
+                                    </svg>
+                                    </a>
+                                </span>
+                                </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    <!-- END: USER-GROUPS -->   
+                    
+                </div>
+
+                
+                <div class="input-block-complete" id="wagonKeeper" style="overflow-y: overlay;">
+                    <app-wagon-keeper-form [user]="user"></app-wagon-keeper-form>
+                </div>
+
+                <div class="input-block-complete" id="accountsReceivableNumber" style="overflow-y: overlay;">
+                    <app-accounts-receivable-number-form [user]="user"></app-accounts-receivable-number-form>
+                </div>
+
+                <div class="input-block-complete" id="userAuthorizations" style="overflow-y: overlay;">
+                    <app-user-authorizations-form [user]="user"></app-user-authorizations-form>
+                </div>
+            </div>
+            <!-- START: BUTTON-LINE -->            
+            <div class="grid-item">
+            </div>
+            <div class="flex-row">        
+                <div class="flex-column" style="width: 40%">
+                </div>        
+                <div class="flex-column elm-progress"  style="width: 20%">
+                    <progress *ngIf="loadingSave" id="progress-label-07"></progress>
+                </div>        
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-right">
+                        <div></div>
+                        <div class="right-aligned">
+                            <db-button *ngIf="(userManagementService.hasCreatePermission() | async ) || (userManagementService.hasUpdatePermission() | async )" variant="brand-primary" type="button" (click)="doSaveUser()" [disabled]="formGroup.invalid || this.userNameExists">
+                                {{ 'Shared.Save-button-label' | translate }}
+                            </db-button>
+                        <!-- /div>
+                        <div -->
+                            <db-button variant="secondary" type="button" (click)="openConfirmationModal()">
+                                {{ 'Shared.Cancel-button-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: BUTTON-LINE -->
+        </div>
+    </form>
+</main>

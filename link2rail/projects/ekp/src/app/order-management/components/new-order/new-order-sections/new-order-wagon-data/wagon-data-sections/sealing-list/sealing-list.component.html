@@ -1,0 +1,72 @@
+<div [formGroup]="formGroup" style="width: 100%">
+
+  <ng-container formArrayName="sealingList">
+    <ng-container *ngFor="let item of sealingList.controls let i = index" [formGroupName]="i">
+    
+      <div class="flex-column">
+        <div class="flex-row">
+
+          <div id="type" class="input-field input-padding-10" style="width: 50%">
+            <input class='elm-input div-with-10'
+              id="type-input-{{i}}" 
+              formControlName="type" 
+              placeholder="{{'New-order.Wagon-information.Placeholder.Type' | translate}}" 
+              title="{{'New-order.Wagon-information.Placeholder.Type' | translate}}"
+              type="text" aria-labelledby="type-input"  style="width: 100% "
+            />
+            <label for="type-{{i}}" class="elm-label">
+              {{'New-order.Wagon-information.Label.Type' | translate}}
+            </label>
+            <ng-container *ngIf="item.get('type').errors">
+              <small class="input-error" *ngIf="item.get('type').errors.hasReferenceNumberWithoutType">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div id="referenceNumber" class="input-field input-padding-10" style="width: 50%">
+            <input class='elm-input div-with-10'
+              id="referenceNumber-input-{{i}}" 
+              formControlName="referenceNumber" 
+              placeholder="{{'New-order.Wagon-information.Placeholder.No' | translate}}" 
+              title="{{'New-order.Wagon-information.Placeholder.No' | translate}}" 
+              type="text" 
+              aria-labelledby="referenceNumber-input"  style="width: 100%"/>
+            <label for="referenceNumber-{{i}}" class="elm-label">
+              {{'New-order.Wagon-information.Label.No' | translate}}
+            </label>
+            <ng-container *ngIf="item.get('referenceNumber').errors">
+              <small class="input-error" *ngIf="item.get('referenceNumber').errors.hasTypeWithoutReferenceNumber">
+                {{ 'New-order.Errors.Seal-number-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div style="width: 135px" class="flex-row">
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                  button-name="addServiceInformation" class="elm-buttom icon-margin-top-1rem"
+                  (click)="addNewLine(null)"
+                  [disabled]="sealingList.length >= 10 || !editMode">
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                  </svg> 
+              </db-button>
+            </div>
+
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                  button-name="removeConsignorDeclaration" class="elm-buttom icon-margin-top-1rem"
+                  (click)="removeLine(i)"
+                  [disabled]="!editMode">
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                  </svg>
+              </db-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

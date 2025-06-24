@@ -1,0 +1,52 @@
+<header class="modal-header">
+  <h3 *ngIf="!text" class="elm-headline">
+    <strong>{{'Shared.Error' | translate}}: {{apiProblem?.title}}</strong>
+  </h3>
+  <h3 *ngIf="text" class="elm-headline">
+    <strong>{{'Shared.Error' | translate}}</strong>
+  </h3>
+</header>
+<main class="modal-main">
+  <div *ngIf="showGenericError" class="modal-details">
+    <div class="generic-error-text">
+      {{ text }}
+    </div>
+  </div>
+  <div *ngIf="isApiError && !showGenericError">
+    <div *ngIf="apiProblem?.detail">
+      <div style="font-weight: bold;">
+        Details:
+      </div>
+      <div class="modal-details">
+        {{apiProblem?.detail}}
+      </div>
+    </div>
+    <div class="border-line"></div>
+    <div>
+      <!-- <i data-icon="info" data-icon-variant="24-outline" style="color: #ec0016; padding-right: 10px;"></i> -->
+      <div><strong>{{'Shared.Instance' | translate}}: </strong> {{apiProblem?.instance?.substring(9, 500)}}</div>
+      <div><strong>Fehler Code: </strong> {{apiProblem?.errorCode}}</div>
+    </div>
+  </div>
+
+  <div *ngIf="apiErrors?.length" class="arrow-div" (click)="openDetails()">
+    <span class="arrow" #arrowIcon>
+      <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+      </svg>
+    </span>
+    <div class="small-text">&nbsp;&nbsp;Weitere Details</div>
+  </div>
+  <div class="errors-list" *ngIf="apiErrors?.length" #errorList>
+    <div *ngFor="let item of apiErrors" class="modal-details small-text">
+      {{item.detail}} <br>
+      <ng-container *ngIf="item.field">Feld: {{item.field}} <br></ng-container>
+      Fehler Code: {{item.errorCode}}
+    </div>
+  </div>
+  <div class="button-group">
+    <db-button variant="brand-primary" type="button" mat-dialog-close (click)="close()">
+      Ok
+    </db-button>
+  </div>
+</main>

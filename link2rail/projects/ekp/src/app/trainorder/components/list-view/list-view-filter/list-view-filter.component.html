@@ -1,0 +1,114 @@
+<div> 
+    <div style="height: 24px;"></div>
+    <form [formGroup]="filterForm">
+        <div *ngIf="containsRoundtrips" class="input-field" style="width: 19.6%; padding: 0 0 0 5px">
+            <select title="{{'Shared.Train-Chain'}}" formControlName="trainChainNameSelector">
+                <option *ngFor="let item of roundtrips" [ngValue]="item.name">{{item.display}}</option>                
+            </select>
+        </div>
+        <div class="main-block" style="margin-top: -25px">
+            <div class="input-field">
+                <input
+                    formControlName="trainNumber"
+                    autocomplete="off"
+                    placeholder="{{ 'Order-view-page.Train-number-title' | translate }}"
+                    type="text"
+                    name="train-number"
+                    id="train-number"
+                    class="elm-input"
+                    maxlength="5"
+                    list="datalisttrain-number" />
+                <label class="elm-label" for="train-number">{{ 'Order-view-page.Train-number-title' | translate }}</label>
+                <datalist id="datalisttrain-number">
+                    <option [value]="option" *ngFor="let option of trainnumbers">{{ option }}</option>
+                </datalist>
+                <div class="icon-block" (click)="clearSearchInput('trainNumber')">
+                    <svg class="icon" [ngClass]="filterForm.get('trainNumber')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon" [ngClass]="filterForm.get('trainNumber')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>
+            </div>
+            <div class="input-field">
+                <input
+                    #planneddepartureFromElement
+                    formControlName="plannedDepartureFrom"
+                    type="date"
+                    [max]="maxDate"
+                    class="elm-input date-field"
+                    placeholder="{{ 'Order-view-page.Time-period-from-label' | translate }}"
+                    name="period-from"
+                    id="period-from"
+                    aria-labelledby="period-from-label"
+                    [class.focused]="planneddepartureFromElement.value"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (change)="selectPlannedDepartureFrom($event)"
+                />
+                <label class="date-label" for="period-from" aria-hidden="true" id="period-from-label">{{
+                    'Order-view-page.Time-period-from-label' | translate
+                }}</label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">{{
+                    'Shared.Errors.date-from-before-date-to' | translate
+                }}</small>
+            </div>
+            <div class="input-field">
+                <input
+                    #planneddepartureToElement
+                    formControlName="plannedDepartureTo"
+                    type="date"
+                    [max]="maxDate"
+                    class="elm-input date-field"
+                    placeholder="Projekt Name"
+                    name="period-to"
+                    id="period-to"
+                    aria-labelledby="period-to-label"
+                    [class.focused]="planneddepartureToElement.value"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (change)="selectPlannedDepartureTo($event)"                
+                />
+                <label class="date-label" for="period-to" aria-hidden="true" id="period-to-label">{{
+                    'Order-view-page.Time-period-to-label' | translate
+                }}</label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">{{
+                    'Shared.Errors.date-from-before-date-to' | translate
+                }}</small>
+            </div>
+            <div class="input-field">
+                <app-el-s-autocomplete
+                    [displayNameTransform]="InfrastructureLocationSummaryPipe.transform"
+                    [formGroup]="filterForm"
+                    [fieldName]="'sendingStation'"
+                    placeholder="{{ 'Order-view-page.Shipping-station-placeholder' | translate }}"                
+                    [autocompleteResultList]="sendingStationsAutocomplete"
+                    [otherConfig]="{errorConfig: {errorCondition: sendingStation?.errors?.required, errorText: 'New-order.Errors.Point-of-loading-location-code-missing' | translate}, doNotDedup: true}"
+                    (doRequestSelectionListItems)="loadSendingStations($event)"
+                    (onSelectItem)="onSelectSendingStation($event)">
+                </app-el-s-autocomplete>                
+            </div>
+            <div class="input-field">
+                <app-el-s-autocomplete
+                    [displayNameTransform]="InfrastructureLocationSummaryPipe.transform"
+                    [formGroup]="filterForm"
+                    [fieldName]="'receivingStation'"
+                    placeholder="{{ 'Order-view-page.Receiving-station-placeholder' | translate }}"                
+                    [autocompleteResultList]="receivingStationsAutocomplete"
+                    [otherConfig]="{errorConfig: {errorCondition: receivingStation?.errors?.required, errorText: 'New-order.Errors.Point-of-loading-location-code-missing' | translate}, doNotDedup: true}"
+                    (doRequestSelectionListItems)="loadReceivingStations($event)"
+                    (onSelectItem)="onSelectReceivingStation($event)">
+                </app-el-s-autocomplete>
+            </div>
+        </div>
+    </form>
+</div>
+<app-overview-filter-control-panel 
+    [resultsCount]="totalTrains" 
+    [activeFiltersCount]="activeFilterAmount()"
+    [isLoading]="loadingInProgress$" 
+    [downloadInProgress]="downloadInProgress"
+    (resetFilters)="resetFilterConditions()" 
+    (downloadReport)="saveCompleteListToCSV()">
+</app-overview-filter-control-panel>

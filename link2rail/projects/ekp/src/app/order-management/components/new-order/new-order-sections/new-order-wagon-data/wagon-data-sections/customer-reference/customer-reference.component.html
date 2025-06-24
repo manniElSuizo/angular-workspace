@@ -1,0 +1,50 @@
+<div [formGroup]="formGroup" style="width: 100%" *ngIf="customerReferenceFormArray">
+
+  <ng-container formArrayName="customerReferenceFormArray">
+    <ng-container *ngFor="let item of customerReferenceFormArray.controls let i = index" [formGroupName]="i">
+
+      <div class="flex-column">
+        <div class="flex-row">
+
+          <div class="input-field input-padding-10" style="width: 100%">
+            <input class='elm-input div-with-10' id="identifier-input" formControlName="identifier"
+              placeholder="{{'New-order.Wagon-information.Placeholder.Customer-reference' | translate}}"
+              title="{{'New-order.Wagon-information.Placeholder.Customer-reference' | translate}}" type="text"
+              aria-labelledby="identifier-input" maxlength="35" style="width: 100%" />
+            <label for="identifier" class="elm-label">
+              {{'New-order.Wagon-information.Label.Customer-reference' | translate}}
+            </label>
+          </div>
+
+          <div style="width: 135px" class="flex-row">
+
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                button-name="addServiceInformation" class="elm-buttom icon-margin-top-1rem" (click)="addLine()"
+                [disabled]="!editMode || customerReferenceFormArray.length > 4">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                </svg>
+              </db-button>
+            </div>
+
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button 
+                type="button" 
+                title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                button-name="removeConsignorDeclaration" 
+                class="elm-buttom icon-margin-top-1rem" 
+                (click)="removeLine(i)"[disabled]="!editMode">                
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                </svg>
+              </db-button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+  </ng-container>
+</div>

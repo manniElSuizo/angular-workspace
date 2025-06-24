@@ -1,0 +1,106 @@
+<div [formGroup]="formGroup" style="width: 100%">
+  <ng-container formArrayName="authorizationList">
+    <ng-container *ngFor="let item of authorizationList.controls; let i = index" [formGroupName]="i">
+      <div class="flex-column">
+        <div class="flex-row">
+          <!-- IM Code Input Field -->
+          <div id="imCode" class="input-field input-padding-10" style="width: 50%">
+            <input class="elm-input" 
+              formControlName="imCode" 
+              id="im-code-label"
+              autocomplete="off" 
+              type="text" 
+              placeholder="{{'New-order.Wagon-information.Placeholder.Ric-ru' | translate}}" 
+              name="imCode"
+              [class.invalid-input]="getImCode(i).errors"
+              (input)="autocompleteInputChanged($event,'im-code')" 
+              (change)="imCodeSelected(i)"
+              (blur)="removeInvalidImCodeOnBlur(i)"
+              list="datalist-im-code"/>
+              <label class="elm-label" for="im-code" aria-hidden="true" id="im-code-label">
+                {{'New-order.Wagon-information.Label.Ric-ru' | translate}}
+              </label>
+            <datalist id="datalist-im-code">
+              <option [value]="option?.code" *ngFor="let option of railwayCompanyAutocomplete trackBy: trackByFn">
+                ({{option?.code}}) {{ option?.name }}
+              </option>
+            </datalist>
+            <div class="icon-block-autocomplete">
+              <svg class="icon " viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#search" />
+              </svg>
+            </div>
+            <!-- Validation for IM Code -->
+            <ng-container *ngIf="getImCode(i).errors">
+              <small class="input-error" *ngIf="getImCode(i).hasError('required')">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getImCode(i).hasError('hasImCodeWithoutPermissionNumber')">
+                {{ 'New-order.Errors.Eiu-or-Evu-missing' | translate }}
+              </small>
+              <small *ngIf="getImCode(i).hasError('invalidCompanyCode')">
+                 class="input-error">
+                  {{'Shared.Errors.Field-is-notFound-error-text' | translate}}
+              </small>
+              
+            </ng-container>
+        </div>
+
+          <!-- Permission Number Input Field -->
+          <div id="permissionNumber" class="input-field input-padding-10" style="width: 50%">
+            <input class='elm-input div-with-10' id="permissionNumber-input" [formControl]="getPermissionNumber(i)"
+              type="text" placeholder="{{'New-order.Wagon-information.Placeholder.Bza-permit-no' | translate}}"
+              aria-labelledby="permissionNumber-input"
+              (blur)="permissionNumberChanged(i)"
+              [class.invalid-input]="getPermissionNumber(i).errors"
+              [title]="'New-order.Wagon-information.Placeholder.Bza-permit-no' | translate" style="width: 100%"
+              maxlength="24" />
+            <label for="permissionNumber" class="elm-label">
+              {{'New-order.Wagon-information.Label.Bza-permit-no' | translate}}
+              </label>
+
+          <!-- Validation for Permission Number -->
+          <ng-container *ngIf="getPermissionNumber(i).errors">
+            <small class="input-error" *ngIf="getPermissionNumber(i).hasError('required')">
+              {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+            </small>
+            <small class="input-error" *ngIf="getPermissionNumber(i).hasError('hasPermissionNumberWithoutImCode')">
+              {{ 'New-order.Errors.AS-no-missing' | translate }}
+            </small>
+            <small class="input-error" *ngIf="getPermissionNumber(i).hasError('hasPermissionNumberDouble')">
+              {{ 'New-order.Errors.AS-no-duplicate-on-wagon' | translate }}
+            </small>
+          </ng-container>
+        </div>
+
+          <!-- Add/Remove Buttons -->
+          <div style="width: 135px" class="flex-row">
+
+            <!-- Add Line Button -->
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                button-name="addServiceInformation" class="elm-buttom icon-margin-top-1rem" (click)="addNewLine(null)"
+                [disabled]="authorizationList.length >= 10 || !editMode">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                </svg>
+              </db-button>
+            </div>
+
+            <!-- Remove Line Button -->
+            <div class="button-in-row div-with-button-in-row" style="padding: 15px 10px 0 0">
+              <db-button type="button" 
+                  title="{{'New-order.Tooltip.Remove-entry' | translate}}"
+                  button-name="removeConsignorDeclaration" class="elm-buttom icon-margin-top-1rem" 
+                  (click)="removeLine(i)" [disabled]="!editMode">
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                  </svg>
+              </db-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

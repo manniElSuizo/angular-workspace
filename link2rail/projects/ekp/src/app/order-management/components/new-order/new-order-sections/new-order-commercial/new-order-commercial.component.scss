@@ -1,0 +1,22 @@
+@use 'color';
+
+::ng-deep .elm-button {
+  height: 51px !important;
+}
+
+input:not([type="checkbox"]) {
+  background-color:color.$background-color-light;
+  height: 50px;
+}
+
+.arrow-div {
+  margin: 1em 0 0 0
+}
+
+.elm-select {
+  width: 100%;
+  height: 51px;
+  padding: 0 0 6px 5px;
+  background-color: #F0F3F5;
+}
+

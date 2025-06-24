@@ -1,0 +1,53 @@
+<div style="width: 100%">
+    <form [formGroup]="filterForm">
+        <div class="filter-block-grid">
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                        [multiselectAutocompleteParameters]="templateNameParameters"
+                        (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                        #templateName></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                        [multiselectAutocompleteParameters]="ordererSgvParameters"
+                        (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                        #ordererSgv></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="ordererPartnerParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #ordererPartner></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                        [multiselectAutocompleteParameters]="shipperSgvParameters"
+                        (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                        #shipperSgv></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="shipperPartnerParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #shipperPartner></app-multiselect-autocomplete>
+            </div>
+        </div>
+        <div class="filter-block-grid" style="margin: -15px 0 0 0">
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="demandLocationParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #demandLocation></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="demandWagonTypeParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #demandWagonType></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [allowSearchFilter]="true"
+                                              [multiselectAutocompleteParameters]="loadRunCountryParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #loadRunCountry></app-multiselect-autocomplete>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,40 @@
+<section class="overview-section">
+    <div class="header-line">
+        <h2>{{ 'ewd.order.overview.title' | translate }}</h2>
+
+        <div style="padding: 0 10px 20px 0"
+             *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_EWD]) | async); else newOrderDisabled">
+            <db-button variant="brand-primary" (click)="createOrder()">
+                <i data-icon="add"
+                   data-icon-variant="24-outline"></i> {{ 'ewd.order.overview.button.createOrder' | translate }}
+            </db-button>
+        </div>
+        <ng-template #newOrderDisabled>
+            <div style="padding: 0 10px 20px 0; cursor: default;">
+                <db-button variant="brand-primary" disabled="true">
+                    <i data-icon="add"
+                       data-icon-variant="24-outline"></i> {{ 'ewd.order.overview.button.createOrder' | translate }}
+                </db-button>
+            </div>
+        </ng-template>
+    </div>
+    <app-order-overview-filter
+            (filterChange)="onFilterCriteriaChange($event)"
+    ></app-order-overview-filter>
+    <app-overview-filter-control-panel
+            [resultsCount]="totalNumberOfResults"
+            [activeFiltersCount]="activeFilterCount"
+            [isLoading]="isLoading"
+            [downloadInProgress]="downloadInProgress"
+            (resetFilters)="handleResetFilters()"
+            (downloadReport)="handleDownloadReport()">
+    </app-overview-filter-control-panel>
+    <app-order-overview-results [tableData]="tableData"></app-order-overview-results>
+    <app-overview-result-control-panel
+            [numberOfResults]="numberOfResults"
+            [totalNumberOfResult]="totalNumberOfResults"
+            (loadMoreClicked)="loadMoreResults()">
+    </app-overview-result-control-panel>
+
+
+</section>

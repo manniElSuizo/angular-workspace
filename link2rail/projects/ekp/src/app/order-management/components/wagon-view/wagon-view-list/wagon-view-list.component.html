@@ -1,0 +1,158 @@
+<section>
+    <div class="header-line">
+        <h2>{{ 'Wagon-overview.Overview-title' | translate }}</h2>
+    </div>
+    <div class="filter">
+        <app-wagon-view-filter></app-wagon-view-filter>
+    </div>
+    <div id="list-view" style="width: 100%; min-width: 1831px"><table class="list-table">
+            <thead class="table-header">
+            <tr>
+                <ng-container *ngFor="let header of tableHeaders">
+                    <th scope="col"
+                        [style.min-width]="header.minWidth"
+                        [style.max-width]="header.maxWidth"
+                        [style.text-align]="header.textAlign"
+                        [title]="header.text">
+                        <div>
+                                <span
+
+                                        [style.text-align]="header.textAlign">
+
+                                    {{ header.text }}
+                                </span>
+
+                            <span class="sort-icons-block" *ngIf="header.sortable" (click)="sortTable(header.value)">
+                                <div class="sort-descending"
+                                     [class.active-sort]="sortConditions?.asc && sortConditions?.field === header.value"></div>
+                                <div class="sort-ascending"
+                                     [class.active-sort]="!sortConditions?.asc && sortConditions?.field === header.value"></div>
+                            </span>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+            </thead>
+            <tbody class="wagonlist_tbody">
+            <ng-container *ngFor="let wagon of wagonSummarys; let i = index">
+                <tr class="wagonlist-row" [class.white-row]="i % 2 === 0">
+                    <td>
+                        <a title="{{ 'Vehicle-details-dialog.Dialog-title' | translate }}" class="mouse-pointer"
+                           (click)="openPopupVehicleDetails(wagon?.wagonNumber)">
+                            <span class="td_padding_firstCol">{{ wagon?.wagonNumber | wagonNumber }}</span>
+                        </a>
+                    </td>
+                    <td class="td_icon_center">
+                        <div *ngIf="!wagon?.emptyWagon"
+                             title="{{ 'Wagon-overview.Tooltip.Loaded' | translate }}"
+                        >
+                            <svg class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#wagon-loaded"/>
+                            </svg>
+                        </div>
+                        <div *ngIf="wagon?.emptyWagon"
+                             title="{{ 'Wagon-overview.Tooltip.Empty' | translate }}"
+                        >
+                            <svg class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#wagon-empty"/>
+                            </svg>
+                        </div>
+                    </td>
+                    <td class="td_icon_center">
+                        <div *ngIf="hasWagonLimitedRunability(wagon?.suitableForRunning)"
+                             title="{{ 'Wagon-overview.Tooltip.Damage-limited-runablity' | translate }}"
+                        >
+                            <svg class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#toolWhite"/>
+                            </svg>
+                        </div>
+                        <div *ngIf="hasWagonNoRunability(wagon?.suitableForRunning)"
+                             title="{{ 'Wagon-overview.Tooltip.Damage-no-runablity' | translate }}"
+                        >
+                            <svg class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#toolBlack"/>
+                            </svg>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="td_date">{{ wagon?.shippingTime  | date: 'dd.MM.yyyy' }}</span>
+                    </td>
+                    <td style="min-width: 105px; max-width: 105px;">
+                        <span class="td_date"
+                              style="min-width: 105px; max-width: 105px;">{{ wagon?.estimatedArrivalTime| date: 'dd.MM.yyyy HH:mm' }}</span>
+                    </td>
+                    <td>
+                        <span class="td_padding">{{ wagon?.sendingStation | uppercase }}</span>
+                    </td>
+                    <td>
+                        <span class="td_padding">{{ wagon?.receivingStation | uppercase }}</span>
+                    </td>
+                    <td>
+                        <span class="td_padding">{{ wagon?.consignorName }}</span>
+                    </td>
+                    <td>
+                        <span class="td_padding">{{ wagon?.consigneeName }}</span>
+                    </td>
+                    <td>
+                        <div title="{{ 'Wagon-overview.Tooltip.Tracking-history-wagon' | translate }}"
+                             class="mouse-pointer" (click)="openPopupTrackingHistory(wagon)">
+                            <div class="flex-container mouse-pointer">
+                                <span class="left">{{ wagon?.lastWagonEventType| translateWagonStatus }}</span>
+                                <span class="right">{{ wagon?.lastWagonEventTime| date: 'dd.MM.yyyy' }}</span>
+                            </div>
+                            <div class="flex-container mouse-pointer">
+                                <a class="left">{{ wagon?.currentLocation }}</a>
+                                <span *ngIf="wagon?.currentLocationCountryCode">&nbsp;({{wagon?.currentLocationCountryCode}})</span>
+                                <span class="right">{{ wagon?.lastWagonEventTime| date: 'HH:mm' }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- <td>
+                        <div class="td_icon_center">
+                            <span class="td_icon_center" *ngIf="wagon?.timeConstraintType === 'grey'">
+                                <div
+                                  [title]="wagon?.latestArrivalTime 
+                                    ? ('Wagon-overview.Tooltip.Duration-target' | translate) + ' ' + (wagon.latestArrivalTime | date:'dd.MM.yyyy HH:mm') + ' ' + ('Shared.Hour-label' | translate) 
+                                    : ('Wagon-overview.Tooltip.No-duration-target' | translate)">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#status-grey" />
+                                  </svg>
+                                </div>
+                              </span>
+                            <span class="td_icon_center" *ngIf="wagon?.timeConstraintType=='green'">
+                                <div title="{{ 'Wagon-overview.Tooltip.Duration-target' | translate }} {{wagon?.latestArrivalTime | date:'dd.MM.yyyy HH:mm'}} {{'Shared.Hour-label' | translate}} ">
+                                    <svg class="icon" viewBox="0 0 25 25" >
+                                        <use xlink:href="assets/icons/icons.svg#status-green" />
+                                    </svg>
+                                </div>
+                            </span>
+                            <span class="td_icon_center" *ngIf="wagon?.timeConstraintType=='red'">
+                                <div title="{{ 'Wagon-overview.Tooltip.Duration-target' | translate }} {{wagon?.latestArrivalTime| date:'dd.MM.yyyy HH:mm'}} {{'Shared.Hour-label' | translate}} ">
+                                    <svg class="icon" viewBox="0 0 25 25" >
+                                        <use xlink:href="assets/icons/icons.svg#status-red" />
+                                    </svg>
+                                </div>
+                            </span>
+                        </div>
+                    </td> -->
+                    <td class="td_icon_center">
+                        <a *ngIf="wagon.orderKey" title="{{ 'Wagon-overview.Tooltip.Order-details' | translate }}" class="mouse-pointer"
+                           (click)="openPopupOrderDetails(wagon)">
+                            {{ wagon?.orderKey?.orderNumber | orderNumber: wagon.orderKey?.orderAuthority }}
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="filter?.showLoadMoreButton$ | async" class="bottom-controls">
+        <button class="load-btn" (click)="loadMore()">
+            {{ 'Order-view-page.Load-more-button-label' | translate }}
+        </button>
+    </div>
+    <div>
+        <strong>{{ wagonSummarys?.length }} {{ 'Shared.Of' | translate }} {{ totalNumberOfWagons }}</strong>
+    </div>
+</section>

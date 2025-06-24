@@ -1,0 +1,45 @@
+<div *ngIf="railOrderSearchSummary" class="flex-column">
+  <div *ngIf="!isLoading">
+    <div id="header" style="background-color: lightgray; padding: 1em 1em 0 0" class="flex-column">
+      <div class="flex-row">
+        <div style="flex-grow: 1;"></div>
+        <div>
+          <a class="close-icon" title="{{'Shared.Close-dialog' | translate}}" mat-dialog-close>
+            <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+              <use xlink:href="assets/icons/icons.svg#close" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="flex-column" style="padding: 0 0 1em 2em">
+        <div>{{'Order-Management.order-view-last-status.Header' | translate}}</div>
+        <div style="font-size: 115%"><b>{{railOrderSearchSummary.orderKey.orderNumber| orderNumber:railOrderSearchSummary.orderKey.orderAuthority }}</b></div>
+      </div>
+    </div>
+
+    <main class="modal-main-trackinghistory modal-main">
+      <div class="history-table-block" style="margin-top: 1em">
+        <table class="cmp-table" style="width: 100%; table-layout: fixed;">
+          <thead class="table-header">
+            <tr>
+              <th style="width: 50%; text-align: left;">{{'Order-Management.order-view-last-status.Section' |
+                translate}}:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of railOrderLastStatusHistory; let i = index;">
+              <tr class="flex-row">
+                <td class="flex-td" style="width: 50%; padding: 10px; text-align: left;">
+                  {{ item.railOrderStatus | translateOrderInternalStatus}}
+                </td>
+                <td class="flex-td" style="width: 50%; padding: 10px; text-align: right; white-space: nowrap;">
+                  {{ item.dateTime | date: 'dd.MM.yyyy HH:mm' }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>

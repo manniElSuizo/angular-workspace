@@ -1,0 +1,30 @@
+{
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Widok rachunku",
+        "filter": {
+          "dateFrom": "Data (od)",
+          "dateTo": "Data (do)",
+          "debitorNumber": "Numer dłużnika",
+          "invoiceNumber": "Numer faktury"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Numer faktury",
+            "invoiceDate": "Data faktury",
+            "referenceInvoiceNumber": "Numer referencyjny faktura",
+            "recipientCompany": "Nazwa firmy",
+            "debitorNumber": "Numer dłużnika",
+            "dueDate": "Termin",
+            "currency": "Waluta",
+            "netAmount": "Kwota netto",
+            "vatAmount": "Kwota VAT",
+            "grossAmount": "Kwota brutto",
+            "link": "Link PDF"
+          }
+        }
+      }
+    }
+  }
+}

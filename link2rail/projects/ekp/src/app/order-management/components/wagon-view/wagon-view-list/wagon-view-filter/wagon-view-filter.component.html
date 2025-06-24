@@ -1,0 +1,145 @@
+<div>
+    <div class="filter-top-margin"></div>
+    <form [formGroup]="filterForm">
+        <div class="main-block main-block-mragin-top-diff">
+            <!-- Filter for wagon number, dispatch date, and other parameters -->
+            <div class="input-field">
+                <input 
+                    formControlName="wagonNumber" 
+                    autocomplete="off"
+                    placeholder="{{ 'Wagon-overview.Filter.Place-holder.Wagon-number' | translate }}" 
+                    type="text"
+                    name="wagonNumber" 
+                    id="wagonNumber" 
+                    class="elm-input"
+                    maxlength="15"
+                    (change)="onChangeFilter($event);" />
+                <label class="elm-label" for="wagonNumber">
+                    {{'Wagon-overview.Filter.Label.Wagon-number' | translate}}
+                </label>
+            </div>
+
+            <div class="input-field">
+                <input 
+                    #dispatchDateElementFrom 
+                    formControlName="dispatchDateFrom" 
+                    type="date" [max]="maxDate"
+                    class="elm-input date-field" 
+                    name="dispatchDateFrom" 
+                    id="dispatchDateFrom"
+                    aria-labelledby="dispatchDateFrom-label" 
+                    [class.focused]="dispatchDateElementFrom.value"
+                    (focus)="onFocus($event)" (blur)="onBlur($event)" (change)="onChangeFilter($event)" />
+                <label class="date-label" for="dispatchDateFrom" aria-hidden="true" id="dispatchDateFrom-label">
+                    {{'Wagon-overview.Filter.Label.Date-of-dispatch-from' | translate }}
+                </label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">
+                    {{'Shared.Errors.date-from-before-date-to' | translate}}
+                </small>
+            </div>
+
+            <div class="input-field">
+                <input 
+                    #dispatchDateElementTo 
+                    formControlName="dispatchDateTo" 
+                    type="date" [max]="maxDate"
+                    class="elm-input date-field" 
+                    name="dispatchDateTo" 
+                    id="dispatchDateTo"
+                    aria-labelledby="dispatchDateTo-label" 
+                    [class.focused]="dispatchDateElementTo.value"
+                    (focus)="onFocus($event)" (blur)="onBlur($event)" (change)="onChangeFilter($event)" />
+                <label class="date-label" for="dispatchDateTo" aria-hidden="true" id="dispatchDateTo-label">
+                    {{'Wagon-overview.Filter.Label.Date-of-dispatch-to' | translate }}
+                </label>
+                <small class="input-error" *ngIf="filterForm.errors?.dateToBeforeDateFrom">{{
+                    'Shared.Errors.date-from-before-date-to' | translate
+                    }}</small>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSending" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msss></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceiving" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msrs></app-multiselect-autocomplete>
+            </div>
+        </div>
+
+        <div class="main-block main-block-mragin-top-diff">
+            <div class="input-field">
+                <input 
+                    formControlName="zabOrderNumber" 
+                    autocomplete="off"
+                    placeholder="{{ 'Wagon-overview.Filter.Place-holder.Zab-order-number' | translate }}" 
+                    type="text"
+                    name="zabOrderNumber" 
+                    id="zabOrderNumber" 
+                    class="elm-input" 
+                    maxlength="20"
+                    (change)="onChangeFilter($event)" />
+                <label class="elm-label" for="zabOrderNumber">
+                    {{'Wagon-overview.Filter.Label.Zab-order-number' |translate }}
+                </label>                
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersCurrentLocation" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mscl></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <select (change)="onChangeFilter($event)" style="min-height: 52px" class="elm-input" type="text" title="{{ 'Wagon-overview.Filter.Label.Loading-state' | translate }}" id="loadingstate" formControlName="loadingstate">
+                    <option value=null></option>
+                    <option value=false>{{ 'Shared.Loading-state-loaded' | translate }} </option>
+                    <option value=true>{{ 'Shared.Loading-state-empty' | translate }}</option>
+                </select>
+                <label class="elm-label label-select" for="loadingstate" aria-hidden="true" id="Loading-state">{{ 'Wagon-overview.Filter.Label.Loading-state' | translate }}</label>
+            </div>
+
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignor" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsigner></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersConsignee" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msconsignee></app-multiselect-autocomplete>
+            </div>
+        </div>
+
+        <div class="main-block main-block-mragin-top-diff">
+            <div class="input-field">
+                <input #incomingByElement formControlName="incomingBy" type="datetime-local" [max]="maxDate"
+                    class="elm-input date-field" name="incomingBy" id="incomingBy"
+                    aria-labelledby="incomingBy-label" [class.focused]="incomingBy.value"
+                    (focus)="onFocus($event)" (blur)="onBlur($event)" (change)="onChangeFilter($event)" />
+                <label class="date-label" for="incomingBy" aria-hidden="true" id="incomingBy-label">
+                    {{'Wagon-overview.Filter.Label.Incoming-by' | translate }}
+                </label>
+            </div>
+            <!-- reference -->
+            <div class="input-field" style="padding: 0 5px 0 0">
+                <input formControlName="reference" style="width: 100%" type="text"
+                placeholder="{{ 'Order-Management.order-view-filter.customerReference' | translate }}"
+                name="reference" 
+                id="reference" 
+                class="elm-input" 
+                type="text"
+                maxlength="35"
+                (change)="onChangeFilter($event);" />
+        <label class="elm-label" for="reference">
+            {{ 'Order-Management.order-view-filter.customerReference' | translate }}
+        </label>
+      </div>
+       <div class="input-field">
+            <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersSendingStationCountryCode" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mssendingstationcountrycode>
+            </app-multiselect-autocomplete>
+        </div>
+        <div class="input-field">
+            <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectAutocompleteParametersReceivingStationCountryCode" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msreceivingstationcountrycode>
+            </app-multiselect-autocomplete>
+        </div>
+        </div>
+    </form>
+</div>
+<app-overview-filter-control-panel 
+    [resultsCount]="totalNumberOfWagons" 
+    [activeFiltersCount]="activeFilterCount"
+    [downloadInProgress]="downloadInProgress"
+    [isLoading]="loadingInProgress$" 
+    (resetFilters)="resetFilterConditions()" 
+    (downloadReport)="saveCompleteListToCSV()">
+</app-overview-filter-control-panel>

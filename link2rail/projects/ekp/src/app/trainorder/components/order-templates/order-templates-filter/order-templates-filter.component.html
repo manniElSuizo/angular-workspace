@@ -1,0 +1,127 @@
+<div #test>
+    <div style="height: 24px;"></div>
+    <form class="main-block" [formGroup]="filterForm">
+        <div class="input-field">
+            <input 
+                formControlName="templateId"
+                placeholder="{{ 'Order-templates-component.Template-id' | translate }}" 
+                type="text"
+                autocomplete="off"                 
+                id="templateId"
+                name="templateId"
+                spellcheck="false"
+                class="elm-input"
+                maxlength="15"
+                aria-labelledby="template-id-label" 
+                (input)="onFocus($event)"
+                (blur)="onBlur($event)"
+            />
+            <label class="elm-label" for="templateId">{{ 'Order-templates-component.Template-id' | translate }}</label>
+            <div class="icon-block" (click)="clearSearchInput('templateId')">
+                <svg class="icon text" [ngClass]="filterForm.get('templateId')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#search" />
+                </svg>
+                <svg class="icon pointer" [ngClass]="filterForm.get('templateId')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#close" />
+                </svg>
+            </div>
+        </div>
+        <div class="input-field">
+            <input 
+                formControlName="senderName" 
+                placeholder="{{ 'Order-templates-component.Sender' | translate }}" 
+                type="text"
+                autocomplete="off"
+                id="senderName" 
+                name="senderName"
+                class="elm-input"       
+                spellcheck="false"       
+                maxlength="50"
+                aria-labelledby="sender-name-label" 
+                (input)="onFocus($event)"
+                (blur)="onBlur($event)"                
+            />
+            <label class="elm-label" for="senderName" aria-hidden="true" id="sender-name-label">{{ 'Order-templates-component.Sender' | translate }}</label>
+                <div class="icon-block" (click)="clearSearchInput('senderName')">
+                    <svg class="icon text" [ngClass]="filterForm.get('senderName')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon pointer" [ngClass]="filterForm.get('senderName')?.value ? 'show-icon' : 'hide-icon'"
+                        viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>
+        </div>
+        <div class="input-field">            
+            <app-el-s-autocomplete
+                [displayNameTransform]="InfrastructureLocationSummaryPipe.transform"
+                [formGroup]="filterForm"
+                [fieldName]="'sendingStation'"
+                placeholder="{{ 'Order-view-page.Shipping-station-placeholder' | translate }}"                
+                [autocompleteResultList]="commercialLocationSummariesSendingStations"
+                [otherConfig]="{errorConfig: {errorCondition: sendingStation?.errors?.required, errorText: 'New-order.Errors.Point-of-loading-location-code-missing' | translate}, doNotDedup: true}"
+                (doRequestSelectionListItems)="loadSendingStations($event)"
+                (onSelectItem)="onSelectSendingStation($event)">
+            </app-el-s-autocomplete>
+        </div>
+        <div class="input-field">
+            <input 
+                formControlName="receiverName" 
+                placeholder="{{ 'Order-templates-component.Receiver' | translate }}" 
+                type="text" 
+                id="receiverName"
+                autocomplete="off"
+                name="receiverName"
+                class="elm-input"
+                spellcheck="false"
+                maxlength="50"
+                aria-labelledby="receiver-name-label" 
+                (input)="onFocus($event)"
+                (blur)="onBlur($event)"
+            />
+            <label class="elm-label" for="receiver-name" aria-hidden="true" id="receiver-name-label">{{ 'Order-templates-component.Receiver' | translate }}</label>
+                <div class="icon-block" (click)="clearSearchInput('receiverName')">
+                    <svg class="icon text" [ngClass]="filterForm.get('receiverName')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#search" />
+                    </svg>
+                    <svg class="icon pointer" [ngClass]="filterForm.get('receiverName')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#close" />
+                    </svg>
+                </div>
+        </div>
+        <div class="input-field">
+            <app-el-s-autocomplete
+                [displayNameTransform]="InfrastructureLocationSummaryPipe.transform"
+                [formGroup]="filterForm"
+                [fieldName]="'receivingStation'"
+                placeholder="{{ 'Order-view-page.Receiving-station-placeholder' | translate }}"                
+                [autocompleteResultList]="commercialLocationSummariesReceivingStations"
+                [otherConfig]="{errorConfig: {errorCondition: receivingStation?.errors?.required, errorText: 'New-order.Errors.Point-of-discharge-location-code-missing' | translate}, doNotDedup: true}"
+                (doRequestSelectionListItems)="loadReceivingStations($event)"
+                (onSelectItem)="onSelectReceivingStation($event)">
+            </app-el-s-autocomplete>    
+        </div>
+    </form>
+</div>
+<div class="controls-block">
+    <div class="controls-block">
+        <h3>{{ 'Shared.Results-label' | translate }} ({{numberOfOrders}})</h3>
+        <div *ngIf="activeFilterAmount() > 0" class="filter-active-all tbl-header-filter-reset-download">
+            <span><strong>{{ activeFilterAmount() }} {{ 'Order-view-page.Filter-active' | translate }}</strong> |</span>
+            <span class="filter-reset" (click)="resetFilterConditions()">
+                {{ 'Order-view-page.Filter-reset-label' | translate }}
+                <i name="filter-reset" class="filter-reset" data-icon="close" data-icon-variant="24-outline"></i>
+            </span>
+        </div>
+    </div>
+    <details class="cmp-overflow-menu download-block tbl-header-filter-reset-download">
+        <summary>
+          <i data-icon="download"></i>
+          Download (.csv)
+        </summary>
+        <menu type="toolbar">
+            <li><button class="elm-button" title="Title text" type="button" (click)="saveCompleteListToCSV()">{{ 'Order-view-page.Download-complete-list-button-label' | translate }}</button></li>
+            <li><button class="elm-button" title="Title text" type="button" (click)="saveFilteredListToCSV()" [disabled]="activeFilterAmount() === 0">{{ 'Order-view-page.Download-filtered-list-button-label' | translate }}</button></li>
+        </menu>
+    </details>
+</div>

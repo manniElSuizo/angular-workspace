@@ -1,0 +1,13 @@
+# Trusted Web Activity (TWA)
+
+* WIP *
+
+## Usage within RI Angular
+
+We're providing a sample file that needs to get hosted within the root of your website for enabling the trust of the Android application through the Digital Asset Links file: `src/.well-known/assetlinks.json`.
+
+Please adopt the entries for your specific implementation, according to https://developers.google.com/digital-asset-links/v1/getting-started
+
+## Further information
+
+https://developers.google.com/web/android/trusted-web-activity

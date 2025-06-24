@@ -1,0 +1,250 @@
+{
+    "Vehicle-details-dialog": {
+        "Dialog-title": "Détails sur le wagon",
+        "Load-limit-panel": "Cadre des masses limites de chargement",
+        "Additonal-load-limit-panel": "Complément Cadre des masses limites pour le chargement",
+        "Vehicle-number": "Numéro de wagon:",
+        "Technical-attibuts": {
+            "International-freightWagon-class": "Code de catégorie (int.):",
+            "National-freightWagon-class": "Code de catégorie (nat.):",
+            "Type-of-construction": "Type de wagon:",
+            "Intermodal-relevant": "Forte demande:",
+            "Tare-weight": "Poids du wagon (kg):",
+            "Length-over-buffers": "Longueur hors tampons (m):",
+            "Maximum-speed-loaded": "Vitesse maximale à l'état chargé (km/h):",
+            "Maximum-speed-empty": "Vitesse maximale à vide (km/h):"
+        },
+        "Current-state": {
+            "Suitable-for-running": "Aptitude à circuler:",
+            "Vehicle-keeper-code": "Numéro de détenteur de wagons:",
+            "Vehicle-keeper-marking": "Désignation abrégée du détenteur de wagons:"
+        },
+        "Damage": {
+            "Damage-type": "Code de dommage:",
+            "Damage-cause-code": "Description des défauts:"
+        },
+        "Revision": {
+            "Date-next-revision": "Délai de révision:"
+        },
+        "Load-limit-pattern": {
+            "Country-code": "Pays:",
+            "Y-Type": {
+                "Line-category": "Catégorie de ligne:",
+                "X-Type": {
+                    "Speed-limit": "Classe de vitesse:",
+                    "Asterisks": "Astérisque:"
+                }
+            }
+        }
+    },
+    "common": {
+        "components": {
+            "multiSelect": {
+                "error": "Erreur lors du chargement",
+                "search": "Recherche",
+                "select": "Sélectionner",
+                "noDataAvailable": "Aucune donnée disponible"
+            },
+            "form": {
+                "button": {
+                    "close": "Fermer",
+                    "cancel": "Annuler",
+                    "send": "Envoyer"
+                }
+            },
+            "overview": {
+                "button": {
+                    "loadMore": "Charger plus"
+                },
+                "link": {
+                    "showAll": "Afficher tout",
+                    "resetAllFilters": "Réinitialiser tous les filtres"
+                },
+                "results": "Entrées ({{resultsCount}})",
+                "activeFilters": "{{activeFiltersCount}} filtres actifs",
+                "resetAllFilters": "Réinitialiser tous les filtres",
+                "resultsOf": "{{resultsCount}} sur {{totalResultsCount}}",
+                "resultCountExceeds": "Veuillez noter qu’un maximum de 10 000 enregistrements peuvent être exportés et ajustez les filtres en conséquence.",
+                "downloadHint": "Le téléchargement peut démarrer avec un retard selon le nombre de filtres."
+            }
+        }
+    },
+    "Shared": {
+        "Of": "of",
+        "Country": "Land",
+        "Payment-transfer": "Überweisung",
+        "Payment-prepayed": "Freibetrag",
+        "Close-dialog": "Dialog schließen",
+        "Loading-state-empty": "Vide",
+        "Loading-state-loaded": "Chargé",
+        "Confirm": "Bestätigen",
+        "Train-Chain": "Trainchain",
+        "Next-label": "Next",
+        "New-order-button-label": "New order",
+        "Weekly-monthly-programm-button-label": "Weekly/Montly program (.xml)",
+        "New-order-header": "New order",
+        "Search-button-label": "Search",
+        "Reset-button-label": "Reset",
+        "Sort-by-label": "Sort by...",
+        "Primary-sort-label": "Primary sorting",
+        "Secondary-sort-label": "Secondary sorting",
+        "Items-pro-page-label": "Items pro page",
+        "Results-label": "Results",
+        "Date-label": "Date",
+        "Date-time-label": "Date / Time",
+        "Location-label": "Location",
+        "Hour-label": "Hour",
+        "Event-label": "Event",
+        "Today-label": "Today",
+        "Monday-label": "Monday",
+        "Tuesday-label": "Tuesday",
+        "Wednesday-label": "Wednesday",
+        "Thursday-label": "Trsday",
+        "Friday-label": "Friday",
+        "Saturday-label": "Saturday",
+        "Sunday-label": "Sunday",
+        "Minute-short-label": "MIN",
+        "Cancel-button-label": "Annuler",
+        "Accept-button-label": "Accept",
+        "Send-button-label": "Send",
+        "Next-button-label": "Next",
+        "Back-button-label": "Back",
+        "Save-button-label": "Save",
+        "xmlUpload-button-label": "File upload",
+        "chooseFile": "Choose File",
+        "sendOrder-button-label": "Send order",
+        "Close-button-label": "Close",
+        "Train-details-empty": "Empty run",
+        "Train-details-loaded": "Loaded run",
+        "Train-cancelled": "Train cancelled",
+        "Train-cancelled-pending": "Abbestellung in Prüfung",
+        "Train-storno-cash": "Cancellation fee applies if applicable",
+        "Required-field": "*Required field",
+        "German": "German",
+        "English": "English",
+        "French": "French",
+        "Italian": "Italian",
+        "Polish": "Polish",
+        "Sending-station": "Forwarding yard",
+        "Receiving-station": "Destination yard",
+        "File-upload-success": "Upload success!",
+        "Confirmations": {
+            "Change-Header": "Confirm changes",
+            "Cancel-OrderHeader": "Cancel process",
+            "Cancel-Order": "Do you want to cancel the process?",
+            "Yes": "Yes",
+            "No": "No"
+        },
+        "Error": "Error",
+        "Info": "Information",
+        "Instance": "Reference",
+        "Errors": {
+            "401": "Vous n’êtes pas connecté. Veuillez vous connecter pour continuer.",
+            "403": "Vous n’avez pas l’autorisation d’accéder à cette page.",
+            "404": "La page demandée n’a pas été trouvée.",
+            "Generic": "Une erreur s’est produite. Nous y travaillons déjà. Veuillez réessayer plus tard.",
+            "Filename": "Der Name der Datei muss einen Unterstrich enthalten, der den Namen des Dokuments und die Versionsnummer trennt. Beispiel: Handbuch_1.3.15.pdf",
+            "No-Data": "No data",
+            "Username-exists-error-text": "Username allready exists!",
+            "Groupname-exists-error-text": "Gruppenname existiert bereits für diesen Kunden!",
+            "Customerprofile-not-exists-error-text": "Kundenprofil existiert nicht!",
+            "Field-is-required-error-text": "Field is required",
+            "Field-is-limited-on-1000": "Please note: The field is limited to 1000 characters!",
+            "Field-is-notFound-error-text": "ungültige Eingabe.",
+            "Field-is-phone-error-text": "Telefon-Nr. hat kein gültiges Format.",
+            "Field-is-email-error-text": "E-Mail Adresse hat kein gültiges Format.",
+            "Natural-number-error-text": "Should be a natural number",
+            "More-than-zero-error-text": "Should be more than 0",
+            "Max-date-error-text": "Date should not be later 31.12.2100",
+            "Min-date-error-text": "Versanddatum darf nicht in der Vergangenheit liegen",
+            "Should-be-less-than": "Der neue Wert muss geringer als {{ num }} sein",
+            "No-reduction-of-wagons-nor-weight": "Es wurde weder Anzahl Wagen noch Gewicht reduziert",
+            "Stations-autocomplete-error-text": "There is no such station",
+            "Earliest-handover-before-latest-handover-error-text": "Earliest handover should be before latest handover",
+            "Earliest-handover-before-earliest-delivery-error-text": "Die früheste Zustellung muss nach der frühesten Übergabe liegen",
+            "Earliest-delivery-before-latest-delivery-error-text": "Earliest delivery should be before latest delivery",
+            "Earliest-handover-before-shipmentDate-error-text": "Das Versanddatum muss vor der frühesten Zustellung liegen",
+            "Incorrect-date-error-text": "Invalid Date",
+            "date-from-before-date-to": "Zeitraum (Von) muss vor Zeitraum (Bis) liegen",
+            "Valid-until-before-valid-from-error-text": "Valid until should be after valid from",
+            "General-technical-error": "Sehr geehrter Kunde, es ist ein technischer Fehler aufgetreten. Bitte kontaktieren Sie den Support per E-Mail oder Telefon.",
+            "Month-program-file-wrong": "Fehlerhaftes Wochen-/Monatsprogramm",
+            "NoProfileFound": "kein Profil gefunden!",
+            "TOMGroup-Missing": "TOM-Gruppe fehlt!",
+            "Role-Missing": "mind. 1 Rolle fehlt!",
+            "no-data": "No data found",
+            "check-input": "Check input",
+            "fetch-user-manual": "Das Benutzerhandbuch konnte nicht geladen werden",
+            "fetch-release-notes": "Die Release notes konnten nicht geladen werden",
+            "download-file": "Die Datei konnte nicht heruntergeladen werden",
+            "no-files": "Es konnten keine Dateien gefunden werden",
+            "Invalid-number": "Bitte geben Sie einen numerischen Wert ein.",
+            "Max-length": "Die Zeichenkette darf nicht länger als {{ num }} Zeichen sein.",
+            "Min-length": "La valeur ne doit pas être inférieure à {{ num }} caractères."
+        },
+        "Load-more-button-label": "Mehr laden",
+        "Admin-label": "Administrator",
+        "Customerservice-label": "Kundenservice",
+        "Customerservice-Templates-label": "KS Vorlagen",
+        "Customer-label": "Besteller",
+        "Sender-label": "Versender",
+        "Receiver-label": "Empfänger",
+        "ADM": "Administrator",
+        "CS": "Kundenservice",
+        "CST": "KS Vorlagen",
+        "ORD": "Besteller",
+        "SDR": "Versender",
+        "REC": "Empfänger",
+        "Role-Header": "Rollen anpassen",
+        "SuitableForRunnigType": {
+            "Fully-operational": "0 - Uneingeschränkt lauffähig",
+            "Immediate-repair-needed": "1 - Sofort aussetzen zur Reparatur",
+            "Immediate_unloading-needed": "2 - Sofort aussetzen - zurechtladen",
+            "Limited-operational-mws": "3 - Begrenzt lauffähig – MWS",
+            "Must-not-be-moved": "4 - Darf nicht bewegt werden",
+            "Limited-operational": "5 - Begrenzt lauffähig",
+            "Restricted-operational": "6 - Eingeschränkt lauffähig"
+        },
+        "RailorderStatus": {
+            "CLOSED": "F - Fermé",
+            "ACTIVE": "A - Actif",
+            "SUBMITTED": "P - Prêt",
+            "CANCELLED": "U - Supprimé",
+            "ACCEPTED": "V - Préconstitué",
+            "CAPTURED": "Z - Mémorisé temporairement",
+            "INVALID": "Invalide"
+        },
+        "RailorderInternalStatus": {
+            "WAITING": "En position d'attente",
+            "TRANSMITTED": "a été transmis",
+            "EXPIRED": "Commande expirée",
+            "CAPTURED": "Dans la mémoire tampon",
+            "ACCEPTED": "Commandé",
+            "DRAFT": "Projet saisi",
+            "SUBMITTED": "Prêt",
+            "ACTIVE": "Actif",
+            "CLOSED": "Fermé",
+            "CANCELLED": "Supprimé",
+            "INVALID": "Invalid",
+            "CANCELLED-download": "Supprimé",
+            "TRANSMITTED-download": "a été transmis"
+        },
+        "WagonTrackingEventType": {
+            "LOCATION_CHANGE": "Changement de lieu",
+            "ACTIVATION": "Activation",
+            "DEPARTURE": "Départ",
+            "PASSTHROUGH": "Passage",
+            "ARRIVAL": "Arrivée",
+            "COMPLETION": "Accomplissement",
+            "HANDOVER": "Remise",
+            "TAKEOVER": "Prise en charge",
+            "FORCEDCOMPLETION": "Achèvement forcé",
+            "PARKING": "Statut du plan de transport garé",
+            "PRENOTIFICATION": "Hermes30-Prénotification",
+            "LOADING": "Chargement",
+            "UNLOADING": "Déchargement",
+            "TRANSPORTSTART": "Démarrage du transport",
+            "SHOCK": "Choc"
+        }
+    }
+}

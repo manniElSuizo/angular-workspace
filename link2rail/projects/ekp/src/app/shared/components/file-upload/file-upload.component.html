@@ -1,0 +1,32 @@
+<header class="modal-header">
+    <h3 class="elm-headline">
+      <strong>{{'Shared.Weekly-monthly-programm-button-label' | translate}}</strong>
+    </h3>
+  </header>
+  <main class="modal-main">
+    <form>
+      <div>
+        <div>
+            <div style="padding-left: 24px;">
+                <span>
+                    <label for="file-upload" class="custom-file-upload"  >
+                        <i data-icon="upload" data-icon-variant="24-outline"></i>
+                    </label>
+                    <small style="padding-left: 8px;">{{fileName || 'Shared.chooseFile' | translate}}</small>
+                    <input id="file-upload" type="file" (change)="onFileSelected($event)" #fileUpload>
+                </span>
+            </div>
+            <div class="border"></div>
+            <div class="button-group">
+                <input id="uploadButton" class="elm-button" data-variant="primary" type="button" value="{{'Shared.xmlUpload-button-label' | translate}}" (click)="uploadFile($event)" disabled>
+                <button class="elm-button" data-variant="secondary" type="button" mat-dialog-close>
+                    {{'Shared.Cancel-button-label' | translate}}
+                </button>
+            </div>
+        </div>
+        <div class="elm-progress" *ngIf="loadingInProgress">
+            <progress id="progress-label-07"></progress>
+        </div>
+      </div>
+    </form>
+  </main>

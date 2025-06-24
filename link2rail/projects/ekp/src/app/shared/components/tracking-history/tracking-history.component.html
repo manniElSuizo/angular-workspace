@@ -1,0 +1,207 @@
+<header class="modal-header">
+    <span id="testId">{{ 'Order-view-page.Tracking-history-page.Tracking-history-header' | translate }}</span>
+    <h2 *ngIf="data && !isTrainChain">
+        <strong id="train-id">{{ selectedTrain?.trainNumber }} | </strong> <span id="from-to"> {{ toUpperOptionalString(stationFrom?.name) }} -
+        {{ toUpperOptionalString(stationTo?.name) }}</span>
+    </h2>
+    <div *ngIf="data && isTrainChain" style="width: 100%">
+        <h2>
+            <svg class="icon">
+                <use xlink:href="assets/icons/icons.svg#chain"/>
+            </svg>&nbsp;
+            <ng-container *ngIf="has_permission_read_tracking">
+                <strong id="train-id">{{ getTrainNumbersAsCSV() }} | </strong> <span id="from-to">{{ fromToTrainChain }}</span>
+            </ng-container>
+            <ng-container *ngIf="!has_permission_read_tracking">
+                <strong id="train-id">{{ getTrainNumbersFromTrainDetailsAsCSV() }}</strong>
+            </ng-container>
+        </h2>
+    </div>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+<div class="cmp-tab-bar" role="tablist">
+    <ng-container *ngIf="has_permission_read_tracking">
+        <input type="radio" name="cmp-tab-bar-tracking" id="tracking-history" checked [tabIndex]="0">
+        <label for="tracking-history" role="tab">{{'Order-view-page.Tracking-history-page.PLAN_CURRENT_TIME' | translate}}</label>
+        <section id="content_tracking" role="tabpanel" [style.padding-top]="0" >
+		    <div class="flex-row">
+                <div class="history-control-block">
+                    <h4>{{ 'Order-view-page.Tracking-history-page.Schedule-label' | translate }}</h4>
+                    <div class="flex-column">
+                        <div class="flex-row">
+                            <input type="radio" [ngModel]="viewState" class="elm-radio" id="daily_schedule" checked value="DAILY_SCHEDULE" (click)="selectTimetableDaily()">
+                            <label class="elm-label" for="daily_schedule">{{ 'Order-view-page.Tracking-history-page.Daily-schedule-radio-button-label' | translate }}</label>
+                        </div>
+                        <div class="flex-row" style="margin: 0.5em 0 0 0">
+                            <input type="radio" [ngModel]="viewState" class="elm-radio" id="yearly_schedule" value="YEARLY_SCHEDULE" (click)="selectTimetableYearly()">
+                            <label class="elm-label" for="yearly_schedule">{{ 'Order-view-page.Tracking-history-page.Yearly-schedule-radio-button-label' | translate }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="trackingHistory?.manualEta" class="flex-column">
+                    <div style="height: 1em; padding: 0px; ">                
+                        &nbsp;
+                    </div>
+                    <div class="flex-column" style="margin: 0.5em 0 0 1em;  padding: 0.5em 0.5em 3.5em 0.5em;">
+                        <div style="font-weight: bold" >{{ 'Order-view-page.Tracking-history-page.Manual-eta-label' | translate }}</div>
+                        <div style="margin-top: 0.5em;">{{(trackingHistory?.manualEta | dateTime)}}</div>
+                    </div>
+                    <div style="height: 2em; padding: 0px; ">
+                        &nbsp;
+                    </div>
+                </div>
+                
+                <div *ngIf="trackingHistory?.parked" class="flex-column">
+                    <div style="height: 1em; padding: 0px; ">
+                        &nbsp;
+                    </div>
+                    <div class="flex-column" style="margin: 0.5em 0 0 1em; padding: 0.5em 0.5em 0 0.5em;">
+                        <div style="font-weight: bold" >{{ 'Order-view-page.Tracking-history-page.Parked-label' | translate }}</div>
+                        <div>
+                            <svg width="20%" hight="20%" viewBox="0 0 5 5">
+                                <use xlink:href="assets/icons/icons.svg#train-parked" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div style="height: 0em; padding: 0px; ">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <span class="modal-tab">
+                <div class="history-table-block">
+                    <table class="cmp-table list-table" [style.padding-top]="0" >
+                        <thead>
+                            <tr>
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Event-table-header' | translate }}</th>
+                                <th *ngIf="isTrainChain" scope="col" id="train-number-header">{{ 'Order-view-page.Train-number-label' | translate }}</th>
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Location-table-header' | translate }}</th>
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Planned-time-table-header' | translate }}</th>
+                                
+                                <th scope="col">
+                                    <div>
+                                        {{ 'Order-view-page.Tracking-history-page.Real-time-table-header' | translate }}
+                                        <span class="sort-icons-block" (click)="sortTable()">
+                                            <div class="sort-descending"
+                                                [class.active-sort]="sortConditions?.asc && sortConditions?.field === 'realTime'"></div>
+                                            <div class="sort-ascending"
+                                                [class.active-sort]="!sortConditions?.asc && sortConditions?.field === 'realTime'"></div>
+                                        </span>
+                                    </div>
+                                </th>
+                                
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Relative-position-table-header' | translate }}</th>
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Delay-reason-table-header' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let event of schedule; let i = index;">
+                                <tr>
+                                    <td *ngIf="isPrePostEvent(event)" [attr.colspan]="isTrainChain ? 3 : 2">
+                                        <div class="flex-row">
+                                            <ng-container>
+                                                <div class="icon first-event" *ngIf="i == 0">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#start" /></svg>
+                                                </div>
+                                                <div class="icon" *ngIf="(i < schedule.length - 1 && i !== 0)">
+                                                    <svg viewBox="0 0 25 25">
+                                                        <use xlink:href="assets/icons/icons.svg#stop" />
+                                                    </svg>
+                                                </div>
+                                                <div class="icon last-event" *ngIf="i == schedule.length - 1 ">
+                                                        <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#destination" /></svg>
+                                                </div>
+                                            </ng-container>
+                                            <span>{{'Order-view-page.Tracking-history-page.' + event.event | translate}} ({{'Order-view-page.Tracking-history-page.' + event.eventGroup | translate}})</span>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="!isPrePostEvent(event)" class="flex-td">
+                                        <div class="flex-row">
+                                            <ng-container  *ngIf="sortConditions?.asc">
+                                                <div class="icon first-event" *ngIf="i == 0 && event.event == 'DEPARTURE'">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#start" /></svg>
+                                                </div>
+                                                <div class="icon" *ngIf="(i < schedule.length - 1 && i !== 0) || (i == schedule.length - 1 && event.event !== 'ARRIVAL')">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#stop" /></svg>
+                                                </div>
+                                                <div class="icon last-event" *ngIf="i == schedule.length - 1 && event.event == 'ARRIVAL'">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#destination" /></svg>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container  *ngIf="!sortConditions?.asc">
+                                                <div class="icon first-event" *ngIf="i == 0 && event.event == 'ARRIVAL'">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#destination" /></svg>
+                                                </div>
+
+                                                <div class="icon" *ngIf="(i < schedule.length - 1 && i !== 0) || (i == schedule.length - 1 && event.event !== 'DEPARTURE')">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#stop" /></svg>
+                                                </div>
+                                                <div class="icon last-event" *ngIf="i == schedule.length - 1 && event.event == 'DEPARTURE'">
+                                                    <svg viewBox="0 0 25 25"><use xlink:href="assets/icons/icons.svg#start" /></svg>
+                                                </div>
+                                                
+                                            </ng-container>
+                                            <span  [ngClass]="event.event == 'DEPARTURE' || event.event == 'ARRIVAL' ? 'first-event' : ''">{{ 'Order-view-page.Tracking-history-page.' + event.event | translate }}</span>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="isTrainChain && !isPrePostEvent(event)">{{ event.trainNumber }}</td>
+                                    <td *ngIf="!isPrePostEvent(event)">{{ toUpperOptionalString(event.location?.name) }}</td>
+                                    <td class="planned-departure-col">{{ (event.scheduleDateTime | dateTime) }}</td>
+                                    <td>{{ event.eventDateTime | dateTime }}</td>
+                                    <td *ngIf="event.scheduleDelta && event.scheduleDelta < 15" class="green">{{ event.scheduleDelta }} {{ 'Shared.Minute-short-label' | translate }}</td>
+                                    <td *ngIf="event.scheduleDelta && event.scheduleDelta >= 15" [ngClass]="event.scheduleDelta < 60 ? 'yellow': 'red'">{{ event.scheduleDelta }} {{ 'Shared.Minute-short-label' | translate }}</td>
+                                    <td *ngIf="!event.scheduleDelta && (event.scheduleDateTime | dateTime) == (event.eventDateTime | dateTime)" class="green">0 {{ 'Shared.Minute-short-label' | translate }}</td> 
+                                    <td *ngIf="!event.scheduleDelta && !event.eventDateTime"></td>
+                                    <td>{{ event.delayReason  }}</td>  
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </span>
+		</section>
+    </ng-container>
+    <ng-container *ngIf="remarkList.length > 0 && has_permission_read_train_details" >
+        <ng-container *ngIf="has_permission_read_tracking">
+            <input type="radio" name="cmp-tab-bar-tracking" id="remarks" tabindex="1"> 
+        </ng-container>
+        <ng-container *ngIf="!has_permission_read_tracking">
+            <input type="radio" name="cmp-tab-bar-tracking" id="remarks" checked tabindex="0"> 
+        </ng-container>
+        <label for="remarks" role="tab">{{'Order-view-page.Tracking-history-page.REMARKS' | translate}}</label>
+        <section id="content_remarks" role="tabpanel">
+            <span class="modal-remark">
+                <div class="history-table-block">
+                    <table class="cmp-table" [style.padding-top]="0">
+                    <thead>
+                        <tr>
+                            <ng-container *ngIf="trainChain">
+                                <th scope="col">{{ 'Order-view-page.Tracking-history-page.Train-number' | translate }}</th>
+                            </ng-container>
+                            <th scope="col">{{ 'Order-view-page.Tracking-history-page.DATE_TIME' | translate }}</th>
+                            <th scope="col">{{ 'Order-view-page.Tracking-history-page.COMMENT' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor= "let remark of remarkList; let i = index;">
+                            <tr>
+                                <ng-container *ngIf="trainChain">
+                                    <td class="td-remark">{{remark.trainNumber}}</td>
+                                </ng-container>
+                                <td class="td-remark">{{remark.dateTime}}</td>
+                                <td class="td-remark">{{remark.remark}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    </table>
+                </div>
+            </span>
+        </section>
+    </ng-container>
+</div>
+</main>

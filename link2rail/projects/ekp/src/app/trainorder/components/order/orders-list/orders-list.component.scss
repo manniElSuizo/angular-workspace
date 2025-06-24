@@ -1,0 +1,253 @@
+@use 'color';
+
+.order-underline {
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+        color: #5d616a;
+    }
+}
+
+.list-table {
+    cursor: default;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 8%), 0 5px 30px 0 rgb(0 0 0 / 5%);
+
+    th:first-of-type {
+        min-width: 54px;
+      }
+    th:nth-last-child(3) {
+        min-width: 115px;
+    }
+
+    th:nth-last-child(4) {
+        min-width: 117px;
+    }
+
+    th:last-of-type {
+        min-width: 50px;
+    }
+
+    tbody {
+        .white-row {
+            background-color:color.$white-color;
+            &:hover {
+                background-color: #D7DCE1;
+            }
+        }
+
+        & > tr:not(.white-row) {
+            &:hover {
+                background-color:  #D7DCE1;
+            }
+            background-color:color.$background-grey-color;
+        }
+
+        .order-row td {
+            // padding: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 0;
+            div {
+                padding: 12px 16px 12px 10px;
+            }
+        }
+    }
+
+    .icons-block {
+        .cmp-dropdown {
+            display: inline-flex;
+        }
+
+        .cmp-dropdown summary::before {
+            --icon-glyph: '';
+        }
+
+        .disruption {
+            position: absolute;
+            top: 10px;
+            left: 19px;
+            height: 14px;
+            width: 14px;
+        }
+
+        summary::before {
+            background-color: rgba(0, 106, 150, 0.01);
+            padding: 0;
+            transform: translate(2px, -4px);
+        }
+
+        .cmp-overflow-menu {
+            display: inline-flex;
+        }
+
+        .cmp-dropdown menu {
+            margin: 0;
+            right: 100%;
+        }
+
+        .cmp-dropdown menu li button{
+            min-width: 270px;
+            overflow: visible;
+            display: block;
+            cursor: pointer;
+        }
+    }
+}
+
+.train-row {
+    display: none;
+    td {
+        background-color:color.$white-color;
+        padding-bottom: 0;
+    }
+}
+
+.train-row-show {
+    display: table-row;
+    animation: fade_in_show 0.5s;
+}
+
+.arrow {
+    text-align: right;
+    border-left: 4px solid transparent;
+    svg {
+        transform: rotate(0);
+        transition: all ease-in-out 0.3s;
+        z-index: 1;
+    }
+}
+
+.arrow-up {
+    fill: #0087b9;
+    border-left: 4px solid #0087b9;
+
+    svg {
+        transform: rotate(-90deg);
+    }
+}
+
+.deactivated-arrow {
+    opacity: 0;
+
+    .icon {
+        cursor: default;
+    }
+}
+
+.blue-border {
+    border-left: 4px solid #0087b9;
+}
+
+@keyframes fade_in_show {
+    0% {
+            opacity: 0;
+            transform: all ease-in-out
+    }
+
+    100% {
+            opacity: 1;
+            transform: all ease-in-out
+    }
+}
+
+.trains-sub-table {
+    margin-left: 51px;
+    th {
+        border: none;
+        font-weight: bold;
+        padding: 8px 20px 7px 20px;
+
+        &:first-of-type {
+
+            & > div {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            small {
+                font-weight: normal;
+            }
+        }
+
+    }
+
+    tr {
+        background:color.$white-color;
+
+        td:first-of-type {
+            min-width: 140px;
+        }
+    }
+    th, td {
+        border-bottom: 1px solid #282d3733;
+        padding: 20px;
+    }
+
+    .arrow-right-corner {
+        fill: #ec0016;
+    }
+}
+
+.controls-filter {
+    display: flex;
+    width: 1795px;
+    justify-content: space-between;
+    margin-bottom: 35px;
+
+    div i {
+      margin-left: 5px;
+    }
+  }
+
+.controls-block {
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-end;
+    padding: 10px 13px 10px 0px;
+
+    h3 {
+      margin: 0;
+    }
+
+    div {
+      margin: 5px 10px;
+
+      select {
+        min-width: 150px;
+        max-width: 250px;
+      }
+    }
+
+    .sort-block {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-end;
+
+        i {
+          margin-bottom: 5px;
+        }
+      }
+
+      .download-block * {
+        cursor: pointer;
+      }
+}
+
+.header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.elm-button {
+    font-weight: bold;
+}
+
+section {
+    margin: 15px 16px 16px;
+    padding: 30px 18px 30px 30px;
+    background-color:color.$white-color;
+    box-shadow: 1px 1px 3px rgba(color.$black-color, 0.3);
+}

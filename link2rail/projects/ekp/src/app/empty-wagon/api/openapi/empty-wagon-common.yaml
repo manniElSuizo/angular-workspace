@@ -1,0 +1,226 @@
+components:
+  schemas:
+    CommercialLocation:
+      type: object
+      description: Commercial location information
+      properties:
+        countryCodeUic:
+          type: string
+          description: Numerical identifier of the country.
+          example: "80"
+          maxLength: 2
+        countryCodeIso:
+          type: string
+          description: ISO code of the country.
+          example: "80"
+          maxLength: 2
+        number:
+          type: string
+          description: Numerical identifier.
+          example: "101196"
+          maxLength: 6
+        owner:
+          type: string
+          example: "2180"
+          description: Identifier of the owner.
+          maxLength: 4
+          default: "2180"
+        name:
+          type: string
+          example: "Location name"
+          description: name.
+          maxLength: 255
+      required:
+        - countryCodeUic
+        - number
+        - owner
+    CustomerInformation:
+      type: object
+      properties:
+        sgvId:
+          type: string
+          description: Identifier of the customer.
+          example: "4788"
+          maxLength: 10
+        sgvName:
+          type: string
+          description: Name of the customer.
+          example: "Covestro Deutschland AG"
+        partnerId:
+          type: string
+          description: Identifier of the company location.
+          example: "1000976"
+          maxLength: 8
+        partnerName:
+          type: string
+          description: Name of the company location.
+          example: "Werk Krefeld-Uerdingen"
+
+      required:
+        - sgvId
+        - partnerId
+    FreightWagonLocation:
+      properties:
+        number:
+          type: string
+          description: Freight Location number.
+          example: "0200"
+          maxLength: 4
+        satelliteNumber:
+          type: string
+          example: "63"
+          description: Satellite number of the station
+          maxLength: 2
+        name:
+          type: string
+          example: "Freight wagon location name"
+          maxLength: 255
+      required:
+        - number
+    DeficiencyReason:
+      type: object
+      properties:
+        location:
+          type: string
+          description: Location name
+        numberOfWagon:
+          type: number
+          description: number of wagon
+          maximum: 999.9
+          multipleOf: 0.1
+    DemandLocation:
+      type: object
+      properties:
+        commercialLocation:
+          $ref: "#/components/schemas/CommercialLocation"
+        freightWagonLocation:
+          $ref: "#/components/schemas/FreightWagonLocation"
+      required:
+        - commercialLocation
+    DemandType:
+      type: object
+      properties:
+        maxOrderAmount:
+          type: integer
+          format: int32
+          description: Maximum amount of wagons that can be ordered of this demand type.
+          example: 3
+        assessment:
+          type: boolean
+          description: States whether a manual assessment of the request must occur in any case.
+          example: true
+        shipperAuthorization:
+          type: boolean
+        commentCustomer:
+          type: string
+          minLength: 1
+          maxLength: 200
+        referenceNumber:
+          type: string
+          minLength: 1
+          maxLength: 50
+        demandWagonType:
+          $ref: '#/components/schemas/DemandWagonType'
+        nhm:
+          $ref: '#/components/schemas/NHM'
+        loadRunLocation:
+          $ref: '#/components/schemas/CommercialLocation'
+        transitRailwayUndertaking:
+          $ref: '#/components/schemas/TransitRailwayUndertaking'
+      required:
+        - demandWagonType
+    DemandWagonType:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Wagon type code of the ordered wagon.
+          example: "2180"
+          maxLength: 4
+        number:
+          type: string
+          description: Wagon type number of the ordered wagon.
+          example: "18301"
+          maxLength: 5
+        name:
+          type: string
+          description: The name of the Wagon type.
+          example: 'Hbbi 306'
+          maxLength: 50
+      required:
+        - number
+    NHM:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The NHM code.
+          example: '000105'
+          maxLength: 6
+        description:
+          type: string
+          description: The description corresponding to the NHM code.
+          example: 'Hausgeflügel (lebend)'
+      required:
+        - code
+    StatusHistory:
+      type: object
+      description: status information
+      properties:
+        status:
+          $ref: "#/components/schemas/Status"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2018-12-12T09:37:42Z"
+    Status:
+      type: string
+      enum:
+        - CANCELED
+        - CREATED
+        - DISPATCHED
+        - DRAFT
+        - DRAFT_REMOVED
+        - IN_PROCESS
+        - IS_TRANSMITTED
+        - PARTIAL_CANCELLATION
+        - REJECTED
+        - TRANSMITTED
+        - TRANSMIT_FAILED
+    TransitRailwayUndertaking:
+      type: object
+      properties:
+        companyCode:
+          type: string
+          description: The transit railway undertaking identifier of the company responsible for the load run.
+          example: '2181'
+          maxLength: 4
+        companyName:
+          type: string
+          description: The transit railway undertaking name of the company responsible for the load run.
+          example: 'Rail Cargo Austria AG'
+          maxLength: 100
+      required:
+        - companyCode
+    Wagon:
+      type: object
+      properties:
+        wagonNumber:
+          type: string
+          description: Number of assigned wagon.
+          example: '318046752206'
+        internationalFreightWagonClass:
+          type: string
+          description: Letter marking describing type ("Wagengattung") of assigned wagon.
+          example: "Shimmnsttu"
+        typeOfConstruction:
+          type: string
+          description: Type of construction ("Bauart") of assigned wagon.
+          example: "722"
+    IdNameType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

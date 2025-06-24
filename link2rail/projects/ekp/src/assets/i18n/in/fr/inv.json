@@ -1,0 +1,30 @@
+{
+  "inv": {
+    "invoice": {
+      "overview": {
+        "title": "Vue de la facture",
+        "filter": {
+          "dateFrom": "Date (de)",
+          "dateTo": "Date (à)",
+          "debitorNumber": "Numéro de débiteur",
+          "invoiceNumber": "Numéro de facture"
+        },
+        "table": {
+          "header": {
+            "invoiceNumber": "Numéro de facture",
+            "invoiceDate": "Date de la facture",
+            "referenceInvoiceNumber": "Réf. numéro de facture",
+            "recipientCompany": "Nom commercial",
+            "debitorNumber": "Numéro de débiteur",
+            "dueDate": "Échéances",
+            "currency": "Unité monétaire",
+            "netAmount": "Montant Net",
+            "vatAmount": "Montant de la T.V.A.",
+            "grossAmount": "Montant brut",
+            "link": "Lien PDF"
+          }
+        }
+      }
+    }
+  }
+}

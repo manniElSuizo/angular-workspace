@@ -1,0 +1,145 @@
+<div class="dialog-container">
+  <header class="modal-header-sticky">
+    <h2>{{ 'New-order.Wagon-information.Label.Import-wagon-information' | translate }}</h2>
+    <a class="close-icon" title="{{'New-order.Main.Tooltip.Close-dialog-label' | translate}}" (click)="closeDialog()"
+      mat-dialog-close>
+      <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+        <use xlink:href="assets/icons/icons.svg#close" />
+      </svg>
+    </a>
+  </header>
+
+  <main id="main-part">
+    <section id="section-input" class="input-container">
+      <div>
+        <b>{{ 'New-order.Wagon-information.Label.Import-wagon-wagon-data' | translate }}:</b>
+      </div>
+
+      <form [formGroup]="importForm" style="width: 100%;">
+        <div id="import-text-container" class="flex-row import-text-container">
+          <textarea class="elm-textarea import-text" id="importText" formControlName="importWagonText"
+            placeholder="{{ 'New-order.Wagon-information.Label.Import-wagon-wagon-data' | translate }}"
+            aria-labelledby="import-text-label">
+          </textarea>
+        </div>
+      </form>
+
+      <div id="section-button" class="button-container">
+
+        <db-button id="delete-import-text" button-name="delete-import-text" class="elm-button button-style"
+          style="background-color: #282d37; color: white; height: 40px;" type="button"
+          title="{{ 'New-order.Wagon-information.Label.Import-wagon-button-delete' | translate }}" variant="primary" (click)="deleteImportText()">
+          {{ 'New-order.Wagon-information.Label.Import-wagon-button-delete' | translate }}
+        </db-button>
+
+        <db-button id="start-import" button-name="start-import" class="elm-button button-style"
+          style="background-color:  #282d37; color: white; height: 40px;" type="button"
+          title="{{ 'New-order.Wagon-information.Label.Import-wagon-start-import' | translate }}" variant="primary"
+          (click)="startImport()">
+          <svg class="icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#upload" />
+          </svg>
+          {{ 'New-order.Wagon-information.Label.Import-wagon-start-import' | translate }}
+        </db-button>
+      </div>
+    </section>
+    <section id="errors" *ngIf="importedWagonInformation?.length > 99" class="error-message">
+      {{'New-order.Errors.Import-wagoncount-high' | translate}}
+    </section>
+    <section id="import-table" class="table-container">
+      <div class="table-wrapper">
+        <table class="list-table fixed-table">
+          <thead class="table-header">
+            <tr>
+              <ng-container *ngFor="let header of tableHeaders">
+                <th scope="col"
+                    [style.width]="header.minWidth"
+                    [style.text-align]="header.textAlign"
+                    [title]="header.headerText">
+                  <div class="flex-row">
+                    <span>{{ header.headerText }}</span>
+                  </div>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+    
+          <tbody>
+            <tr *ngFor="let row of importedWagonInformation; let i = index">
+              <td>{{ row.rowId + 1 }}</td>
+              <td>{{ row.wagon?.wagonNumber | wagonNumber }}</td>
+              <td>{{ row.wagon?.goods?.[0]?.weight }}</td>
+              <td class="text-ellipsis" [style.white-space]="'pre-line'" [title]="row.wagon?.goods?.[0]?.additionalDescription">
+                {{ row.wagon?.goods?.[0]?.additionalDescription }}
+              </td>
+    
+              <!-- NHM Code with Tooltip -->
+              <td class="tooltip pointer">
+                <div class="tooltip-container">
+                  <span class="text-ellipsis" [title]="row?.wagon?.goods[0]?.nhmDescription">
+                    {{ row?.wagon?.goods[0]?.nhmCode }} 
+                    {{ row?.wagon?.goods[0]?.nhmDescription?.length > 15 ? (row?.wagon?.goods[0]?.nhmDescription.slice(0,15) + '...') : row?.wagon?.goods[0]?.nhmDescription }}
+                  </span>
+                  <span *ngIf="row?.wagon?.goods[0]?.nhmDescription?.length > 15" class="tooltiptext">
+                    {{ row?.wagon?.goods[0]?.nhmDescription }}
+                  </span>
+                </div>
+              </td>
+
+              <!-- Loading State -->
+              <ng-container *ngIf="row.wagon?.loadingStatus !== null && row.wagon?.loadingStatus !== undefined; else emptyLoadingState">
+                <td>
+                  {{ row.wagon.loadingStatus ? ('Shared.Loading-state-loaded' | translate) : ('Shared.Loading-state-empty' | translate) }}
+                </td>
+              </ng-container>
+              
+              <ng-template #emptyLoadingState>
+                <td></td>
+              </ng-template>
+              
+              <!-- MRN-->
+              <td  class="tooltip pointer">
+                <div class="tooltip-container">
+                  <span class="text-ellipsis" [title]="getMrnSubType(row.wagon)">
+                {{ getMrnSubType(row.wagon) }}
+              </span>
+              </div>
+              </td>
+              <td>{{ getMrnIdentifier(row.wagon) }}</td>
+    
+              <!-- Validation Errors Tooltip -->
+              <td class="tooltip pointer" *ngIf="hasValidationErrors(i.toString()) ">
+                <div class="tooltip-container">
+                  <img src="assets/icons/Warning_Orange.svg" class="warning-icon" alt="Warning" />
+                  <span class="tooltiptext">
+                    {{ getErrorText(i) }}
+                  </span>
+                </div>
+              </td>
+              <td *ngIf="!hasValidationErrors(i.toString())"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section id="button-footer" class="button-footer">
+      <db-button id="canel-import-dialog" class="elm-button button-style"
+        style="background-color: transparent  ; color:#282d37" type="button" (click)="closeDialog()"
+        title="{{ 'New-order.Wagon-information.Label.Import-wagon-button-cancel' | translate }}" button-name="cancel-import-dialog">
+
+        {{ 'New-order.Wagon-information.Label.Import-wagon-button-cancel' | translate }}
+
+      </db-button>
+      <db-button id="accept-import" 
+        class="elm-button button-style" 
+        variant="brand-primary" 
+        type="button" 
+        (click)="confirm()"
+        [disabled]="hasErrorsOrTooManyRows()"
+        title="{{ 'New-order.Wagon-information.Label.Import-wagon-button-accept' | translate }}" button-name="accept-import">
+        {{ 'New-order.Wagon-information.Label.Import-wagon-button-accept' | translate }}
+      </db-button>
+    </section>
+  </main>
+</div>

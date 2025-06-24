@@ -1,0 +1,348 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_PICKUP_DELIVERY">
+    <form [formGroup]="formGroup">
+        <div id="main-col" class="flex-column" >
+
+            <div id="group-1-header" class="flex-row">
+                <h3>{{ 'New-order.Pickup-delivery.Pickup-delivery-group-header' | translate }}</h3>
+            </div>
+            <div id="order-section-header" class="flex-row orderSectionHeader">
+                <label for="pickup"><b>{{ 'New-order.Pickup-delivery.Label.Pickup' | translate }}</b></label>
+            </div>
+
+            <div id="pickup-row-1" class="flex-row fr-100-gap-10" >
+                <div class="fr-flex-1">
+                    <div class="input-field" id="pickupCountry-field" style="width: 100%; padding:0px 10px 0px 0px">
+                        <select id="pickupCountry-select" class="elm-input" name="pickupCountry" style="width: 100%;"
+                            formControlName="pickupCountry" type="text"
+                            title="{{ 'New-order.Pickup-delivery.Placeholder.Pickup-country' | translate }}*"
+                            [class.invalid-input]="pickupCountry?.invalid"
+                            aria-labelledby="pickupCountry-label"
+                            (change)="onChangeCountry($event)">
+                            <option></option>
+                            <option *ngFor="let country of countries$ | async"
+                                [value]="country.uicCountryCode">{{ country | country }}
+                            </option>
+                        </select>
+                        <label id="pickupCountry-label" class="elm-label" for="pickupCountry" aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Pickup-country' | translate}}*
+                        </label>
+                        <ng-container
+                            *ngIf="formGroup.get('pickupCountry').invalid && formGroup.get('pickupCountry').touched">
+                            <small class="input-error" *ngIf="formGroup.get('pickupCountry').errors?.required">{{
+                                'New-order.Errors.Point-of-loading-country-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="pickupStation-div" class="fr-flex-1">
+                    <div id="pickupStation-input-field" class="input-field"
+                        style="padding: 0px 10px 0px 0px; width: 100%;">
+                        <app-el-s-autocomplete
+                                [displayNameTransform]="commercialLocationSummaryPipe.transform"
+                                [formGroup]="formGroup"
+                                [fieldName]="pickupStationFieldName"
+                                [placeholder]="('New-order.Pickup-delivery.Placeholder.Pickup-station' | translate) + '*'"
+                                [title]="('New-order.Pickup-delivery.Placeholder.Pickup-station' | translate) + '*'"
+                                [autocompleteResultList]="commercialLocationSummariesPickupStations"
+                                [otherConfig]="{errorConfig: {errorCondition: pickupStation?.errors?.required, errorText: 'New-order.Errors.Point-of-loading-location-code-missing' | translate}, doNotDedup: true}"
+                                (doRequestSelectionListItems)="loadPickupStations($event)"
+                                (onSelectItem)="onSelectPickupStation($event)">
+                        </app-el-s-autocomplete>
+                        <!-- <ng-container
+                            *ngIf="pickupStation?.errors">
+                            <small class="input-error" *ngIf="pickupStation.errors?.required">
+                                {{'New-order.Errors.Point-of-loading-location-code-missing' | translate }}
+                            </small>
+                        </ng-container> -->
+                    </div>
+                </div>
+                <div id="pickupSealoadingpoint" class="fr-flex-1">
+                    <div id="pickupSealoadingpoint-input-field" class="input-field"
+                        style="padding: 0px 10px 0px 0px; width: 100%;">
+                        <select style="width: 100%;" id="pickupSealoadingpoint-input" class="elm-input" name="pickupSealoadingpoint"
+                            formControlName="pickupSealoadingpoint" type="text"
+                            title="{{'New-order.Pickup-delivery.Placeholder.Pickup-sealoadingpoint' | translate}}"
+                            maxlength="45"
+                            [class.invalid-input]="formGroup.get('pickupSealoadingpoint')?.invalid && formGroup.get('pickupSealoadingpoint')?.touched"
+                            aria-labelledby="pickupSealoadingpoint-label"
+                            (change)="onChangeLoadingPoint($event)">
+                            <option></option>
+                            <option *ngFor="let item of loadingPointsPickupStation" [value]="loadingPointValue(item)">{{ item.name }}</option>
+                        </select>
+                        <label class="elm-label" id="pickupSealoadingpoint-label" for="pickupSealoadingpoint-input"
+                            aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Pickup-sealoadingpoint' | translate}}
+                        </label>
+                        
+                        <ng-container *ngIf="formGroup.get('pickupSealoadingpoint').errors">
+                            <small class="input-error" *ngIf="formGroup.get('pickupSealoadingpoint').errors?.pickupSealoadingpointRequired">{{
+                                'New-order.Errors.Maritime-point-of-loading-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div id="pickup-row-2" class="flex-row fr-100-gap-10">
+                <div id="shippingDate" class="fr-flex-1">
+                    <div id="shippingDate-input-field" class="input-field"
+                        style="width: 100%; padding:0px 10px 0px 0px">
+                        <input id="shippingDate-input" class="elm-input " name="shippingDate"
+                            formControlName="shippingDate" type="date"
+                            placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Shipping-date' | translate }}*"
+                            [class.invalid-input]="formGroup.get('shippingDate')?.invalid && formGroup.get('shippingDate')?.touched"
+                            aria-labelledby="shippingDate-label"
+                            (change)="isShippingDateInPast()"/>
+                        <label class="elm-label" id="shippingDate-label" for="shippingDate-input" aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Shipping-date' | translate}}*
+                        </label>
+                        <ng-container *ngIf="formGroup.get('shippingDate').invalid">
+                            <small class="input-error" *ngIf="formGroup.get('shippingDate').errors?.shippingDateInPast">{{
+                                'New-order.Errors.Bookingtime-in-past' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="formGroup.get('shippingDate').errors?.shippingDateRequired">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                        <ng-container *ngIf="shippingDateInPast && !formGroup.get('shippingDate').invalid">
+                            <small class="input-error">{{ 'New-order.Errors.Orderdate-in-past' | translate }} </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="shippingTime" class="fr-flex-1">
+                    <div id="shippingTime-input-field" class="input-field"
+                        style="width: 100%; padding:0px 10px 0px 0px">
+                        <input id="shippingTime-input" class="elm-input" name="shippingTime"
+                            formControlName="shippingTime" type="time"
+                            placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Shipping-time' | translate }}*"
+                            [class.invalid-input]="formGroup.get('shippingTime')?.invalid && formGroup.get('shippingTime')?.touched"
+                            aria-labelledby="shippingTime-label"
+                            (change)="isShippingDateInPast()" />
+                        <label class="elm-label" id="shippingTime-label" for="shippingTime-input" aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Shipping-time' | translate}}*
+                        </label>
+                        <ng-container *ngIf="formGroup.get('shippingTime').invalid && formGroup.get('shippingTime').touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="formGroup.get('shippingTime').errors?.shippingTimeRequired">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div id="toggle-pickup" class="arrow-div flex-row" (click)="togglePickupLocation()">
+                <span [ngClass]="{'arrow': !isPickupLocationVisible, 'arrow-up': isPickupLocationVisible}" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isPickupLocationVisible"> {{
+                    'New-order.Pickup-delivery.Show-section-details-pickup-location'|translate }}</div>
+                <div class="flex-row show-hide-section" *ngIf="isPickupLocationVisible"> {{
+                    'New-order.Pickup-delivery.Hide-section-details-pickup-location'|translate }}</div>
+            </div>
+            <div *ngIf="isPickupLocationVisible" class="flex-row">
+                <div class="flex-row fr-100-gap-10">
+                    <!-- Zusatzinformation -->
+                    <div id="pickupLocationInfo" class="fr-flex-1">
+                        <div id="pickupLocationInfo-input-field" class="input-field"
+                            style="width: 100%; padding:0px 10px 0px 0px">
+                            <input id="pickupLocationInfo-input" class="elm-input" name="pickupLocationInfo"
+                                formControlName="pickupLocationInfo" type="text"
+                                placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Pickup-location-info' | translate }}"
+                                [class.invalid-input]="formGroup.get('pickupLocationInfo')?.invalid && formGroup.get('pickupLocationInfo')?.touched"
+                                aria-labelledby="pickupLocationInfo-label"
+                                (change)="updateRailOrderFromForm()" />
+                            <label class="elm-label" id="pickupLocationInfo-label" for="pickupLocationInfo-input"
+                                aria-hidden="true" maxlength="45">
+                                {{'New-order.Pickup-delivery.Label.Pickup-location-info' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Übernahmeort Code --> 
+                    <div id="pickupLocationCode" class="fr-flex-1">
+                        <div id="pickupLocationCode-input-field" class="input-field" style="width: 100%; padding: 0px 10px 0px 0px;">
+                            <input id="pickupLocationCode-input" class="elm-input" name="pickupLocationCode"
+                                formControlName="pickupLocationCode" type="text" style="width: 100%;"
+                                placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Pickup-location-code' | translate }}"
+                                [class.invalid-input]="formGroup.get('pickupLocationCode')?.invalid && formGroup.get('pickupLocationCode')?.touched"
+                                aria-labelledby="pickupLocationCode-label" maxlength="15"
+                                (change)="updateRailOrderFromForm()" />
+                            <label class="elm-label" id="pickupLocationCode-label" for="pickupLocationCode-input"
+                                aria-hidden="true">
+                                {{ 'New-order.Pickup-delivery.Label.Pickup-location-code' | translate }}
+                            </label>
+                            <ng-container *ngIf="formGroup.get('pickupLocationCode').invalid && formGroup.get('pickupLocationCode').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="pickupLocationText" class="fr-flex-1">
+                        <div id="pickupLocationText-input-field" class="input-field"
+                            style="width: 100%; padding:0px 10px 0px 0px">
+                            <input id="pickupLocationText-input" class="elm-input" name="pickupLocationText"
+                                formControlName="pickupLocationText" type="text"
+                                placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Pickup-location-text' | translate }}"
+                                [class.invalid-input]="formGroup.get('pickupLocationText')?.invalid && formGroup.get('pickupLocationText')?.touched"
+                                aria-labelledby="pickupLocationText-label" maxlength="35"
+                                (change)="updateRailOrderFromForm()" />
+                            <label class="elm-label" id="pickupLocationText-label" for="pickupLocationText-input"
+                                aria-hidden="true">
+                                {{ 'New-order.Pickup-delivery.Label.Pickup-location-text' | translate }}
+                            </label>
+                            <ng-container *ngIf="formGroup.get('pickupLocationText').invalid && formGroup.get('pickupLocationText').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                    'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-row" style="margin: 20px 0px 0px 0px;" class="orderSectionHeader div-with-100">
+                <label for="pickup"><b>{{ 'New-order.Pickup-delivery.Label.Delivery' | translate }}</b></label>
+            </div>
+            <div id="delivery-row-1" class="flex-row fr-100-gap-10">
+                <div id="deliveryCountry" class="fr-flex-1">
+                    <div class="input-field" id="deliveryCountry-field" style="width: 100%; padding:0px 10px 0px 0px">
+                        <select id="deliveryCountry-select" class="elm-input" name="deliveryCountry"
+                            style="width: 100%;" formControlName="deliveryCountry" type="text"
+                            title="{{ 'New-order.Pickup-delivery.Placeholder.Delivery-country' | translate }}*"
+                            [class.invalid-input]="formGroup.get('deliveryCountry')?.invalid && formGroup.get('deliveryCountry')?.touched"
+                            aria-labelledby="deliveryCountry-label"
+                            (change)="onChangeCountry($event)">
+                            <option></option>
+                            <option *ngFor="let country of countries$ | async"
+                                [value]="country.uicCountryCode">{{ country | country }}
+                            </option>
+                        </select>
+                        <label id="deliveryCountry-label" class="elm-label" for="deliveryCountry" aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Delivery-country' | translate}}*
+                        </label>
+                        <ng-container *ngIf="formGroup.get('deliveryCountry').invalid && formGroup.get('deliveryCountry').touched">
+                            <small class="input-error" *ngIf="formGroup.get('deliveryCountry').errors?.required">{{
+                                'New-order.Errors.Point-of-unloading-country-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="deliveryStation-div" class="fr-flex-1">
+                    <div id="deliveryStation-input-field" class="input-field"
+                        style="padding: 0px 10px 0px 0px; width: 100%;">
+                        <app-el-s-autocomplete
+                                [displayNameTransform]="commercialLocationSummaryPipe.transform"
+                                [formGroup]="formGroup"
+                                [fieldName]="deliveryStationFieldName"
+                                [placeholder]="('New-order.Pickup-delivery.Placeholder.Delivery-station' | translate) + '*'"
+                                [title]="('New-order.Pickup-delivery.Placeholder.Delivery-station' | translate) + '*'"
+                                [autocompleteResultList]="commercialLocationSummariesDeliveryStations"
+                                [otherConfig]="{errorConfig: {errorCondition: deliveryStation?.errors?.required, errorText: 'New-order.Errors.Point-of-unloading-location-code-missing' | translate}, doNotDedup: true}"
+                                (doRequestSelectionListItems)="loadDeliveryStations($event)"
+                                (onSelectItem)="onSelectDeliveryStation($event)">
+                        </app-el-s-autocomplete>
+                        <!-- <ng-container *ngIf="deliveryStation?.invalid && deliveryStation?.touched">
+                            <small class="input-error" *ngIf="deliveryStation?.errors?.required">
+                                {{'New-order.Errors.Point-of-unloading-location-code-missing' | translate }}
+                            </small>
+                        </ng-container> -->
+                    </div>
+                </div>
+                <div id="deliverySealoadingpoint" class="fr-flex-1">
+                    <div id="deliverySealoadingpoint-input-field" class="input-field"
+                        style="padding: 0px 10px 0px 0px; width: 100%;">
+                        <select style="width: 100%;" id="deliverySealoadingpoint-input" class="elm-input" name="deliverySealoadingpoint"
+                            formControlName="deliverySealoadingpoint" type="text"
+                            title="{{'New-order.Pickup-delivery.Placeholder.Delivery-sealoadingpoint' | translate}}"
+                            maxlength="45"
+                            [class.invalid-input]="formGroup.get('deliverySealoadingpoint')?.invalid && formGroup.get('deliverySealoadingpoint')?.touched"
+                            aria-labelledby="deliverySealoadingpoint-label"
+                            (change)="onChangeLoadingPoint($event)">
+                            <option></option>
+                            <option *ngFor="let item of loadingPointsDeliveryStation" [value]="loadingPointValue(item)">{{ item.name }}</option>
+                        </select>
+                        <label class="elm-label" id="deliverySealoadingpoint-label" for="deliverySealoadingpoint-input"
+                            aria-hidden="true">
+                            {{'New-order.Pickup-delivery.Label.Delivery-sealoadingpoint' | translate}}
+                        </label>
+                        <ng-container *ngIf="deliverySealoadingpoint?.errors">
+                            <small class="input-error" *ngIf="deliverySealoadingpoint?.errors?.deliverySealoadingpointRequired">
+                                {{'New-order.Errors.Maritime-point-of-loading-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="arrow-div flex-row div-with-100" (click)="toggleDeliveryLocation()">
+                <span [ngClass]="{'arrow': !isDeliveryLocationVisible, 'arrow-up': isDeliveryLocationVisible}"
+                    #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isDeliveryLocationVisible">
+                    {{'New-order.Pickup-delivery.Show-section-details-delivery-location' | translate }}</div>
+                <div class="flex-row show-hide-section" *ngIf="isDeliveryLocationVisible">
+                    {{'New-order.Pickup-delivery.Hide-section-details-delivery-location' | translate }}</div>
+            </div>
+            <div *ngIf="isDeliveryLocationVisible" class="flex-row fr-100-gap-10">
+                <div id="deliveryLocationInfo" class="fr-flex-1" >
+                    <div id="deliveryLocationInfo-input-field" class="input-field" style="width: 100%; padding: 0px 10px 0px 0px;">
+                        <input id="deliveryLocationInfo-input" class="elm-input" name="deliveryLocationInfo"
+                            formControlName="deliveryLocationInfo" type="text" 
+                            placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Delivery-location-info' | translate }}"
+                            [class.invalid-input]="formGroup.get('deliveryLocationInfo')?.invalid && formGroup.get('deliveryLocationInfo')?.touched"
+                            aria-labelledby="deliveryLocationInfo-label" style="width: 100%;"
+                            (change)="updateRailOrderFromForm()" />
+                        <label class="elm-label" id="deliveryLocationInfo-label" for="deliveryLocationInfo-input"
+                            aria-hidden="true" maxlength="45">
+                            {{'New-order.Pickup-delivery.Label.Delivery-location-info' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="deliveryLocationCode" class="fr-flex-1">
+                    <div id="deliveryLocationCode-input-field" class="input-field" style="width: 100%; padding: 0px 10px 0px 0px;">
+                        <input id="deliveryLocationCode-input" class="elm-input" name="deliveryLocationCode"
+                            formControlName="deliveryLocationCode" type="text"
+                            placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Delivery-location-code' | translate }}"
+                            [class.invalid-input]="formGroup.get('deliveryLocationCode')?.invalid && formGroup.get('deliveryLocationCode')?.touched"
+                            aria-labelledby="deliveryLocationCode-label" maxlength="15"
+                            (change)="updateRailOrderFromForm()" />
+                        <label class="elm-label" id="deliveryLocationCode-label" for="deliveryLocationCode-input"
+                            aria-hidden="true">
+                            {{ 'New-order.Pickup-delivery.Label.Delivery-location-code' | translate }}
+                        </label>
+                        <ng-container *ngIf="formGroup.get('deliveryLocationCode').invalid && formGroup.get('deliveryLocationCode').touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="fr-flex-1">
+                    <div id="deliveryLocationText-input-field" class="input-field" style="width: 100%; padding: 0px 10px 0px 0px;">
+                        <input id="deliveryLocationText-input" class="elm-input" name="deliveryLocationText"
+                            formControlName="deliveryLocationText" type="text"
+                            placeholder="{{ 'New-order.Pickup-delivery.Placeholder.Delivery-location-text' | translate }}"
+                            [class.invalid-input]="formGroup.get('deliveryLocationText')?.invalid && formGroup.get('deliveryLocationText')?.touched"
+                            aria-labelledby="deliveryLocationText-label" maxlength="35"
+                            (change)="updateRailOrderFromForm()" />
+                        <label class="elm-label" id="deliveryLocationText-label" for="deliveryLocationText-input"
+                            aria-hidden="true">
+                            {{ 'New-order.Pickup-delivery.Label.Delivery-location-text' | translate }}
+                        </label>
+                        <ng-container
+                            *ngIf="deliveryLocationText.invalid && deliveryLocationText.touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

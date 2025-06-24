@@ -1,0 +1,36 @@
+<div [formGroup]="formGroup" id="{{fieldName}}-div">
+    <input
+            class='elm-input'
+            id="{{fieldName}}"
+            name="{{fieldName}}"
+            formControlName="{{fieldName}}"
+            placeholder="{{placeholder}}"
+            type="text"
+            autocomplete="off"
+            attr.list="datalist-{{fieldName + (arrayIndex ? arrayIndex : '')}}"
+            (input)="autocompleteInputChanged($event)"
+            (change)="onAcChange($event)"
+            style="width: 100%"
+            attr.aria-labelledby="{{fieldName}}-label"
+            [class.invalid-input]="otherConfig && otherConfig.errorConfig && otherConfig.errorConfig.errorCondition"/>
+    <label class="elm-label" id="{{fieldName}}-label" for="{{fieldName}}" aria-hidden="true">
+        {{ title }}
+    </label>
+    <datalist id="datalist-{{fieldName + (arrayIndex ? arrayIndex : '')}}">
+        <option [value]="option.displayValue"
+                *ngFor="let option of publicDatalist"> {{ option.displayValue }}
+        </option>
+    </datalist>
+    <div class="icon-block" *ngIf="busy">
+        <i class="fa-solid fa-hourglass-half fa-spin"></i>
+    </div>
+    <div class="icon-block" *ngIf="!busy && inputFieldHasContent() && isEnabled()">
+        <i class="fa-solid fa-xmark" (click)="clear()" style="cursor: pointer"></i>
+    </div>
+    <ng-container
+            *ngIf="otherConfig && otherConfig.errorConfig && otherConfig.errorConfig.errorCondition && otherConfig.errorConfig.errorText">
+        <small class="input-error">
+            {{ otherConfig.errorConfig.errorText }}
+        </small>
+    </ng-container>
+</div>

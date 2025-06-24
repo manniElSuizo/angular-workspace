@@ -1,0 +1,32 @@
+<header class="modal-header">
+    <h2> {{ 'ewd.order.form.cancellation.title' | translate }}</h2>
+    <a class="close-icon" title="{{ 'common.components.form.button.close' | translate }}" mat-dialog-close>
+        <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close"/>
+        </svg>
+    </a>
+
+</header>
+<main class="modal-main">
+    <div style="text-align:center">
+        <p>{{ 'ewd.order.form.cancellation.message' | translate }} </p>
+    </div>
+    <form>
+        <div style="display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;">
+            <db-button variant="brand-primary" type="button" (click)="cancelOrdersByOrderId()"
+                       style="margin-right: 1em;">
+                <span style="width: 320px; ">{{ 'ewd.order.form.cancellation.button.cancelOrderId' | translate }}</span>
+            </db-button>
+
+            <db-button variant="brand-primary" type="button" (click)="cancelOrderByIdConsumer()"
+                       style="margin-right: 1em;">
+                <span style="width: 320px;">{{ 'ewd.order.form.cancellation.button.cancelOrderIdConsumer' | translate }}</span>
+            </db-button>
+
+        </div>
+
+    </form>
+</main>

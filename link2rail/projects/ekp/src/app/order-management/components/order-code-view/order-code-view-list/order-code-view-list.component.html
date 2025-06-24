@@ -1,0 +1,107 @@
+<section>
+    <div class="header-line">
+        <h2>{{ 'Navigation.Order-management-order-code-list' | translate }}</h2>
+        <div style="flex: 1"></div>
+    </div>
+    <div style="width: 100%">
+        <app-order-code-view-filter></app-order-code-view-filter>
+    </div>
+    <div id="list-view" style="width: 100%; min-width: 1820px">
+      <table class="list-table">
+          <thead class="table-header">
+              <tr>    
+                  <ng-container *ngFor="let header of tableHeaders">
+                      <th scope="col" [style.min-width]="header.minWidth" [style.max-width]="header.maxWidth" [style.text-align]="header.textAlign" [title]="header.headerText">
+                          <div class="flex-row">
+                              <span>{{ header.headerText }}<br/>{{header.headerTextrow2}}</span>
+                              <span class="sort-icons-block" *ngIf="header.sortable" (click)="sortTable(header.fieldName)">
+                                  <div class="sort-descending" [class.active-sort]="sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                                  <div class="sort-ascending" [class.active-sort]="!sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                              </span>
+                          </div>
+                      </th>
+                  </ng-container> 
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let railOrderCode of railOrderCodes; let i = index" [class.white-row]="i % 2 === 0"  >
+                  <td>{{railOrderCode.templateNumber}}<br/>{{railOrderCode.templateName}}</td>
+                  <td>{{railOrderCode.consignorName}}</td>
+                  <td>{{railOrderCode.sendingStation}}<br/>{{railOrderCode.pointOfLoadingName}}</td>
+                  <td>{{railOrderCode.consigneeName}}</td>   
+                  <td>{{railOrderCode.receivingStation}}<br/>{{railOrderCode.pointOfUnloadingName}}</td>
+                  <td class="pointer" style="width:250px; display: table-cell;">
+                    <div (click)="openNhmDetails(railOrderCode)" style="text-decoration: underline;">{{railOrderCode.nhmCode}}</div>
+                  </td>
+                  <td style="width:250px">
+                        <div style="width: 100%;" title="{{railOrderCode.unCode}} {{railOrderCode.unDescription}}">
+                            <div *ngIf="railOrderCode.unDescription?.length<=15">{{railOrderCode.unCode}} {{railOrderCode.unDescription}}</div>
+                            <div *ngIf="railOrderCode.unDescription?.length>15">{{railOrderCode.unCode}} {{railOrderCode.unDescription.slice(0,15)+"..."}}</div>
+                        </div>
+                  </td>
+                  <td>
+                      <div style="width: 100%; margin-left: 20px;" >
+                        <div *ngIf="permissionService.hasPermission(null, [authorization.WRITE_OM]); else notActive" 
+                        (click)="goTo(Destination.CONSIGMENT_NOTE,railOrderCode)" class="pointer" style="cursor: pointer">
+                              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <g fill="none" fill-rule="evenodd">
+                                  <path d="M11 2c.28 0 .53.094.719.313l4 4a.915.915 0 0 1 .28.687v1a1 1 0 0 1-1 1h-5c-.561 0-1-.469-1-1V4H4v16H9a1 1 0 0 1 0 2H3c-.562 0-1-.437-1-1V3c0-.562.438-1 1-1h8zM7 16a1 1 0 1 1-.001 2 1 1 0 0 1 0-2zm1-4c.563 0 1 .437 1 1 0 .562-.437 1-1 1H7c-.562 0-1-.438-1-1 0-.563.438-1 1-1h1zm3-7.594V7h2.594L11 4.406z" fill="#282D37"/>
+                                  <path stroke="#282D37" stroke-width="2" stroke-linejoin="round" d="M11 11h11v6H11z"/>
+                                  <path stroke="#282D37" stroke-width="2" stroke-linecap="round" d="M11 19.5h11"/>
+                                  <path d="M14 21a1 1 0 0 0 1-1h1a2 2 0 1 1-4 0h1a1 1 0 0 0 1 1zM19 21a1 1 0 0 0 1-1h1a2 2 0 1 1-4 0h1a1 1 0 0 0 1 1z" fill="#282D37" fill-rule="nonzero"/>
+                                  </g>
+                              </svg>
+                          </div>
+                      </div>
+                      <ng-template #notActive>
+                        <div style="opacity: 0.4;">
+                            <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                                <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                            </svg>
+                        </div>
+                    </ng-template>
+                  </td>
+                  <td>
+                      <div (click)="openMenu($event, railOrderCode)">
+                          <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                              <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                          </svg>
+                      </div>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  
+      
+      <div *ngIf="filter?.showLoadMoreButton$ | async" class="bottom-controls">    
+          <button class="load-btn" (click)="loadMore()">
+              {{ 'Order-view-page.Load-more-button-label' | translate }}
+          </button>
+      </div>
+      <div>
+          <strong>{{ railOrderCodes?.length }} {{'Shared.Of' | translate}} {{ filter?.totalNumberOfElements$ | async  }}</strong>
+      </div>
+    </div>
+</section>
+
+<app-popup-menu>
+    <div class="items">
+        <p *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async)"
+            (click)="goTo(Destination.NEW_ORDER)" 
+            [class.disabeled-menu]="!hasWritePermission()">
+            {{ 'Order-Management.Order-code-view-list.Context-Menu.Create-order' | translate }}
+        </p>
+        <p *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async)"
+            (click)="renameOrderTemplate()" 
+            [class.disabeled-menu]="!hasWritePermission()">
+            {{ 'Order-Management.Order-code-view-list.Context-Menu.Rename-order-code' | translate }}
+        </p>
+        <p *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_OM]) | async)"
+            (click)="onNewOrderFast()" [class.disabeled-menu]="!hasWritePermission()">
+            {{ 'Order-Management.Quick-entry' | translate }}
+        </p>
+        <p (click)="goTo(Destination.ORDER_DETAILS)" [class.disabeled-menu]="!hasReadPermission()">
+            {{ 'Order-Management.Order-code-view-list.Context-Menu.Investigate-order-code' | translate }}
+        </p>
+    </div>
+</app-popup-menu>

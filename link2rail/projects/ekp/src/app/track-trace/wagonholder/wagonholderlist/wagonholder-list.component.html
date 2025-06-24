@@ -1,0 +1,65 @@
+<section>
+    <div class="header-line">
+        <h2>{{ 'Wagonholder-component.Overview-title' | translate }}</h2>
+    </div>
+    <div class="filter">
+        <app-wagonholder-list-filter></app-wagonholder-list-filter>
+    </div>
+    <div id="list-view">
+        <div class="elm-progress" *ngIf="filter?.loadingInProgress$ | async">
+            <progress id="progress-label-07"></progress>
+        </div>
+
+        <div>
+            <table class="list-table">
+                <thead class="table-header">
+                    <tr>
+                        <ng-container *ngFor="let header of tableHeaders">
+                            <th scope="col" 
+                                [title]="header.headerText"
+                                [style.min-width]="header.minWidth" 
+                                [style.max-width]="header.maxWidth" 
+                            >
+                                <div>
+                                    <div>
+                                        <span>{{ header.headerText }}</span>
+                                    </div>
+                                    <span class="sort-icons-block" *ngIf="header.sortable" (click)="sortTable(header.fieldName)">
+                                        <div class="sort-descending" [class.active-sort]="sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                                        <div class="sort-ascending" [class.active-sort]="!sortConditions?.asc && sortConditions?.field === header.fieldName"></div>
+                                    </span>
+                                </div>
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let wagonkeeperitem of vehicleSummariesForVehicleKeeper; let i = index" [class.white-row]="i % 2 === 0"  >
+                        <td> {{wagonkeeperitem.vehicleKeeperCode}}</td>
+                        <td > 
+                            <div>
+                                <a title="{{getTooltip(wagonkeeperitem.vehicleNumber)}}" class="mouse-pointer" (click)="openWagonInfoModal(wagonkeeperitem.vehicleNumber)">{{wagonkeeperitem.vehicleNumber}}</a>
+                            </div>
+                        </td>
+                        <td> {{wagonkeeperitem.internationalFreightWagonClass}} </td>
+                        <td> {{wagonkeeperitem.lastStatus.location.code}} </td>
+                        <td> {{wagonkeeperitem.lastStatus.statusDate|dateTime}} </td>
+                        <td> {{wagonkeeperitem.lastStatus.location.country.name}} </td>
+                        <td> {{wagonkeeperitem.lastStatus.location.name}} </td>
+                        <td> {{wagonkeeperitem.suitableForRunning.description}} </td>
+                        <td> {{wagonkeeperitem.damageTypes[0]?.code}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div *ngIf="filter?.showLoadMoreButton$ | async" class="bottom-controls">    
+        <button class="load-btn" (click)="loadMore()">
+            {{ 'Order-view-page.Load-more-button-label' | translate }}
+        </button>
+    </div>
+    <div>
+        <strong>{{ vehicleSummariesForVehicleKeeper?.length }} {{'Shared.Of' | translate}} {{ filter?.totalNumberOfElements$ | async }}</strong>
+    </div>
+</section>

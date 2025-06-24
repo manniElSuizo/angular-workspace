@@ -1,0 +1,794 @@
+    <div *ngIf="currentSectionName === SectionName.SECTION_CONSIGNEE_CONSIGNOR">
+    <form [formGroup]="formGroup">
+        <div id="order-form-header" class="flex-row">
+            <h3>{{ 'New-order.Consignee-consignor.Consignor-consignor-group' | translate }}</h3>
+        </div>
+        <div id="order-section-consignor-header" class="flex-row" class="orderSectionHeader">
+            <label>{{ 'New-order.Consignee-consignor.Consignor-section-sender' | translate }}</label>
+        </div>
+        <div formGroupName="consignor" class="flex-row fr-100-gap-10-no-justify-content" id="consignor-info-row-one">
+            <div class="fr-flex-1;">
+                <div class="input-field">
+                    <ng-container *ngIf="(permissionService.isInternalUser() | async ) else selectCustomer">
+                        <input 
+                            id="consignorCustomerId-input" 
+                            name="consignorCustomerId"
+                            autocomplete="off" 
+                            formControlName="customerId" type="text" class="elm-input"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Consignor-customer-id' | translate }}*"
+                            aria-labelledby="consignorCustomerId-label"
+                            list="datalist-consignorSgvId"
+                            (blur)="blur()"
+                            (input)="getConsignorCustomersList($event)"
+                            (change)="getPartners($event)"
+                            [class.invalid-input]="!(consignorCustomerId?.valid || consignorCustomerId?.disabled)" />
+                        <label class="elm-label" id="consignorCustomerId-label" for="consignorCustomerId-input"
+                            aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Consignor-customer-id' | translate}}*
+                        </label>
+                        <datalist id="datalist-consignorSgvId">
+                            <option *ngFor="let option of consignorCustomerSuggestions4Internal">{{ option | customerSgvName}}</option>
+                        </datalist>
+                        <div class="icon-block" (click)="clearInput('consignorCustomerId')" *ngIf="consignorCustomerId?.enabled">
+                            <svg class="icon"
+                                [ngClass]="consignorCustomerId?.value ? 'hide-icon' : 'show-icon'"
+                                viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#search" />
+                            </svg>
+                            <svg class="icon"
+                                [ngClass]="consignorCustomerId?.value ? 'show-icon' : 'hide-icon'"
+                                viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#close" />
+                            </svg>
+                        </div>
+                    </ng-container>
+                    <ng-template #selectCustomer>
+                        <select 
+                            type="text"
+                            id="consignorCustomerId-ext-input"
+                            name="consignorCustomerId-ext"
+                            formControlName="customerId"
+                            [class.invalid-input]="!(consignorCustomerId?.valid || consignorCustomerId?.disabled)"
+                            aria-labelledby="consignorCustomerId-ext-input-label"
+                            title="{{'New-order.Consignee-consignor.Label.Consignor-customer-id'| translate}}"
+                            (change)="onChangeCustomerIdExternalUser($event)"
+                            class="elm-input">
+                                <option></option>
+                                <option *ngFor="let option of consignorCustomerSuggestions" [value]="option.sgvId">{{ option | sgvPipe }}</option>
+                        </select>
+                        <label id="consignorCustomerId-ext-input-label" class="elm-label" for="consignorCustomerId-ext-input"
+                            aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Consignor-customer-id' | translate}}
+                        </label>
+                    </ng-template>
+                    <ng-container
+                        *ngIf="!(consignorCustomerId?.valid || consignorCustomerId?.disabled)">
+                        <small class="input-error">{{
+                            'New-order.Errors.Consignor-customerno-missing' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="consignorPartnerIdDiv" class="fr-flex-1;">
+                <div class="input-field">
+                    <select id="consignorPartnerId" class="elm-input" name="consignorPartnerId"
+                        formControlName="partnerId" type="text"
+                        title="{{'New-order.Consignee-consignor.Label.Consignor-partner-id' | translate}}*"
+                        [class.invalid-input]="!(consignorPartnerId?.valid || consignorPartnerId.disabled)"
+                        aria-labelledby="consignorPartnerId-label"
+                        (change)="onChangeConsignorPartnerId($event)">
+                            <option *ngFor="let option of sites" [value]="option.partnerId">{{ option | sitePipe }}</option>
+                    </select>
+                    <label id="consignorPartnerId-label" class="elm-label" for="consignorPartnerId"
+                        aria-hidden="true">
+                        {{'New-order.Consignee-consignor.Label.Consignor-partner-id' | translate}}*
+                    </label>
+                    <ng-container
+                        *ngIf="!(consignorPartnerId?.valid || consignorPartnerId.disabled)">
+                        <small class="input-error">{{
+                             'New-order.Errors.Consignor-location-missing' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div id="toggle-party-consignor" class="arrow-div" (click)="togglePartyInfoConsignorVisibility()">
+            <span [ngClass]="{'arrow': !isPartyInfoConsignorVisible, 'arrow-up': isPartyInfoConsignorVisible}"
+                #arrowIcon>
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                </svg>
+            </span>
+            <div class="show-hide-section" *ngIf="!isPartyInfoConsignorVisible"> {{
+                'New-order.Consignee-consignor.Show-section-details-loading-party'|translate }}</div>
+            <div class="show-hide-section" *ngIf="isPartyInfoConsignorVisible"> {{
+                'New-order.Consignee-consignor.Hide-section-details-loading-party'|translate }}</div>
+        </div>
+        <div *ngIf="isPartyInfoConsignorVisible">
+            <div formGroupName="consignor" class="flex-row fr-100-gap-10" id="additional-consignor-info-row-one" style="width: 100%;">
+
+                <div id="consignorAddressStreet" class="fr-flex-1;">
+                    <div class="input-field" id="consignorAddressStreet-field">
+                        <input class="elm-input" id="consignorAddressStreet-input" name="consignorAddressStreet"
+                            formControlName="street" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-street' | translate }}"
+                            maxlength="50"
+                            [class.invalid-input]="consignorAddressStreet.invalid && consignorAddressStreet?.touched"
+                            aria-labelledby="consignorAddressStreet-label" />
+                        <label class="elm-label" id="consignorAddressStreet-label" for="consignorAddressStreet"
+                            aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-address-street' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="consignorAddressCountry" class="fr-flex-1;">
+                    <div class="input-field" id="consignorAddressCountry-field">
+                        <app-select-field [settings]="{
+                            id: 'consignorAddressCountry-select',
+                            formControl: consignorAddressCountry,
+                            formGroup: consignor,
+                            i18n: {label: 'New-order.Consignee-consignor.Label.Party-address-country'},
+                            formControlName: 'country',
+                            options: countries$ | async,
+                            optionTransform: countryPipe,
+                            optionValueProperty: 'countryCode'
+                        }"></app-select-field>
+                    </div>
+                </div>
+                <div id="consignorContactPersonName" class="fr-flex-1;">
+                    <div class="input-field" id="consignorContactPersonName-field">
+                        <input id="consignorContactPersonName-input" class="elm-input" name="consignorContactPersonName"
+                            formControlName="name" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-name' | translate }}"
+                            maxlength="35"
+                            [class.invalid-input]="consignorContactPersonName.invalid && consignorContactPersonName?.touched"
+                            aria-labelledby="consignorContactPersonName-label" />
+                        <label class="elm-label" id="consignorContactPersonName-label"
+                            for="consignorContactPersonName-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-name' | translate}}
+                        </label>
+                    </div>
+                </div>
+
+                <div id="consignorComment" class="fr-flex-1;">
+                    <div id="consignorComment-field" class="input-field">
+                        <input id="consignorComment" class="elm-input" formControlName="comment" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-comment' | translate }}"
+                            aria-labelledby="consignorComment-label" maxlength="45"
+                            
+                            [class.invalid-input]="consignorComment.invalid && consignorComment?.touched" />
+                        <label class="elm-label elm-label-margin" id="consignorComment-label" for="consignorComment"
+                            aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-comment' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div formGroupName="consignor" id="additional-consignor-info-row-two" class="fr-100-gap-10-no-justify-content">
+                <div id="consignorContactPersonTel" class="fr-flex-1;">
+                    <div class="input-field" id="consignorContactPersonTel-field">
+                        <input id="consignorContactPersonTel-input" class="elm-input" name="consignorContactPersonTel"
+                            formControlName="tel" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-tel' | translate }}"
+                            maxlength="30"
+                            [class.invalid-input]="consignorContactPersonTel.invalid && consignorContactPersonTel?.touched"
+                            aria-labelledby="consignorContactPersonTel-label" />
+                        <label class="elm-label" id="consignorContactPersonTel-label"
+                            for="consignorContactPersonTel-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-tel' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="consignorContactPersonFax" class="fr-flex-1;">
+                    <div class="input-field" id="consignorContactPersonFax-field">
+                        <input id="consignorContactPersonFax-input" class="elm-input" name="consignorContactPersonFax"
+                            formControlName="fax" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-fax' | translate }}"
+                            maxlength="30"
+                            [class.invalid-input]="consignorContactPersonFax.invalid && consignorContactPersonFax?.touched"
+                            aria-labelledby="consignorContactPersonFax-label" />
+                        <label class="elm-label" id="consignorContactPersonFax-label"
+                            for="consignorContactPersonFax-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-fax' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="consignorContactPersonEmail" class="fr-flex-1;">
+                    <div class="input-field" id="consignorContactPersonEmail-field">
+                        <input id="consignorContactPersonEmail-input" class="elm-input"
+                            name="consignorContactPersonEmail" formControlName="email" type="email"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-email' | translate }}"
+                            maxlength="50"
+                            [class.invalid-input]="consignorContactPersonEmail.invalid && consignorContactPersonEmail?.touched"
+                            aria-labelledby="consignorContactPersonEmail-label" />
+                        <label class="elm-label" id="consignorContactPersonEmail-label"
+                            for="consignorContactPersonEmail-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-email' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="freightPayerConsignorSectionHeader" class="flex-row orderSectionHeader">
+                <label>{{ 'New-order.Consignee-consignor.Consignor-section-freightpayer-consignor' | translate }}</label>
+            </div>
+            <!-- Frachtzahler Versand -->
+            <div formGroupName="freightpayerConsignor" id="freight-payer-consignor" class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="freightPayerConsignorCustomerIdAuthorityOfCustomerId" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsignorCustomerIdAuthorityOfCustomerId-field">
+                        <select id="freightPayerConsignorCustomerIdAuthorityOfCustomerId-select" class="elm-input"
+                            name="freightPayerConsignorCustomerIdAuthorityOfCustomerId"
+                            formControlName="authorityOfCustomerId" type="text"
+                            title="{{'New-order.Consignee-consignor.Placeholder.Party-customerid-authority-of-customerId' | translate}}"
+                            [class.invalid-input]="freightPayerConsignorCustomerIdAuthorityOfCustomerId?.errors"
+                            aria-labelledby="freightPayerConsignorCustomerIdAuthorityOfCustomerId-label">
+                            <option value=""></option>
+                            <option [value]="authority.uicCompanyCode" *ngFor="let authority of authorityList$ | async">
+                                {{authority | railAuthority}}
+                            </option>
+                        </select>
+                        <label id="freightPayerConsignorCustomerIdAuthorityOfCustomerId-label" class="elm-label"
+                            for="freightPayerConsignorCustomerIdAuthorityOfCustomerId" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-customerid-authority-of-customerId'| translate}}
+                        </label>
+                        <ng-container
+                            *ngIf="freightPayerConsignorCustomerIdAuthorityOfCustomerId?.errors">
+                            <small class="input-error" *ngIf="freightPayerConsignorCustomerIdAuthorityOfCustomerId?.errors?.freightpayerConsignorGroupAuthorityMissing">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container> 
+                    </div>
+                </div>
+                <div id="freightPayerConsignorCustomerIdSgv" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsignorCustomerIdSgv-field">
+                        <app-input-field [settings]="{
+                            id: 'freightPayerConsignorCustomerIdSgv-input',
+                            name: 'freightPayerConsignorCustomerIdSgv',
+                            formControlName: 'sgv',
+                            maxLength: 10,
+                            formControl: freightPayerConsignorCustomerIdSgv,
+                            formGroup: freightpayerConsignor,
+                            showErrorCondition: formGroup.get('freightpayerConsignor')?.get('sgv')?.hasError('freightpayerConsignorInvalidCombinationSgvZip') || formGroup.get('freightpayerConsignor')?.get('sgv')?.hasError('freightpayerConsignorSgvNotNumeric') ,
+                            i18n: {
+                              label: 'New-order.Consignee-consignor.Label.Party-customerid-sgv',
+                              errorText: getErrorMessage()
+                            }
+                          }"></app-input-field>
+                    </div>
+                </div>
+                <div id="freightPayerConsignorAddressZipCode" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsignorAddressZipCode-field">
+                        <app-input-field [settings]="{
+                            id: 'freightPayerConsignorAddressZipCode-input',
+                            name: 'freightPayerConsignorAddressZipCode',
+                            formControlName: 'zipCode',
+                            maxLength: 9,
+                            formControl: freightPayerConsignorCustomerIdSgv,
+                            formGroup: freightpayerConsignor,
+                            showErrorCondition: formGroup.get('freightpayerConsignor')?.hasError('freightpayerConsignorInvalidCombinationZipSgv'),
+                            i18n: {
+                              label: 'New-order.Consignee-consignor.Placeholder.Party-address-zipcode',
+                              errorText: 'New-order.Errors.Freightpayer-dispatch-zipcode-missing'
+                            }
+                          }"></app-input-field>
+                    </div>
+                </div>
+                <div id="freightPayerConsignorVatId" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsignorVatId-field">
+                        <app-input-field [settings]="{
+                            id: 'freightPayerConsignorVatId-input',
+                            name: 'freightPayerConsignorVatId',
+                            formControlName: 'vatId',
+                            maxLength: 25,
+                            formControl: freightPayerConsignorVatId,
+                            formGroup: freightpayerConsignor,
+                            hideError: true,
+                            i18n: {
+                                label: 'New-order.Consignee-consignor.Placeholder.Party-vatid'
+                            }
+                            }"></app-input-field>
+                    </div>
+                </div>
+            </div>
+            <div id="header-consignor-section-loading-party"
+                class="flex-row fr-100-gap-10-no-justify-content orderSectionHeader">
+                <label>{{ 'New-order.Consignee-consignor.Consignor-section-loader' | translate }}</label>
+            </div>
+            <div formGroupName="loadingParty" id="loading-party" class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="loadingPartyCustomerIdAuthorityOfCustomerId" class="fr-flex-1;">
+                    <div class="input-field" id="loadingPartyCustomerIdAuthorityOfCustomerId-field">
+                        <app-select-field [settings]="{
+                            id: 'loadingPartyCustomerIdAuthorityOfCustomerId',
+                            formControl: loadingPartyCustomerIdAuthorityOfCustomerId,
+                            formGroup: loadingParty,
+                            i18n: {label: 'New-order.Consignee-consignor.Placeholder.Party-customerid-authority-of-customerId'},
+                            formControlName: 'authorityOfCustomerId',
+                            options: authorityList$ | async,
+                            optionTransform: railAuthority,
+                            optionValueProperty: 'uicCompanyCode',
+                            addEmptyOption: true
+                        }"></app-select-field>
+                    </div>
+                </div>
+                <div class="fr-flex-1;">
+                    <div class="input-field" id="loadingPartyCustomerIdSgv-field">
+                        <app-input-field [settings]="{
+                            id: 'loadingPartyCustomerIdSgv',
+                            formControlName: 'sgv',
+                            i18n: {
+                                label: 'New-order.Consignee-consignor.Label.Party-customerid-sgv',
+                                placeholder: 'New-order.Consignee-consignor.Placeholder.Party-customerid-sgv',
+                                errorText: getErrorMessage() 
+                            },
+                            showErrorCondition: formGroup.get('loadingParty')?.hasError('loadingPartyCustomerIdInvalidCombinationSgvZip') || formGroup.get('loadingParty')?.hasError('loadingPartyCustomerIdMustBeNumeric') ,
+                            maxLength: 10,
+                            formGroup: loadingParty,
+                            formControl: loadingPartyCustomerIdSgv,
+                        }"></app-input-field>
+                    </div>
+                </div>
+                <div class="fr-flex-1;">
+                    <div class="input-field" id="loadingPartyName-field">
+                        <app-input-field [settings]="{
+                            id: 'loadingPartyName',
+                            formControlName: 'name',
+                            i18n: {
+                                label: 'New-order.Consignee-consignor.Label.Party-name',
+                                placeholder: 'New-order.Consignee-consignor.Placeholder.Party-name',
+                            },
+                            maxLength: 45,
+                            formGroup: loadingParty,
+                            formControl: loadingPartyName,
+                        }"></app-input-field>
+                    </div>
+                </div>
+                <div class="fr-flex-1;">
+                    <div class="input-field" id="loadingPartyAddressZipCode-field">
+                        <app-input-field [settings]="{
+                            id: 'loadingPartyAddressZipCode',
+                            formControlName: 'zipCode',
+                            i18n: {
+                                label: 'New-order.Consignee-consignor.Label.Party-address-zipcode',
+                                placeholder: 'New-order.Consignee-consignor.Placeholder.Party-address-zipcode',
+                                errorText: 'New-order.Errors.Loading-party-zipcode-missing'
+                            },
+                            maxLength: 9,
+                            formGroup: loadingParty,
+                            formControl: loadingPartyAddressZipCode,
+                        }"></app-input-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div id="order-section-consignee-header" class="flex-row" class="orderSectionHeader">
+            <label>{{ 'New-order.Consignee-consignor.Consignee-section-receiver' | translate }}</label>
+        </div>
+        <!-- Empfänger -->
+        <div formGroupName="consignee" id="consignee-section" class="flex-row fr-100-gap-10-no-justify-content">
+            <div class="fr-flex-1;">
+                <!-- BVW-->
+                <div class="input-field" id="consigneeCustomerIDCustomerIdAuthorityOfCustomerId-field">
+                    <app-select-field [settings]="{
+                        id: 'consigneeCustomerIDCustomerIdAuthorityOfCustomerId',
+                        formControl: consigneeAuthorityOfCustomerIdCustomerId,
+                        formGroup: consignee,
+                        showErrorCondition: consignee.get('authorityOfCustomerId').hasError('required'),
+                        i18n: {
+                            label: 'New-order.Consignee-consignor.Placeholder.Party-customerid-authority-of-customerId',
+                            errorText: 'New-order.Errors.Consignee-country-missing'
+                        },
+                        formControlName: 'authorityOfCustomerId',
+                        options: authorityList$ | async,
+                        optionTransform: railAuthority,
+                        optionValueProperty: 'uicCompanyCode',
+                        addEmptyOption: true,
+                        showRequired: true
+                    }"></app-select-field>
+                </div>
+            </div>
+            <div class="fr-flex-1;">
+                <div class="input-field" id="consigneeCustomerID-field">
+                    <app-input-field [settings]="{
+                        id: 'consigneeCustomerId',
+                        formControlName: 'customerId',
+                        maxLength: 10,
+                        formControl: consigneeCustomerId,
+                        formGroup: consignee,
+                        showRequired: false,
+                        showErrorCondition: consignee.hasError('consigneeCustomerIdMustBeNumeric') || consigneeCustomerId.hasError('required'),
+                        i18n: {
+                          label: 'New-order.Consignee-consignor.Label.Consignee-customer-id',
+                          placeholder: 'New-order.Consignee-consignor.Placeholder.Consignee-customer-id',
+                          errorText: 'New-order.Errors.Consignee-customerno-missing'
+                        }
+                      }"></app-input-field>
+                </div>
+            </div>
+            <!--Empfänger Name --> 
+            <div id="fieldConsigeeName" class="fr-flex-1;">
+                <div class="input-field" id="consigneeName-field">
+                    <input id="consigneeName-input" class="elm-input" name="consigneeName"
+                        autocomplete="off"
+                        formControlName="name" type="text"
+                        placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-name' | translate }}*"
+                        maxlength="45"
+                        [class.invalid-input]="formGroup.get('consignee').get('name').errors?.required"
+                        aria-labelledby="consigneeName-label" />
+                    <label class="elm-label" id="consigneeName-label" for="consigneeName-input" aria-hidden="true">
+                        {{'New-order.Consignee-consignor.Label.Party-name' | translate}}*
+                    </label>
+                     <ng-container
+                        *ngIf="consigneeName.errors">
+                        <small class="input-error" *ngIf="formGroup.get('consignee').get('name').errors?.required">{{
+                            'New-order.Errors.Consignee-name-missing' | translate }}
+                        </small>
+                    </ng-container>
+                    <!-- <div class="icon-block" (click)="clearInput('consigneeName')">
+                        <svg class="icon" [ngClass]="consigneeName.value ? 'hide-icon' : 'show-icon'"
+                            viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#search" />
+                        </svg>
+                        <svg class="icon" [ngClass]="consigneeName.value ? 'show-icon' : 'hide-icon'"
+                            viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#close" />
+                        </svg>
+                    </div> -->
+                    <!-- <ng-container
+                        *ngIf="consigneeName.invalid && consigneeName').touched">
+                        <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                            'Shared.Errors.Field-is-required-error-text' | translate }}
+                        </small>
+                    </ng-container> -->
+                </div>
+            </div>
+        </div>
+        <!-- Empfänger PLZ -->
+        <div formGroupName="consignee" class="flex-row fr-100-gap-10-no-justify-content" id="ConsigneeLine2">
+            <div id="consigneeAddressZipCode" class="fr-flex-1;">
+                <div class="input-field" id="consigneeAddressZipCode-field">
+                    <input id="consigneeAddressZipCode-input" class="elm-input" name="consigneeAddressZipCode"
+                        formControlName="zipCode" type="text"
+                        placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-zipcode' | translate }}*"
+                        maxlength="9" [class.invalid-input]="consigneeAddressZipCode?.errors"
+                        aria-labelledby="consigneeAddressZipCode-label" />
+                    <label class="elm-label" id="consigneeAddressZipCode-label" for="consigneeAddressZipCode-input"
+                        aria-hidden="true">
+                        {{'New-order.Consignee-consignor.Label.Party-address-zipcode' | translate}}*
+                    </label>
+                    <ng-container *ngIf="consigneeAddressZipCode?.errors">
+                        <small class="input-error" *ngIf="formGroup.get('consignee').get('zipCode').errors?.zipCodeRequired">
+                            {{ 'New-order.Errors.Consignee-zipcode-missing' | translate }}
+                        </small>
+                        <small class="input-error" *ngIf="consigneeAddressZipCode.errors?.zipCodeGermanInvalid">
+                            {{ 'New-order.Errors.Five-digits-german-zipcode' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Empfänger Ort -->
+            <div id="fieldConsigneeAddressCity" class="fr-flex-1;">
+                <div class="input-field" id="consigneeAddressCity-field">
+                    <input id="consigneeAddressCity-input" class="elm-input" name="consigneeAddressCity" formControlName="city"
+                        type="text"
+                        placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-city' | translate }}*"
+                        maxlength="35" [class.invalid-input]="consigneeAddressCity?.invalid && consigneeAddressCity?.touched"
+                        aria-labelledby="consigneeAddressCity-label" />
+                    <label class="elm-label" id="consigneeAddressCity-label" for="consigneeAddressCity-input"
+                        aria-hidden="true">
+                        {{'New-order.Consignee-consignor.Label.Party-address-city' | translate}}*
+                    </label>
+                    <ng-container *ngIf="consigneeAddressCity.errors">
+                        <small class="input-error" *ngIf="formGroup.get('consignee').get('city').errors?.required">
+                            {{ 'New-order.Errors.Consignee-location-missing' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Empfänger Land -->
+            <div id="consigneeAddressCountry" class="fr-flex-1;">
+                <div class="input-field" id="consigneeAddressCountry-field">
+                    <select id="consigneeAddressCountry-select" class="elm-input" name="consigneeAddressCountry"
+                        formControlName="country" type="text"
+                        title="{{'New-order.Consignee-consignor.Placeholder.Party-address-country' | translate}}*"
+                        [class.invalid-input]="consigneeAddressCountry?.invalid && consigneeAddressCountry?.touched"
+                        aria-labelledby="consigneeAddressCountry-label">
+                        <option value=""></option>
+                        <option *ngFor="let country of countries$ | async" [value]="country.countryCode">
+                            {{ country | country }}
+                        </option>
+                    </select>
+                    <label id="consigneeAddressCountry-label" class="elm-label" for="consigneeAddressCountry"
+                        aria-hidden="true">
+                        {{'New-order.Consignee-consignor.Label.Party-address-country' | translate}}*
+                    </label>
+                    <ng-container *ngIf="consigneeAddressCountry.errors">
+                        <small class="input-error" *ngIf="consigneeAddressCountry.errors?.required">{{
+                            'New-order.Errors.Consignee-country-missing' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div id="toggle-party-consignee" class="arrow-div" (click)="togglePartyInfoConsigneeVisibility()">
+            <span [ngClass]="{'arrow': !isPartyInfoConsigneeVisible, 'arrow-up': isPartyInfoConsigneeVisible}"
+                #arrowIcon>
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                </svg>
+            </span>
+            <div class="flex-row show-hide-section" *ngIf="!isPartyInfoConsigneeVisible"> {{
+                'New-order.Consignee-consignor.Show-section-details-unloading-party'|translate }}</div>
+            <div class="flex-row show-hide-section" *ngIf="isPartyInfoConsigneeVisible"> {{
+                'New-order.Consignee-consignor.Hide-section-details-unloading-party'|translate }}</div>
+        </div>
+        <div *ngIf="isPartyInfoConsigneeVisible">
+            <div formGroupName="consignee" id="additional-consignee-info-row-one" class="flex-row fr-100-gap-10-no-justify-content">
+                <!-- Empfänger Straße -->
+                <div id="consigneeAddressStreet" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeAddressStreet-field">
+                        <input id="consigneeAddressStreet-input" class="elm-input"
+                            formControlName="street" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-street' | translate }}"
+                            aria-labelledby="consigneeAddressStreet-label" maxlength="50"
+                            [class.invalid-input]="consigneeAddressStreet?.invalid && consigneeAddressStreet.touched" />
+                        <label class="elm-label" id="consigneeAddressStreet-label" for="consigneeAddressStreet">
+                            {{'New-order.Consignee-consignor.Label.Party-address-street' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <!-- Empfänger Kontaktperson -->
+                <div id="consigneeContactPersonName" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeContactPersonName-field">
+                        <input id="consigneeContactPersonName-input" class="elm-input" name="consigneeContactPersonName"
+                            formControlName="contactPersonName" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-name' | translate }}"
+                            maxlength="35"
+                            [class.invalid-input]="consigneeContactPersonName?.invalid && consigneeContactPersonName?.touched"
+                            aria-labelledby="consigneeContactPersonName-label" />
+                        <label class="elm-label" id="consigneeContactPersonName-label"
+                            for="consigneeContactPersonName-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-name' | translate}}*
+                        </label>
+                    </div>
+                </div>
+                <div id="consigneeComment" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeComment-input">
+                        <input id="consigneeComment-input" class="elm-input" name="consigneeComment"
+                            formControlName="comment" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-comment' | translate }}"
+                            maxlength="45"
+                            [class.invalid-input]="consigneeComment?.invalid && consigneeComment?.touched"
+                            aria-labelledby="consigneeComment-label" />
+                        <label class="elm-label" id="consigneeComment-label" for="consigneeComment-input"
+                            aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-comment' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Empfänger Kontaktperson Telefon -->
+            <div formGroupName="consignee"  id="additional-consignee-info-row-two" class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="consigneeContactPersonTel" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeContactPersonTel-field">
+                        <input id="consigneeContactPersonTel-input" class="elm-input" name="consigneeContactPersonTel"
+                            formControlName="tel" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-tel' | translate }}"
+                            maxlength="30"
+                            [class.invalid-input]="consigneeContactPersonTel?.invalid && consigneeContactPersonTel?.touched"
+                            aria-labelledby="consigneeContactPersonTel-label" />
+                        <label class="elm-label" id="consigneeContactPersonTel-label"
+                            for="consigneeContactPersonTel-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-tel' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="consigneeContactPersonFax" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeContactPersonFax-field">
+                        <input id="consigneeContactPersonFax-input" class="elm-input" name="consigneeContactPersonFax"
+                            formControlName="fax" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-fax' | translate }}"
+                            maxlength="30"
+                            [class.invalid-input]="consigneeContactPersonFax?.invalid && consigneeContactPersonFax?.touched"
+                            aria-labelledby="consigneeContactPersonFax-label" />
+                        <label class="elm-label" id="consigneeContactPersonFax-label"
+                            for="consigneeContactPersonFax-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-fax' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div id="consigneeContactPersonEmail" class="fr-flex-1;">
+                    <div class="input-field" id="consigneeContactPersonEmail-field">
+                        <input id="consigneeContactPersonEmail-input" class="elm-input"
+                            name="consigneeContactPersonEmail" formControlName="email" type="email"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-contact-person-email' | translate }}"
+                            maxlength="50"
+                            [class.invalid-input]="consigneeContactPersonEmail?.invalid && consigneeContactPersonEmail?.touched"
+                            aria-labelledby="consigneeContactPersonEmail-label" />
+                        <label class="elm-label" id="consigneeContactPersonEmail-label"
+                            for="consigneeContactPersonEmail-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-contact-person-email' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Frachtzahler Empfang -->
+            <div id="freightPayerConsigneeSectionHeader" class="flex-row" class="orderSectionHeader">
+                <label>{{ 'New-order.Consignee-consignor.Consignor-section-freightpayer-consignee' | translate }}</label>
+            </div>
+            <div formGroupName="freightPayerConsignee" id="freightPayerConsigneeSection" class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="freightPayerConsigneeCustomerIdAuthorityOfCustomerId" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsigneeCustomerIdAuthorityOfCustomerId-field">
+                        <select id="freightPayerConsigneeCustomerIdAuthorityOfCustomerId-select" class="elm-input"
+                            name="freightPayerConsigneeCustomerIdAuthorityOfCustomerId"
+                            formControlName="authorityOfCustomerId" type="text"
+                            title="{{'New-order.Consignee-consignor.Label.Party-customerid-authority-of-customerId' | translate}}"
+                            [class.invalid-input]="freightPayerConsigneeCustomerIdAuthorityOfCustomerId.invalid && freightPayerConsigneeCustomerIdAuthorityOfCustomerId?.touched"
+                            aria-labelledby="freightPayerConsigneeCustomerIdAuthorityOfCustomerId-label">
+                            <option value=""></option>
+                            <option [value]="authority.uicCompanyCode" *ngFor="let authority of authorityList$ | async">
+                                {{authority | railAuthority}}
+                            </option>
+                        </select>
+                        <label id="freightPayerConsigneeCustomerIdAuthorityOfCustomerId-label" class="elm-label"
+                            for="freightPayerConsigneeCustomerIdAuthorityOfCustomerId" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-customerid-authority-of-customerId' | translate}}
+                        </label>
+                        <ng-container
+                            *ngIf="freightPayerConsigneeCustomerIdAuthorityOfCustomerId?.invalid && freightPayerConsigneeCustomerIdAuthorityOfCustomerId?.touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">
+                                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="freightPayerConsigneeCustomerIdSgv" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsigneeCustomerIdSgv-field">
+                        <input id="freightPayerConsigneeCustomerIdSgv-input" class="elm-input"
+                            name="freightPayerConsigneeCustomerIdSgv"
+                            formControlName="sgv" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Consignee-customer-id' | translate }}"
+                            maxlength="10"
+                            [class.invalid-input]="freightPayerConsigneeCustomerIdSgv.invalid && freightPayerConsigneeCustomerIdSgv?.touched"
+                            aria-labelledby="freightPayerConsigneeCustomerIdSgv-label" />
+                        <label class="elm-label" id="freightPayerConsigneeCustomerIdSgv-label"
+                            for="freightPayerConsigneeCustomerIdSgv-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Consignee-customer-id' | translate}}
+                        </label>
+                        <ng-container *ngIf="freightPayerConsigneeCustomerIdSgv?.errors">
+                            <small class="input-error" *ngIf="freightPayerConsigneeCustomerIdSgv.errors?.freightPayerSgvRequired">
+                                {{ 'New-order.Errors.Freightpayer-receipt-customerno-missing' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="freightPayerConsigneeCustomerIdSgv.errors?.freightPayerSgvNoNumeric">
+                                {{'Shared.Errors.Invalid-number' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="freightPayerConsigneeAddressZipCode" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsigneeAddressZipCode-field">
+                        <input id="freightPayerConsigneeAddressZipCode-input" class="elm-input"
+                            name="freightPayerConsigneeAddressZipCode"
+                            formControlName="zipCode" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-zipcode' | translate }}"
+                            maxlength="9"
+                            [class.invalid-input]="freightPayerConsigneeAddressZipCode?.errors"
+                            aria-labelledby="freightPayerConsigneeAddressZipCode-label" />
+                        <label class="elm-label" id="freightPayerConsigneeAddressZipCode-label"
+                            for="freightPayerConsigneeAddressZipCode-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-address-zipcode' | translate}}
+                        </label>
+                        <ng-container *ngIf="freightPayerConsigneeAddressZipCode?.errors">
+                            <small class="input-error" *ngIf="freightPayerConsigneeAddressZipCode.errors?.freightPayerZipRequired">
+                                {{ 'New-order.Errors.Freightpayer-receipt-zipcode-missing' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="freightPayerConsigneeVatId" class="fr-flex-1;">
+                    <div class="input-field" id="freightPayerConsigneeVatId-field">
+                        <input id="freightPayerConsigneeVatId-input" class="elm-input" name="freightPayerConsigneeVatId"
+                            formControlName="vatId" type="text"
+                            placeholder="{{'New-order.Consignee-consignor.Placeholder.Party-vatid' | translate}}"
+                            maxlength="25"
+                            [class.invalid-input]="freightPayerConsigneeVatId.invalid && freightPayerConsigneeVatId?.touched"
+                            aria-labelledby="freightPayerConsigneeVatId-label" />
+                        <label class="elm-label" id="freightPayerConsigneeVatId-label"
+                            for="freightPayerConsigneeVatId-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-vatid' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Entlader -->
+            <div id="header-consignor-section-unloading-party" class="flex-row " class="orderSectionHeader">
+                <label>{{ 'New-order.Consignee-consignor.Consignee-section-unloader' | translate }}</label>
+            </div>
+            <div formGroupName="unloadingParty" id="unloadingParty" class="flex-row fr-100-gap-10-no-justify-content">
+                <div id="unloadingPartyCustomerIdAuthorityOfCustomerId" class="fr-flex-1;">
+                    <div id="unloadingPartyCustomerIdAuthorityOfCustomerId-field" class="input-field">
+                        <select id="unloadingPartyCustomerIdAuthorityOfCustomerId-select" class="elm-input"
+                            name="unloadingPartyCustomerIdAuthorityOfCustomerId"
+                            formControlName="authorityOfCustomerId" type="text"
+                            title="{{'New-order.Consignee-consignor.Placeholder.Party-customerid-authority-of-customerId' | translate}}"
+                            [class.invalid-input]="unloadingPartyCustomerIdAuthorityOfCustomerId.invalid && unloadingPartyCustomerIdAuthorityOfCustomerId?.touched"
+                            aria-labelledby="unloadingPartyCustomerIdAuthorityOfCustomerId-label">
+                            <option value=""></option>
+                            <option [value]="authority.uicCompanyCode" *ngFor="let authority of authorityList$ | async">
+                                {{authority | railAuthority}}
+                            </option>
+                        </select>
+                        <label id="unloadingPartyCustomerIdAuthorityOfCustomerId-label" class="elm-label"
+                            for="unloadingPartyCustomerIdAuthorityOfCustomerId" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-customerid-authority-of-customerId' |translate}}
+                        </label>
+                        <ng-container
+                            *ngIf="unloadingPartyCustomerIdAuthorityOfCustomerId?.invalid && unloadingPartyCustomerIdAuthorityOfCustomerId?.touched">
+                            <small class="input-error" *ngIf="formGroup.errors?.required">{{
+                                'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <div id="fieldUnloadingPartyCustomerIdSgv" class="fr-flex-1;">
+                    <div class="input-field" id="unloadingPartyCustomerIdSgv-field">
+                        <input id="unloadingPartyCustomerIdSgv-input" class="elm-input"
+                            name="unloadingPartyCustomerIdSgv" formControlName="sgv" type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Consignee-customer-id' | translate }}"
+                            maxlength="10"
+                            [class.invalid-input]="unloadingPartyCustomerIdSgv.errors?.unloadingPartySgvNoNumeric"
+                            aria-labelledby="unloadingPartyCustomerIdSgv-label" />
+                        <label class="elm-label" id="unloadingPartyCustomerIdSgv-label"
+                            for="unloadingPartyCustomerIdSgv-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Consignee-customer-id' | translate}}
+                        </label>
+                        <ng-container *ngIf="unloadingPartyCustomerIdSgv?.errors">
+                        <small class="input-error" *ngIf="unloadingPartyCustomerIdSgv.errors?.unloadingPartySgvZip">
+                            {{'New-order.Errors.Unloading-party-customerno-missing' | translate }}
+                        </small>
+                        <small class="input-error" *ngIf="unloadingPartyCustomerIdSgv.errors?.unloadingPartySgvNoNumeric">
+                            {{'Shared.Errors.Invalid-number' | translate }}
+                        </small>
+                    </ng-container>
+                    </div>
+                </div>
+                <div class="fr-flex-1;">
+                    <div class="input-field" id="unloadingPartyName-field">
+                        <app-input-field [settings]="{
+                            id: 'unloadingPartyName',
+                            formControlName: 'name',
+                            i18n: {
+                                label: 'New-order.Consignee-consignor.Label.Party-name',
+                                placeholder: 'New-order.Consignee-consignor.Placeholder.Party-name',
+                            },
+                            maxLength: 45,
+                            formGroup: unloadingParty,
+                            formControl: unloadingPartyName,
+                        }"></app-input-field>
+                    </div>
+                </div>
+                <div id="fieldUnloadingPartyAddressZipCode" class="fr-flex-1;">
+                    <div id="unloadingPartyAddressZipCode-input-field" class="input-field">
+                        <input id="unloadingPartyAddressZipCode-input" class="elm-input"
+                            name="unloadingPartyAddressZipCode" formControlName="zipCode"
+                            type="text"
+                            placeholder="{{ 'New-order.Consignee-consignor.Placeholder.Party-address-zipcode' | translate }}"
+                            maxlength="9"
+                            [class.invalid-input]="unloadingPartyAddressZipCode.invalid && unloadingPartyAddressZipCode?.touched"
+                            aria-labelledby="unloadingPartyAddressZipCode-label" />
+                        <label class="elm-label" id="unloadingPartyAddressZipCode-label"
+                            for="unloadingPartyAddressZipCode-input" aria-hidden="true">
+                            {{'New-order.Consignee-consignor.Label.Party-address-zipcode' | translate}}
+                        </label>
+                        <ng-container
+                        *ngIf="unloadingPartyAddressZipCode?.errors">
+                        <small class="input-error" *ngIf="unloadingPartyAddressZipCode.errors?.unloadingPartyZipRequired">{{
+                            'New-order.Errors.Unloading-party-zipcode-missing' | translate }}
+                        </small>
+                    </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

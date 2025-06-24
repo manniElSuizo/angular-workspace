@@ -1,0 +1,17 @@
+wagon-list-nr {
+    padding: 30px 0px 0px 0px
+}
+
+
+/* Styles for enabled state of the specific button */
+button {
+    background-color: white !important; /* Set your desired background for enabled state */
+    
+}
+
+/* Styles for disabled state of the specific button */
+button:disabled {
+    background-color: white !important; /* Override with white for disabled */
+    
+}
+

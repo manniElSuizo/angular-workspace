@@ -1,0 +1,122 @@
+<body>
+    <div class="main">
+        <img src="../../../assets/img/DB224672_smallModified.jpg" alt="">
+        <div class="title">
+            <h1>{{ 'Title' | translate }}</h1>
+        </div>
+    </div>
+    <div class="main">
+        <ul class="cmp-cards">
+            <!-- li class="cmp-card" data-variant="banner">
+                {{userProfile | json}}
+            </li -->
+            <!-- Empty Wagon -->
+            <li class="cmp-card"
+                [class.disabled]="!(permissionService.hasPermission('empty-wagon-order-list') | async )">
+                <a routerLink="/empty-wagon/empty-wagon-order-list">
+                    <div class="card-figure">
+                        <svg class="icon">
+                            <use xlink:href="assets/icons/icons-menue.svg#emptyWagonLandingPage" />
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="elm-headline">{{ 'Navigation.Empty-wagon' | translate }}</div>
+                        <div class="elm-text">{{ 'Home.Empty-wagon-text' | translate }}</div>
+                    </div>
+                    <div class="card-text" style="vertical-align: center;">
+                        <!--div class="arrow" #arrowIcon>
+                            <svg class="iconSmall" viewBox="0 0 25 25" style="margin: 0px;">
+                                <use xlink:href="assets/icons/icons.svg#chevron-right-red" />
+                            </svg>
+                            <small style="font-weight: bold; padding-left: 0;">
+                                {{ 'Shared.Next-label' | translate }}
+                            </small>
+                        </div-->
+                    </div>
+                </a>
+            </li>
+
+            <!-- Order -->
+            <li class="cmp-card"
+                [class.disabled]="!(permissionService.hasPermission('order-management-order-list') | async )">
+                <a routerLink="/order-management/order-management-order-list">
+                    <div class="card-figure">
+                        <svg class="icon">
+                            <use xlink:href="assets/icons/icons-menue.svg#orderLandingPage" />
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="elm-headline">{{ 'Navigation.Order-management' | translate }}</div>
+                        <div class="elm-text">{{ 'Home.Order-management-text' | translate }}</div>
+                    </div>
+                    <div class="card-text" style="vertical-align: center;">
+
+                        <!--div class="arrow" #arrowIcon>
+                            <svg class="iconSmall" viewBox="0 0 25 25" style="margin: 0px;">
+                                <use xlink:href="/assets/icons/icons.svg#chevron-right-red" />
+                            </svg>
+                            <small style="font-weight: bold; padding-left: 0;">
+                                {{ 'Shared.Next-label' | translate }}
+                            </small>
+                        </div-->
+                    </div>
+                </a>
+            </li>
+
+            <!-- Track-trace -->
+            <li class="cmp-card" [class.disabled]="!(permissionService.hasPermission('tracktrace') | async )">
+                <a routerLink="/customer-portal/wagonview/wagon-view-list">
+                    <div class="card-figure">
+                        <svg class="icon">
+                            <use xlink:href="assets/icons/icons-menue.svg#TrackAndTraceLandingPage" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="elm-headline">{{ 'Navigation.Track-trace' | translate }}</div>
+                        <div class="elm-text">{{ 'Home.Track-trace-text' | translate }}</div>
+                    </div>
+                    <div class="card-text" style="vertical-align: center;">
+                        <!--div class="arrow" #arrowIcon>
+                            <svg class="iconSmall" viewBox="0 0 25 25" style="margin: 0px;">
+                                <use xlink:href="assets/icons/icons.svg#chevron-right-red" />
+                            </svg>
+                            <small style="font-weight: bold; padding-left: 0;">
+                                {{ 'Shared.Next-label' | translate }}
+                            </small>
+                        </div-->
+                    </div>
+                </a>
+            </li>
+
+            <!-- Train Management -->
+            <li class="cmp-card" [class.disabled]="!(permissionService.hasPermission('trains-list-view') | async )">
+                <a routerLink="/gzp/trainorder/trains-list-view">
+                    <div class="card-figure">
+                        <svg class="icon">
+                            <use xlink:href="assets/icons/icons-menue.svg#TrainmanagmentLandingPage" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="elm-headline">{{ 'Navigation.Train-management' | translate }}</div>
+                        <div class="elm-text">{{ 'Home.Train-management-text' | translate }}</div>
+                    </div>
+                    <div class="card-text" style="vertical-align: center;">
+                        <!-- div class="arrow" #arrowIcon>
+                            <svg class="iconSmall" viewBox="0 0 25 25" style="margin: 0px;">
+                                <use xlink:href="assets/icons/icons.svg#chevron-right-red" />
+                            </svg>
+                            <small style="font-weight: bold; padding-left: 0;">
+                                {{ 'Shared.Next-label' | translate }}
+                            </small>
+                        </div-->
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="elm-progress" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+    </div>
+</body>

@@ -1,0 +1,171 @@
+<section>
+  <div class="header-line">
+      <h2>{{ 'Order-view-page.Overview-title' | translate }}</h2>
+  </div>
+  <app-week-view-filter #filter (dow)="setDaysOfWeek($event)"></app-week-view-filter>
+  <div style="margin-bottom: -20px;" *ngIf="loadingInProgress">
+      <div>
+          <div class="elm-progress">
+              <progress id="progress-label-07" style="margin-bottom: 40px;"></progress>
+          </div>
+      </div>
+  </div>
+  <div class="calendar">
+      <table class="cmp-table">
+          <thead>
+          <tr>
+              <th class="col" style="vertical-align: top;">{{ 'Order-view-page.Train-number-label' | translate }}</th>
+              <th class="col" style="vertical-align: top;">{{ 'Order-view-page.Shipping-station-label' | translate }}</th>
+              <th class="col" style="vertical-align: top;">{{ 'Order-view-page.Receiving-station-label' | translate }}</th>
+              <ng-container *ngFor="let dayOfWeek of daysOfWeek | keyvalue: dayComparator">
+                  <th class="col">
+                      <div>
+                          <strong>{{ dayOfWeek.value.date | date: 'EEEE' }}</strong>
+                      </div>
+                      <div>
+                          <span [ngClass]="{ today: isToday(dayOfWeek.value.date) }">{{ dayOfWeek.value.date | dateTime: 'shortDate' }}</span>
+                      </div>
+                  </th>
+              </ng-container>
+          </tr>
+          </thead>
+          <tbody *ngIf="regularTrains || specialTrains">
+          <ng-container *ngFor="let trainsObject of [regularTrains, specialTrains]; let i = index">
+              <tr *ngIf="i === 0">
+                  <td id="regular-trains" colspan="10">{{ 'Calendar-view-page.Regular-trains-header' | translate }}</td>
+              </tr>
+              <tr *ngIf="i === 1">
+                  <td id="special-trains" colspan="10">{{ 'Calendar-view-page.Special-trains-header' | translate }}</td>
+              </tr>
+
+              <tr *ngFor="let item of trainsObject | keyvalue">
+                  <td class="train-number">
+                    <div *ngIf="isTrainChain(item)" class="flex-row">
+                        <img *ngIf="getTrainChainType(item) == trainChainTypes.INTERMODAL" src="assets/icons/chain_32.png" style="margin-bottom: 5px; width: 20px" title="{{ getTrainChainIds(item) }}" />
+                        <svg *ngIf="getTrainChainType(item) == trainChainTypes.ROUNDTRIP" class="icon" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#round-trip"/>
+                        </svg>
+                        <div style="margin-left: 5px" title="{{ getTrainChainIds(item) }}">{{ item.value.trainNumber }}</div>
+                    </div>
+                    <div *ngIf="!isTrainChain(item)" >                        
+                        <div style="margin-left: 25px">{{ item.value.trainNumber }}</div>
+                    </div>
+                    
+                  </td>
+                  <td>{{ toUpperOptionalString(item.value.sendingStation) }}</td>
+                  <td>
+                    <div *ngIf="!isTrainChain(item)">{{ toUpperOptionalString(item.value.receivingStation) }}</div>
+                    <div *ngIf="isTrainChain(item)">{{ toUpperOptionalString(getChainReceivingStation(item)) }}</div>
+                  </td>
+                  <td class="day-cell" *ngFor="let day of daysOfWeekArray; let i = index">
+                      <div class="train-info" *ngIf="item.value[i]" [class.deactivated]="item.value[i].orderStatus === 'CANCELED'">
+                          <div class="time-block mouse-pointer" (click)="openTrainInfoModal(item.value[i])" title="{{ 'Order-view-page.openTrainDetails' | translate }}">
+                            <span class="time-block-line">
+                                <div [class.holiday-show]="item.value[i].holidays?.length > 0" class="holiday">
+                                    <div class="holiday-text" title="{{ getHolidayNames(item.value[i].holidays) }}">{{ 'Calendar-view-page.Holiday-icon-text' | translate }}</div>
+                                </div>
+                                <div *ngIf="item.value[i].manualEta">
+                                    <span class="eta">ETA</span>
+                                    <span class="eta-time" [class.train-late]="isTrainLate(item.value[i])">{{ item.value[i].manualEta | dateTime: 'HH:MM' }}{{ arrivalOnOtherDay(item.value[i].plannedDeparture, item.value[i].manualEta) }}</span>
+                                </div>
+                                <div *ngIf="hasConstructionSite(item.value[i])">
+                                    <img src="assets/icons/Baustellen-Icon.svg" style="width: 25px" title="{{getConstructionSiteToolTip(item.value[i])}}" />
+                                </div>
+                            </span>
+                              <div>
+                                  <span>{{ item.value[i].plannedDeparture | dateTime: 'HH:MM' }}</span>
+                                  <span>{{ item.value[i].plannedArrival | dateTime: 'HH:MM' }}{{ arrivalOnOtherDay(item.value[i].plannedDeparture, item.value[i].plannedArrival) }}</span>
+                              </div>
+                          </div>
+                          <div class="progress-bar-block">
+                              <div *ngIf="item.value[i].orderStatus != 'CANCELED'"
+                                      class="progress-bar"
+                                      [style.width]="calculateProgress(item.value[i].progress ? item.value[i].progress.toString() : null, item.value[i].parked)"
+                                      [class.progress-train-late]="isTrainLate(item.value[i])"
+                                      [class.progress-train-tooLate]="isTrainTooLate(item.value[i])"
+                                      [class.progress-train-parked]="item.value[i].parked"
+                              ></div>
+                          </div>
+                          <div class="icons-block">
+                              <div class="mouse-pointer" *ngIf="item.value[i].operationalMode === 'IDLE'" title="{{ 'Shared.Train-details-empty' | translate }}" (click)="openTrainInfoModal(item.value[i])">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                      <use xlink:href="assets/icons/icons.svg#wagon-empty"/>
+                                  </svg>
+                              </div>
+                              <div class="mouse-pointer" *ngIf="item.value[i].operationalMode === 'LOAD'" title="{{ 'Shared.Train-details-loaded' | translate }}" (click)="openTrainInfoModal(item.value[i])">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                      <use xlink:href="assets/icons/icons.svg#wagon-loaded"/>
+                                  </svg>
+                              </div>
+                              
+                              <div class="mouse-pointer" *ngIf="item.value[i].orderStatus === 'CANCELED'" title="{{ 'Shared.Train-cancelled' | translate }}" (click)="openTrainInfoModal(item.value[i])">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                      <use xlink:href="assets/icons/icons.svg#train-cancelled"/>
+                                  </svg>
+                              </div>                                
+
+                              <div class="mouse-pointer" *ngIf="item.value[i].orderStatus === 'CANCELLATION_ACQUIRED' || item.value[i].orderStatus === 'CANCELLATION_IN_VALIDATION'" title="{{ 'Shared.Train-cancelled-pending' | translate }}" (click)="openTrainInfoModal(item.value[i])">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                      <use xlink:href="assets/icons/icons.svg#train-cancelled-pending"/>
+                                  </svg>
+                              </div>
+                              
+                              <div class="mouse-pointer" *ngIf="item.value[i].cancellationFee === true" title="{{ 'Shared.Train-storno-cash' | translate }}" (click)="openTrainInfoModal(item.value[i])">
+                                  <svg class="icon" viewBox="0 0 25 25">
+                                      <use xlink:href="assets/icons/icons.svg#storno-cash"/>
+                                  </svg>
+                              </div>
+
+                              <div *ngIf="showTrackingBar(item.value[i])"
+                                   title="{{ 'Order-view-page.Tracking-history-header' | translate }}" class="icon mouse-pointer">
+                                  <svg class="icon" viewBox="0 0 25 25"
+                                       (click)="openTrackingHistoryModal(item.value[i])"
+                                       data-testId="tracking-history">
+                                      <use xlink:href="assets/icons/icons.svg#tracking-position"/>
+                                  </svg>
+                              </div>
+                              <div *ngIf="(item.value[i] | trainCancelable); else second">
+                                  <details class="cmp-overflow-menu" *ngIf="activateEditMenu(item.value[i])">
+                                      <summary>
+                                          <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                                              <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                                          </svg>
+                                      </summary>
+                                      <menu type="toolbar">                                            
+                                          <li>
+                                              <button class="elm-button" title="{{ 'Order-component.Context-menu.Cancel' | translate }}" type="button" (click)="openModalCancelOrder(item.value[i])">
+                                                  {{ 'Order-component.Context-menu.Cancel' | translate }}
+                                              </button>
+                                          </li>
+                                      </menu>
+                                  </details>                                  
+                              </div>
+                              <ng-template #second>
+                                <div class="icons-block" style="opacity: 0.4; margin-right: 0px;">
+                                    <svg viewBox="0 0 25 25" class="icon">
+                                        <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                                    </svg>
+                                </div>
+                            </ng-template>
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+
+  <div *ngIf="showLoadButton && !loadingInProgress" class="bottom-controls">    
+    <button class="load-btn" (click)="loadMore()">
+        {{ 'Order-view-page.Load-more-button-label' | translate }}
+    </button>
+  </div>
+
+  <div>
+    <strong>{{ lengthOfTrainsList }} {{'Shared.Of' | translate}} {{ totalTrains }}</strong>
+  </div>
+  
+</section>
+
+

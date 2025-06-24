@@ -1,0 +1,67 @@
+<div class="flex-row">
+    <div style="width: 50%; margin: 30px 0 0 20px">
+      <div class="flex-row" style="width: 100%">
+        <div style="margin: 0 0 0 1em; width: 100%">
+            <small style="font-style: italic;">{{fileName}}</small>
+        </div>
+        <div style="min-width: 350px" class="flex-row" *ngIf="(permissionService.hasPermission('user-management') | async )">
+            <i style="margin: 0.25em .5em 0 0" data-icon="help" (click)="showFileNameInfo()" class="pointer"></i>
+            <div class="pointer">
+                <label for="file-upload" class="file-upload">{{'Shared.chooseFile' | translate}}</label>
+                <input id="file-upload" type="file" (change)="onFileSelected($event)" #fileUpload accept=".pdf" class="pointer">
+            </div>
+            <div style="margin: 0 0 0 1em">
+                <db-button data-variant="brand-primary" type="button" (click)="uploadReleaseInformation()" [disabled]="uploadReleaseInformationDisabled()">
+                    {{ 'Shared.Save-button-label' | translate }}
+                </db-button>
+            </div>
+         </div>   
+      </div>
+      <div class="parting-line"></div>
+      <div class="elm-progress" *ngIf="loadingInProgress">
+          <progress id="progress-label-07"></progress>
+      </div>
+  
+      <div class="flex-column full-width">
+          <div class="flex-row full-width">
+              <div class="head width-10">ID</div>
+              <div class="head width-45">Name</div>
+              <div class="head width-20">Version</div>
+              <div class="head width-20">Datum</div>
+              <div class="head width-5"></div>
+          </div>
+          <div *ngFor="let releaseInformation of releaseInformationList; let idx = index" id="ri_row_{{idx}}" class="flex-row pointer" (click)="selectRow(idx); selectReleaseInformation(releaseInformation)">
+              
+                  <div class="width-10" style="padding-left: 5px; padding-top: 5px">{{releaseInformation.id}}</div>
+                  <div class="width-45" style="padding-top: 5px">{{releaseInformation.name}}</div>
+                  <div class="width-20" style="padding-top: 5px">{{releaseInformation.version}}</div>
+                  <div class="width-20" style="padding-top: 5px">{{releaseInformation.created}}</div>                
+                  <div class="width-5" style="text-align: right; padding-right: 5px">
+                    <i data-icon="download" data-icon-variant="24-outline" (click)="download(releaseInformation.id)" title="Download"></i>                    
+                  </div>
+                  <div *ngIf="(permissionService.hasPermission('user-management') | async )" class="width-5" style="text-align: right; padding-right: 5px" title="Löschen">
+                    <i data-icon="delete" data-icon-variant="24-outline" (click)="deleteReleaseInformation(releaseInformation.id)" title="Löschen"></i>                    
+                  </div>
+              
+          </div>
+      </div>
+  
+      <div *ngIf="releaseInformationList && total > releaseInformationList.length" class="center-content" style="margin-top: 1em">
+          <div class="load-button pointer center-content" (click)="loadMore()">{{ 'Order-view-page.Load-more-button-label' | translate }}</div>    
+      </div>
+  
+      <div *ngIf="loadingCompleted && releaseInformationList.length === 0" class="center-content">
+        <div style="margin: 50px">{{'Shared.Errors.no-files' | translate}}</div>
+      </div>
+
+      <div class="parting-line"></div>
+  
+    </div>
+    
+    <pdf-viewer *ngIf="showPdf" 
+        [src]="selected" 
+        [original-size]="false"      
+        style="width: 50%; height: calc(100vh - 277px);">
+    </pdf-viewer>
+
+</div>

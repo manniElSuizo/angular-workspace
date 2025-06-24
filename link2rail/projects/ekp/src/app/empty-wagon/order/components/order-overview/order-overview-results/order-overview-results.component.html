@@ -1,0 +1,124 @@
+<section>
+    <div id="list-view" style="width: 100%; min-width: 1820px">
+        <table class="list-table">
+            <thead class="table-header">
+            <tr>
+                <ng-container *ngFor="let header of tableHeaders">
+                    <th scope="col" [style.min-width]="header.minWidth" [style.text-align]="header.textAlign"
+                        [title]="header.headerText">
+                        <div class="flex-row">
+                            <span [innerHtml]="header.headerText" [title]="header.headerTitle"></span>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let orderSummary of tableData; let i = index" [class.white-row]="i % 2 === 0">
+                <td>
+                    <div>{{ orderSummary.orderId }}</div>
+                    <div>{{ orderSummary.orderIdConsumer }}</div>
+                </td>
+                <td>
+                    <div>{{ orderSummary.templateName }}</div>
+                    <div>{{ orderSummary.internalOrderNumber }}</div>
+                </td>
+                <td>
+                    <div matTooltip="{{ orderSummary.orderer.sgvName }}" class="tooltip pointer">
+                        {{ orderSummary.orderer.sgvId }}
+                    </div>
+                    <div matTooltip="{{ orderSummary.orderer.partnerName }}" class="tooltip pointer">
+                        {{ orderSummary.orderer.partnerId }}
+                    </div>
+                </td>
+                <td>
+                    <div matTooltip="{{ orderSummary.shipper.sgvName }}"
+                         class="tooltip pointer">{{ orderSummary.shipper.sgvId }}
+                    </div>
+                    <div matTooltip="{{ orderSummary.shipper.partnerName }}"
+                         class="tooltip pointer">{{ orderSummary.shipper.partnerId }}
+                    </div>
+                </td>
+                <td>
+                    {{ orderSummary?.demandLocation?.name }}
+                </td>
+                <td>
+                    <div matTooltip="{{ orderSummary.freightWagonLocation?.name }}"
+                         class="tooltip pointer">{{ orderSummary.freightWagonLocation?.number }}
+                    </div>
+                    <div>{{ orderSummary.demandLocation?.countryCodeIso }}</div>
+                </td>
+                <td>
+                    <div> {{ orderSummary.demandWagonType.number }}</div>
+                    <div>{{ orderSummary.demandWagonType.name }}</div>
+                </td>
+                <td>
+                    <div> {{ orderSummary.numberOfWagonsOrdered }}</div>
+                    <div>{{ orderSummary.numberOfWagonsDisposed }}</div>
+                </td>
+                <td>
+                    <div class="tooltip pointer" (click)="viewStatusHistory(orderSummary.orderIdConsumer)">
+                        <a> {{ orderSummary.status }}</a>
+                    </div>
+                </td>
+                <td>
+                    {{ orderSummary.origin }}
+                </td>
+                <td>{{ orderSummary.deliveryDateTime | dateTime }}</td>
+                <td>
+                    <div *ngIf="orderSummary.loadRunInformation">
+                        <details class="icon cmp-dropdown mouse-pointer"
+                                 title=" {{'ewd.order.overview.table.menu.loadRunInformation.title' | translate }}">
+                            <summary id="summary">
+                                <svg viewBox="0 0 25 25" class="icon">
+                                    <use xlink:href="assets/icons/icons.svg#zab-details"/>
+                                </svg>
+                            </summary>
+                            <menu type="toolbar" style="width: 300px" #menu>
+                                <div id="load-run-data-hader" class="load-run-data-header">
+                                    {{ 'ewd.order.overview.table.menu.loadRunInformation.title' | translate }}:
+                                </div>
+                                <div></div>
+                                <div>{{ 'ewd.order.overview.table.menu.loadRunInformation.countryCodeUic' | translate }}</div>
+                                <div>{{ orderSummary.loadRunInformation.countryCodeUic }}</div>
+                                <div>{{ 'ewd.order.overview.table.menu.loadRunInformation.locationNumber' | translate }}</div>
+                                <div>{{ orderSummary.loadRunInformation.locationNumber }}</div>
+                                <div>{{ 'ewd.order.overview.table.menu.loadRunInformation.transitRailwayUndertakingCode' | translate }}</div>
+                                <div>{{ orderSummary.loadRunInformation.transitRailwayUndertakingCode }}</div>
+                                <div>{{ 'ewd.order.overview.table.menu.loadRunInformation.nhmCode' | translate }}</div>
+                                <div>{{ orderSummary.loadRunInformation.nhmCode }}</div>
+                            </menu>
+                        </details>
+                    </div>
+                </td>
+                <td>{{ orderSummary.commentToCustomerService }}</td>
+                <td>{{ orderSummary.customerReference }}</td>
+                <td>
+                    <div (click)="openMenu($event, orderSummary)">
+                        <svg viewBox="0 0 24 24" class="icon mouse-pointer">
+                            <use xlink:href="assets/icons/icons.svg#more-vertical"/>
+                        </svg>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<app-popup-menu>
+    <div class="items">
+        <div *ngIf="selectedRailOrder && selectedRailOrder.enableEditButton"
+             (click)="modifyOrder(selectedRailOrder.orderIdConsumer)"> {{ 'ewd.order.overview.button.modifyOrder' | translate }}
+        </div>
+        <div *ngIf="!(selectedRailOrder && selectedRailOrder.enableEditButton)"
+             style="opacity: 0.4;"> {{ 'ewd.order.overview.button.modifyOrder' | translate }}
+        </div>
+        <div *ngIf="selectedRailOrder && selectedRailOrder.enableCancelButton"
+             (click)="cancelOrder(selectedRailOrder.orderId,selectedRailOrder.orderIdConsumer)"> {{ 'ewd.order.overview.button.cancelOrder' | translate }}
+        </div>
+        <div *ngIf="!(selectedRailOrder && selectedRailOrder.enableCancelButton)"
+             style="opacity: 0.4;"> {{ 'ewd.order.overview.button.cancelOrder' | translate }}
+        </div>
+        <div (click)="viewOrder(selectedRailOrder.orderIdConsumer)"> {{ 'ewd.order.overview.button.viewOrder' | translate }}</div>
+    </div>
+</app-popup-menu>

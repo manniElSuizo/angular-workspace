@@ -1,0 +1,56 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.width-5 {
+  width: 5%;
+}
+
+.width-10 {
+  width: 10%;
+}
+
+.width-20 {
+  width: 20%;
+}
+
+.width-45 {
+  width: 45%;
+}
+
+.head {  
+  font-weight: bold;
+  margin: 0 0 .5em 0;
+}
+
+.load-button {
+  text-align: center; 
+  width: 200px; 
+  border-radius: 5px; 
+  border: 1px solid black; 
+  background-color: #fff; 
+  color: #000; 
+  height: 40px;
+  
+}
+
+pdf-viewer {
+  ::ng-deep {
+    .ng2-pdf-viewer-container {
+      margin-left: 5%;
+      margin-right: 5%;
+      max-width: 95%;
+      overflow-x: hidden;
+    }
+  }
+}

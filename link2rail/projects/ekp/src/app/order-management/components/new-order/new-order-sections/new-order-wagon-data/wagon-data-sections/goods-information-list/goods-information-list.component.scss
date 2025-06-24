@@ -1,0 +1,30 @@
+.icon-block {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 15px;
+    top: 30px;
+    
+    .icon {
+        position: absolute;
+    }
+}
+
+.button-field {
+    position: relative;
+    padding-right: 0.6em;
+    margin-top: 14px;
+}
+
+db-button {
+    margin-top: 0.7rem;
+}
+
+svg {
+    margin: 5px 0 7px 0;
+}
+
+.elm-button {
+    margin: 0!important;
+    padding: 0;
+}

@@ -1,0 +1,349 @@
+<header class="modal-header">
+  <span>{{ 'Order-view-page.Train-details-page.Train-info-header' | translate }}</span>
+  
+  <div *ngIf="!isTrainChain()">
+    <h2 class="elm-headline">
+      <strong>{{ trainDetail?.train?.trainNumber || '-' }}</strong><span class="details-h2-normal"> - {{ (plannedDepartureTitle | dateTime: 'shortDate') || '-' }}</span>
+    </h2>
+  </div>
+  <div *ngIf="isTrainChain()" style="width: 100%">
+    <div class="input-field" style="width: 100%">
+      <form [formGroup]="formGroup" style="width: 100%">
+        <select class="elm-input" title="Zugkette" name="train-chain-items" id="train-chain-items" formControlName="trainChainItemSelector">          
+          <option *ngFor="let train of this.trainChainTrains" [ngValue]="train">{{train.train.trainNumber}} - {{train.train.productionDate  | dateTime: 'shortDate'}}</option>
+        </select>
+      </form>
+  </div>
+  </div>
+
+  <a class="close-icon" title="Close the dialog" mat-dialog-close>
+    <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+      <use xlink:href="assets/icons/icons.svg#close" />
+    </svg>
+  </a>
+
+  <div class="elm-progress dim-overlay" *ngIf="loadingInProgress">
+    <progress id="progress-label-07"></progress>
+  </div>
+
+</header>
+<main class="modal-main">
+  <div class="details-info-block">
+    <div class="info-block-part">
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Train-type-label' | translate }}:</strong>
+        </div>
+        <div *ngIf="trainDetail?.productType">{{ 'train-' + trainDetail?.productType | translate }}</div>
+        <div *ngIf="!trainDetail?.productType">-</div>
+      </div>
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Train-id-label' | translate }}:</strong>
+        </div>
+        <div *ngIf="trainDetail?.train?.trainId || trainDetail?.train?.startDate">{{ (trainDetail?.train?.trainId || '-') + (trainDetail?.train?.startDate || '-') }}</div>
+        <div *ngIf="!trainDetail?.train?.trainId && !trainDetail?.train?.startDate">-</div>
+      </div>
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Order-status-label' | translate }}:</strong>
+        </div>
+        <div id="order-status-value">{{ translateStatus() | translate }}</div>
+      </div>
+      
+      <div *ngIf="trainDetail?.orderStatus?.includes('CANCELED')">
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Cancel-reason-label' | translate }}:</strong>
+        </div>
+        <div>{{ trainDetail?.cancelReasonName }}</div>        
+      </div>
+      
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Current-train-number-label' | translate }}:</strong>
+        </div>
+        <div *ngIf="trainDetail?.currentTrainNumber">{{ trainDetail?.currentTrainNumber || '-'}}</div>
+        <div *ngIf="!trainDetail?.currentTrainNumber">-</div>
+      </div>
+    </div>    
+
+    <div *ngIf="currentSchedule === CurrentSchedule.NONE" class="info-block-part">
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-length-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">-</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-weight-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">-</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-speed-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">-</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.bza-number-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">-</div>
+      </div>
+
+    </div>
+
+    <div *ngIf="currentSchedule === CurrentSchedule.DAILY" class="info-block-part">
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-length-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableDaily?.lengthMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-weight-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableDaily?.weightMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-speed-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableDaily?.speedMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.bza-number-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableDaily?.bzaNumber || '-' }}</div>
+      </div>
+    </div>
+
+    <div *ngIf="currentSchedule === CurrentSchedule.YEARLY" class="info-block-part">
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-length-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableYearly?.lengthMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%"> 
+          <strong>{{ 'Order-view-page.Train-details-page.max-weight-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableYearly?.weightMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.max-speed-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableYearly?.speedMax || '-' }}</div>
+      </div>
+      <div>
+        <div style="width: 60%">
+          <strong>{{ 'Order-view-page.Train-details-page.bza-number-label' | translate }}:</strong>
+        </div>
+        <div style="width: 40%">{{ trainDetail?.timetableYearly?.bzaNumber || '-' }}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr />
+
+  <div *ngIf="hasConstructionSites(trainDetail)" id="construction-site-information">
+    <div *ngIf="getConstructionSiteCount(trainDetail) > 0">
+      <div [ngSwitch]="getConstructionSiteCount(trainDetail)">
+        <div *ngSwitchDefault class="trainAffectectByConstruction">{{'Order-view-page.Train-details-page.train-affected-by-n-constructionSites' | translate : {cnt : constructionSitesCount} }}</div>
+        <div *ngSwitchCase="1" class="trainAffectectByConstruction">{{'Order-view-page.Train-details-page.train-affected-by-one-construction-site' | translate}}</div>
+        <div *ngSwitchCase="2" class="trainAffectectByConstruction">{{'Order-view-page.Train-details-page.train-affected-by-two-construction-sites' | translate}}</div>
+        <div *ngSwitchCase="3" class="trainAffectectByConstruction">{{'Order-view-page.Train-details-page.train-affected-by-three-construction-sites' | translate}}</div>
+      </div>
+    </div>
+    <div  *ngIf="getConstructionSiteCount(trainDetail) <= 0">
+      <div class="trainAffectectByConstruction"> {{'Order-view-page.Train-details-page.train-affected-by-constructionSites' | translate}} </div>    
+    </div>
+    <div *ngFor="let site of trainDetail.constructionSites" class="details-info-block" style="padding-top: 1em">      
+
+      <div class="info-block-part">
+        <div>
+          <div style="width: 60%">
+            <strong>{{ 'Order-view-page.Train-details-page.construction-time' | translate }}</strong>
+          </div>
+          <div style="width: 40%">{{ site.period }}</div>
+        </div>
+        <div>
+          <div style="width: 60%">
+            <strong>{{ 'Order-view-page.Train-details-page.affected-section' | translate }}:</strong>              
+          </div>
+          <div style="width: 40%">{{site.location}}</div>
+        </div>
+      </div>    
+
+      <div class="info-block-part">
+        <div>
+          <div style="width: 40%">
+            <strong>{{ 'Order-view-page.Train-details-page.construction-impact' | translate }}:</strong>
+          </div>
+          <div style="width: 60%">{{site.impact}}</div>
+        </div>
+        <div>
+          <div style="width: 40%">
+            <strong>{{ 'Order-view-page.Train-details-page.estimated-arrival' | translate }}:</strong>
+          </div>
+          <div style="width: 60%">{{ (site.eta | dateTime: 'separated') }}</div>
+        </div>       
+      </div>
+
+    </div>
+  </div>
+
+  <hr *ngIf="hasConstructionSites(trainDetail)" />
+
+  <div class="details-info-block" style="width: 100%">
+    <div class="info-block-part">
+      <div>
+        <strong style="font-size: 1.3rem;">{{ 'Order-view-page.Train-details-page.Shipping-station-label' | translate }}:</strong><strong style="font-size: 1.3rem; margin: 0 0 0 2em">{{ toUpperOptionalString(trainDetail?.timetableDaily?.sendingStation?.name || trainDetail?.timetableYearly?.sendingStation?.name) || '-' }}</strong>
+      </div>        
+      <div>
+        <div>
+          <small *ngIf="showLableOriginally('sendingStation')" class="small-info, originally-lable">
+            ({{ 'Order-view-page.Train-details-page.originally' | translate }} {{ toUpperOptionalString(trainDetail?.timetableYearly?.sendingStation?.name) }})
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-info-block">
+    <div class="info-block-part">
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Actual-departure-label' | translate }}:</strong>
+        </div>
+        <div>{{ (trainDetail?.actualDeparture | dateTime: 'separated') || '-' }}</div>
+      </div>
+
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Planned-departure-label' | translate }}:</strong>
+          <br />
+          <small>{{ 'Order-view-page.Train-details-page.Annual-plan-label' | translate }}</small>
+        </div>
+        <div>{{ (trainDetail?.timetableYearly?.plannedDeparture | dateTime: 'separated') || '-' }}</div>
+      </div>
+
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Planned-departure-label' | translate }}:</strong>
+          <br />
+          <small>{{ 'Order-view-page.Train-details-page.Daily-plan-label' | translate }}</small>
+        </div>
+        <div>{{ (trainDetail?.timetableDaily?.plannedDeparture | dateTime: 'separated') || '-' }}</div>
+      </div>
+    </div>
+
+    <div class="info-block-part">
+      
+      <div *ngIf="trainDetail?.closeTimes?.actualTime">
+        <strong>{{ ('Order-view-page.Train-details-page.Acceptance-deadline-current-label' | translate)}}: {{ (trainDetail?.closeTimes?.actualTime | dateTime: 'separated')}}</strong>
+      </div>
+      
+      <div *ngIf="trainDetail?.closeTimes?.plannedTime" style="margin: 1em 0 0 0">
+        <strong>{{ ('Order-view-page.Train-details-page.Acceptance-deadline-target-label' | translate)}}: {{ (trainDetail?.closeTimes?.plannedTime | dateTime: 'separated')}}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+  <hr />
+
+  <div class="details-info-block" style="width: 100%">
+    <div class="info-block-part">
+      <div>
+        <div>
+          <strong style="font-size: 1.3rem;">{{ 'Order-view-page.Train-details-page.Receiving-station-label' | translate }}:</strong><strong style="font-size: 1.3rem; margin: 0 0 0 2em">{{ toUpperOptionalString(trainDetail?.timetableDaily?.receivingStation?.name || trainDetail?.timetableYearly?.receivingStation?.name) || '-' }}</strong>
+        </div>        
+      </div>
+      <div>
+        <small *ngIf="showLableOriginally('receivingStation')" class="small-info, originally-lable">
+          ({{ 'Order-view-page.Train-details-page.originally' | translate }} {{ toUpperOptionalString(trainDetail?.timetableYearly?.receivingStation?.name) }})
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-info-block">
+    <div class="info-block-part">
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Actual-arrival-label' | translate }}:</strong>
+        </div>
+        <div>{{ (trainDetail?.actualArrival | dateTime: 'separated') || '-' }}</div>
+      </div>
+
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Planned-arrival-label' | translate }}:</strong>
+          <br />
+          <small>{{ 'Order-view-page.Train-details-page.Annual-plan-label' | translate }}</small>
+        </div>
+        <div>{{ (trainDetail?.timetableYearly?.plannedArrival | dateTime: 'separated') || '-' }}</div>
+      </div>
+
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Planned-arrival-label' | translate }}:</strong>
+          <br />
+          <small>{{ 'Order-view-page.Train-details-page.Daily-plan-label' | translate }}</small>
+        </div>
+        <div>{{ (trainDetail?.timetableDaily?.plannedArrival | dateTime: 'separated') || '-' }}</div>
+      </div>
+    </div>
+
+    <div class="info-block-part">
+      
+      <div *ngIf="trainDetail?.provisionTimes?.actualTime">
+        <strong>{{ 'Order-view-page.Train-details-page.Provisioning-time-current-label' | translate }}: {{ (trainDetail?.provisionTimes?.actualTime | dateTime: 'separated')}}</strong>
+      </div>  
+      
+      <div *ngIf="trainDetail?.provisionTimes?.plannedTime" style="margin: 1em 0 0 0">
+        <strong>{{ 'Order-view-page.Train-details-page.Provisioning-time-target-label' | translate }}: {{ (trainDetail?.provisionTimes?.plannedTime | dateTime: 'separated')}}</strong>
+      </div>
+
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="details-info-block">
+    <div class="info-block-part">
+      <div>
+        <div>
+          <strong>{{ 'Order-view-page.Train-details-page.Corridor-label' | translate }}:</strong>
+        </div>
+        <div>{{ trainDetail?.corridor || '-' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div *ngIf="trainDetail?.majorDisruptions && trainDetail?.majorDisruptions?.length">
+    <!-- <div>
+      <strong>{{ 'Order-view-page.Disruption-label' | translate }}: </strong>
+    </div> -->
+    <div *ngFor="let md of trainDetail?.majorDisruptions" class="disruption">
+      <svg class="disruption-red-icon" viewBox="0 0 32 32" style="margin: 0px;">
+        <use xlink:href="assets/icons/icons.svg#error-triangle" />
+      </svg>
+      <div>
+        <strong>{{ 'Order-view-page.Disruption-label' | translate }}: {{ md.objectKeyAlpha }} | {{md.validFrom | date}} - {{md.validUntil | date}}</strong><br>
+        {{ md.name }}
+      </div>
+    </div><br>
+  </div>
+</main>

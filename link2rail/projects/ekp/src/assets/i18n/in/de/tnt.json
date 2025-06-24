@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Wagenhaltersicht",
+        "Tooltip": {
+            "Open-wagon-details": "Öffne Wagendetails für Wagen: "
+        },
+        "Table-header": {
+            "Wagonkeeper": "Wagenhalter",
+            "Wagonnumber": "Wagennummer",
+            "Wagoncategory": "Gattung",
+            "Trackingstatus": "Trackingstatus",
+            "Trackingstatusdate": "Datum",
+            "Country": "Land",
+            "Location": "Standort",
+            "Runability": "Lauffähigkeit",
+            "Damagecode": "Schadcode"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Wagenhalter",
+            "Vehicle-number": "Wagennummer",
+            "Vehicle-type": "Wagengattung",
+            "Runnability": "Lauffähigkeit",
+            "Damage-Code": "Schadcode",
+            "Location-country": "Standort Land",
+            "Location": "Standort"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Tracking Historie",
+        "Overview-title": "Tracking Historie",
+        "ZAB-order-number": "ZAB Auftragsnummer:",
+        "Wagon-number": "Wagennummer:",
+        "Table-header": {
+            "Event": "Event",
+            "Location": "Standort",
+            "Real-time": "Ist-Zeiten",
+            "Train-number": "Zugnummer"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Wagenübersicht",
+        "Table-header": {
+            "Wagon-number": "Wagennummer",
+            "Date-of-dispatch": "Versanddatum",
+            "Expected-arrival": "Vsl. Ankunft",
+            "Forwarding-yard": "Versandbahnhof",
+            "Destination-yard": "Empfangsbahnhof",
+            "Consignor": "Absender",
+            "Consignee": "Empfänger",
+            "Event": "Event",
+            "Location": "Aktueller Standort",
+            "Zab-order-number": "ZAB Auftrags- nummer"
+        },
+        "Tooltip": {
+            "Loaded": "Wagen beladen",
+            "Empty": "Wagen leer",
+            "Damage-limited-runablity": "Wagen eingeschränkt lauffähig",
+            "Damage-no-runablity": "Wagen nicht lauffähig",
+            "Duration-target": "Laufzeitziel:",
+            "No-duration-target": "Kein Laufzeitziel vorhanden",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Ist-Ankunft",
+            "Actual-sending-date-label": "Ist-Abfahrt",
+            "Additional-commercial-information-discount-code": "Kundenabkommen",
+            "Annotation-of-consignor-description": "Absenderreferenz",
+            "Bza-number": "BZA-Nummer",
+            "Consignee": "Empfaenger",
+            "Customs-tariff-no": "Zollnummer",
+            "Current-train-number-label": "Aktuelle Zugnummer",
+            "Customer-reference": "Kundenreferenz",
+            "Damage-code": "Schadcode",
+            "Damage-code-description": "Schadcode Beschreibung",
+            "Damage-limited-runablity": "Wagen eingeschraenkt lauffaehig",
+            "Damage-no-runablity": "Wagen nicht lauffaehig",
+            "First-train-number-label": "Erste Zugnummer",
+            "Forwarding-yard-number": "Versandbahnhof Nummer",
+            "Loaded": "Wagen beladen",
+            "Location-status": "Aktueller Standort Status",
+            "Location-time": "Aktueller Standort Zeit",
+            "Netto-weight": "Nettogewicht",
+            "NHM-code-description": "Warenbezeichnung",
+            "NHM-code-label": "NHM-Code",
+            "Receiver-customer-number": "Empfaengernummer",
+            "Receiving-country": "Empfangsland",
+            "Receiving-station-number": "Empfangsbahnhof Nummer",
+            "Runablity": "Lauffaehigkeit",
+            "Sender-customer-number": "Absendernummer",
+            "Sending-country": "Versandland",
+            "Status": "ZAB-Status",
+            "Tare-weight": "Wagengewicht",
+            "Template-name": "Auftragscode",
+            "Wagon-type-label": "Wagengattung",
+            "Weight": "Bruttogewicht",
+            "Zab-order-number": "ZAB Auftragsnummer",
+            "Location-country": "Standort Land"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Wagennummer",
+                "Date-of-dispatch-from": "Versanddatum (von)",
+                "Date-of-dispatch-to": "Versanddatum (bis)",
+                "Incoming-by": "Im Zulauf bis",
+                "Zab-order-number": "Auftragsnummer",
+                "Sending-station": "Versandbahnhof (Name)",
+                "Receiving-station": "Empfangsbahnhof (Name)",
+                "Location": "Aktueller Standort",
+                "NHM-code": "NHM Code",
+                "Consignor": "Absender (Name/SGV-Nr.)",
+                "Consignee": "Empfänger (Name/SGV-Nr.)",
+                "Loading-state": "Ladezustand wählen",
+                "customerReference": "Referenz",
+                "senderIsoCountryCode": "Versandland",
+                "deliveryIsoCountryCode": "Empfangsland"
+            },
+            "Label": {
+                "Wagon-number": "Wagennummer",
+                "Date-of-dispatch-from": "Versanddatum (von)",
+                "Date-of-dispatch-to": "Versanddatum (bis)",
+                "Incoming-by": "Im Zulauf bis",
+                "Zab-order-number": "Auftragsnummer",
+                "Sending-station": "Versandbahnhof",
+                "Receiving-station": "Empfangsbahnhof",
+                "Location": "Aktueller Standort",
+                "NHM-code": "NHM Code",
+                "Consignor": "Absender (Name/SGV-Nr.)",
+                "Consignee": "Empfänger (Name/SGV-Nr.)",
+                "Loading-state": "Ladezustand",
+                "Loading-state-loaded": "Beladen",
+                "Loading-state-empty": "Leer",
+                "customerReference": "Referenz",
+                "senderIsoCountryCode": "Versandland",
+                "deliveryIsoCountryCode": "Empfangsland"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Suche",
+                "noDataAvailablePlaceholderText": "Keine Daten verfügbar"
+            }
+        }
+    }
+}

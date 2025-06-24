@@ -1,0 +1,44 @@
+<div>
+  <div class="grid-picklist">
+      <div class="grid-items">
+          <label class="elm-label" for="notAssignedProfiles">nicht zugeordnetet Profile</label>
+      </div>
+      <div></div>
+      <div class="grid-items">
+        <div>
+          <label class="elm-label" for="assignedProfiles">zugeordnetet Profile</label>
+        </div>
+        <!--div>
+          <button class="elm-button" data-variant="primary" type="button" (click)="openCustomerRolesModal()" [disabled]="assignedProfiles.length === 0">
+            Rollen anpassen
+          </button>
+        </div--> 
+      </div>
+    </div>
+    <div class="grid-picklist">
+      <div id="notAssignedProfiles" class="flex-column elm-textarea" style="border: 1px solid lightgrey">
+        <div *ngFor="let item of unassignedProfiles" id="{{item.id}}" (click)="selectUnassignedListItem(item.id)" style="padding: 0 1em 0 1em">
+          {{item.sgvId}} / {{item.companyLocationNumber}} 
+        </div>
+      </div>
+      <div class="picklist-buttons">
+        <button class="elm-button" data-variant="tertiary-plain" type="button" style="width: 40px; margin: 10px 0 5px 0;" [disabled]="unassignedProfiles.length === 0" (click)="assignSelectedItem()">
+            &gt;
+        </button>
+        <button class="elm-button" data-variant="tertiary-plain" type="button" style="width: 40px; margin: 5px 0 10px 0;" [disabled]="unassignedProfiles.length === 0" (click)="assignAll()">
+          &gt;&gt;
+        </button>
+        <button class="elm-button" data-variant="tertiary-plain" type="button" style="width: 40px; margin: 10px 0 5px 0;" [disabled]="assignedProfiles.length <= 1" (click)="unassignSelectedItem()">
+            &lt;
+        </button>
+        <button class="elm-button" data-variant="tertiary-plain" type="button" style="width: 40px; margin: 5px 0 10px 0;" [disabled]="assignedProfiles.length <= 1" (click)="unassignAll()">
+          &lt;&lt;
+        </button>
+      </div>
+        <div id="assignedProfiles" class="flex-column elm-textarea" style="border: 1px solid lightgrey">
+          <div *ngFor="let item of assignedProfiles" id="{{item.id}}" [class.assignedProfile]="item.id == primaryProfileId" (click)="selectAssignedListItem(item.id)" style="padding: 0 1em 0 1em">
+            {{item.sgvId}} / {{item.companyLocationNumber}} 
+        </div>
+      </div>
+    </div>
+</div>

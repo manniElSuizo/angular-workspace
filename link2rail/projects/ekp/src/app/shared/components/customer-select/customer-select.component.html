@@ -1,0 +1,52 @@
+<form class="rea-grid main-block" [formGroup]="selectCustomerForm">
+    <div class="input-field" *ngIf="!(permissionService.hasPermission(null, [authorization.READ_ALL_PROFILES]) | async)" style="margin-right: 365px;">
+        <select
+                name="selectedCustomer"
+                id="selectedCustomer"
+                formControlName="selectedCustomer"
+                type="text"
+                class="elm-input"
+                list="datalistcustomer-select"
+                (change)="selectCustomer($event)">
+            <option value="-1"></option>
+            <option [value]="i" *ngFor="let option of tmCustomerDataList; index as i">{{option | customerSgvPartnerId}}</option>
+        </select>
+        <label class="elm-label" for="selectedCustomer" aria-hidden="true" id="customer-select-label">{{ 'customer-select' | translate }}</label>
+    </div>
+    <div class="input-field" *ngIf="permissionService.hasPermission(null, [authorization.READ_ALL_PROFILES]) | async">
+        <input
+               autocomplete="off"
+               name="sgvId" id="sgvId"
+               formControlName="sgvId" type="text" class="elm-input"
+               placeholder="{{ 'customer-select' | translate }}*"
+               list="datalist-sgvId"
+               (input)="getSgvIdsList($event)"
+               (change)="selectSgvId($event)"
+               />
+            <label class="elm-label" for="sgvId">{{ 'customer-select' | translate }}</label>
+        <datalist id="datalist-sgvId">
+            <option *ngFor="let option of sgvAutoComplete">{{ option | customerSgvName}}</option>
+        </datalist>
+        <div class="icon-block" (click)="clearSearchInput()">
+            <svg class="icon" [ngClass]="selectCustomerForm.get('sgvId')?.value ? 'hide-icon' : 'show-icon'" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#search" />
+            </svg>
+            <svg class="icon" [ngClass]="selectCustomerForm.get('sgvId')?.value ? 'show-icon' : 'hide-icon'" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close" />
+            </svg>
+        </div>
+    </div>
+    <div class="input-field" *ngIf="permissionService.hasPermission(null, [authorization.READ_ALL_PROFILES]) | async">
+        <select *ngIf="partnerIdList && partnerIdList.length > 0 else disabledSelect" formControlName="partnerId" class="elm-input" type="text"
+                name="partnerId"
+                id="partnerId"
+                (change)="selectPartnerId($event)">
+            <option [value]="option.partnerId"
+                    *ngFor="let option of partnerIdList">{{ option.partnerId !== '' ? '(' + option.partnerId + ') ' + option.name : '' }}</option>
+        </select>
+        <ng-template #disabledSelect><select formControlName="partnerId" class="elm-input" type="text" name="partnerId" id="partnerId"></select></ng-template>
+        <label class="elm-label" for="partnerId" aria-hidden="true" id="partnerId-label">
+            {{ 'partnerId-select' | translate }}
+        </label>
+    </div>
+</form>

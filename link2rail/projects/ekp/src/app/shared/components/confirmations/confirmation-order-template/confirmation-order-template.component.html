@@ -1,0 +1,22 @@
+<header class="modal-header">
+    <h3 class="elm-headline">
+      <strong>{{'Shared.Confirmations.Cancel-OrderTemplateHeader' | translate}}</strong>
+    </h3>
+  </header>
+  <main class="modal-main">
+    <form>
+      <div>
+        <div>
+          <div style="text-align:center">
+            <br>{{'Shared.Confirmations.Cancel-Order-Template' | translate}}
+          </div>
+          <div class="button-group">
+            <input class="elm-button" data-variant="primary" type="button" mat-dialog-close value="{{'Shared.Confirmations.Yes' | translate}}" (click)="closeModals()">
+            <button class="elm-button" data-variant="secondary" type="button" mat-dialog-close>
+              {{'Shared.Confirmations.No' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>

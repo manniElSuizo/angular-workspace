@@ -1,0 +1,250 @@
+<header class="modal-header">
+    <h2>
+        <strong>{{ 'User-management-component.Customerprofile-edit-header' | translate }}</strong>
+    </h2>
+    <a class="close-icon" title="{{ 'Shared.Close-button-label' | translate }}" (click)="openConfirmationModal()">
+        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+    <p *ngIf="profile?.customerProfileId">
+        ID: {{ profile.customerProfileId }}
+    </p>
+</header>
+<main class="modal-main" style="overflow: hidden">
+    <form [formGroup]="formGroup" autocomplete="false" [class.loading]="loadingSave">
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="tab-header">
+                    <span class="tab-title">1. {{'User-management-component.Customerprofile-edit-header' | translate }}</span>
+                    <span class="RequiredField" id="required-field">{{'Shared.Required-field' | translate}}</span>
+                </div>
+                <div class="input-block-complete" id="profileData">
+                    <div class="flex-row">                
+                        <div class="flex-column" style="width: 33%">
+                            <!--START: Kunde -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputCustomer">
+                                <input formControlName="customer"
+                                        type="text"
+                                        class="elm-input"
+                                        name="customer"
+                                        id="customer"
+                                        aria-labelledby="customer-label"
+                                        [readOnly]="true"
+                                />
+                                <label class="elm-label" for="customer" aria-hidden="true" id="customer-label">{{ 'User-management-component.Profile.customer-label' | translate }}</label>
+                                <div class="elm-progress" *ngIf="loadingInProgress">
+                                    <progress id="progress-label-07"></progress>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column" style="width: 33%">
+                            <!--START: SGV -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputSGV">
+                                <input formControlName="sgv"
+                                        type="text"
+                                        class="elm-input"
+                                        name="sgv"
+                                        id="sgv"
+                                        aria-labelledby="sgv-label"
+                                        [readOnly]="true"
+                                />
+                                <label class="elm-label" for="sgv" aria-hidden="true" id="sgv-label">{{ 'User-management-component.Profile.sgv-label' | translate }}</label>
+                            </div>
+                        </div>
+                        <div class="flex-column" style="width: 33%">
+                            <!--START: SGV -->
+                            <div class="input-field" [formGroup]="formGroup" id="inputSite">
+                                <input formControlName="site"
+                                        type="text"
+                                        class="elm-input"
+                                        name="site"
+                                        id="site"
+                                        aria-labelledby="site-label"
+                                        [readOnly]="true"
+                                />
+                                <label class="elm-label" for="site" aria-hidden="true" id="site-label">{{ 'User-management-component.Profile.site-label' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-column" style="width: 33%">
+                            <div class="input-field">
+                                <select formControlName="tomgroup" class="elm-input"
+                                type="text"
+                                name="tomgroup"
+                                id="tomgroup">
+                                    <option [ngValue]=""></option>
+                                    <option *ngFor="let tg of tomGroups" [value]="tg.id">{{tg.groupName}}</option>
+                                </select>
+                                <label class="elm-label" for="tomgroup" aria-hidden="true" id="tomgroup-label">
+                                    {{ 'User-management-component.Profile.tomgroup-label' | translate }}</label
+                                >
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--END: CUSTOMER -->
+
+                    <div class="dashed-line"></div>
+
+                    <!-- START: RELATIONS -->
+                    <div class="flex-row">
+                        <div class="flex-column">
+                            <h3>{{ 'User-management-component.Profile.grantor-relation-label' | translate }}</h3>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-column">
+                            <table class="list-table">
+                                <thead class="table-header">
+                                    <tr>
+                                      <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of grantorTableHeaders">
+                                        <div>
+                                          <div>
+                                            <span>{{ header.text }}</span>
+                                          </div>
+                                          <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                                            <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                            <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                                          </span>
+                                        </div>
+                                      </th>
+                                      <th style="min-width: 40px; max-width: 40px;"></th>
+                                    </tr>
+                                  </thead>
+                                <tbody *ngIf="profile?.grantorRelations">
+                                    <tr *ngFor="let rel of profile.grantorRelations">
+                                        <td>{{getCustomer(rel.granteeCustomer)}}</td>
+                                        <td>{{rel.relationType.relationName}}</td>
+                                        <td class="no-op" style="text-align: right; min-width: 40px; max-width: 40px;">
+                                            <span>
+                                                <a title="{{ 'delete' | translate }}">
+                                                <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="removeRelation(rel)">
+                                                    <use xlink:href="assets/icons/icons.svg#delete" />
+                                                </svg>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-field">
+                                                <input
+                                                    formControlName="customerProfile"
+                                                    type="text"
+                                                    class="elm-input no-margin"
+                                                    placeholder="{{ 'User-management-component.Customer-profile-label' | translate }}"
+                                                    name="customerProfile"
+                                                    id="customerProfile"
+                                                    list="datalist-customerProfile"
+                                                    (input)="getCustomerList($event)"
+                                                    (change)="selectCustomer($event)"/>
+                                                <label class="elm-label" for="customerProfile" aria-hidden="true" id="customerProfile-label">
+                                                    {{ 'User-management-component.Customer-profile-label' | translate }}
+                                                </label>
+                                                <ng-container *ngIf="formGroup.controls.customerProfile.invalid && formGroup.controls.customerProfile.touched || !this.customerProfileExists">
+                                                    <small class="input-error" *ngIf="formGroup.controls.customerProfile.errors?.required">{{'Shared.Errors.Field-is-required-error-text' | translate}}</small>
+                                                    <small class="input-error" *ngIf="!this.customerProfileExists">{{
+                                                        'Shared.Errors.Customerprofile-not-exists-error-text' | translate
+                                                        }}
+                                                    </small>
+                                                </ng-container>
+                                                <datalist id="datalist-customerProfile">
+                                                <option *ngFor="let option of customerAutoComplete">{{ getCustomer(option) }}</option>
+                                                </datalist> 
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-field">
+                                                <select formControlName="relationtype" class="elm-input no-margin"
+                                                type="text"
+                                                name="relationtype"
+                                                id="relationtype">
+                                                    <option [ngValue]=""></option>
+                                                    <option *ngFor="let t of relationTypes" [value]="t.id">{{t.relationName}}</option>
+                                                </select>
+                                                <label class="elm-label" for="relationtype" aria-hidden="true" id="relationtype-label">
+                                                    {{ 'User-management-component.Profile.relation-name' | translate }}</label
+                                                >
+                                            </div>
+                                        </td>
+                                        <td class="no-op" style="text-align: right; min-width: 40px; max-width: 40px;">
+                                            <span>
+                                            <a title="{{ 'add' | translate }}">
+                                            <svg viewBox="0 0 25 25" class="icon mouse-pointer" (click)="addCustomerRelation()" [class.disabled]="!this.customerProfile.value || !this.customerProfileExists || !this.relationtype.value">
+                                                <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                                            </svg>
+                                            </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+
+                    <div class="flex-row" style="margin-top: 10px;">
+                        <div class="flex-column">
+                            <h3>{{ 'User-management-component.Profile.grantee-relation-label' | translate }}</h3>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-column">
+                            <table class="list-table">
+                                <thead class="table-header">
+                                    <tr>
+                                      <th scope="col" [title]="header.text" [style.width]="header.width? header.width : 'auto'" *ngFor="let header of granteeTableHeaders">
+                                        <div>
+                                          <div>
+                                            <span>{{ header.text }}</span>
+                                          </div>
+                                          <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                                            <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                                            <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                                          </span>
+                                        </div>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                <tbody *ngIf="profile?.granteeRelations">
+                                    <tr *ngFor="let rel of profile.granteeRelations">
+                                        <td>{{getCustomer(rel.grantorCustomer)}}</td>
+                                        <td>{{rel.relationType.relationName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div>  
+            </div>
+
+            
+            <!-- START: BUTTON-LINE -->
+            <div class="grid-item">
+            </div>
+            <div class="flex-row">        
+                <div class="flex-column" style="width: 40%">
+                </div>        
+                <div class="flex-column elm-progress"  style="width: 20%">
+                    <progress *ngIf="loadingSave" id="progress-label-07"></progress>
+                </div>        
+                <div class="flex-column" style="width: 40%">
+                    <div class="grid-item buttons-right">
+                        <div class="right-aligned">
+                            <db-button *ngIf="(userManagementService.hasUpdatePermission() | async ) || (userManagementService.hasCreatePermission() | async )" variant="brand-primary" type="button" (click)="doSaveCustomerProfile()" [disabled]="formGroup.invalid">
+                                {{ 'Shared.Save-button-label' | translate }}
+                            </db-button>
+                        <!-- /div>
+                        <div -->
+                            <db-button variant="secondary" type="button" (click)="openConfirmationModal()">
+                                {{ 'Shared.Cancel-button-label' | translate }}
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: BUTTON-LINE -->
+        </div>
+    </form>
+</main>

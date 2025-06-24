@@ -1,0 +1,93 @@
+<div style="width: 100%">
+    <form [formGroup]="filterForm">
+        <div class="filter-block-grid">
+            <div class="input-field">
+                <input formControlName="demandDateFrom"
+                       #demandDateFrom
+                       type="date"
+                       name="demandDateFrom"
+                       id="demandDateFrom"
+                       class="elm-input date-field"
+                       aria-labelledby="demandDateFromLabel"
+                       [class.focused]="demandDateFrom.value"
+                       (focus)="onFocus($event)"
+                       (blur)="onBlur($event)"
+                       (change)="onFilterChange($event)"/>
+                <label class="date-label" id="demandDateFromLabel" for="demandDateFrom" aria-hidden="true">
+                    {{ 'ewd.order.overview.filter.dateFrom' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <input formControlName="demandDateTo"
+                       #demandDateTo
+                       type="date"
+                       name="demandDateTo"
+                       id="demandDateTo"
+                       class="elm-input date-field"
+                       aria-labelledby="demandDateToLabel"
+                       [class.focused]="demandDateTo.value"
+                       (focus)="onFocus($event)"
+                       (blur)="onBlur($event)"
+                       (change)="onFilterChange($event)"/>
+                <label class="date-label" id="demandDateToLabel" for="demandDateTo" aria-hidden="true">
+                    {{ 'ewd.order.overview.filter.dateTo' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                    #ordererSgv
+                    [multiselectAutocompleteParameters]="ordererSgvParameters"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                >
+                </app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="ordererPartnerParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #ordererPartner></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="demandLocationParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #demandLocation></app-multiselect-autocomplete>
+            </div>
+        </div>
+        <div class="filter-block-grid" style="margin: -15px 0 0 0">
+            <div class="input-field">
+                <app-multiselect-autocomplete [allowSearchFilter]="true"
+                                              [multiselectAutocompleteParameters]="loadRunCountryParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #loadRunCountry></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="demandWagonTypeParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #demandWagonType></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [allowSearchFilter]="false"
+                                              [multiselectAutocompleteParameters]="statusParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #status></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <input formControlName="searchReference"
+                       type="text"
+                       placeholder="{{ 'ewd.order.overview.filter.searchReference' | translate}}"
+                       name="searchReference"
+                       id="searchReference"
+                       class="elm-input"
+                       (change)="onFilterChange($event);"/>
+                <label class="elm-label" for="searchReference">
+                    {{ 'ewd.order.overview.filter.searchReference' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [allowSearchFilter]="false"
+                                              [multiselectAutocompleteParameters]="originParameters"
+                                              (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                                              #origin></app-multiselect-autocomplete>
+            </div>
+        </div>
+    </form>
+</div>

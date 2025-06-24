@@ -1,0 +1,93 @@
+<div>
+    <div class="filter-top-margin"></div>
+    <form [formGroup]="filterForm">
+        <div class="main-block main-block-mragin-top-diff">
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParamsVehicleKeeperCodes" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msvkc></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <input 
+                    formControlName="vehicleNumber"
+                    placeholder="{{ 'Wagonholder-component.Vehiclekeeper-filter.Vehicle-number' | translate }}"
+                    type="text"
+                    name="vehicleNumber" 
+                    id="vehicleNumber" 
+                    class="elm-input" 
+                    maxlength="15"
+                    (change)="onChangeFilter($event);" />
+                <label class="elm-label" for="vehicleNumber">
+                    {{ 'Wagonholder-component.Vehiclekeeper-filter.Vehicle-number' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParamsVehicleTypes" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msvt></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <select 
+                        (change)="onChangeFilter($event)"
+                        style="min-height: 52px" class="elm-input" type="text"
+                        title="{{ 'Wagonholder-component.Vehiclekeeper-filter.Runnability' | translate }}"
+                        id="suitableForRunning"
+                        formControlName="suitableForRunning">
+                    <option></option>
+                    <option *ngFor="let runability of runnabilities" [value]="runability.code">{{ runability.name | translate }} </option>
+                </select>
+                <label class="elm-label label-select" for="suitableForRunning" aria-hidden="true">
+                    {{ 'Wagonholder-component.Vehiclekeeper-filter.Runnability' | translate }}
+                </label>
+            </div>
+        </div>
+        <div class="main-block main-block-mragin-top-diff">
+            <div class="input-field">
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParamsDamageTypes" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #msdt></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <!-- input 
+                    formControlName="lastStatusCountryCode"
+                    placeholder="{{ 'Wagonholder-component.Vehiclekeeper-filter.Location-country' | translate }}"
+                    type="text"
+                    name="lastStatusCountryCode" 
+                    id="lastStatusCountryCode" 
+                    class="elm-input" 
+                    maxlength="15"
+                    (change)="onChangeFilter($event);" />
+                <label class="elm-label" for="lastStatusCountryCode">
+                    {{ 'Wagonholder-component.Vehiclekeeper-filter.Location-country' | translate }}
+                </label -->
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParamsLastStatusCountryCode" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mslscc></app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <!-- input 
+                    formControlName="lastStatusLocationNames"
+                    placeholder="{{ 'Wagonholder-component.Vehiclekeeper-filter.Location' | translate }}"
+                    type="text"
+                    name="lastStatusLocationNames" 
+                    id="lastStatusLocationNames" 
+                    class="elm-input" 
+                    maxlength="15"
+                    (change)="onChangeFilter($event);" />
+                <label class="elm-label" for="lastStatusLocationNames">
+                    {{ 'Wagonholder-component.Vehiclekeeper-filter.Location' | translate }}
+                </label -->
+                <app-multiselect-autocomplete [multiselectAutocompleteParameters]="multiselectParamsLastStatusLocationNames" (formFieldEventEmitter)="multiselectChangeEventListener($event)" #mslsln></app-multiselect-autocomplete>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="controls-block">
+    <div class="controls-block">
+        <h3>{{ 'Shared.Results-label' | translate }} ({{ vehicleSummariesForVehicleKeeper.length }})</h3>
+        <div *ngIf="activeFilterCount > 0" class="filter-active-all tbl-header-filter-reset-download">
+            <span><strong>{{ activeFilterCount }} {{ 'Month-view-page.Filter-active' | translate }}</strong> |</span>
+            <span class="filter-reset" (click)="resetAllFilters()">
+                {{ 'Month-view-page.Filter-reset-label' | translate }}
+                <i name="filter-reset" class="filter-reset" data-icon="close" data-icon-variant="24-outline"></i>
+            </span>
+        </div>
+    </div>
+    <div class="cmp-overflow-menu download-block tbl-header-filter-reset-download" style="cursor: pointer;">
+          <!-- i data-icon="download"></i>
+          Download (.csv) -->
+    </div>
+</div>

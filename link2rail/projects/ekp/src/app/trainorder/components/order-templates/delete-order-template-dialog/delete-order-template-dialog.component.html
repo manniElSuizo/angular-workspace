@@ -1,0 +1,18 @@
+<main class="modal-main">
+    <div>
+        {{ 'Order-templates-component.Delete-order-template.Dialog-text-prefix' | translate }} {{templateId}} {{ 'Order-templates-component.Delete-order-template.Dialog-text-suffix' | translate }}
+    </div>
+    <div class="button-group grid-container">
+        <div class="grid-item ">
+            <db-button variant="secondary" type="button" (click)="onDiscardClick()">
+                {{ 'Order-templates-component.Delete-order-template.Cancellation-button' | translate }}
+            </db-button>
+        </div>
+
+        <div class="grid-item right-aligned">
+            <db-button variant="brand-primary" type="submit" (click)="onConfirmationClick()">
+                {{ 'Order-templates-component.Delete-order-template.Confirmation-button' | translate }}
+            </db-button>
+        </div>
+    </div>
+</main>

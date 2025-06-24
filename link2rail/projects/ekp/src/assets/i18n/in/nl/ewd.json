@@ -1,0 +1,375 @@
+{
+  "ewd": {
+    "shared": {
+      "status": {
+        "canceled": "geannuleerd",
+        "created": "besteld",
+        "dispatched": "bestelling verzonden",
+        "draft": "concept aangemaakt",
+        "draftRemoved": "concept verwijderd",
+        "inProcess": "in behandeling",
+        "isTransmitted": "wordt verzonden",
+        "partialCancellation": "(Gedeeltelijke) annulering",
+        "rejected": "afgewezen",
+        "transmitted": "verzonden",
+        "transmitFailed": "verzenden mislukt"
+      }
+    },
+    "order": {
+      "overview": {
+        "title": "Overzicht van bestellingen",
+        "button": {
+          "createOrder": "Nieuwe bestelling",
+          "modifyOrder": "bewerken",
+          "cancelOrder": "annuleren",
+          "viewOrder": "openen"
+        },
+        "filter": {
+          "dateFrom": "Datum (van)",
+          "dateTo": "Datum (tot)",
+          "ordererSgv": "Klant",
+          "ordererPartner": "Locatienummer klant",
+          "demandLocation": "Spoorwegstation",
+          "loadRunCountry": "Land van bestemming",
+          "demandWagonType": "Behoeftetype",
+          "status": "Status",
+          "searchReference": "Zoeken (bestel-ID, link2rail-ID, referentie)",
+          "origin": "Oorsprong"
+        },
+        "table": {
+          "header": {
+            "orderId": {
+              "text": "Bestel-ID<br>link2rail-ID",
+              "title": "Bestel-ID, link2rail-ID"
+            },
+            "internalOrderNumber": {
+              "text": "Sjabloon<br>EWD-ID",
+              "title": "Sjabloon, EWD-ID"
+            },
+            "orderer": {
+              "text": "Klant<br>Locatie",
+              "title": "Klant, Locatie"
+            },
+            "shipper": {
+              "text": "Verzender<br>Locatie",
+              "title": "Verzender, Locatie"
+            },
+            "demandLocation": {
+              "text": "Spoorwegstation",
+              "title": "Spoorwegstation"
+            },
+            "freightWagonLocation": {
+              "text": "Locatie behoefte<br>Land",
+              "title": "Locatie behoefte, Land"
+            },
+            "demandWagonType": {
+              "text": "Behoeftetype",
+              "title": "Behoeftetype"
+            },
+            "numberOfWagon": {
+              "text": "Aantal<br> wagons",
+              "title": "Aantal wagons"
+            },
+            "status": {
+              "text": "Status",
+              "title": "Status"
+            },
+            "origin": {
+              "text": "Oorsprong",
+              "title": "Oorsprong"
+            },
+            "demandDateTime": {
+              "text": "Datum en tijd behoefte",
+              "title": "Datum en tijd behoefte"
+            },
+            "loadRunInformation": {
+              "text": "Informatie over lading",
+              "title": "Informatie over lading"
+            },
+            "customerCommentsToService": {
+              "text": "Opmerking klant",
+              "title": "Opmerking klant"
+            },
+            "customerReference": {
+              "text": "Klantreferentie",
+              "title": "Klantreferentie"
+            },
+            "menu": {
+              "text": "",
+              "title": ""
+            }
+          },
+          "menu": {
+            "loadRunInformation": {
+              "title": "Informatie over lading",
+              "countryCodeUic": "Land van bestemming",
+              "locationNumber": "Bestemmingsstation",
+              "transitRailwayUndertakingCode": "Doorvoer SO",
+              "nhmCode": "NHM-code"
+            }
+          },
+          "downloadCsv": {
+            "orderId": "Bestel-ID",
+            "templateName": "link2rail-ID",
+            "internalOrderNumber": "Sjabloon",
+            "orderIdConsumer": "EWD-ID",
+            "ordererSgvId": "Klant",
+            "ordererPartnerId": "Locatie",
+            "shipperSgvId": "Verzender",
+            "shipperPartnerId": "Locatie",
+            "demandLocationCountry": "Land",
+            "freightWagonLocation": "Locatie behoefte",
+            "numberOfWagonsOrdered": "Aantal",
+            "numberOfWagonsDisposed": "wagons",
+            "demandDateTime": "Datum en tijd",
+            "customerCommentsToService": "Opmerking klant"
+          }
+        }
+      },
+      "form": {
+        "common": {
+          "orderTemplate": {
+            "required": "*Verplicht veld",
+            "inputs": {
+              "templateName": {
+                "placeholder": "Sjabloon",
+                "label": "Sjabloon"
+              }
+            }
+          },
+          "orderPartners": {
+            "title": "Klant",
+            "inputs": {
+              "ordererSgv": {
+                "placeholder": "Klant",
+                "label": "Klant"
+              },
+              "ordererPartner": {
+                "placeholder": "Locatie klant",
+                "label": "Locatie klant"
+              },
+              "shipperSgv": {
+                "placeholder": "Vertrek",
+                "label": "Vertrek"
+              },
+              "shipperPartner": {
+                "placeholder": "Locatie lader",
+                "label": "Locatie lader"
+              }
+            }
+          },
+          "demandLocation": {
+            "inputs": {
+              "commercialLocation": {
+                "placeholder": "Station",
+                "label": "Station"
+              },
+              "freightWagonLocation": {
+                "placeholder": "Terminal",
+                "label": "Terminal"
+              }
+            }
+          },
+          "demandTime": {
+            "title": "Aanvraag",
+            "inputs": {
+              "demandDate": {
+                "placeholder": "dag",
+                "label": "dag"
+              },
+              "demandTime": {
+                "placeholder": "tijd",
+                "label": "tijd"
+              }
+            },
+            "errors": {
+              "demandDate": {
+                "required": "Voer de vraagdatum in.",
+                "isMinDateNotMet": "De vraagdatum is vóór de vereiste minimumdatum {{ minDemandDate }}.",
+                "isMaxDateExceeded": "De vraagdatum mag niet later zijn dan {{ maxDemandDate }}.",
+                "nonWorkingDay": "De vraagdatum is geen werkdag."
+              },
+              "demandTime": {
+                "required": "Voer de vraagtijd in.",
+                "expired": "De uiterste datum en tijd voor klantbestellingen {{ latestCustomerOrderDateTime }} is verstreken."
+              },
+              "demandTypesArray": {
+                "invalidWagonCount": "Er moet ten minste één wagon worden besteld."
+              }
+            }
+          },
+          "demandType": {
+            "inputs": {
+              "demandWagonType": {
+                "placeholder": "wagentype",
+                "label": "wagentype"
+              },
+              "wagonAmount": {
+                "placeholder": "Aantal wagens",
+                "label": "Aantal wagens"
+              },
+              "commentToCustomerService": {
+                "placeholder": "Opmerking klantenservice",
+                "label": "Opmerking klantenservice"
+              },
+              "customerReference": {
+                "placeholder": "Klantreferentie",
+                "label": "Klantreferentie"
+              },
+              "countryCode": {
+                "placeholder": "Ontvangstland",
+                "label": "Ontvangstland"
+              },
+              "loadRunLocation": {
+                "placeholder": "Bestemmingsstation",
+                "label": "Bestemmingsstation"
+              },
+              "transitRailway": {
+                "placeholder": "Doorvoer SO",
+                "label": "Doorvoer SO"
+              },
+              "nhmCode": {
+                "placeholder": "NHM-code",
+                "label": "NHM-code"
+              }
+            },
+            "infos": {
+              "maxNumberOfWagonExceeded": "Het maximum aantal wagons {{ maxNumberOfWagon }} is overschreden."
+            }
+          }
+        },
+        "creation": {
+          "title": "Nieuwe bestelling",
+          "titleForTemplate": "Sjabloon",
+          "button": {}
+        },
+        "modification": {
+          "button": {}
+        },
+        "cancellation": {
+          "title": "Bestelling annuleren",
+          "message": "Wilt u de op dit moment geselecteerde deelorder of de hele order annuleren?",
+          "button": {
+            "cancelOrderId": "Hele order annuleren",
+            "cancelOrderIdConsumer": "Huidige link2rail-ID annuleren"
+          }
+        },
+        "history": {
+          "title": "Geschiedenis",
+          "section": {
+            "title": "Geschiedenis"
+          }
+        }
+      }
+    },
+    "template": {
+      "overview": {
+        "title": "Sjabloonoverzicht",
+        "button": {
+          "createOrder": "Nieuwe bestelling",
+          "viewTemplate": "openen"
+        },
+        "filter": {
+          "templateName": "Sjabloon",
+          "ordererSgv": "Klant",
+          "ordererPartner": "Locatie klant",
+          "shipperSgv": "Vertrek",
+          "shipperPartner": "Locatie lader",
+          "demandLocation": "Station",
+          "loadRunCountry": "Ontvangstland",
+          "demandWagonType": "Wagentype"
+        },
+        "table": {
+          "header": {
+            "templateName": "Sjabloon",
+            "ordererSgv": "Klant",
+            "ordererPartner": "Locatie klant",
+            "shipperSgv": "Vertrek",
+            "shipperPartner": "Locatie lader",
+            "createOrder": "Nieuwe lege wagenorder",
+            "viewTemplate": "Bekijk sjabloon",
+            "editTemplateName": "Sjabloon hernoemen"
+          }
+        }
+      },
+      "form": {
+        "rename": {
+          "title": "Sjabloon hernoemen {{templateName}}",
+          "inputs": {
+            "customerTemplateName": {
+              "placeholder": "Door gebruiker gedefinieerde naam",
+              "label": "Door gebruiker gedefinieerde naam"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Empty-wagon": {
+    "demand-component": {
+      "demand": "Behoefte",
+      "required-field": "*Verplicht veld",
+      "placeholder": {
+        "delivery-date-time": "Behoeftedag",
+        "Number-of-wagons": "Aantal wagons",
+        "customer-service": "Opmerking klantenservice",
+        "customer-reference": "Klantreferentie",
+        "demand-wagon-type": "Wagentype",
+        "receiving-country": "Ontvangstland",
+        "station-name": "Bestemmingsstation",
+        "transit-railway": "Doorvoer SO",
+        "nhm-code": "NHM-code",
+        "demand-date": "Behoeftedag",
+        "time-range": "Behoeftetijd"
+      },
+      "demand-date": {
+        "invalid-date": "Selecteer een latere datum.",
+        "missing-date": "Selecteer de behoefte dag en tijd."
+      },
+      "time-range": {
+        "invalid-date": "Selecteer een latere datum."
+      },
+      "wagon-amount": {
+        "error-text": "Er moet ten minste één wagon worden besteld."
+      }
+    },
+    "Template-view-list": {},
+    "Order-view-list": {
+      "Empty-wagon-order-list": "Overzicht van bestellingen",
+      "Table-header": {
+        "Order-id": "Bestel-ID MRX-ID",
+        "Order-id-consumer": "MRX-ID",
+        "Internal-order-number": "EWD-ID  Sjabloon",
+        "Orderer-customer-id": "Klant Locatie",
+        "Orderer-company-location-number": "Locatie",
+        "Shipper-customer-id": "Verzender Locatie",
+        "Shipper-company-location-number": "Locatie",
+        "Demand-location-commercial-location-country": "Land locatie behoefte",
+        "Demand-location-commercial-location-name": "Spoorwegstation",
+        "Demand-location-commercial-location-number": "Stationnummer",
+        "Demand-location-freight-wagon-location-number": "Nummer locatie behoefte",
+        "Demand-location-freight-wagon-location-name": "Naam locatie behoefte",
+        "Load-run-data": "Informatie over lading",
+        "Demand-wagon-type-wagon-type": "Wagentype",
+        "Demand-wagon-type-wagon-type-code": "Wagentype code",
+        "Demand-wagon-type-wagon-Type-number": "Wagentype nummer",
+        "Number-of-wagon-ordered": "Aantal (prognose) wagons",
+        "Number-of-wagon-disposed": "(prognose) wagons",
+        "Status": "Status",
+        "Origin": "Oorsprong",
+        "Delivery-date": "Behoeftedag tijd",
+        "Load-run-location-commercial-location-country": "Ontvangstland",
+        "Load-run-location-commercial-location-number": "Bestemmingsstation",
+        "Transit-railway-undertaking-company-code": "Doorvoer SO",
+        "Transported-goods-NHM-code": "NHM-code",
+        "Comment-to-customer-service": "Opmerking klantenservice",
+        "Customer-reference": "Klantreferentie",
+        "Template": "Sjabloon",
+        "Wagon-number": "Wagennummer",
+        "Wagon-type-national": "Wagentype nationaal",
+        "Wagon-type-international": "Wagentype internationaal",
+        "Wagon-type": "Type"
+      }
+    }
+  }
+}

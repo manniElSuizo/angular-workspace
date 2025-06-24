@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup">
+    <div class="flex-row">
+        <div style="width: 25%" class="input-field input-padding-10">
+            <app-el-s-autocomplete
+                    [formGroup]="formGroup"
+                    [displayNameTransform]="'value'"
+                    [fieldName]="'templateNameControl'"
+                    [minInputLength]="1"
+                    [placeholder]="('ewd.order.form.common.orderTemplate.inputs.templateName.placeholder' | translate)"
+                    [title]="('ewd.order.form.common.orderTemplate.inputs.templateName.placeholder' | translate)"
+                    [autocompleteResultList]="this.templateNameResultList"
+                    (doRequestSelectionListItems)="fetchTemplateNames($event)"
+                    (onSelectItem)="onSelectTemplateNameListItem($event)">
+            </app-el-s-autocomplete>
+        </div>
+        <div style="width: 75%; text-align: right; margin: 20px 20px 0 0">
+            {{ 'ewd.order.form.common.orderTemplate.required' | translate }}
+        </div>
+    </div>
+</form>

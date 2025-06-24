@@ -1,0 +1,65 @@
+/* Apply font family to modal header, body, footer, and body */
+.modal-header, .modal-body, .modal-footer, body {
+    font-size: medium;
+    font-family: "DB Screen Sans", Helvetica, Arial, sans-serif !important;
+    width: 100%;
+}
+
+/* Modal container with max height and no overflow */
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure footer is at the bottom */
+    width: 100%; 
+    max-height: 80vh; /* Limit the height of the modal */
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px; /* Optional: add rounded corners */
+}
+
+/* Modal body */
+.modal-body {
+    width: 100%; /* Ensure the body takes up the full width */
+    font-size: 16px;
+    flex-grow: 1; /* Ensure the body takes up available space */
+    overflow-y: auto; /* Allows scrolling inside the body */
+    padding: 0px 20px 0px 20px; /* Add padding inside the body */
+    background-color: white;
+}
+
+/* Modal footer with Flexbox to center and align buttons */
+.modal-footer {
+    display: flex;
+    justify-content: space-between; /* Align buttons to left and right */
+    align-items: center;
+    width: 100%;
+    background-color: white;
+}
+
+/* Feedback button styled */
+.feedback-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-weight: normal;
+    cursor: pointer; /* Adds a pointer cursor to indicate it's clickable */
+}
+
+/* Custom close button styled */
+.custom-close-button {
+    background-color: white;
+    color: black;
+    padding: 10px 20px 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid black; /* Border color */
+    font-weight: bold;
+    cursor: pointer; /* Adds a pointer cursor to indicate it's clickable */
+}
+
+/* Hover effect for close button */
+.custom-close-button:hover {
+    background-color: rgb(214, 211, 211); /* Slight darkening on hover */
+}

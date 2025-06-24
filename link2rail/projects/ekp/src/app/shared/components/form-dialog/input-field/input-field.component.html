@@ -1,0 +1,23 @@
+
+<span [formGroup]="settings.formGroup">
+    <input #inputField
+        [id]="getId()"
+        [name]="getName()"
+        formControlName="{{settings.formControlName}}"
+        [placeholder]="placeholderText"
+        [maxlength]="settings.maxLength"
+        [minlength]="settings.minLength"
+        [class.invalid-input]="errorCondition()"
+        class="elm-input"
+        [type]="settings.type ? settings.type : 'text'"
+        attr.aria-labelledby="{{getId()}}-label"
+        (change)="doOnChange($event)"
+        (blur)="doOnBlur($event)"
+    />
+    <label class="elm-label" id="{{getId()}}-label"
+        for="{{getId()}}" aria-hidden="true">{{placeholderText}}</label>
+    <ng-container
+        *ngIf="!settings.hideError && errorCondition()">
+        <small class="input-error">{{settings.i18n.errorText | translate}}</small>
+    </ng-container>
+</span>

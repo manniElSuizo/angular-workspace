@@ -1,0 +1,61 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-picklist {
+  display: grid;
+  grid-template-columns: 6fr 1fr 6fr;
+  cursor: default;
+  .elm-textarea {
+      overflow: auto;
+      resize: none;
+      height: 400px;
+  }
+  .picklist-buttons {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+  }
+  .grid-items {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 3px;
+  }
+}
+.assignedProfile {
+  font-weight: bold;
+}
+
+.elm-button {
+  &%variant-tertiaryPlain {
+		background-color: transparent; // shame.css
+		border: 2px solid transparent;
+		color: #282D37;
+
+		&:disabled {
+			color: unquote(#282D37 + "80");
+		}
+
+		&:not(:disabled) {
+			&:hover {
+				// TODO: This could probably get simplified later on e.g. via CSS variables
+				background-color: #F0F3F5;
+			}
+		}
+
+		&:active {
+			background-color: #F0F3F5;
+		}
+	}
+  &[data-variant="tertiary-plain"] {
+		@extend %variant-tertiaryPlain;
+	}
+}

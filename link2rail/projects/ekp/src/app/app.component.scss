@@ -1,0 +1,9 @@
+@use 'color';
+
+section {
+    min-height: calc(100vh - 162px);
+    background-color:color.$background-color-light;
+    // padding: 1px;
+    display: flex;
+    justify-content: center;
+}

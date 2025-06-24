@@ -1,0 +1,252 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_WAGON_DATA">
+  <form [formGroup]="formGroup">
+    <div class="flex-column">
+      <div id="order-form-header" class="flex-row div-with-100">
+        <h3>{{ 'New-order.Wagon-information.Group-header' | translate }}</h3>
+      </div>
+      <div class="orderSectionHeader">
+        <p>{{ 'New-order.Wagon-information.wagon-data' | translate }}</p>
+      </div>
+       
+        <div id="wagon-information-row-1" class="flex-row orderSectionHeader div-with-100" 
+     style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <!-- Gesamtanzahl Wagen -->
+          <div class="input-field input-padding-10 div-with-25">
+            <select formControlName="numberOfWagons" (change)="adjustWagonList()"
+              title="{{ 'New-order.Wagon-information.Label.Number-of-wagons' | translate }}"
+              class="elm-input div-with-100" type="text" name="numberOfWagons" id="number_of_wagons">
+              <!-- Generate options with numbers 1 to 99 -->
+              <option [value]="number" *ngFor="let number of numbersOfWagonsList">{{ number }}</option>
+            </select>
+            <label class="elm-label div-with-100" for="number_of_wagons" aria-hidden="true" id="number-of-wagons-label">
+              {{ 'New-order.Wagon-information.Label.Number-of-wagons' | translate }}
+            </label>
+          </div>
+
+          <!-- Import Wagendaten -->
+          <db-button 
+              id='wagon-information-import' class="flex-row orderSectionHeader" 
+                    variant="brand-primary" type="button"
+                    [disabled]="!editMode" 
+                    style="margin-top: 16px; "
+                    (click)="importWagonInformation()">
+                      {{ 'New-order.Wagon-information.Label.Import-wagon-information' | translate }}
+          </db-button>
+      </div>
+    </div>
+
+    <div *ngIf="formGroup && wagonInformationList.controls.length > 0" [formGroup]="formGroup" style="width: 100%">
+      <ng-container formArrayName="wagonInformationList">
+        <ng-container *ngFor="let item of wagonInformationList.controls let i = index" [formGroupName]="i">
+          <div class="flex-row">
+            <div id="checkboxWagon" style="width: 5%">
+              <div class="flex-row" style="padding: 30px 10px 0 0">
+                <div class="input-padding-10"><input id="checkboxWagon-input" formControlName="checkboxWagon"
+                    type="checkbox" name="checkbox" [formControl]="getCheckboxWagon(i)" class="elm-checkbox">
+                </div>
+                <div><label for="checkboxWagon-input">{{i+1}}.</label></div>
+                <div> <ng-container *ngIf="getWagon(i).invalid">
+                    <p style="color:red;">*</p>
+                  </ng-container></div>
+              </div>
+            </div>
+            
+            <div id="wagonNumber" class="input-field input-padding-10" style="width: 16%">
+              <input (blur)="setWagonNumber(i)" class='elm-input div-with-10' id="wagonNumber-input"
+              autocomplete="off"  
+              formControlName="wagonNumber"
+                placeholder="{{'New-order.Wagon-information.Placeholder.Wagon-number' | translate}}"
+                title="{{'New-order.Wagon-information.Placeholder.Wagon-number' | translate}}" type="text"
+                name="wagonNumber" type="text" aria-labelledby="wagonNumber-input" maxlength="15" style="width: 100%" />
+              <label for="wagonNumber" class="elm-label">
+                {{'New-order.Wagon-information.Label.Wagon-number' | translate}}
+              </label>
+              <ng-container *ngIf="getWagonNumber(i).errors">
+                <small class="input-error" *ngIf="getWagonNumber(i).errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getWagonNumber(i).errors?.duplicateNumber">
+                  {{ 'New-order.Errors.Wagon-no-duplicate' | translate : {wagonNumber: getWagonNumber(i).value}  }}
+                </small>
+                <small class="input-error" *ngIf="getWagonNumber(i).errors?.ensureValidWagonNumber">
+                  {{ 'New-order.Errors.Wagon-no-invalid' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getWagonNumber(i).errors?.isInvalidWagonNumber">
+                  {{ 'New-order.Errors.Checksum-invalid-for-wagon-no' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getWagonNumber(i).errors?.invalidChecksum">
+                  {{ 'New-order.Errors.Checksum-invalid-for-wagon-no' | translate }}
+                </small>
+              </ng-container>
+            </div>
+
+            <div id="firstGoodWeight" class="input-field input-padding-10" style="width: 16%">
+              <input (blur)="setFirstGoodWeight(i)" class="elm-input div-with-10" id="firstGoodWeight-input"
+                autocomplete="off"  
+                formControlName="firstGoodWeight"
+                placeholder="{{'New-order.Wagon-information.Placeholder.First-good-weight' | translate}}"
+                title="{{'New-order.Wagon-information.Placeholder.First-good-weight' | translate}}" name="weight"
+                type="number" aria-labelledby="firstGoodWeight-input" style="width: 100%" />
+              <label for="firstGoodWeight" class="elm-label">
+                {{'New-order.Wagon-information.Label.First-good-weight' | translate}}
+              </label>
+              <ng-container *ngIf="getFirstGoodWeight(i).errors">
+                <small class="input-error" *ngIf="getFirstGoodWeight(i).errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getFirstGoodWeight(i).errors?.noGoodWeight">
+                  {{ 'New-order.Errors.Weight-not-numerical' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getFirstGoodWeight(i).errors?.decimalPlacesGoodWeight">
+                  {{ 'New-order.Errors.No-decimal-for-weight' | translate }}
+                </small>
+              </ng-container>
+            </div>
+
+            <div id="typeOfWagon" class="input-field input-padding-10" style="width: 16%">
+              <app-el-s-autocomplete 
+                [autocompleteResultList]="wagonTypeResultLists[i]"
+                [displayNameTransform]="'code'"
+                [fieldName]="'typeOfWagon'"
+                [formGroup]="getWagonInformationFormGroup(i)"
+                [title]="'New-order-page.Wagon-type-label' | translate"
+                [placeholder]="'New-order-page.Wagon-type-label' | translate"
+                [arrayIndex]="i"
+                [otherConfig]="{errorConfig: {errorCondition: getTypeOfWagon(i).errors?.noTypeOfWagon, errorText: 'New-order.Errors.Wagon-category-missing' | translate}, doNotDedup: true}"
+                (doRequestSelectionListItems)="getWagonTypeAutocomplete($event, i)"
+                (onSelectItem)="onSelectWagonData($event, i)"
+              ></app-el-s-autocomplete>
+            </div>
+
+            <div id="firstGoodAdditionalDescription" class="input-field input-padding-10" style="width: 16%">
+              <input (blur)="setFirstGoodAdditionalDescription(i)" class='elm-input div-with-10'
+                autocomplete="off"
+                id="firstGoodAdditionalDescription-input" formControlName="firstGoodAdditionalDescription"
+                placeholder="{{'New-order.Wagon-information.Placeholder.First-good-additional-description' | translate}}"
+                title="{{'New-order.Wagon-information.Placeholder.First-good-additional-description' | translate}}"
+                name="firstGoodAdditionalDescription" type="text" aria-labelledby="firstGoodAdditionalDescription-input"
+                style="width: 100%" />
+              <label for="firstGoodAdditionalDescription" class="elm-label">
+                {{'New-order.Wagon-information.Label.First-good-additional-description' | translate}}
+              </label>
+              <ng-container
+                *ngIf="getfirstGoodAdditionalDescription(i).errors">
+                <small class="input-error" *ngIf="getfirstGoodAdditionalDescription(i).errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+              </ng-container>
+            </div>
+
+            <div id="firstGoodNhmCode" class="input-field input-padding-10" style="width: 16%">
+              <input class='elm-input div-with-10' id="firstGoodNhmCode-input" formControlName="firstGoodNhmCode"
+                placeholder="{{'New-order.Wagon-information.Placeholder.First-good-nhm-code' | translate}}*"
+                autocomplete="off"
+                title="{{'New-order.Wagon-information.Placeholder.First-good-nhm-code' | translate}}*"
+                name="firstGoodNhmCode" type="text" aria-labelledby="firstGoodNhmCode-input"
+                list="data-list-firstGoodNhmCode" (input)="autocompleteInputChanged($event, 'nhm-code')"
+                (blur)="setFirstNhmCode(i)" style="width: 100%" />
+              <label for="firstGoodNhmCode" class="elm-label">
+                {{'New-order.Wagon-information.Label.First-good-nhm-code' | translate}}*
+              </label>
+              <datalist id="data-list-firstGoodNhmCode">
+                <option [value]="option.nhmCode" *ngFor="let option of nhmCodeAutocomplete; trackBy: trackByFn">{{
+                  option.description }} </option>
+              </datalist>
+              <div class="icon-block-autocomplete">
+                <svg class="icon search-icon" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#search" />
+                </svg>
+              </div>
+              <ng-container *ngIf="getFirstGoodNhmCode(i).errors">
+                <small class="input-error" *ngIf="getFirstGoodNhmCode(i).errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getFirstGoodNhmCode(i).errors?.invalidNhmCode">
+                  {{ 'New-order.Errors.Nhm-code-missing' | translate }}
+                </small>
+              </ng-container>
+            </div>
+            <div id="loadingStatus" class="input-field input-padding-10" style="width: 16%">
+
+              <select id="loadingStatus-select" class="elm-input" name="loadingStatus" formControlName="loadingStatus"
+                (blur)="setLoadingStatus(i)" type="text"
+                title="{{'New-order.Wagon-information.Placeholder.Loading-status' | translate}}*" name="loadingStatus"
+                [class.invalid-input]="formGroup.get('loadingStatus')?.errors"
+                aria-labelledby="loadingStatus-label">
+                <option value=""></option>
+                <option *ngFor="let option of loadingStatusOptions" [value]="option.value">
+                  {{ option.label | translate }}
+                </option>
+              </select>
+              <label id="loadingStatus-label" class="elm-label" for="loadingStatus" aria-hidden="true">
+                {{'New-order.Wagon-information.Placeholder.Loading-status' | translate}}*
+              </label>
+              <ng-container *ngIf="getLoadingStatus(i).errors">
+                <small class="input-error" *ngIf="getLoadingStatus(i).errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getLoadingStatus(i).errors?.LoadingStateRequired">
+                  {{ 'New-order.Errors.Loading-status-missing' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getLoadingStatus(i).errors?.EmptyWagonHavingWeight">
+                  {{ 'New-order.Errors.Loading-status-missing' | translate }}
+                </small>
+              </ng-container>
+            </div>
+
+
+            <div class="button-in-row div-with-button-in-row" style="margin: 0px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}" button-name="addWagon"
+                class="elem-button icon-margin-top-1rem" (click)="copyWagon(i)"
+                [disabled]="!editMode || wagonInformationList?.length >= 99">
+                <svg class="icon"  [class.mouse-pointer]="editMode && wagonInformationList?.length < 99"  [style.cursor]="(!editMode || wagonInformationList?.length >= 99) ? 'default' : 'pointer'">
+                  <use xlink:href="assets/icons/icons.svg#copy" />
+                </svg>
+              </db-button>
+            </div>
+
+            <div class="button-in-row div-with-button-in-row" style="margin: 0px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                button-name="removeWagons" class="elem-button icon-margin-top-1rem" (click)="removeLine(i)"
+                [disabled]="!editMode || (wagonInformationList.length < 2 && i == 0)">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                </svg>
+              </db-button>
+            </div>
+
+            <div class="button-in-row div-with-button-in-row" style="padding: 0px 10px 0 0">
+              <db-button type="button" title="{{'New-order.Tooltip.Edit-entry'| translate}}" button-name="editWagonData"
+                class="elem-button icon-margin-top-1rem" (click)="openEditWindow(i)">
+                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#edit" />
+                </svg>
+              </db-button>
+            </div>
+          </div>
+
+        </ng-container>
+        <ng-container id="Total-weight-Container" style="width: 100%;">
+          <hr style="flex: 1; max-width: 40%; border: none; border-top: 1px dashed #ccc; margin: 30px 0px 0px 65%;" />
+          <div class="flex-row " style="padding: 0px 10px 0 0">
+
+            <span style="justify-content:flex-start;">
+              <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                button-name="removeSelectedWagons" class="elem-button icon-margin-top-1rem" (click)="removeSelectedWagons()"
+                [disabled]="!isAnyWagonSelected || wagonInformationList.length < 2">
+
+                <svg class="icon mouse-pointer" viewBox="0 0 24 24">
+                  <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                </svg>
+              </db-button>
+            </span>
+
+            <span style="padding: 15px 0px 0px 65%;">{{'New-order.Wagon-information.Label.Total-weight' |
+              translate}}:</span>
+            <span style="padding: 15px 0px 0px 10px;">{{ totalWeight }}</span>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>

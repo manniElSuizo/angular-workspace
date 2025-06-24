@@ -1,0 +1,23 @@
+# Architecture Decision Record: e2e Testing Library
+
+Date: 2021-04-29
+
+## State
+
+Decided
+
+## Kontext
+
+As the angular team deprecated the protractor e2e testing library (see: link:https://github.com/angular/protractor/issues/5502[Angular Github Issue 5502]), another e2e testing library should take over.
+In the related Github issue the Angular Team is already discussing alternatives.
+
+## Decision
+
+The Angular Team strongly recommends to use Cypress for e2e tests instead of protractor in the Github Issue but gives also some other alternatives.
+After having a look at the link:https://2020.stateofjs.com/en-US/technologies/testing/#testing_experience_ranking[stateofjs.com 2020 survey], it turned out, that Cypress is also very popular and established in the web development community in general.
+Another pro criteria is that Cypress does not depend on a specific frontend framework as Angular, Vue.js or React.
+It's platform-independent and gives developers always the same experience even when the will migrate a project to another technology in the future or when switching between different projects.
+
+## Deciders
+
+Danny Koppenhagen

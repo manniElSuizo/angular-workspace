@@ -1,0 +1,681 @@
+<div [formGroup]="formGroup" style="width: 100%">
+
+      <!-- Null Reihe -->
+      <div id="bza-field" class="input-field input-padding-10" style="width: 23%">
+        <input class='elm-input div-with-10' style="width: 100%"
+        autocomplete="off"
+        formControlName="bzaNumber" 
+        name="bzaNumber"
+        placeholder="{{ 'New-order.Wagon-information.Placeholder.Bza-number' | translate }}"
+        type="text"       
+        (input)="PermissionNumberInput()"
+        aria-labelledby="bza-label" 
+        title="" />
+        <label id="bza-label "for="bzaNumber" class="elm-label">
+          {{'New-order.Wagon-information.Label.Bza-number' | translate}}
+        </label>
+        <ng-container>
+          <small class="input-error" *ngIf="getControlBzaNumber().hasError('hasPermissionNumberDouble')">
+            {{ 'New-order.Errors.AS-no-duplicate-on-wagon' | translate }}
+          </small>
+        </ng-container>
+      </div>
+  
+
+  <ng-container formArrayName="goodsInformationList">
+    <ng-container *ngFor="let item of goodsInformationList.controls let i = index" [formGroupName]="i">
+    
+      <div class="orderSectionHeader">
+        <h3>{{ 'New-order.Wagon-information.goods-data' | translate }} ({{i+1}})</h3>
+      </div>
+
+      <div class="flex-column">
+        <!-- Erste Reihe -->
+        <div class="flex-row">
+
+          <!-- NhmCode -->
+          <div id="nhmCode-field" class="input-field input-padding-10" style="width: 25%">
+              <input class="elm-input" 
+                  id="nhmCode" 
+                  style="width: 100%"
+                  formControlName="nhmCode"
+                  type="text"            
+                  placeholder="{{ 'New-order.Wagon-information.Placeholder.NHM-code' | translate }}*"
+                  title="{{ 'New-order.Wagon-information.Placeholder.NHM-code' | translate }}*"
+                  name="nhmCode"
+                  autocomplete="off"
+                  aria-labelledby="nhm-code-label"
+                  (input)="autocompleteInputChanged($event, 'nhmCode')"
+                  (change)="nhmCodeSelected(i)"
+                  list="data-list-nhm-code" />
+              <label class="elm-label" for="nhmCode" id="nhm-code-label">
+                {{ 'New-order.Wagon-information.Label.NHM-code' | translate }}*
+              </label>
+              <datalist id="data-list-nhm-code">
+                <option [value]="option.nhmCode" *ngFor="let option of nhmCodeAutocomplete trackBy: trackByFn"> {{ option.description }}</option>
+              </datalist>
+              <div class="icon-block-autocomplete">
+                <svg class="icon search-icon" viewBox="0 0 25 25">
+                  <use xlink:href="assets/icons/icons.svg#search" />
+                </svg>
+              </div> 
+              <ng-container *ngIf="getControl(i,'nhmCode').errors">
+                <small class="input-error" *ngIf="getControl(i,'nhmCode').errors?.required">
+                  {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                </small>
+                <small class="input-error" *ngIf="getControl(i,'nhmCode').errors?.invalidNhmCode">
+                  {{ 'New-order.Errors.Nhm-code-missing' | translate }}
+                </small>
+              </ng-container>
+          </div>
+
+          <!--Weight-->
+          <div id="weight-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="weight" 
+            autocomplete="off"
+            formControlName="weight" 
+            name="weight"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.Weight-kg' | translate }}"
+            type="number" 
+            (input)="weightInput(i)"
+            aria-labelledby="weight-label" 
+            title="" />
+            <label for="weight" class="elm-label">
+              {{'New-order.Wagon-information.Label.Weight-kg' | translate}}
+            </label>
+            <ng-container>
+              <small class="input-error" *ngIf="getControl(i,'weight' ).errors?.decimalPlacesGoodWeight">
+                {{ 'New-order.Errors.No-decimal-for-weight' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'weight' ).errors?.noGoodWeight">
+                {{ 'New-order.Errors.Weight-not-numerical' | translate }}
+              </small>    
+              <small class="input-error" *ngIf="getControl(i,'weight' ).errors?.wagonWeightTooHigh">
+                {{ 'New-order.Errors.Total-weight-of-loading-trackles-gt-600' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!--Volumen-->
+          <div id="volume-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="volume"
+            name="volume"
+            autocomplete="off"
+            formControlName="volume" 
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.Volume' | translate }}"
+            type="text" 
+            (keydown)="onNumberOnlyKeydown($event)" 
+            (input)="volumeInput(i)"
+            aria-labelledby="volume" 
+            title="" />
+            <label for="volume" class="elm-label">
+              {{ 'New-order.Wagon-information.Label.Volume' | translate }}
+            </label>
+            <ng-container *ngIf="getControl(i,'volume' ).errors">
+              <small class="input-error" *ngIf="getControl(i,'volume' ).errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'volume' ).errors?.hasUnitWithoutVolume">
+                {{ 'New-order.Errors.Volume-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!--Volumeneinheit Gut-->
+          <div id="unit-field" class="input-field input-padding-10" style="width: 25%">
+            <select class='elm-input div-with-10' style="width: 100%"
+              id="unit"
+              name="unit"
+              autocomplete="off"
+              formControlName="unit" 
+              title="{{ 'New-order.Wagon-information.Placeholder.Unit' | translate }}"
+              type="text" 
+              (change)="selectUnit(i)"
+              aria-labelledby="unit">
+              <option *ngFor="let item of volumeUnits" [ngValue]="item.code">{{item.name}}</option> 
+            </select>
+            <label for="unit" class="elm-label">
+              {{ 'New-order.Wagon-information.Label.Unit' | translate }}
+            </label>            
+            <ng-container *ngIf="getControl(i,'unit').errors">
+              <small class="input-error" *ngIf="getControl(i,'unit').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'unit').errors?.hasVolumeWithoutUnit">
+                {{ 'New-order.Errors.Volume-unit-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+          <!-- Button -->
+          <div class="flex-row">
+
+            <div class="button-field">
+              <db-button type="button" 
+                  title="{{ 'New-order.Tooltip.Add-entry' | translate }}" 
+                  button-name="addServiceInformation" 
+                  class="elm-button"
+                  (click)="addLine()"
+                  [disabled]="goodsInformationList.length >= 4 || !editMode">
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                  </svg> 
+              </db-button>
+            </div>
+
+            <div class="button-field">
+              <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                  button-name="removeConsignorDeclaration" class="elm-button"
+                  (click)="removeLine(i)"
+                  [disabled]="(goodsInformationList.length < 2 && i == 0) || !editMode">
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                  </svg>
+              </db-button>
+            </div>
+          </div>
+
+        </div>  
+
+        <!-- Zweite Reihe -->
+        <div class="flex-row">
+
+          <!-- Verpackung  PackingUnitsType-->
+          <div id="packingUnitsType-field" class="input-field input-padding-10" style="width: 25%">
+            <select class='elm-input div-with-10' style="width: 100%"
+              id="packingUnitsType"
+              name="packingUnitsType"
+              autocomplete="off"
+              formControlName="packingUnitsType" 
+              title="{{ 'New-order.Wagon-information.Placeholder.Packing-units-type' | translate }}"
+              type="text"     
+              (change)="selectPackingUnitsType(i)" 
+              aria-labelledby="packingUnitsType">
+              <option value=""></option>
+              <option *ngFor="let item of packagingUnits" [ngValue]="item.code">{{item.name}}</option> 
+            </select>
+            <label for="packingUnitsType" class="elm-label">
+              {{ 'New-order.Wagon-information.Label.Packing-units-type' | translate }}
+            </label>
+            <ng-container *ngIf="getControl(i,'packingUnitsType').errors">
+              <small class="input-error" *ngIf="getControl(i,'packingUnitsType').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'packingUnitsType').errors?.packingUnitTypeRequired">
+                {{ 'New-order.Errors.Type-of-packaging-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!-- Anzahl  PackingUnitsDescription-->
+          <div id="packingUnitsNumber-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="packingUnitsNumber" 
+            formControlName="packingUnitsNumber" 
+            name="packingUnitsNumber"
+            autocomplete="off"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.Packing-units-Description' | translate }}"
+            type="text" 
+            (keydown)="onNumberOnlyKeydown($event)" 
+            (input)="packingUnitsNumberInput(i)" 
+            aria-labelledby="packingUnitsNumber-label" 
+            title="" />
+            <label for="packingUnitsNumber" class="elm-label">
+              {{'New-order.Wagon-information.Label.Packing-units-Description' | translate}}
+            </label>
+            <ng-container *ngIf="getControl(i,'packingUnitsNumber').errors">
+              <small class="input-error" *ngIf="getControl(i,'packingUnitsNumber').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'packingUnitsNumber').errors?.packingUnitNumberRequired">
+                {{ 'New-order.Errors.Packaging-count-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+           <!-- Extra/Schrotttext  AdditionalDeclarationCode-->
+           <div id="additionalDeclarationCode-field" class="input-field input-padding-10" style="width: 25%">
+            <select class='elm-input div-with-10' style="width: 100%"
+              id="additionalDeclarationCode"
+              name="additionalDeclarationCode"
+              autocomplete="off"
+              formControlName="additionalDeclarationCode" 
+              title="{{ 'New-order.Wagon-information.Placeholder.Additional-declaration-code' | translate }}"
+              type="text" 
+              (change)="selectAdditionalDeclarationCode(i)"
+              aria-labelledby="additionalDeclarationCode">
+              <option value=""></option>
+              <option
+                  *ngFor="let item of scrap" [ngValue]="item.code">{{item.name}}
+              </option> 
+            </select>
+            <label for="additionalDeclarationCode" class="elm-label">
+              {{ 'New-order.Wagon-information.Label.Additional-declaration-code' | translate }}
+            </label>
+            <ng-container *ngIf="getControl(i,'additionalDeclarationCode').errors">
+              <small class="input-error" *ngIf="getControl(i,'additionalDeclarationCode').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'additionalDeclarationCode').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!-- AVV Schlüssel  WasteId-->
+          <div id="wasteId-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="wasteId" 
+            formControlName="wasteId" 
+            name="wasteId"
+            autocomplete="off"
+            maxlength="6"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.WasteId' | translate }}"
+            type="text" 
+            (keydown)="onNumberOnlyKeydown($event)" 
+            (input)="wasteIdInput(i)" 
+            aria-labelledby="wasteId-label" 
+            title="" />
+            <label for="wasteId" class="elm-label">
+              {{'New-order.Wagon-information.Label.WasteId' | translate}}
+            </label>
+            <ng-container *ngIf="getControl(i,'wasteId').errors">
+              <small class="input-error" *ngIf="getControl(i,'wasteId').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'wasteId').errors?.wasteIdRequired">
+                {{ 'New-order.Errors.AVV-missing' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div style="min-width: 135px; width: 135px"></div>
+        </div>
+
+        <!-- Dritte Reihe -->
+        <div class="flex-row">
+
+          <!-- MRN-Klasse ExternalReferenceSubType -->
+          <div id="externalReferenceSubType-field" class="input-field input-padding-10" style="width: 25%">
+            <select class='elm-input div-with-10' style="width: 100%"
+            id="externalReferenceSubType"
+            name="externalReferenceSubType"
+            autocomplete="off"
+            formControlName="externalReferenceSubType" 
+            title="{{ 'New-order.Wagon-information.Placeholder.External-reference-subType' | translate }}"
+            type="text" 
+            (change)="selectExternalReferenceSubType(i)"
+            aria-labelledby="externalReferenceSubType">
+            <option></option>
+            <option *ngFor="let item of mrnTypes[i]" [ngValue]="item.code">({{item.code}}) {{item.name}}</option> 
+            </select>
+            <label for="externalReferenceSubType" class="elm-label">
+              {{ 'New-order.Wagon-information.Label.External-reference-subType' | translate }}
+            </label>
+            <ng-container *ngIf="getControl(i,'externalReferenceSubType')?.errors">
+              <small class="input-error" *ngIf="getControl(i,'externalReferenceSubType')?.errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'externalReferenceSubType')?.errors?.mrnSubTypeRequired">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!-- MRN-Nummer ExternalReferenceIdentifier -->
+          <div id="externalReferenceIdentifier-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="externalReferenceIdentifier" 
+            formControlName="externalReferenceIdentifier" 
+            name="externalReferenceIdentifier"
+            autocomplete="off"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.External-reference-identifier' | translate }}"
+            type="text" 
+            maxlength="21"
+            (input)="externalReferenceSubIdentifierInput(i)"
+            aria-labelledby="externalReferenceIdentifier-label" 
+            title="" />
+            <label for="externalReferenceIdentifier" class="elm-label">
+              {{'New-order.Wagon-information.Label.External-reference-identifier' | translate}}
+            </label>
+            <ng-container *ngIf="getControl(i,'externalReferenceIdentifier')?.errors">
+              <small class="input-error" *ngIf="getControl(i,'externalReferenceIdentifier')?.errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'externalReferenceIdentifier')?.errors?.invalidFormatMrn">
+                {{ 'New-order.Errors.MRN-invalid-format' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <!-- Zolltarif-Nr.  CustomsReferenceNumber -->
+          <div id="customsReferenceNumber-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="customsReferenceNumber" 
+            formControlName="customsReferenceNumber" 
+            name="customsReferenceNumber"
+            autocomplete="off"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.Customs-reference-number' | translate }}"
+            type="text" 
+            maxlength="8"
+            (keydown)="onNumberOnlyKeydown($event)" 
+            (input)="customerReferenceNumberInput(i)"
+            aria-labelledby="customsReferenceNumber-label" 
+            title="" />
+            <label for="customsReferenceNumber" class="elm-label">
+              {{'New-order.Wagon-information.Label.Customs-reference-number' | translate}}
+            </label>
+            <ng-container *ngIf="getControl(i,'customsReferenceNumber').errors">
+              <small class="input-error" *ngIf="getControl(i,'customsReferenceNumber').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'customsReferenceNumber').errors?.maxLengthExceeded">
+                {{ 'New-order.Errors.Tarrif-number-too-long' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'customsReferenceNumber').errors?.invalidNumber">
+                {{ 'New-order.Errors.Tarrif-number-not-numerical' | translate }}
+              </small>
+            </ng-container>
+          </div>
+          
+          <!-- Zusatzinfo  additionalDescription -->
+          <div id="additionalDescription-field" class="input-field input-padding-10" style="width: 25%">
+            <input class='elm-input div-with-10' style="width: 100%"
+            id="additionalDescription" 
+            formControlName="additionalDescription" 
+            name="additionalDescription"
+            autocomplete="off"
+            maxlength="350"
+            placeholder="{{ 'New-order.Wagon-information.Placeholder.Additional-declaration' | translate }}"
+            type="text" 
+            (input)="additionalDescriptionInput(i)"
+            aria-labelledby="additionalDescription-label" 
+            title="" />
+            <label for="additionalDescription" class="elm-label">
+              {{'New-order.Wagon-information.Label.Additional-declaration' | translate}}
+            </label>
+            <ng-container *ngIf="getControl(i,'additionalDescription').errors">
+              <small class="input-error" *ngIf="getControl(i,'additionalDescription').errors?.required">
+                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+              </small>
+              <small class="input-error" *ngIf="getControl(i,'additionalDescription').errors?.additionalDeclarationRequired">
+                {{ 'New-order.Errors.Combination-requires-additional-info' | translate }}
+              </small>
+            </ng-container>
+          </div>
+
+          <div style="min-width: 135px; width: 135px"></div>
+        </div>
+      </div>
+
+      
+          <!-- Dangerous Goods-->
+          <div class="arrow-div flex-row" style="margin: 20px 0 0 0" (click)="toggleDangerousGoods(i)">
+            <div class="flex-row">
+                <span [ngClass]="{'arrow': !isDangerousGoods[i], 'arrow-up': isDangerousGoods[i] }" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25" style="margin: 0 0 10px 0">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isDangerousGoods[i]"> 
+                    {{'New-order.Wagon-information.Show-section-dangerous-goods' | translate }}
+                  </div>
+                <div class="flex-row show-hide-section" *ngIf="isDangerousGoods[i]"> 
+                    {{ 'New-order.Wagon-information.Hide-section-dangerous-goods' | translate }}
+                </div>
+                <ng-container *ngIf="getControl(i,'emptyPackingUnit').errors
+                                  || getControl(i,'explosiveMass').errors 
+                                  || getControl(i,'specialInstructionDisplay').errors
+                                  || getControl(i,'additionalInformationNag').errors
+                              ">
+                  <span style="color:red;">*</span>
+              </ng-container>
+
+            </div>
+          </div>
+
+          <div *ngIf="isDangerousGoods[i]">
+              <div class="flex-column" style="width: 100%">
+                <div class="flex-row" style="width: 100%">
+                  <div class="flex-column" style="width: 50%">
+                   
+                    <!-- UnNr-->
+                    <div id="unNr" class="input-field input-padding-10" style="width: 100%">
+                        <input class='elm-input div-with-10' id="unNr-input"
+                            formControlName="unNr"
+                            placeholder="{{'New-order.Wagon-information.Placeholder.UN-number' | translate}}"
+                            title="{{'New-order.Wagon-information.Placeholder.UN-number' | translate}}"
+                            name="unNr" 
+                            aria-labelledby="unNr-input" 
+                            list="data-list-dangerous-good"
+                            (input)="autocompleteInputChanged($event, 'dangerous-cargo')"                             
+                            type="text"
+                            style="width: 100%"
+                            >
+                        <label for="unNr" class="elm-label">
+                            {{'New-order.Wagon-information.Label.UN-number' | translate}}
+                        </label>
+                        <datalist id="data-list-dangerous-good">
+                          <option [value]="option.unCode" *ngFor="let option of dangerousGoodsAutocomplete; trackBy: trackByFn"> {{ option.unDescription }} </option>
+                        </datalist>
+                    </div>
+
+                    <div class="flex-row">
+                      <!-- emptyPackingUnit -->
+                      <div id="emptyPackingUnit" class="input-field input-padding-10" style="width: 50%">
+                          <select id="emptyPackingUnit-input" class="elm-input" name="emptyPackingUnit" (change)="selectEmptyPackingUnitsCode(i)"
+                              formControlName="emptyPackingUnit" type="text"
+                              title="{{'New-order.Wagon-information.Placeholder.Empty-packaging-tank-wagon' | translate}}" aria-labelledby="emptyPackingUnit-input">                              
+                              <option value=""></option>
+                              <option [value]="emptyPackingUnit.code"
+                                  *ngFor="let emptyPackingUnit of emptyPackingUnitList">
+                                  {{'New-order.Wagon-information.emptyPackingUnitCode' | translate}}
+                              </option>                              
+                          </select>
+                          <label for="emptyPackingUnit" class="elm-label">
+                              {{'New-order.Wagon-information.Placeholder.Empty-packaging-tank-wagon' | translate}}
+                          </label>
+                          <ng-container *ngIf="getControl(i,'emptyPackingUnit').errors">
+                            <small class="input-error" *ngIf="getControl(i,'emptyPackingUnit').errors?.required">
+                              {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="getControl(i,'emptyPackingUnit').errors?.emptyPackagingUnitRequired">
+                              {{ 'New-order.Errors.Appropriate-specification-missing' | translate }}
+                            </small>
+                          </ng-container>
+
+                      </div>
+
+                      <!-- explosiveMass -->
+                      <div id="explosiveMass" class="input-field input-padding-10" style="width: 50%">
+                          <input class='elm-input div-with-10' id="explosiveMass-input"
+                              formControlName="explosiveMass"
+                              (input)="explosiveMassInput(i)"
+                              placeholder="{{'New-order.Wagon-information.Placeholder.Explosive-mass' | translate}}"
+                              title="{{'New-order.Wagon-information.Placeholder.Explosive-mass' | translate}}"
+                              name="explosiveMass"
+                              autocomplete="off"
+                              [class.invalid-input]="getControl(i,'explosiveMass').errors"
+                              aria-labelledby="explosiveMass-input" type="text" style="width: 100%" />
+                          <label for="explosiveMass" class="elm-label">
+                              {{'New-order.Wagon-information.Label.Explosive-mass' | translate}}
+                          </label>
+                          <ng-container
+                              *ngIf="getControl(i,'explosiveMass').errors">
+                              <small class="input-error"
+                                  *ngIf="getControl(i,'explosiveMass').errors?.netExplosiveMassClassRequired">
+                                  {{ 'New-order.Errors.Net-explosive-mass-missing' | translate }}
+                              </small>
+                          </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="flex-row">
+
+                        <!-- additionalInformation -->
+                        <div id="additionalInformationNag" class="input-field input-padding-10"
+                            style="width: 100%">
+                            <input class='elm-input div-with-10' id="additionalInformationNag-input"
+                                formControlName="additionalInformationNag"
+                                (input)="additionalInformationNagInput(i)"
+                                placeholder="{{'New-order.Wagon-information.Placeholder.Additional-information-not-specified-elsewhere' | translate}}"
+                                title="{{'New-order.Wagon-information.Placeholder.Additional-information-not-specified-elsewhere' | translate}}"
+                                name="additionalInformationNag" type="text"
+                                [class.invalid-input]="getControl(i,'additionalInformationNag').errors"
+                                aria-labelledby="additionalInformationNag-input" style="width: 100%" />
+                            <label for="additionalInformationNag" class="elm-label">
+                                {{'New-order.Wagon-information.Placeholder.Additional-information-not-specified-elsewhere' | translate}}
+                            </label>
+                            <ng-container *ngIf="getControl(i,'additionalInformationNag').errors">
+                              <small class="input-error" *ngIf="getControl(i,'additionalInformationNag').errors?.required">
+                                {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                              </small>
+                              <small class="input-error" *ngIf="getControl(i,'additionalInformationNag').errors?.dangerousGoodClassRequired">
+                                {{ 'New-order.Errors.Dangerous-goods-class-missing' | translate }}
+                            </small>
+                            <small class="input-error" *ngIf="getControl(i,'additionalInformationNag').errors?.nagInfoRequired">
+                              {{ 'New-order.Errors.Additional-info-nag-missing' | translate }}
+                          </small>
+                          </ng-container>
+                        </div>
+
+                    </div>
+                  </div>
+
+                  <div class="flex-column" style="width: 50%; padding: 5px 0 0 10px">
+
+                    <div class="flex-row" style="width: 100%">
+                      <db-button variant="brand-primary" 
+                      (click)="openDangerousGoodSelectionPopup(i)"
+                      [disabled]="acHasGoodAtIndex(i)">
+                        <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'New-order.Wagon-information.Label.Select-dangerous-good' | translate }}
+                      </db-button>
+                      <db-button type="button" style="margin: 10px 0 0 10px"
+                          title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                          button-name="removeConsignorDeclaration" 
+                          (click)="removeDangerousGood(i)"
+                          [disabled]="acHasGoodAtIndex(i)">
+                          <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                              <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                          </svg>
+                      </db-button>
+                    </div>
+
+                    <!-- specialInstruction -->
+                    <div id="specialInstruction" class="input-field input-padding-10" style="width: 100%; margin-top: 4px;">
+                      <select id="specialInstruction-input" class="elm-input" name="specialInstruction" style="width: 100%" (change)="selectSpecialInstruction(i)"
+                          formControlName="specialInstruction" type="text"
+                          (change)="onSpecialInstructionChange(i, $event)" 
+                          title="{{'New-order.Wagon-information.Label.Special-provision' | translate}}"
+                          aria-labelledby="specialInstruction-input">
+                          <option value=""></option>
+                          <option *ngFor="let specialInstruction of specialInstructionsList" 
+                                  [value]="specialInstruction.code">
+                                  {{ specialInstruction.code }} - {{ specialInstruction.name }}
+                          </option>
+                      </select>
+                      <label for="emptyPackingUnit" class="elm-label">
+                          {{'New-order.Wagon-information.Label.Special-provision' | translate}}
+                      </label>
+                    </div>
+                    <div class="input-field input-padding-10" style="width: 100%;">
+                      <input id="special-instruction-display" class="elm-input" 
+                        autocomplete="off"
+                          formControlName="specialInstructionDisplay" type="text"
+                          placeholder="{{'New-order.Wagon-information.Label.Further-details' | translate}}"
+                          title="{{'New-order.Wagon-information.Label.Further-details' | translate}}"
+                          aria-labelledby="additionalInformationNag-input" style="width: 100% disabled" 
+                          />
+                      <label for="additionalInfoDisplay" class="elm-label">
+                        {{'New-order.Wagon-information.Label.Further-details' | translate}}
+                      </label>
+                      <ng-container *ngIf="getControl(i,'specialInstructionDisplay').errors">
+                        <small class="input-error" *ngIf="getControl(i,'specialInstructionDisplay').errors?.required">
+                          {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                        </small>
+                    </ng-container>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                        <!-- restrictionFlag -->
+                        <div style="width: 30%; margin: 1em 0 0 0" class="flex-row">
+                            <input id="transportProhibited-input" name="transportProhibited" (change)="selectTransportProhibited(i)"
+                                placeholder="{{'New-order.Wagon-information.Placeholder.Transport-ban' | translate}}"
+                                title="{{'New-order.Wagon-information.Placeholder.Transport-ban' | translate}}"
+                                formControlName="transportProhibited" type="checkbox" class="elm-checkbox"
+                                style="margin: .75em 0 0 0">
+                            <label
+                                style="margin: .75em 0 0 1em">{{'New-order.Wagon-information.Label.Transport-ban'
+                                | translate}}</label>
+                        </div>
+
+                        <!-- wasteIndicator -->
+                        <div style="width: 30%; margin: 1em 0 0 0" class="flex-row">
+                            <input id="wasteIndicator-input" name="wasteIndicator" (change)="selectWasteIndicator(i)"
+                                placeholder="{{'New-order.Wagon-information.Placeholder.Waste' | translate}}"
+                                title="{{'New-order.Wagon-information.Placeholder.Waste' | translate}}"
+                                formControlName="wasteIndicator" type="checkbox" class="elm-checkbox"
+                                style="margin: .75em 0 0 0">
+                            <label style="margin: .75em 0 0 1em">{{'New-order.Wagon-information.Label.Waste' |
+                                translate}}</label>
+                        </div>
+
+                        <!-- approvalFlag -->
+                        <div style="width: 40%; margin: 1em 0 0 0" class="flex-row">
+                            <input id="accidentInformationSheetAvailable-input" (change)="selectAccidentInformationSheetAvailable(i)"
+                                name="accidentInformationSheetAvailable"
+                                placeholder="{{'New-order.Wagon-information.Placeholder.Tremcard-is-available-to-DB' | translate}}"
+                                title="{{'New-order.Wagon-information.Placeholder.Tremcard-is-available-to-DB' | translate}}"
+                                formControlName="accidentInformationSheetAvailable" type="checkbox"
+                                class="elm-checkbox" style="margin: .75em 0 0 0">
+                            <label
+                                style="margin: .75em 0 0 1em; padding: 0 10px 0 0">{{'New-order.Wagon-information.Label.Tremcard-is-available-to-DB' | translate}}</label>
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-row" style="margin: 1em 0 0 0">
+                  <div style="width: 100%">
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.Danger-no' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'dangerIdentificationNumber').value}}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.UN-number' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'unNr')?.value}}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.Description-of-content' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'description')?.value}}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.Class' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'class')?.value}}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.Packing-group' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'packingGroup')?.value }}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.DG-note-1-to-4' | translate}}:</div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'dangerLabels')?.value }}</div>
+                    </div>
+                    <div class="flex-row" style="width: 100%">
+                      <div style="width: 30%">{{'New-order.Wagon-information.Label.Information' | translate}}: </div>
+                      <div class="text-content" style="width: 70%; text-align: right; padding-right: 10px">{{getControl(i,'additionalInformation')?.value}} </div>
+                    </div>
+                  </div>
+                  <div class="flex-row" style="width: 100%; margin: 0 0 0 1em" >
+                    <div style="width: 70%; text-align: right">{{'New-order.Wagon-information.Label.No' | translate}}:</div>
+                    <div class="text-content" style="width: 30%; text-align: right; padding-right: 10px">{{getControl(i,'accidentInformationSheetNr')?.value}}</div>
+                  </div>
+                </div>
+                
+              </div>
+          </div>
+
+      </ng-container>
+  </ng-container>
+</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="invoice" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+>
+    <title>24dp Icon/invoice</title>
+    <g id="24dp-Icon/invoice" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="_53_InvoiceView" transform="translate(4, 2)">
+            <path d="M13.5159425,19 L1.92758039,19 C-0.160781682,19 0.00301142161,17.075431 0.00301142161,17.075431 L0.00301142161,1.26939655 L1.2314597,0.0409482759 L2.4189597,1.22844828 L3.64740797,0 L4.87585625,1.22844828 L6.10430453,0 L7.3327528,1.22844828 L8.56120108,0 L9.78964935,1.22844828 L11.0180976,0 L12.2465459,1.22844828"
+                  id="Path" stroke="#282D37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12.2874942,1.26939655 L12.2874942,17.075431 C12.2874942,17.075431 12.1237011,19 14.2120631,19"
+                  id="Path" stroke="#282D37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14.2530114,19 C16.3413735,19 16.1775804,17.075431 16.1775804,17.075431 L16.1775804,9.41810345 L12.3693907,9.41810345"
+                  id="Path" stroke="#282D37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <line x1="2.09137349" y1="10.1551724" x2="6.02240797" y2="10.1551724" id="Path" stroke="#282D37"
+                  stroke-width="2" stroke-linecap="round"></line>
+            <line x1="8.53749418" y1="10.1551724" x2="9.80689073" y2="10.1551724" id="Path" stroke="#282D37"
+                  stroke-width="2" stroke-linecap="round"></line>
+            <line x1="2.09137349" y1="16.2974138" x2="6.02240797" y2="16.2974138" id="Path" stroke="#282D37"
+                  stroke-width="2" stroke-linecap="round"></line>
+            <line x1="2.09137349" y1="13.2909483" x2="9.05258039" y2="13.2909483" id="Path" stroke="#282D37"
+                  stroke-width="2" stroke-linecap="round"></line>
+            <text id="€" fill="#282D37" fill-rule="nonzero" font-family="DBSans-Bold, DB Sans" font-size="6"
+                  font-weight="bold">
+                <tspan x="4.01735421" y="8.07">€</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,141 @@
+<div class="orderSectionHeader">
+    <h3>{{ 'ewd.order.form.common.demandTime.title' | translate }}</h3>
+</div>
+
+<div [formGroup]="formGroup" style="width: 100%">
+    <div class="flex-column" style="width: 100%">
+        <div class="flex-row" style="width: 100%">
+            <!-- Bedarfstag -->
+            <div style="width: 25%" class="input-field input-padding-10">
+                <input formControlName="demandDateControl"
+                       style="width: 100%"
+                       type="date"
+                       placeholder="{{ 'ewd.order.form.common.demandTime.inputs.demandDate.placeholder' | translate }}*"
+                       id="demandDate"
+                       class="elm-input"
+                       [min]="minDemandDate"
+                       [max]="maxDemandDate"
+                       [class.invalid-input]="demandDateControl.errors?.required || demandDateControl?.errors?.nonWorkingDay"
+                       (change)="onSelectDemandDate($event)"/>
+                <label class="elm-label" id="demandDateLabel" for="demandDate" aria-hidden="true">
+                    {{ 'ewd.order.form.common.demandTime.inputs.demandDate.label' | translate }}*
+                </label>
+            </div>
+
+
+            <div style="width: 25%" class="input-field input-padding-10">
+                <ng-container *ngIf="timeRangeIsSelectable; else timeRangeInput">
+                    <select id="timeSelect"
+                            class="elm-input"
+                            style="width: 100%;"
+                            formControlName="timeControl"
+                            [class.invalid-input]="demandDateControl.errors?.required"
+                            type="time"
+                            title="{{ 'ewd.order.form.common.demandTime.inputs.demandTime.placeholder' | translate }}*"
+                            (change)="onSelectTimeRange($event)">
+                        <option></option>
+                        <option *ngFor="let item of demandDateTimes"
+                                [value]="item">{{ item }}
+                        </option>
+                    </select>
+                    <label class="elm-label" id="timeRangeLabel" for="timeSelect" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandTime.inputs.demandTime.label' | translate }}*
+                    </label>
+                </ng-container>
+                <ng-template #timeRangeInput>
+                    <input id="timeInput"
+                           class="elm-input"
+                           style="width: 100%;"
+                           [class.invalid-input]="timeControl.errors?.required || (timeControl.errors?.expired)"
+                           formControlName="timeControl"
+                           type="time"
+                           placeholder="{{ 'ewd.order.form.common.demandTime.inputs.demandTime.placeholder' | translate }}*"/>
+                    <label class="elm-label" for="timeInput" aria-hidden="true">
+                        {{ 'ewd.order.form.common.demandTime.inputs.demandTime.label' | translate }}*
+                    </label>
+                </ng-template>
+            </div>
+
+            <div>
+                <div *ngIf="action ==='create'" class="flex-row">
+                    <!--Add button-->
+                    <div style="padding: 10px 0 0 0">
+                        <db-button type="button"
+                                   button-name="addFormGroup"
+                                   class="elm-button"
+                                   (click)="addFormGroup()"
+                                   [disabled]="false">
+                            <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle"/>
+                            </svg>
+                        </db-button>
+                    </div>
+                    <!--Remove button-->
+                    <div style="padding: 10px 0 0 0">
+                        <db-button type="button"
+                                   button-name="removeFormGroup" class="elm-button"
+                                   (click)="removeFormGroup()"
+                                   [disabled]="this.runningNumber < 1">
+                            <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#garbageCan"/>
+                            </svg>
+                        </db-button>
+                    </div>
+                </div>
+            </div>
+            <div></div>
+        </div>
+        <div style="width: 100%; text-align: left; padding: 30px 0 0 0">
+            <small *ngIf="demandDateControl.errors?.required" class="input-error"
+                   style="margin-left: 10px">
+                {{ 'ewd.order.form.common.demandTime.errors.demandDate.required' | translate }}
+            </small>
+            <small *ngIf="!(isWorkingDay$.getValue())" class="input-info"
+                   style="margin-left: 10px">
+                {{
+                    'ewd.order.form.common.demandTime.errors.demandDate.nonWorkingDay' | translate
+                }}
+            </small>
+            <small *ngIf="demandDateControl.errors?.isMinDateNotMet" class="input-error"
+                   style="margin-left: 10px">
+                {{
+                    'ewd.order.form.common.demandTime.errors.demandDate.isMinDateNotMet' | translate:
+                        {minDemandDate: this.minDate.toLocaleDateString()}
+                }}
+            </small>
+            <small *ngIf="demandDateControl.errors?.isMaxDateExceeded" class="input-error"
+                   style="margin-left: 10px">
+                {{
+                    'ewd.order.form.common.demandTime.errors.demandDate.isMaxDateExceeded' | translate:
+                        {maxDemandDate: this.maxDate.toLocaleDateString()}
+                }}
+            </small>
+
+            <small *ngIf="timeControl.errors?.required" class="input-error"
+                   style="margin-left: 10px">
+                {{ 'ewd.order.form.common.demandTime.errors.demandTime.required' | translate }}
+            </small>
+            <small *ngIf="timeControl.errors?.expired" class="input-error"
+                   style="margin-left: 10px">
+                {{
+                    'ewd.order.form.common.demandTime.errors.demandTime.expired' | translate:
+                        {latestCustomerOrderDateTime: timeControl.errors?.expired.toLocaleString()}
+                }}
+            </small>
+            <small *ngIf="demandTypesArray.errors?.invalidWagonCount" class="input-error" style="margin-left: 10px">
+                {{ 'ewd.order.form.common.demandTime.errors.demandTypesArray.invalidWagonCount' | translate }}
+            </small>
+        </div>
+        <div formArrayName="demandTypesArray">
+            <div *ngFor="let _item of demandTypesArray.controls; let j = index"
+                 [formGroupName]="j">
+                <app-demand-type
+                        [data]="data.demands[j]"
+                        [formGroup]="this.getDemandTypeFormGroup(j)"
+                        [action]="action"
+                >
+                </app-demand-type>
+            </div>
+        </div>
+    </div>
+</div>

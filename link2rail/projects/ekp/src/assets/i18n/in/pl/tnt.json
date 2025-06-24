@@ -1,0 +1,143 @@
+{
+    "Wagonholder-component": {
+        "Overview-title": "Widok posiadacza wagonu",
+        "Tooltip": {
+            "Open-wagon-details": "Otwórz szczegóły wagonu dla wagonu:"
+        },
+        "Table-header": {
+            "Wagonkeeper": "Posiadacze wagonów",
+            "Wagonnumber": "Numer wagonu",
+            "Wagoncategory": "Rodzaj wagonu",
+            "Trackingstatus": "Status śledzenia",
+            "Trackingstatusdate": "Data",
+            "Country": "Kraj",
+            "Location": "Lokalizacja",
+            "Runability": "Pojemność wagonu",
+            "Damagecode": "Kod błędu"
+        },
+        "Vehiclekeeper-filter": {
+            "Vehicle-keeper": "Posiadacze wagonów",
+            "Vehicle-number": "Numer wagonu",
+            "Vehicle-type": "Rodzaj wagonu",
+            "Runnability": "Pojemność wagonu",
+            "Damage-Code": "Kod błędu",
+            "Location-country": "Lokalizacja Kraj",
+            "Location": "Lokalizacja"
+        }
+    },
+    "Tracking-history-wagon": {
+        "Title": "Historia śledzenia",
+        "Overview-title": "Historia śledzenia",
+        "ZAB-order-number": "Opdrachtnummer:",
+        "Wagon-number": "Numer wagonu:",
+        "Table-header": {
+            "Event": "Wydarzenie",
+            "Location": "Miejsce",
+            "Real-time": "Czas rzeczywisty",
+            "Train-number": "Numer pociągu"
+        }
+    },
+    "Wagon-overview": {
+        "Overview-title": "Przegląd wagonów",
+        "Table-header": {
+            "Wagon-number": "Numer wagonu",
+            "Date-of-dispatch": "Data wysyłki",
+            "Expected-arrival": "Przewidywany przyjazd",
+            "Forwarding-yard": "Stacja wysyłkowa",
+            "Destination-yard": "Stacja odbiorcza",
+            "Consignor": "Nadawca",
+            "Consignee": "Odbiorca",
+            "Event": "Event",
+            "Location": "Aktualna lokalizacja",
+            "Zab-order-number": "Opdrachtnummer"
+        },
+        "Tooltip": {
+            "Loaded": "Wagon załadowany",
+            "Empty": "Wagon pusty",
+            "Damage-limited-runablity": "Wagon ograniczony działający",
+            "Damage-no-runablity": "Wagon nie działa",
+            "Duration-target": "Cel czasu pracy:",
+            "No-duration-target": "Brak dostępnego celu czasu pracy",
+            "Tracking-history-wagon": "Tracking Historie",
+            "Order-details": "Auftragsdetails"
+        },
+        "CSV-export": {
+            "Actual-receiving-date-label": "Rzeczywista data odbioru",
+            "Actual-sending-date-label": "Rzeczywista data wysyłki",
+            "Additional-commercial-information-discount-code": "Umowa z klientem",
+            "Annotation-of-consignor-description": "Referencja nadawcy",
+            "Bza-number": "Numer BZA",
+            "Consignee": "Odbiorca",
+            "Customs-tariff-no": "Numer taryfy celnej",
+            "Current-train-number-label": "Aktualny numer pociągu",
+            "Customer-reference": "Referencja klienta",
+            "Damage-code": "Kod uszkodzenia",
+            "Damage-code-description": "Opis kodu uszkodzenia",
+            "Damage-limited-runablity": "Wagon ograniczony działający",
+            "Damage-no-runablity": "Wagon nie działa",
+            "First-train-number-label": "Pierwszy numer pociągu",
+            "Forwarding-yard-number": "Numer stacji wysyłkowej",
+            "Loaded": "Wagon załadowany",
+            "Location-status": "Status aktualnej lokalizacji",
+            "Location-time": "Czas aktualnej lokalizacji",
+            "Netto-weight": "Masa netto",
+            "NHM-code-description": "Opis kodu NHM",
+            "NHM-code-label": "Kod NHM",
+            "Receiver-customer-number": "Numer klienta odbiorcy",
+            "Receiving-country": "Kraj odbioru",
+            "Receiving-station-number": "Numer stacji odbiorczej",
+            "Runablity": "Przejezdność",
+            "Sender-customer-number": "Numer klienta nadawcy",
+            "Sending-country": "Kraj wysyłki",
+            "Status": "Status ZAB",
+            "Tare-weight": "Masa własna",
+            "Template-name": "Nazwa szablonu",
+            "Wagon-type-label": "Typ wagonu",
+            "Weight": "Masa brutto",
+            "Zab-order-number": "Numer zlecenia",
+            "Location-country": "Lokalizacja Kraj"
+        },
+        "Filter": {
+            "Place-holder": {
+                "Wagon-number": "Numer wagonu",
+                "Date-of-dispatch-from": "Data wysyłki (od)",
+                "Date-of-dispatch-to": "Data wysyłki (do)",
+                "Incoming-by": "W napływie do",
+                "Zab-order-number": "Opdrachtnummer",
+                "Sending-station": "Stacja wysyłkowa",
+                "Receiving-station": "Stacja odbiorcza",
+                "Location": "Aktualna lokalizacja",
+                "NHM-code": "Kod NHM",
+                "Consignor": "Nadawca",
+                "Consignee": "Odbiorca",
+                "Loading-state": "Obciążenie",
+                "reference": "Referencja",
+                "senderIsoCountryCode": "Kraj nadawcy",
+                "deliveryIsoCountryCode": "Kraj odbiorcy"
+            },
+            "Label": {
+                "Wagon-number": "Numer wagonu",
+                "Date-of-dispatch-from": "Data wysyłki (od)",
+                "Date-of-dispatch-to": "Data wysyłki (do)",
+                "Incoming-by": "W napływie do",
+                "Zab-order-number": "Opdrachtnummer",
+                "Sending-station": "Stacja wysyłkowa",
+                "Receiving-station": "Stacja odbiorcza",
+                "Location": "Aktualna lokalizacja",
+                "NHM-code": "Kod NHM",
+                "Consignor": "Nadawca",
+                "Consignee": "Odbiorca",
+                "Loading-state": "Obciążenie",
+                "Loading-state-loaded": "Załadowany",
+                "Loading-state-empty": "Pusty",
+                "reference": "Referencja",
+                "senderIsoCountryCode": "Kraj nadawcy",
+                "deliveryIsoCountryCode": "Kraj odbiorcy"
+            },
+            "ControlMultiSelect": {
+                "searchPlaceholderText": "Droog",
+                "noDataAvailablePlaceholderText": "Brak dostępnych danych"
+            }
+        }
+    }
+}

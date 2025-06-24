@@ -1,0 +1,26 @@
+<header class="modal-header">
+    <span style="font-weight: bold;">
+        {{ 'NHM-Code-Details.NHM-Code' | translate }}
+    </span>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+  </header>
+  <main class="modal-main" *ngIf="railOrderCodeSummary">
+    <table class="list-table">
+        <thead class="table-header">
+            <tr>
+                <th style="min-width: 152px;">{{ 'NHM-Code-Details.NHM-Code' | translate }}</th>
+                <th>{{ 'NHM-Code-Details.Description' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ railOrderCodeSummary.nhmCode }}</td>
+                <td>{{ railOrderCodeSummary.nhmDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </main>

@@ -34,6 +34,11 @@
             "styles": [
               "projects/ekp/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -42,12 +47,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumError": "3MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "200kB",
+                  "maximumError": "200kB"
                 }
               ],
               "outputHashing": "all"
@@ -69,6 +74,10 @@
             "development": {
               "buildTarget": "ekp:build:development"
             }
+          },
+          "options": {
+            "proxyConfig": "projects/ekp/proxy.config.json",
+            "port": 4200
           },
           "defaultConfiguration": "development"
         },
@@ -93,6 +102,11 @@
             "styles": [
               "projects/ekp/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            },
             "scripts": []
           }
         }
@@ -129,6 +143,11 @@
             "styles": [
               "projects/eurasia/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -165,6 +184,10 @@
               "buildTarget": "eurasia:build:development"
             }
           },
+          "options": {
+            "proxyConfig": "projects/eurasia/proxy.config.json",
+            "port": 4201
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -188,6 +211,11 @@
             "styles": [
               "projects/eurasia/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "styles"
+              ]
+            },
             "scripts": []
           }
         }

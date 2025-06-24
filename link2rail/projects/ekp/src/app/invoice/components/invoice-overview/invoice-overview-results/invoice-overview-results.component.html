@@ -1,0 +1,43 @@
+<section>
+    <div id="list-view" style="width: 100%;">
+        <table class="list-table">
+            <tr>
+                <th *ngFor="let header of tableHeaders"
+                    scope="col" [style.min-width]="header.minWidth"
+                    [style.text-align]="header.textAlign"
+                    [title]="header.headerText"
+                    role="columnheader">
+                    <div class="flex-row">
+                        <span [innerHtml]="header.headerText"></span>
+                        <span *ngIf="header.sortable"
+                              class="sort-icons-block"
+                              role="button"
+                              tabindex="0"
+                              (click)="onClickSortField(header.fieldName)"
+                              (keydown.enter)="onClickSortField(header.fieldName)">
+                <div class="sort-descending" [class.active-sort]="isAscending(header.fieldName)"></div>
+                <div class="sort-ascending" [class.active-sort]="isDescending(header.fieldName)"></div>
+            </span>
+                    </div>
+                </th>
+            </tr>
+            <tr *ngFor="let invoiceSummary of tableData; let i = index" [class.white-row]="i % 2 === 0">
+                <td>{{ invoiceSummary.invoiceNumber }}</td>
+                <td>{{ invoiceSummary.invoiceDate | date }}</td>
+                <td>{{ invoiceSummary.referenceInvoiceNumber }}</td>
+                <td>{{ invoiceSummary.recipientCompany }}</td>
+                <td>{{ invoiceSummary.debitorNumber }}</td>
+                <td>{{ invoiceSummary.dueDate | date }}</td>
+                <td style="text-align: right">{{ invoiceSummary.netAmount | currency : invoiceSummary.currency }}</td>
+                <td style="text-align: right">{{ invoiceSummary.vatAmount | currency : invoiceSummary.currency }}</td>
+                <td style="text-align: right">{{ invoiceSummary.grossAmount | currency : invoiceSummary.currency }}</td>
+                <td style="text-align: center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                         (click)="showInvoice(i)" class="pointer">
+                        <use xlink:href="assets/icons/invoice.svg#invoice"></use>
+                    </svg>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

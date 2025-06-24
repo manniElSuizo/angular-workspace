@@ -1,0 +1,23 @@
+<div class="flex-row">
+  <button (click)="setSection(ViewState.SECTION_1)">Sektion 1</button>
+  <button (click)="setSection(ViewState.SECTION_2)">Sektion 2</button>
+  <button (click)="setSection(ViewState.SECTION_3)">Sektion 3</button>
+</div>
+
+<div style="margin: 5em 0 0 0">
+  <div>
+    <app-section-1 #section_1 [viewState]="viewState" [order]="order"></app-section-1>
+  </div>
+
+  <div>
+    <app-section-2 #section_2 [viewState]="viewState"></app-section-2>
+  </div>
+
+  <div>
+    <app-section-3 #section_3 [viewState]="viewState"></app-section-3>
+  </div>
+</div>
+
+<div style="margin: 5em 0 0 0">
+  <button (click)="validate()">Validate all Sections</button>
+</div>

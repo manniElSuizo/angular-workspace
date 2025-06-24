@@ -1,0 +1,47 @@
+<form [formGroup]="formGroup">
+    <div class="flex-row">
+        <div style="width: 25%" class="input-field input-padding-10" id="commercialLocation">
+            <input formControlName="commercialLocation"
+                   id="commercialLocationInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.demandLocation.inputs.commercialLocation.placeholder' | translate }}*"
+                   [class.invalid-input]="false"
+                   aria-labelledby="commercialLocationLabel"/>
+            <label class="elm-label" id="commercialLocationLabel" for="commercialLocationInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.demandLocation.inputs.commercialLocation.label' | translate }}*
+            </label>
+        </div>
+        <div style="width: 25%" class="input-field input-padding-10" id="freightWagonLocation">
+            <input formControlName="freightWagonLocation"
+                   id="freightWagonLocationInput"
+                   class="elm-input"
+                   autocomplete="off"
+                   type="text"
+                   placeholder="{{ 'ewd.order.form.common.demandLocation.inputs.freightWagonLocation.placeholder' | translate }}*"
+                   [class.invalid-input]="false"
+                   aria-labelledby="freightWagonLocationLabel"/>
+            <label class="elm-label" id="ordererPartnerLabel" for="freightWagonLocationInput" aria-hidden="true">
+                {{ 'ewd.order.form.common.demandLocation.inputs.freightWagonLocation.label' | translate }}*
+            </label>
+        </div>
+    </div>
+    <div formArrayName="demandDateTimesArray">
+        <div *ngFor="let _item of demandDateTimesArray.controls let i = index"
+             [formGroupName]="i">
+            <app-demand-time
+                    [data]="data.demandDateTimes[i]"
+                    [demandLocation]="data.demandLocation"
+                    [formGroup]="this.getDemandDateTimeFormGroup(i)"
+                    [action]="action"
+                    [runningNumber]="i"
+                    (addDemandDateTime)="addDemandDate()"
+                    (removeDemandDateTime)="removeDemandDate(i)"
+            >
+            </app-demand-time>
+
+        </div>
+    </div>
+
+</form>

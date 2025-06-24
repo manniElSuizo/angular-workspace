@@ -1,0 +1,151 @@
+<section>
+  <div class="header-line">
+      <h2>{{ 'Navigation.Orders-overview' | translate }}</h2>
+      <div class="additional-buttons-block">
+          <db-button *ngIf="permissionService.hasPermission(null, [authorization.CREATE_ORDER_FLEXTRAIN]) | async" variant="brand-primary" (click)="openNewOrderModal()">
+              <i data-icon="add" data-icon-variant="24-outline"></i> {{ 'Shared.New-order-button-label' | translate }}
+          </db-button>
+          <db-button *ngIf="hasActiveProfile() && (permissionService.hasPermission(null, [authorization.UPLOAD_PROGRAM]) | async)" variant="secondary-solid" (click)="openFileUploadModal()">
+              <i data-icon="upload" data-icon-variant="24-outline"></i> {{ 'Shared.Weekly-monthly-programm-button-label' | translate }}
+          </db-button>
+      </div>
+  </div>
+  <app-order-filter #filter></app-order-filter>
+  <ng-container>
+      <div class="controls"></div>
+      <div class="elm-progress" *ngIf="loadingInProgress">
+        <progress id="progress-label-07"></progress>
+      </div>
+      <div class="orders-table">
+        <table class="list-table">
+          <thead class="table-header">
+            <tr>
+              <th scope="col" [title]="header.text" *ngFor="let header of tableHeaders">
+                <div>
+                  <div>
+                    <span>{{ header.text }}</span>
+                  </div>
+                  <span class="sort-icons-block" *ngIf="header.sortField" (click)="sortTable(header.value)">
+                    <div class="sort-descending" [class.active-sort]="sortConditions.asc && sortConditions.field === header.value"></div>
+                    <div class="sort-ascending" [class.active-sort]="!sortConditions.asc && sortConditions.field === header.value"></div>
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+    
+          <tbody style="overflow: auto;">
+            <ng-container *ngFor="let order of ordersList; let i = index">
+              <tr class="order-row" [class.white-row]="i % 2 === 0">
+                <td>
+                  <div class="arrow" (click)="showTrains(arrowIcon, i)" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                  </div>
+                </td>
+                <td>{{ order.customerReference ? order.customerReference : '-' }}</td>
+                <td *ngIf="(permissionService.hasPermission(null, [authorization.READ_ORDER_DETAILS], order.authorization) | async) else noDetails" class="order-underline" title="{{ 'Order-component.Table-header.Order-number-tooltip' | translate }}" (click)="openOrderDetails(order)">{{ order.orderNumber }}</td>
+                <ng-template #noDetails><td>{{ order.orderNumber }}</td></ng-template>
+                <td><span *ngIf="order.orderStatus">{{ order.orderStatus | translate}} </span></td>
+                <td>{{ order.shipmentDate | dateTime: "shortDate" }}</td>
+    
+                <td *ngIf="createTrainNumber(order) === '[...]'" title="{{ 'Order-component.More-Train-Number' | translate }}">{{createTrainNumber(order)}}</td>
+                <td *ngIf="createTrainNumber(order) !== '[...]'">{{createTrainNumber(order)}}</td>            
+    
+                <td>{{ order.sendingStation.name | uppercase }}</td>
+                <td>{{ order.receivingStation.name | uppercase }}</td>
+                <td (click)="openNhmDetailsModal(order.nhmCodes, order.orderNumber)" title="{{ order.nhmCodes | nhmPipe : 'full' }}" class="order-underline">{{ order.nhmCodes | nhmPipe }}</td>
+                <td>{{ order.length | number: '1.0-0' }}</td>
+                <td style="min-width: 180px;">{{ order.weight | number }}</td>
+                <td class="align-left" style="min-width: 50px;"></td>
+                <td style="min-width: 50px;">
+                  <span *ngIf="(permissionService.hasPermission(null, [authorization.REDUCTION], order.authorization) | async) || (permissionService.hasPermission(null, [authorization.CANCEL_SPECIAL_TRAIN], order.authorization) | async)">
+                  <span class="icons-block" *ngIf="isCancellationAllowed(order); else second">
+                    <details class="icon cmp-dropdown" title="{{ 'Order-component.Table-header.Modify' | translate }}">
+                      <summary>
+                        <svg viewBox="0 0 25 25" class="icon mouse-pointer">
+                          <use xlink:href="assets/icons/icons.svg#edit" />
+                        </svg>
+                      </summary>
+                      <menu type="toolbar">
+                          <!--li *ngIf="(permissionService.hasPermission(null, [authorization.REDUCTION], order.authorization) | async)">
+                            <button class="elm-button " title="{{ 'Order-component.Context-menu.Modify' | translate }}" type="button" (click)="openModalModifyOrder(order)" disabled>
+                              {{ 'Order-component.Context-menu.Modify' | translate }}
+                            </button>
+                          </li-->
+                          <li *ngIf="(permissionService.hasPermission(null, [authorization.CANCEL_SPECIAL_TRAIN], order.authorization) | async)">
+                            <button class="elm-button " title="{{ 'Order-component.Context-menu.Cancel' | translate }}" type="button" (click)="openModalCancelOrder(order)">
+                              {{ 'Order-component.Context-menu.Cancel' | translate }}
+                            </button>
+                          </li>
+                      </menu>
+                    </details>
+                  </span>
+                  </span>
+                  <ng-template #second>
+                    <span class="icons-block" class="icon" style="opacity: 0.4">
+                      <svg viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#edit" />
+                      </svg>
+                    </span>
+                  </ng-template>              
+                </td>
+              </tr>
+              <!-- TODO: remove every 3rd row ngIf -->
+              <tr class="train-row" #trainRow [attr.data-train-row]="i">
+                  <td colspan="12" class="blue-border">
+                    <table class="trains-sub-table">
+                      <div>
+                        <thead>
+                          <tr>
+                            <th>{{ 'Order-details.Carrier-label' | translate }}</th>
+                            <th>{{ 'Order-view-page.Train-number-label' | translate }}</th>
+                            <th>{{ 'Order-view-page.Sending-date-label' | translate }}</th>
+                            <th>{{ 'Order-view-page.ETA-label' | translate }}</th>
+                            <th>{{ 'Order-view-page.Shipping-station-label' | translate }}</th>
+                            <th>{{ 'Order-view-page.Receiving-station-label' | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let carrier of order.carrierRoute">
+                            <td>{{ carrier.carrier?.name ? carrier.carrier?.name : '-' }}</td>
+                            
+                            <td class="order-underline" *ngIf="carrier.trainNumber else noTrainNumber" (click)="openTrainInfoModal(carrier.trainNumber, carrier.productionDate)" title="{{ 'Order-view-page.openTrainDetails' | translate }}">
+                              {{ carrier.trainNumber }}
+                            </td>
+                            <ng-template #noTrainNumber>
+                              <td>-</td>
+                            </ng-template>
+      
+                            <td>{{ carrier.plannedDeparture ? (carrier.plannedDeparture | dateTime) : '-' }}</td>
+                            <td>{{ carrier.plannedArrival ? (carrier.plannedArrival | dateTime) : '-' }}</td>
+                            <td>{{ carrier.sendingStation?.name ? carrier.sendingStation?.name : '-' }}</td>
+                            <td>{{ carrier.receivingStation?.name ? carrier.receivingStation?.name : '-' }}</td>
+                          </tr>
+                        </tbody>
+                      </div>
+                    </table>
+                  </td>
+                </tr>
+            </ng-container>
+          </tbody>
+    
+        </table>
+        
+      </div>
+
+      <div *ngIf="showLoadButton && !loadingInProgress" class="bottom-controls">    
+        <button class="load-btn" (click)="loadMore()">
+            {{ 'Order-view-page.Load-more-button-label' | translate }}
+        </button>
+    </div>
+    <div>
+        <strong>{{ lengthOfOrdersList }} {{'Shared.Of' | translate}} {{ totalOrders }}</strong>
+    </div>
+
+  </ng-container>
+</section>
+
+
+

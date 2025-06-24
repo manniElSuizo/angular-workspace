@@ -1,0 +1,24 @@
+<!-- <ul class="cmp-language-switcher1">
+  <li *ngFor="let lang of listLanguages()">
+    <a (click)="setLanguage(lang)" class="elm-link" [ngStyle]="{ 'color':getLanguage() === lang ? '#F01414' : '' }">
+      {{ lang }}
+    </a>
+  </li>
+</ul> -->
+<!--ul class="cmp-language-switcher" role="listbox">
+  <li *ngFor="let lang of listLanguages()" [attr.aria-selected]="getLanguage() === lang ? 'true' : null" role="option">
+    <a (click)="setLanguage(lang)" class="elm-link" [attr.hreflang]="lang" rel="alternate" title="{{ 'change-language' | translate:{ language: translateLanguage(lang) } }}">
+      {{ lang }}
+    </a>
+  </li>
+</ul-->
+
+<span [formGroup]="formGroup">
+  <select title="language-selector" 
+          id="language-selector" 
+          formControlName="language" 
+          (change)="change()" 
+          style="margin: .4em 0 0 .5em; border: none; font-size: 115%">
+    <option *ngFor="let language of availableLanguages" [value]="language.code">{{language.code}}</option>    
+  </select> 
+</span>

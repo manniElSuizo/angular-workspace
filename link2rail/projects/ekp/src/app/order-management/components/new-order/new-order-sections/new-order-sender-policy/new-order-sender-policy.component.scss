@@ -1,0 +1,9 @@
+@use 'color';
+
+.field-consignor-declaration-additional-information {
+  resize: vertical;
+  background-color:color.$background-color-light !important;
+  margin: 10px 0px 0px 0px;;
+  border: none;
+}
+

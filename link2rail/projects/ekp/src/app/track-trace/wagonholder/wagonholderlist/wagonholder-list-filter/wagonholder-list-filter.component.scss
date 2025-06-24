@@ -1,0 +1,102 @@
+
+// input fields
+.filter-top-margin {
+    height: 24px;
+}
+
+.main-block-mragin-top-diff {
+    margin-top: -25;
+}
+
+.controls-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .filter-reset {
+        cursor: pointer;
+    }
+    .tbl-header-filter-reset-download {
+        padding-left: 30px;
+        padding-bottom: 18px;
+    }
+
+    .cmp-overflow-menu {
+
+        menu {
+            width: 100%
+        }
+
+        button {
+            padding: 1rem;
+        }
+        summary {
+          cursor: pointer;
+          font-size: 1rem;
+        }
+    
+        summary::before {
+            display: none;
+            --icon-glyph: '';
+        }
+    }
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .filter-reset {
+        cursor: pointer;
+    }
+}
+
+.main-block {
+    display: grid;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+
+    div {
+        position: relative;
+    }
+
+    .input-field {
+      margin-left: 5px;
+      margin-right: 5px;
+    }    
+
+    .hide-icon {
+        visibility: hidden;
+    }
+
+    .show-icon {
+        visibility: visible;
+    }
+    
+    .icon-block {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: 15px;
+        top: 32px;
+
+        .icon {
+            position: absolute;
+        }
+    }
+}
+
+.input-field {
+    select {
+        font-size: 14px;
+        height: 50px;        
+        background-color: #F0F3F5;  
+        border: none;
+        border-radius: 4px;
+    }
+    .label-select {
+        // width: 30px;
+    }
+}

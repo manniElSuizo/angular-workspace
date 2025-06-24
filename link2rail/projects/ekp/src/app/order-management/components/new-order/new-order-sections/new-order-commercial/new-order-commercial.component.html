@@ -1,0 +1,531 @@
+<div *ngIf="currentSectionName === SectionName.SECTION_COMMERCIAL" style="overflow-y: hidden;">
+    <form [formGroup]="formGroup">
+        <div class="flex-column">
+            <div class="flex-row">
+                <h3>{{ 'New-order.Commercial.group-header' | translate }}</h3>
+            </div>
+
+            <div id="Field_Prepayment_Note" class='fr-flex-1' style="width: 100%; margin: 0 30px 0 0">
+                <div class="input-field" id="prepayment-note-field" style="width: 100%;">
+                    <select class='elm-input elm-select' id="prepaymentNote" 
+                    formControlName="prepaymentNote"
+                        type="text" style="width: 100%" aria-labelledby="prepaymentNote-label" maxlength="45"
+                        [class.invalid-input]="prepaymentNote.errors?.PrepaymentNoteInvalid"
+                        title="{{ 'New-order.Commercial.Placeholder.prepayment-note' | translate }}*">
+                        <option value=""></option>
+                        <option [value]="prepaymentNote.code" *ngFor="let prepaymentNote of prepaymentNodeCodeText">
+                            {{prepaymentNote.text}}
+                        </option>
+                    </select>
+                    <label class="elm-label" id="prepaymentNote-label" for="Field_Prepayment_Note">
+                        {{'New-order.Commercial.Placeholder.prepayment-note' | translate}}*
+                    </label>
+                    <ng-container *ngIf="prepaymentNote.errors">
+                        <small class="input-error" *ngIf="prepaymentNote.errors?.required">
+                            {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                        </small>
+                        <small class="input-error" *ngIf="prepaymentNote.errors?.PrepaymentNoteInvalid">
+                            {{ 'New-order.Errors.Delivery-terms-note-invalid' | translate }}
+                        </small>
+                        <small class="input-error" *ngIf="prepaymentNote.errors?.PrepaymentNoteRequired">
+                            {{ 'New-order.Errors.Delivery-terms-note-missing' | translate }}
+                        </small>
+                        
+                    </ng-container>
+                  
+                </div>
+            </div>
+            <div class="arrow-div flex-row" (click)="toggleAdditionalPrepaymentInput()">
+                <span [ngClass]="{'arrow': !isAdditionalPrepaymentInput, 'arrow-up': isAdditionalPrepaymentInput}"
+                    #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isAdditionalPrepaymentInput"> 
+                    {{'New-order.Commercial.Show-section-details-additional-prepayment' | translate }}
+                    </div>
+                <div class="flex-row show-hide-section" *ngIf="isAdditionalPrepaymentInput"> 
+                    {{'New-order.Commercial.Hide-section-details-additional-prepayment' | translate }}
+                </div>
+            </div>
+
+            <!-- weitere Eingaben -->
+            <div *ngIf="isAdditionalPrepaymentInput" class="flex-row">
+
+                <div class="flex-row" style="gap: 10px; width: 100%;">
+                    <div id="Label_product_extra_charge_code" class="flex-row" width="10%"
+                        style="margin: 25px 20px 0px 0px; min-width: 25%;">
+                        {{'New-order.Commercial.Placeholder.product-extra-charge-code' | translate }}
+                    </div>
+                   
+                    <div id="Array_product_extra_charge_code" formArrayName="productExtraChargeCodes" class="flex-row"
+                        style="flex-wrap: nowrap; align-items: center; gap: 10px; margin: 0px 20px 0px 0px;">
+                        <div *ngFor="let productExtraChargeCode of  productExtraChargeCodes.controls let i = index" [formGroupName]="i">
+                            <div class="input-field" id="Field_product_extra_charge_code"
+                                style="width: 70px; height: 51px; padding-bottom: 10px;">
+                                <input class='elm-input' id="productExtraChargeCode"
+                                    formControlName="productExtraChargeCode" 
+                                    autocomplete="off"
+                                    type="text"
+                                    aria-labelledby="Field_product_extra_charge_code" maxlength="3"
+                                    (blur)="onProductExtraChargeCodeBlur(i)"
+                                    [class.invalid-input]="productExtraChargeCode?.invalid && productExtraChargeCode?.touched"
+                                    title="{{'New-order.Commercial.Placeholder.product-extra-charge-code' | translate }}" />
+                                <label class="elm-label" style="visibility: hidden;" for="Field_product_extra_charge_code">
+                                    {{'New-order.Commercial.Placeholder.product-extra-charge-code'| translate }}
+                                </label>
+                            </div>
+                        </div>            
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isAdditionalPrepaymentInput" class="flex-row"  style="padding : 0 0 0 350px; margin-top: 1em;  " >
+            <ng-container *ngIf="formGroup.errors">
+                <small class="input-error" *ngIf="formGroup.errors?.MissingExtraChargeCode">
+                    {{ 'New-order.Errors.Ancillary-charge-code-missing' | translate }}
+                </small>
+            </ng-container>
+            </div>
+            <div *ngIf="isAdditionalPrepaymentInput" class="flex-row">
+                <div class="flex-row flex-row fr-100-gap-10" style="margin-top: 1em;">
+                    <div id="Label_product_extra_charge_code" class="flex-row"
+                        style="margin: 25px 20px 0px 0px; min-width: 25%;">
+                        {{'New-order.Commercial.Placeholder.prepayment-up-to-authority' | translate}}
+                    </div>
+                    <div id="Field_prepayment_up_to_authority" class="flex-row fr-flex-1" style="width: 100% ;">
+                        <div class="input-field" id="prepayment_up_to_authority-field"
+                            style="padding:0px 10px 0px 0px; width: 100%;">
+                            <select class='elm-input' style="width: 100%;" id="prepaymentUpToAuthority"
+                                formControlName="prepaymentUpToAuthority" type="text"
+                                title="{{ 'Shared.Country' | translate }}"
+                                aria-labelledby="Field_prepayment_up_to_authority" maxlength="45"
+                                [class.invalid-input]="prepaymentUpToAuthority?.invalid && prepaymentUpToAuthority?.touched">
+                                <option value=""></option>
+                                <option *ngFor="let country of countries$ | async" [value]="country.uicCountryCode">
+                                    {{ country | country }}
+                                </option>
+                            </select>
+                            <label class="elm-label" for="Field_prepayment_up_to_authority">
+                                {{'Shared.Country' | translate}}
+                            </label>
+                            <ng-container
+                                *ngIf="formGroup.get('prepaymentUpToAuthority').invalid && formGroup.get('prepaymentUpToAuthority').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">
+                                    {{ 'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                                <small class="input-error" *ngIf="formGroup.errors?.MissingPrepaymentUpToAuthority">
+                                    {{ 'New-order.Errors.Acceptance-of-freight-country-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="Field_prepayment_up_to_border_description" class="flex-row fr-flex-1">
+                        <div id="Field_prepayment_up_to_border_description-field" class="input-field"
+                            style="padding: 0px 10px 0px 0px; width: 100%;">
+                            <input id="prepaymentUpToBorderDescription" name="prepaymentUpToBorderDescription"
+                                formControlName="prepaymentUpToBorderDescription" type="text" class='elm-input'
+                                placeholder="{{ 'New-order.Commercial.Placeholder.prepayment-up-to-border-description' | translate }}"
+                                aria-labelledby="Field_prepayment_up_to_border_description"
+                                list="datalist-prepaymentUpToBorderStation" (keyup)="loadStations($event)"
+                                (change)="onSelectionChangeStation($event)"
+                                autocomplete="off"
+                                [class.invalid-input]="prepaymentUpToBorderDescription?.invalid && prepaymentUpToBorderDescription?.touched" />
+                            <label class="elm-label" id="prepaymentUpToBorderDescription-label" for="Field_prepayment_up_to_border_description"
+                                aria-hidden="true">
+                                {{'New-order.Commercial.Placeholder.prepayment-up-to-border-description' | translate}}
+                            </label>
+                            <datalist id="datalist-prepaymentUpToBorderStation">
+                                <option value=""></option>
+                                <option *ngFor="let option of suggestionsPepaymentUpToBoarderStations">
+                                    {{ option.displayValue }}
+                                </option>
+                            </datalist>
+                            <div class="icon-block">
+                                <svg class="icon"
+                                    [ngClass]="prepaymentUpToBorderDescription?.value ? 'hide-icon' : 'show-icon'"
+                                    viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#search" />
+                                </svg>
+                                <svg class="icon"
+                                    [ngClass]="prepaymentUpToBorderDescription?.value ? 'show-icon' : 'hide-icon'"
+                                    (click)="clearInputprepaymentUpToBorderDescription()" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#close" />
+                                </svg>
+                            </div>
+                            <ng-container
+                                *ngIf="formGroup.get('prepaymentUpToBorderDescription').invalid && formGroup.get('prepaymentUpToBorderDescription').touched">
+                                <small class="input-error" *ngIf="formGroup.errors?.required">
+                                    {{'Shared.Errors.Field-is-required-error-text' | translate }}
+                                </small>
+                                <small class="input-error" *ngIf="formGroup.errors?.MissingPrepaymentUpToBorderDescription">
+                                    {{ 'New-order.Errors.Acceptance-of-freight-rail-yard-missing' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Kommerzielle Bedingungen -->
+            <div class="arrow-div flex-row" (click)="toggleCommercialSpecification()">
+                <span [ngClass]="{'arrow': !isCommercialSpecification, 'arrow-up': isCommercialSpecification}" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isCommercialSpecification"> {{ 'New-order.Commercial.Show-section-details-commercial-specification' | translate }}</div> 
+                <div class="flex-row show-hide-section" *ngIf="isCommercialSpecification"> {{ 'New-order.Commercial.Hide-section-details-commercial-specification' | translate }}</div> 
+            </div>
+
+            <div *ngIf="isCommercialSpecification">
+                <div formArrayName="commercialSpecifications">
+                    <div *ngFor="let item of commercialSpecifications.controls let i = index" [formGroupName]="i"
+                        class="fr-100-gap-10">
+                        <div id="Field_commercial_specification_additional_info" class='fr-flex-1'>
+                            <div class="input-field" id="commercialSpecification-field" style="width: 100%;">
+                                <select class="elm-input elm-select" id="commercialSpecificationCode"
+                                    formControlName="code" type="text"
+                                    title="{{ 'New-order.Commercial.Placeholder.selection' | translate }}" >
+                                    <option value=""></option>
+                                    <option [value]="commercialSpecification.code"
+                                        *ngFor="let commercialSpecification of commercialSpecificationsCodeName">
+                                        {{commercialSpecification.name}} ({{commercialSpecification.code}})
+                                    </option>
+                                </select>
+                                <label class="elm-label div-with-100" for="commercialSpecificationCode"
+                                    aria-hidden="true" id="commercialSpecificationCode_label">
+                                    {{'New-order.Commercial.Placeholder.selection'| translate }}
+                                </label>
+                                <ng-container *ngIf="commercialSpecifications.controls[i].invalid && commercialSpecifications.controls[i].touched">
+                                    <small class="input-error" *ngIf=" commercialSpecifications.controls[i].errors?.typeOfSpecificationMissing">
+                                        {{ 'New-order.Errors.Type-of-specificaton-missing' | translate }}
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div id="Field_commercial_specification_additional_info" class="fr-flex-1">
+                            <input class='elm-input' id="commercialSpecificationAdditionalInfo"
+                                formControlName="additionalInformation" type="text" style="width: 100%"
+                                placeholder="{{ 'New-order.Commercial.Placeholder.additional_info' | translate }}"
+                                aria-labelledby="Field_commercial_specification_additional_info" maxlength="45"
+                                [class.invalid-input]="item?.invalid && item?.touched"/>
+                            <label class="elm-label" for="Field_commercial_specification_additional_info">
+                                {{'New-order.Commercial.Placeholder.additional_info' | translate}}
+                            </label>
+                            <ng-container *ngIf="commercialSpecifications.controls[i].invalid && commercialSpecifications.controls[i].touched ">                            
+                            <small class="input-error" *ngIf="commercialSpecifications.controls[i].errors?.descriptionOfSpecificationMissing">
+                                {{ 'New-order.Errors.Description-of-specification-missing' | translate }}
+                            </small>    
+                        </ng-container>
+                        
+                        </div>
+                        <div class="button-in-row div-with-button-in-row" style="margin: 0px 0px 0 0">
+                            <db-button type="button" title="{{'New-order.Tooltip.Add-entry' | translate}}"
+                                button-name="addCommercialSpecification" class="elem-button icon-margin-top-1rem"
+                                (click)="addEmptyCommercialSpecification()"
+                                [disabled]="commercialSpecifications.controls.length >= 5 || !editMode  || (railOrder?.templateNumber?.length>0)">
+                                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#plusSymbolInCircle" />
+                                </svg>
+                            </db-button>
+                        </div>
+
+                        <div class="button-in-row div-with-button-in-row" style="margin: 0px 0px 0 0">
+                            <db-button type="button" title="{{'New-order.Tooltip.Remove-entry'| translate}}"
+                                button-name="removeCommercialSpecification" class="elem-button icon-margin-top-1rem"
+                                (click)="deleteItem(i)"
+                                [disabled]="(commercialSpecifications.controls.length < 2 && i == 0) || !editMode  || (railOrder?.templateNumber?.length>0)">
+                                <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                                    <use xlink:href="assets/icons/icons.svg#garbageCan" />
+                                </svg>
+                            </db-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weitere Kommerzielle Angaben -->
+            <div class="arrow-div flex-row" (click)="toggleAdditionalCommercialInformation()">
+                <span
+                    [ngClass]="{'arrow': !isAdditionalCommercialInformation, 'arrow-up': isAdditionalCommercialInformation}"
+                    #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isAdditionalCommercialInformation"> 
+                    {{'New-order.Commercial.Show-section-details-additional-commercial-information' | translate }}
+                    </div>
+                <div class="flex-row show-hide-section" *ngIf="isAdditionalCommercialInformation"> 
+                    {{'New-order.Commercial.Hide-section-details-additional-commercial-information' | translate }}
+                </div>
+            </div>
+
+            <div *ngIf="isAdditionalCommercialInformation" class="flex-column">
+                <!--Reihe 1-->
+                <div id="Row1" class="flex-row fr-100-gap-10" style="width: 99%;">
+                    <div class="fr-flex-1">
+                        <div id="Field_loading_authorisation">
+                            <input class='elm-input' id="loadingAuthorisation" formControlName="loadingAuthorisation"
+                                type="text"
+                                placeholder="{{ 'New-order.Commercial.Placeholder.loading-authorisation' | translate }}"
+                                aria-labelledby="Field_loading_authorisation" maxlength="30"
+                                [class.invalid-input]="loadingAuthorisation?.invalid && loadingAuthorisation?.touched" />
+                            <label class="elm-label" for="Field_loading_authorisation">
+                                {{'New-order.Commercial.Placeholder.loading-authorisation' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="fr-flex-1">
+                        <div id="Field_additional_commercial_information_nhm_code">
+                            <input class='elm-input' id="commercialInformationNhmCode"
+                                formControlName="commercialInformationNhmCode" type="text"
+                                placeholder="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_nhm_code' | translate }}"
+                                aria-labelledby="Field_additional_commercial_information_nhm_code" maxlength="6"
+                                [class.invalid-input]="commercialInformationNhmCode?.invalid && commercialInformationNhmCode?.touched" />
+                            <label class="elm-label" for="Field_additional_commercial_information_nhm_code">
+                                {{ 'New-order.Commercial.Placeholder.additional_commercial_information_nhm_code' | translate }} 
+                                </label>
+                        </div>
+
+                    </div>
+
+                    <div class="fr-flex-1">
+                        <div id="Field_additional_commercial_information_contract_number">
+                            <input class='elm-input' id="Field_additional_commercial_information_contract_number"
+                                formControlName="commercialInformationContractNumber" type="text"
+                                placeholder="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_contract_number' | translate }}"
+                                aria-labelledby="Field_additional_commercial_information_contract_number" maxlength="45"
+                                [class.invalid-input]="commercialInformationContractNumber?.invalid && commercialInformationContractNumber?.touched" />
+                            <label class="elm-label" for="Field_additional_commercial_information_contract_number">
+                                {{'New-order.Commercial.Placeholder.additional_commercial_information_contract_number' | translate}}
+                            </label>
+                            <ng-container *ngIf="commercialInformationContractNumber.invalid && commercialInformationContractNumber.touched ">
+                                <!-- Check for "descriptionOfSpecificationMissing" error -->
+                                <small class="input-error" *ngIf="commercialInformationContractNumber.errors?.ContractNumberNotNumerical">
+                                    {{ 'New-order.Errors.Contract-no-not-numerical' | translate }}
+                                </small>
+                                <small class="input-error" *ngIf="commercialInformationContractNumber.errors?.contractNumberInvalidChecksum">
+                                    {{ 'New-order.Errors.Contract-no-invalid-cecksum' | translate }}
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="fr-flex-1" id="Row1_Col4">
+                        <div id="Field_additional_commercial_information_discount_code">
+                            <input class='elm-input' id="Input_additional_commercial_information_discount_code"
+                                formControlName="commercialInformationDiscountCode" type="text"
+                                placeholder="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_discount_code' | translate }}"
+                                aria-labelledby="Field_additional_commercial_information_discount_code" maxlength="45"
+                                [class.invalid-input]="commercialInformationDiscountCode?.invalid && commercialInformationDiscountCode?.touched" />
+                            <label class="elm-label" for="Field_additional_commercial_information_discount_code">
+                                {{'New-order.Commercial.Placeholder.additional_commercial_information_discount_code'| translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--Reihe 2-->
+                <div id="Row_2" class="flex-row fr-100-gap-10" style="width: 99%;">
+                    <!--Wert des Gutes-->
+                    <div class="fr-flex-1" id="Field_additional_commercial_information_value_of_commodity_price">                 
+                        <input class='elm-input' 
+                            id="Field_additional_commercial_information_value_of_commodity_price"
+                            formControlName="commercialInformationValueOfCommodityPrice" 
+                            type="text"
+                            placeholder="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_value_of_commodity_price' | translate }}"
+                            aria-labelledby="Field_additional_commercial_information_value_of_commodity_price"
+                            maxlength="45"
+                            [class.invalid-input]="commercialInformationValueOfCommodityPrice?.invalid && commercialInformationValueOfCommodityPrice?.touched" />
+                        <label class="elm-label" for="Field_additional_commercial_information_value_of_commodity_price">
+                            {{'New-order.Commercial.Placeholder.additional_commercial_information_value_of_commodity_price'| translate}}#
+                        </label>
+                    </div>
+                    <!-- Währung 1 -->
+                    <div class="fr-flex-1" id="additional_commercial_information_value_of_commodity_currency">
+                        <div style="position: relative;" id="additional_commercial_information_value_of_commodity_currency-field">
+                            <select
+                                title="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_value_of_commodity_currency' | translate }}"
+                                class="elm-input elm-select" type="text"
+                                name="commercialInformationValueOfCommodityCurrency"
+                                id="commercialInformationValueOfCommodityCurrency"
+                                formControlName="commercialInformationValueOfCommodityCurrency" [attr.disabled]="true"
+                                aria-disabled="true" readonly>
+                                <option value=""></option>
+                                <option *ngFor="let currency of currencyList" [value]="currency.code">
+                                    {{ currency.name }}
+                                </option>
+                            </select>
+                            <label class="elm-label" for="commercialInformationValueOfCommodityCurrency"
+                                aria-hidden="true" id="additional_commercial_information_value_of_commodity_currency_label">
+                                {{ 'New-order.Commercial.Placeholder.additional_commercial_information_value_of_commodity_currency'| translate }}
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Interesse an der Lieferung -->
+                    <div id="Field_additional_commercial_information_value_of_delivery_price" class="fr-flex-1">
+                        <input class='elm-input' id="Field_additional_commercial_information_value_of_delivery_price"
+                            formControlName="commercialInformationValueOfDeliveryPrice" type="text"
+                            placeholder="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_value_of_delivery_price' | translate }}"
+                            aria-labelledby="Field_additional_commercial_information_value_of_delivery_price"
+                            maxlength="45"
+                            [class.invalid-input]="commercialInformationValueOfDeliveryPrice?.invalid && commercialInformationValueOfDeliveryPrice?.touched" />
+                        <label class="elm-label" for="Field_additional_commercial_information_value_of_delivery_price">
+                            {{'New-order.Commercial.Placeholder.additional_commercial_information_value_of_delivery_price'| translate}}
+                        </label>
+                    </div>
+                    <!-- Währung 2 -->
+                    <div class="fr-flex-1" id="Field_additional_commercial_information_value_of_delivery_currency">
+                        <div style="position: relative;"
+                            id="additional_commercial_information_value_of_delivery_currency-field">
+                            <select
+                                title="{{ 'New-order.Commercial.Placeholder.additional_commercial_information_value_of_delivery_currency' | translate }}"
+                                class="elm-input elm-select" type="text"
+                                name="commercialInformationValueOfDeliveryCurrency"
+                                id="additional_commercial_information_value_of_delivery_currency"
+                                formControlName="commercialInformationValueOfDeliveryCurrency" 
+                                [attr.disabled]="true"
+                                aria-disabled="true" readonly>
+                                <option value=""></option>
+                                <option *ngFor="let currency of currencyList" [value]="currency.code">
+                                    {{ currency.name }}
+                                </option>
+                            </select>
+                            <label class="elm-label" for="additional_commercial_information_value_of_delivery_currency"
+                                aria-hidden="true">
+                                {{'New-order.Commercial.Placeholder.additional_commercial_information_value_of_delivery_currency'| translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Absendervermerke für den Empfänger -->
+            <div class="arrow-div flex-row" (click)="toggleAnnotationOfConsignorDescription()">
+                <span
+                    [ngClass]="{'arrow': !isAnnotationOfConsignorDescription, 'arrow-up': isAnnotationOfConsignorDescription}"
+                    #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isAnnotationOfConsignorDescription"> 
+                    {{'New-order.Commercial.Show-section-details-annotation-of-consignor-description' | translate }}
+                </div>
+                <div class="flex-row show-hide-section" *ngIf="isAnnotationOfConsignorDescription"> 
+                    {{'New-order.Commercial.Hide-section-details-annotation-of-consignor-description' | translate }}
+                </div>
+            </div>
+
+            <div *ngIf="isAnnotationOfConsignorDescription" class="flex-column"
+                style="margin: 0px 20px 0px 0px; width: 100%;">
+                <textarea id="Field_annotation_of_consignor_description"
+                    formControlName="annotationOfConsignorDescription"
+                    placeholder="{{'New-order.Commercial.Placeholder.annotaion-of-consignor-description' | translate}}"
+                    aria-labelledby="Field_annotation_of_consignor_description" maxlength="2000"
+                    style="width: 100%; border-color: whitesmoke; background-color: #F0F3F5;">
+                </textarea>
+            </div>
+
+            <!-- für DB interne Kunden -->
+            <div class="arrow-div flex-row" (click)="toggleDbInternal()">
+                <span [ngClass]="{'arrow': !isDbInternal, 'arrow-up': isDbInternal }" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isDbInternal"> 
+                    {{'New-order.Commercial.Show-section-details-db-internal' | translate }}
+                </div>
+                <div class="flex-row show-hide-section" *ngIf="isDbInternal"> 
+                    {{'New-order.Commercial.Hide-section-details-db-internal' | translate }}
+                </div>
+            </div>
+
+            <div *ngIf="isDbInternal" class="flex-row" style="margin: 0 30px 0 0;width: 99%;">
+                <div id="Field_external_reference_identifier" style="width: 33%">
+                    <input class='elm-input' id="Field_external_reference_identifier"
+                        formControlName="commercialInformationExternalReferenceIdentifier" type="text"
+                        placeholder="{{ 'New-order.Commercial.Placeholder.external-reference-identifier' | translate }}"
+                        aria-labelledby="Field_external_reference_identifier" maxlength="5"
+                        [class.invalid-input]="commercialInformationExternalReferenceIdentifier?.invalid && commercialInformationExternalReferenceIdentifier?.touched" />
+                    <label class="elm-label" for="Field_external_reference_identifier">
+                        {{'New-order.Commercial.Placeholder.external-reference-identifier'| translate}}
+                    </label>
+                </div>
+                <div id="Field_external_reference_consignment_number" style="padding: 0 0 0 10px; width: 33%">
+                    <input class='elm-input' id="Field_external_reference_consignment_number"
+                        formControlName="commercialInformationExternalReferenceConsigmentNumber" type="text"
+                        placeholder="{{ 'New-order.Commercial.Placeholder.external-reference-consignment_number' | translate }}"
+                        aria-labelledby="Field_external_reference_consignment_number" maxlength="6"
+                        [class.invalid-input]="commercialInformationExternalReferenceConsigmentNumber?.invalid && commercialInformationExternalReferenceConsigmentNumber?.touched" />
+                    <label class="elm-label" for="Field_external_reference_consignment_number">
+                        {{'New-order.Commercial.Placeholder.external-reference-consignment_number'| translate}}
+                    </label>
+                </div>
+
+                <div *ngIf="(permissionService.hasPermission(null, [authorization.WRITE_SHIPPING_NUMBER]) | async)" id="Field_consignmentnote_consignment_number" style="padding: 0 0 0 10px; width: 34%">
+                    <input class='elm-input' id="Field_consignmentnote_consignment_number"
+                        formControlName="consignmentnoteConsigmentNumber" type="text"
+                        placeholder="{{ 'New-order.Commercial.Placeholder.consignmentnote-consignment-number' | translate }}"
+                        aria-labelledby="Field_consignmentnote_consignment_number" maxlength="6"
+                        [class.invalid-input]="consignmentnoteConsigmentNumber?.invalid && consignmentnoteConsigmentNumber?.touched" />
+                    <label class="elm-label" for="Field_consignmentnote_consignment_number">
+                        {{'New-order.Commercial.Placeholder.consignmentnote-consignment-number' | translate}}
+                    </label>
+                </div>
+            </div>
+
+            <!-- Transitfakturierung -->
+            <div class="arrow-div flex-row" (click)="toggleSectionalInvoicing()">
+                <span [ngClass]="{'arrow': !isSectionalInvoicing, 'arrow-up': isSectionalInvoicing }" #arrowIcon>
+                    <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                        <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                    </svg>
+                </span>
+                <div class="flex-row show-hide-section" *ngIf="!isSectionalInvoicing"> 
+                    {{'New-order.Commercial.Show-sectional-invoicing' | translate }}
+                </div>
+                <div class="flex-row show-hide-section" *ngIf="isSectionalInvoicing"> 
+                    {{'New-order.Commercial.Hide-sectional-invoicing' | translate }}
+                </div>
+            </div>
+
+            <div *ngIf="isSectionalInvoicing" class="flex-row" style="margin: 0 30px 0 0">
+                <div style="width: 50%">
+                    <input class='elm-input' id="Field_executing_carrier_ru_code"
+                        formControlName="executingCarrierRuCode" type="text"
+                        placeholder="{{ 'New-order.Commercial.Placeholder.executing-carrier-ru-code' | translate }}"
+                        aria-labelledby="Field_executing_carrier_ru_code" maxlength="4"
+                        [class.invalid-input]="executingCarrierRuCode?.invalid && executingCarrierRuCode?.touched" />
+                    <label class="elm-label" for="Field_executing_carrier_ru_code">
+                        {{'New-order.Commercial.Placeholder.executing-carrier-ru-code'|translate }}
+                    </label>
+                </div>
+
+                <div id="Field_sectional_invoicing_carrier_code" style="padding: 0 0 0 10px; width: 50%">
+                    <input
+                        class='elm-input'
+                        id="Field_sectional_invoicing_carrier_code"
+                        formControlName="sectionalInvoicingCarrierCode"
+                        type="text"
+                        placeholder="{{ 'New-order.Commercial.Placeholder.sectional-invoicing-carrier-code' | translate }}"
+                        aria-labelledby="Field_external_reference_consignment_number"
+                        maxlength="45"
+                        [class.invalid-input]="sectionalInvoicingCarrierCode?.invalid && sectionalInvoicingCarrierCode?.touched" />
+                    <label class="elm-label" for="Field_sectional_invoicing_carrier_code">
+                        {{'New-order.Commercial.Placeholder.sectional-invoicing-carrier-code'| translate }}
+                    </label>
+                    <ng-container *ngIf="sectionalInvoicingCarrierCode.errors?.sectionalInvoicing">
+                        <!-- Check for "descriptionOfSpecificationMissing" error -->
+                        <small class="input-error">
+                            {{ 'New-order.Errors.Sectional-invoicing-executing-carrier-code' | translate }}
+                        </small>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

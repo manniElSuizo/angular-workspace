@@ -1,0 +1,197 @@
+@use 'color';
+.sigma {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.wagonNumber {
+  text-align: center;
+}
+
+.wagonType {
+  text-align: center;
+}
+
+.shippingDate {
+  text-align: center;
+}
+
+.consignee {
+  text-align: center;
+}
+
+.consignor {
+  text-align: center;
+}
+
+.goodType {
+  text-align: center;
+}
+
+.cargoWeight {
+  text-align:right;
+}
+
+.vehicleWeight {
+  text-align: right;
+}
+
+.totalWeight {
+  text-align: right;
+}
+
+.numberOfAxis {
+  text-align: center;
+}
+
+.lengthOfWagon {
+  text-align: right;
+}
+
+.orderNumber {
+  text-align: center;
+}
+.sumCargoWeight {
+  text-align: right;
+}
+
+#train-chain-selector {
+    min-width: 100%;
+}
+
+#train-chain-input {
+  min-width: 100%;
+}
+#form-group-train-chain{
+  min-width: 100%;
+}
+.tbody {
+  .white-row {
+    background-color:color.$white-color;
+
+    &:hover {
+      background-color: #D7DCE1;
+    }
+  }
+}
+
+.orderNumberRow {
+  vertical-align: top;
+}
+
+.detailRow {
+  vertical-align: top;
+}
+
+.tdHeadline {
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tdLabel {
+  white-space: nowrap;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 25%;
+}
+
+.tdLabelInfo {
+  white-space: nowrap;
+  padding-left: 5em;
+  padding-right: 10px;
+  width: 25%;
+}
+
+.tdEmptyCol {
+  padding-left: 50px;
+}
+
+#weightOfWagon {
+  text-align: center;
+}
+
+
+.footer {
+  flex-shrink: 0;
+}
+
+.input-field {
+  select {
+      font-size: 20px;
+      font-weight: bold;
+      height: 52px;
+      margin: 0.5em 1em 1em 0;
+      padding: 14px 16px 14px 17px;
+      background-color: white;
+      border-color: lightgrey;
+      border-bottom: none;
+      width: 99%;
+  }
+}
+
+th div {
+  display: flex;
+  justify-content: center;
+}
+
+th {
+  text-align: center;
+  padding: 23px 10px 23px 10px;
+}
+
+details-info-block {
+  display: flex;
+
+  .info-block-part {
+    width: 100%;
+
+    &>div {
+      display: flex;
+
+      div {
+        width: 100%;
+        text-align: left;
+        margin: 5px 0;
+      }
+    }
+
+    &:first-of-type {
+      margin-right: 10%;
+    }
+
+    .small-info {
+      font-style: italic;
+      color: #AFB4BB;
+    }
+  }
+}
+
+.modal-main {
+  padding: 0px 0px;
+}
+
+hr {
+  background-color: #c8cdd2;
+  display: block;
+  height: 1px;
+}
+
+.details-h2-normal {
+  font-weight: normal;
+}
+
+.info-block-table {
+  width: 100%;
+}
+
+tfoot tr {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background-color: #FFFFFF;
+}
+
+tfoot td {
+  border-top: 1px solid #3c414b;
+}

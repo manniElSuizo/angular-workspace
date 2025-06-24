@@ -1,0 +1,49 @@
+<header class="modal-header">
+    <span>{{ 'Order-Management.Order-code.Rename' | translate }}</span>
+    <h2>
+        <strong>{{ dialogTitle }}</strong>
+    </h2>
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+</header>
+<main class="modal-main">
+    <form style="display: grid;" [formGroup]="formGroup">
+        <div class="flex-row">
+            <div class="input-field" style="display: grid;">
+                <label for="templateName" class="elm-label">{{'Order-Management.Order-code-view-filter.Label.Template-number' | translate}}</label><br />
+                <span style="margin-left: 5px;">{{orderTemplateSummary.templateNumber}}</span>
+            </div>
+            <div class="input-field">
+                <input 
+                    formControlName="templateName" 
+                    autocomplete="off"
+                    type="text"
+                    name="templateName"
+                    id="templateName"
+                    class="elm-input"
+                    placeholder="{{'Order-Management.Shared.Template-name' | translate}}">
+                <label for="templateName" class="elm-label">{{'Order-Management.Shared.Template-name' | translate}}</label>
+                <ng-container *ngIf="templateName.invalid">
+                    <small class="input-error">
+                        {{'Order-Management.Shared.Errors.Order-template-name-validation' | translate }}
+                    </small>
+                </ng-container>
+            </div>
+        </div>
+        <div class="button-group flex-row" style="margin-top: 20px; justify-content: flex-end;">
+            <db-button variant="brand-primary" type="button" style="margin-right: 1em;" class="hydrated" (click)="rename()">
+                <button class="elm-button" data-variant="brand-primary" type="button">
+                    {{'Shared.Save-button-label' | translate}}
+                </button>
+            </db-button>
+            <db-button variant="secondary-solid" type="button" class="hydrated">
+                <button class="elm-button" data-variant="secondary-solid" type="button" mat-dialog-close>
+                    {{'Shared.Cancel-button-label' | translate}}
+                </button>
+            </db-button>
+        </div>
+    </form>
+</main>

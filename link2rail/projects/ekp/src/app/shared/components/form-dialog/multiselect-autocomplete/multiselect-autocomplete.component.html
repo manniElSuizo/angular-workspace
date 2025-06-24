@@ -1,0 +1,24 @@
+
+    <div class="multi-select-container" [formGroup]="multiselectForm">
+      <label class="elm-label" [for]="multiselectAutocompleteParameters.fieldId">{{multiselectAutocompleteParameters.i18n.labelText}}</label>
+      <div [id]="multiselectAutocompleteParameters.divId" class="input-field">
+        <ng-multiselect-dropdown 
+          class="ng-multiselect-dropdown-class"
+          name="sendingStationMultiselectDropdown" 
+          formControlName="{{multiselectAutocompleteParameters.fieldId}}"
+          [id]="multiselectAutocompleteParameters.fieldId"
+          [settings]="dropdownSettings" 
+          [placeholder]="searchPlaceholderText"
+          [data]="dataList"
+          [customFilter]="true"
+          (onSelect)="onSelect($event)"
+          (onDeSelect)="onDeSelect($event)" 
+          (onDropDownClose)="onDropDownClose($event)" 
+          (onFilterChange)="onFilterChange($event)"
+          (onItemSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          (onDeSelectAll)="onDeSelectAll($event)"
+          >
+        </ng-multiselect-dropdown>
+      </div>
+    </div>

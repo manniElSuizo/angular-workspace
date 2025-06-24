@@ -1,0 +1,154 @@
+<section>
+  <div class="header-line">
+    <h2>{{ 'Order-view-page.Overview-title' | translate }}</h2>
+  </div>
+  
+  <app-month-filter #filter></app-month-filter>
+
+  <div style="margin-bottom: -20px;" *ngIf="loadingInProgress">
+    <div>
+        <div class="elm-progress">
+            <progress id="progress-label-07" style="margin-bottom: 40px;"></progress>
+        </div>
+    </div>
+  </div>
+
+  <div style="text-align: right">
+    <a style="text-decoration: underline; cursor: pointer" (click)="collapseAll()">alle zuklappen</a> / <a style="text-decoration: underline; cursor: pointer" (click)="expandAll()">alle aufklappen</a></div>
+
+  <div *ngIf="this.currentAmountOfLoadedTrainItems > 0" id="calendar" style="width: 100%;">
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse; border-top: 1px solid lightgray; background-color: white;">
+      <thead class="table-header-top" >
+        <tr>
+          <td style="width: 20px; background-color: white; text-align: center; padding: .5em 0 0 0"></td>
+          <td style="width: 200px; text-align: center; padding: .5em 0 0 0; background-color: white;">{{ 'Month-view-page.Shipping-station-label' | translate }}</td>
+          <td style="width: 200px; text-align: center; padding: .5em 0 0 0; background-color: white">{{ 'Month-view-page.Receiving-station-label' | translate }}</td>
+          <td style="width: 20px; background-color: white"></td>
+          <td style="width: 40px; min-width: 40px; text-align: center;" *ngFor="let day of datesInPeriod" [style]="setBackgroundColor(day)">
+            <div class="flex-column">
+              <div style="text-align: center"><b>{{formatDayOfMonth(day)}}</b></div>
+              <div style="text-align: center; font-size: 85%;">{{ dateOfDay(day) }}</div>
+            </div>          
+          </td>          
+        </tr>
+      </thead>
+      <tbody style="overflow: auto; border-top: 1px solid lightgray; ">
+        <tr *ngFor="let relation of relationModel">
+          <td [attr.colspan]="(datesInPeriod.length+4)" style="width: 100%">
+            <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+              <tr style="background-color: whitesmoke;">
+                <td [ngClass]="filter.isAllExpanded ? 'arrow-up' : 'arrow'" style="width: 20px;" (click)="toggle(arrowIcon, relation)" #arrowIcon>
+                  <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                    <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                  </svg>
+                </td>
+                <td style="width: 200px; font-size: 85%; text-align: center; padding-top: 8px">{{relation.sendingStation.name?.toUpperCase() }}</td>
+                <td style="width: 200px; font-size: 85%; text-align: center; padding-top: 8px">{{relation.receivingStation.name?.toUpperCase() }}</td>
+                <td style="width: 12px">&nbsp;</td>
+                <td *ngFor="let tile of relation.infoRow" style="width: 40px; min-width: 40px; text-align: center;" id="infoRowId">
+                  <div *ngIf="tile.status === TileType.INFO">
+                    <svg class="icon" style="vertical-align: middle;" viewBox="0 0 25 25">
+                      <use xlink:href="assets/icons/icons.svg#monthly-info"/>
+                    </svg>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="relation.expanded" class="train-row">
+                <td [attr.colspan]="(datesInPeriod.length +4)" class="blue-border">
+                  <div>
+
+                    <table class="subtable">
+                      <tr *ngFor="let identifierToDataRows of relation.dataRows | keyvalue">
+                        <td class="tile-head"><img *ngIf="isTrainChainLine(identifierToDataRows)" src="assets/icons/chain_32.png" style="width: 20px; height: 20px; margin: 0px 3px 0 0; vertical-align: middle;" title="{{ 'Shared.Train-Chain' | translate }}" /><span title="{{showIdentifierTitel(identifierToDataRows)}}" style="vertical-align: middle;">{{showId(identifierToDataRows.key)}}</span></td>
+                        <td *ngFor="let tile of identifierToDataRows.value" class="tile-row">
+                            <div *ngIf="(tile.status !== TileType.CANCELED && tile.status !== TileType.EMPTY)" class="tile" title="{{ getTileTitle(tile) }}" (click)="openMenu($event, tile)" [style]="trainTouchesHoliday(tile)">
+                              <svg *ngIf="tile.status === TileType.PARKED" viewBox="0 0 25 25" style="max-height: 25px">
+                                <use xlink:href="assets/icons/icons.svg#train-parked" />
+                              </svg>
+                              <svg  *ngIf="tile.status === TileType.ORDER_ACQUIRED" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#circle-quarter"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.ORDER_IN_VALIDATION" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#circle-half"/>
+                  	              </svg>
+                              <svg *ngIf="tile.status === TileType.ORDER_IN_REVIEW" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#circle-half"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.ORDER_ACCEPTED" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#circle-three-quarters"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.CANCELLATION_DECLINED" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#circle-three-quarters"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.ORDER_DECLINED" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#order-canceled"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.TRAIN_ON_TIME" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-green"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.TRAIN_LATE" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-yellow"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.TRAIN_TOO_LATE" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-red"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.TRAIN_SCHEDULED" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.CANCELLATION_ACQUIRED && profileSelected()" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-cancelled-pending"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.CANCELLATION_IN_VALIDATION && profileSelected()" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-cancelled-pending"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.CANCELLATION_ACQUIRED && !profileSelected()" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train"/>
+                              </svg>
+                              <svg *ngIf="tile.status === TileType.CANCELLATION_IN_VALIDATION && !profileSelected()" class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train"/>
+                              </svg>
+                            </div>
+
+                            <div *ngIf="tile.status === TileType.CANCELED" class="tile deactivated" title="{{tile.id}}: {{ tile.status | translate }}" (click)="openMenu($event, tile)" [style]="trainTouchesHoliday(tile)">
+                              <svg class="icon" viewBox="0 0 25 25">
+                                <use xlink:href="assets/icons/icons.svg#train-cancelled"/>
+                              </svg>
+                            </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>     
+      </tbody> 
+    </table> 
+  </div>
+
+  <app-popup-menu>
+    <p *ngFor="let holiday of touchesHoliday()" class="title" style="border-bottom: 1px solid lightgrey; font-style: italic;">{{holiday}}</p>
+    <p *ngIf="selectedTile" class="title">
+      <b *ngIf="selectedTile.trains">Zugnummer: {{selectedTile.id}}</b>
+      <b *ngIf="!(selectedTile.trains)">Bestellnummer: {{selectedTile.id}}</b>
+    </p>
+    <div class="items">
+      <p *ngIf="(permissionService.hasPermission(null, [authorization.READ_TRAIN_DETAILS], selectedTile?.authorization) | async) && isTrain()" (click)="goTo(Destination.TRAIN_DETAILS)">Zugdetails</p>
+      <p *ngIf="(permissionService.hasPermission(null, [authorization.READ_TRACKING], selectedTile?.authorization) | async) && isTrain() && selectedItemIsTrackable()" (click)="goTo(Destination.TRACKING_HISTORIE)">Tracking Historie</p>
+      <p *ngIf="isOrder()" (click)="goTo(Destination.ORDER_DETAILS)">Bestelldetails</p>
+      <p *ngIf="selectedItemIsCancelable()" (click)="goTo(Destination.CANCELLATION)">Abbestellen</p>
+    </div>
+  </app-popup-menu>        
+
+  <div *ngIf="!loadingInProgress && showLoadButton" class="bottom-controls">
+    <button class="load-btn" (click)="loadMore()">
+        {{ 'Month-view-page.Load-more-button-label' | translate }}
+    </button>        
+  </div>
+
+  <div>
+    <strong>{{ currentAmountOfLoadedTrainItems }} {{'Shared.Of' | translate}} {{ totalTrainAmount }}</strong>
+  </div>
+
+</section>

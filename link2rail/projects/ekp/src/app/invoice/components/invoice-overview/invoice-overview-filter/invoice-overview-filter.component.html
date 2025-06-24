@@ -1,0 +1,60 @@
+<div style="width: 100%">
+    <form [formGroup]="filterForm">
+        <div class="filter-block-grid">
+            <div class="input-field">
+                <input formControlName="invoiceDateFrom"
+                       #invoiceDateFrom
+                       type="date"
+                       name="invoiceDateFrom"
+                       id="invoiceDateFrom"
+                       class="elm-input date-field"
+                       aria-labelledby="invoiceDateFromLabel"
+                       [class.focused]="invoiceDateFrom.value"
+                       (focus)="onFocus($event)"
+                       (blur)="onBlur($event)"
+                       (change)="onFilterChange($event)"/>
+                <label class="date-label" id="invoiceDateFromLabel" for="invoiceDateFrom" aria-hidden="true">
+                    {{ 'inv.invoice.overview.filter.dateFrom' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <input formControlName="invoiceDateTo"
+                       #invoiceDateTo
+                       type="date"
+                       name="invoiceDateTo"
+                       id="invoiceDateTo"
+                       class="elm-input date-field"
+                       aria-labelledby="invoiceDateToLabel"
+                       [class.focused]="invoiceDateTo.value"
+                       (focus)="onFocus($event)"
+                       (blur)="onBlur($event)"
+                       (change)="onFilterChange($event)"/>
+                <label class="date-label" id="invoiceDateToLabel" for="invoiceDateTo" aria-hidden="true">
+                    {{ 'inv.invoice.overview.filter.dateTo' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+                <app-multiselect-autocomplete
+                    #debitorNumber
+                    [multiselectAutocompleteParameters]="debitorNumberParameters"
+                    (formFieldEventEmitter)="multiselectChangeEventListener($event)"
+                >
+                </app-multiselect-autocomplete>
+            </div>
+            <div class="input-field">
+                <input formControlName="invoiceNumber"
+                       type="text"
+                       placeholder="{{ 'inv.invoice.overview.filter.invoiceNumber' | translate}}"
+                       name="invoiceNumber"
+                       id="invoiceNumber"
+                       class="elm-input"
+                       (change)="onFilterChange($event);"/>
+                <label class="elm-label" for="invoiceNumber">
+                    {{ 'inv.invoice.overview.filter.invoiceNumber' | translate }}
+                </label>
+            </div>
+            <div class="input-field">
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,36 @@
+<header class="modal-header">
+    <h2>link2rail-ID: {{ data?.orderIdConsumer }}</h2>
+    <a class="close-icon" title="{{ 'common.components.form.button.close' | translate }}" mat-dialog-close>
+        <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close"/>
+        </svg>
+    </a>
+</header>
+
+<main class="modal-main-trackinghistory modal-main">
+    <div class="history-table-block" style="margin-top: 1em">
+        <table class="list-table">
+            <thead>
+            <tr>
+                <th style="text-align: left;">{{
+                        'ewd.order.form.history.section.title' |
+                            translate
+                    }}:
+                </th>
+                <th>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of data?.history; let i = index" [class.white-row]="i % 2 === 0">
+                <td class="flex-td" style="width: 50%; padding: 10px; text-align: left;">
+                    {{ item.status }}
+                </td>
+                <td class="flex-td" style="width: 50%; padding: 10px; text-align: left; white-space: nowrap;">
+                    {{ item.dateTime | date: 'dd.MM.yyyy HH:mm' }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

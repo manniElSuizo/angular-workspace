@@ -1,0 +1,43 @@
+<div class="dialog-container">
+    <header class="modal-header-sticky">
+        <h2>{{ 'ewd.template.form.rename.title' | translate: {templateName} }}</h2>
+        <a class="close-icon" title="{{ 'common.components.form.button.close' | translate }}" mat-dialog-close>
+            <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close"/>
+            </svg>
+        </a>
+    </header>
+    <main class="modal-main">
+        <form [formGroup]="formGroup" autocomplete="off">
+            <div style="width: 100%" class="input-field">
+                <input formControlName="customerTemplateNameControl"
+                       maxlength="100"
+                       type="text"
+                       class="elm-input"
+                       placeholder="{{ 'ewd.template.form.rename.inputs.customerTemplateName.placeholder' | translate }}"
+                       id="customerTemplateName"/>
+                <label class="elm-label" for="customerTemplateName" aria-hidden="true">
+                    {{ 'ewd.template.form.rename.inputs.customerTemplateName.label' | translate }}
+                </label>
+            </div>
+
+        </form>
+    </main>
+    <footer class="modal-footer-sticky">
+        <div style="padding-left: 30px" class="close-section">
+            <a class="close-icon" mat-dialog-close>
+                <db-button type="button">{{ 'common.components.form.button.cancel' | translate }}</db-button>
+            </a>
+        </div>
+        <div class="button-navigation">
+
+            <db-button class="elm-button"
+                       [disabled]="isSendButtonDisabled"
+                       variant="brand-primary"
+                       type="button" (click)="submit()">
+                {{ 'common.components.form.button.send' | translate }}
+            </db-button>
+
+        </div>
+    </footer>
+</div>

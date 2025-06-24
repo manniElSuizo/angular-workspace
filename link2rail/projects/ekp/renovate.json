@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "group:angularMonorepo",
+    "group:angularcliMonorepo",
+    "group:angular-eslintMonorepo",
+    "group:typescript-eslintMonorepo"
+  ],
+  "packageRules": [
+    {
+      "packageNames": ["@angular/core"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npx ng update {{{depName}}} --from={{{fromVersion}}} --to={{{toVersion}}} --migrateOnly --allowDirty --force"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "packageNames": ["@angular/cli"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npx ng update {{{depName}}} --from={{{fromVersion}}} --to={{{toVersion}}} --migrateOnly --allowDirty --force"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "packageNames": ["@angular-eslint/schematics"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npx ng update {{{depName}}} --from={{{fromVersion}}} --to={{{toVersion}}} --migrateOnly --allowDirty --force"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "packageNames": ["@cypress/schematic"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npx ng update {{{depName}}} --from={{{fromVersion}}} --to={{{toVersion}}} --migrateOnly --allowDirty --force"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    }
+  ],
+  "ignoreDeps": [
+    "tslib",
+    "rxjs",
+    "ts-loader",
+    "typescript",
+    "zone.js",
+    "@types/node",
+    "@types/jasmine",
+    "@cypress/webpack-preprocessor",
+    "cypress",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "eslint",
+    "jasmine-core",
+    "karma",
+    "karma-chrome-launcher",
+    "karma-coverage",
+    "karma-jasmine",
+    "karma-jasmine-html-reporter"
+  ]
+}

@@ -1,0 +1,25 @@
+<div [formGroup]="formGroup"> 
+  <div id="{{fieldName}}id">
+    <input class="elm-input" 
+        id="{{fieldName}}"
+        formControlName="{{fieldName}}"
+        placeholder="{{placeholder}}"
+        title="{{title}}"
+        type="text" 
+        autocomplete="off"
+        name="{{fieldName}}"
+        [attr.list]="this.datalistname"
+        (input)="autocompleteInputChanged($event)"        
+        maxlength="{{maxInputLength}}"
+         />
+    <label class="elm-label" for="{{fieldName}}" inert="inert" id="{{fieldName}}LabelId">{{ label }}</label>
+    <datalist id="{{datalistname}}">
+      <option [value]="option.code" *ngFor="let option of publicDatalist"> {{ option.name }} </option>
+    </datalist>
+    <div class="icon-block" *ngIf="busy">
+      <i class="fa-solid fa-hourglass-half fa-spin"></i>
+    </div>
+    <div class="icon-block" *ngIf="!busy && inputFieldHasContent() && isEnabled()">
+      <i class="fa-solid fa-xmark" (click)="clear()" style="cursor: pointer"></i>
+    </div>
+</div>

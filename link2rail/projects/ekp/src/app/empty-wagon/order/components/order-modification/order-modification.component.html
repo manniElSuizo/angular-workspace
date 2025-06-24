@@ -1,0 +1,51 @@
+<div class="dialog-container">
+    <header class="modal-header-sticky">
+        <h2>link2rail-id: {{ data?.orderIdConsumer }}</h2>
+        <a class="close-icon" title="{{ 'common.components.form.button.close' | translate }}" mat-dialog-close>
+            <svg style="cursor: pointer" class="icon remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close"/>
+            </svg>
+        </a>
+    </header>
+    <main class="modal-main" style="overflow-y: unset">
+        <form [formGroup]="formGroup" (submit)="sendOrderModificationRequest()" autocomplete="off">
+            <app-order-template
+                    [data]="data.templateName"
+                    [action]="action"
+                    [formGroup]="templateControl"
+            >
+            </app-order-template>
+            <app-order-partners
+                    [data]="partners"
+                    [formGroup]="partnersControl"
+            >
+            </app-order-partners>
+
+            <app-demand *ngIf="this.demand"
+                        [data]="this.demand"
+                        [action]="action"
+                        [formGroup]="demandControl"
+            >
+            </app-demand>
+
+        </form>
+    </main>
+    <footer class="modal-footer-sticky">
+        <div class="close-section">
+            <a class="close-icon" mat-dialog-close>
+                <db-button type="button">{{ 'common.components.form.button.cancel' | translate }}</db-button>
+            </a>
+        </div>
+        <div *ngIf="action ==='edit'" class="button-navigation">
+
+            <db-button class="elm-button"
+                       [disabled]="isSendButtonDisabled"
+                       variant="brand-primary"
+                       type="button" (click)="submit()">
+                {{ 'common.components.form.button.send' | translate }}
+            </db-button>
+
+        </div>
+    </footer>
+</div>
+

@@ -1,0 +1,136 @@
+<div class="dialog-container">
+    <header class="modal-header-sticky">
+        <h2>{{ 'New-order.Wagon-information.Group-header' | translate }}</h2>
+
+        <a class="close-icon" title="{{'Shared.Close-dialog' | translate}}"  (click)="cancel()">
+            <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+                <use xlink:href="assets/icons/icons.svg#close" />
+            </svg>
+        </a>
+    </header>
+
+    <!-- Main Content (Scrollable) -->
+    <main id="sectionMain" style="overflow-y: auto;">
+        <div id='wagon-information-row-1' class="flex-row" style="flex-direction: column; margin-left: 31px; width: 90%;">
+            <h3>{{'New-order.Wagon-information.Header-wagon-information' | translate}}</h3>
+            <!-- Goods Information List -->
+            <div>
+                <app-goods-information-list [railOrder]="railOrder" [formGroup]="formGroup" [editMode]="editMode" [idx]="idx" [validationMode]="validationMode" [isFastEntry]="isFastEntry"></app-goods-information-list> 
+            </div>
+            <!-- Customer Reference -->
+            <div *ngIf="!isFastEntry" class="arrow-div flex-row" style="margin: 20px 0 0 0" (click)="toggleCustomerReference()">
+                <div class="flex-row">
+                    <span [ngClass]="{'arrow': !isCustomerReference, 'arrow-up': isCustomerReference }"
+                        #arrowIcon>
+                        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                        </svg>
+                    </span>
+                    <span class="flex-row show-hide-section">
+                        <span *ngIf="!isCustomerReference">{{ 'New-order.Wagon-information.Show-section-customer-reference' | translate }}</span>
+                        <span *ngIf="isCustomerReference">{{ 'New-order.Wagon-information.Hide-section-customer-reference' | translate }}</span>
+                        <span *ngIf="getCustomerReferenceCount() > 0" style="margin-left: 8px;">
+                            ({{ getCustomerReferenceCount() }})
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="isCustomerReference && !isFastEntry">
+                <app-customer-reference [railOrder]="railOrder" [idx]="idx" [formGroup]="formGroup" [wagonInformation]="wagonInformation" [editMode]="editMode" [validationMode]="validationMode"></app-customer-reference>
+            </div>
+            <!-- Sealing -->
+            <div *ngIf="!isFastEntry" class="arrow-div flex-row" style="margin: 20px 0 0 0" (click)="toggleSealingList()">
+                <div class="flex-row">
+                    <span [ngClass]="{'arrow': !isSealingList, 'arrow-up': isSealingList }"
+                        #arrowIcon>
+                        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                        </svg>
+                    </span>
+                    <span class="flex-row show-hide-section">
+                        <span *ngIf="!isSealingList">{{ 'New-order.Wagon-information.Show-section-sealing' | translate }}</span>
+                        <span *ngIf="isSealingList">{{ 'New-order.Wagon-information.Hide-section-sealing' | translate }}</span>
+                        <span *ngIf="getSealingListCount() > 0" style="margin-left: 8px;">
+                            ({{ getSealingListCount() }})
+                        </span>
+                        <ng-container *ngIf="isSealingValid()">
+                            <span style="color:red;">*</span>
+                        </ng-container>
+                    </span>
+                </div>
+            </div>            
+            <div *ngIf="isSealingList && !isFastEntry">
+                <app-sealing-list [railOrder]="railOrder" [formGroup]="formGroup" [wagonInformation]="wagonInformation" [editMode]="editMode" [validationMode]="validationMode"></app-sealing-list>
+            </div>
+            <!-- LoadingTacklesList -->
+            <div *ngIf="!isFastEntry" class="arrow-div flex-row" style="margin: 20px 0 0 0" (click)="toggleLoadingTackles()">
+                <div class="flex-row">
+                    <span [ngClass]="{'arrow': !isLoadingTacklesList, 'arrow-up': isLoadingTacklesList }"
+                        #arrowIcon>
+                        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                        </svg>
+                    </span>
+                    <span class="flex-row show-hide-section">
+                        <span *ngIf="!isLoadingTacklesList">{{ 'New-order.Wagon-information.Show-section-loading-tackles' | translate }}</span>
+                        <span *ngIf="isLoadingTacklesList">{{ 'New-order.Wagon-information.Hide-section-loading-tackles' | translate }}</span>
+                        <span *ngIf="getLoadingTacklesCount() > 0" style="margin-left: 8px;">
+                            ({{ getLoadingTacklesCount() }})
+                        </span>
+                        <ng-container *ngIf="isLoadingTacklesValid()">
+                            <span style="color:red;">*</span>
+                        </ng-container>
+                    </span>
+                </div>
+            </div>            
+            <div *ngIf="isLoadingTacklesList && !isFastEntry">
+                <app-loading-tackles-list [railOrder]="railOrder" [formGroup]="formGroup" [wagonInformation]="wagonInformation" [editMode]="editMode" [validationMode]="validationMode"></app-loading-tackles-list>
+            </div>
+            <!-- Authorization -->
+            <div *ngIf="!isFastEntry" class="arrow-div flex-row" style="margin: 20px 0 0 0" (click)="toggleAuthorization()">
+                <div class="flex-row">
+                    <span [ngClass]="{'arrow': !isAuthorizationList, 'arrow-up': isAuthorizationList }"
+                        #arrowIcon>
+                        <svg class="icon mouse-pointer" viewBox="0 0 25 25">
+                            <use xlink:href="assets/icons/icons.svg#chevron-right" />
+                        </svg>
+                    </span>
+                    <span class="flex-row show-hide-section">
+                        <span class="flex-row show-hide-section">
+                            <span *ngIf="!isAuthorizationList">{{ 'New-order.Wagon-information.Show-section-authorization-list' | translate }}</span>
+                            <span *ngIf="isAuthorizationList">{{ 'New-order.Wagon-information.Hide-section-authorization-list' | translate }}</span>
+                            <span *ngIf="getAuthorizationListCount()>0" style="margin-left: 8px;">
+                                 ({{ getAuthorizationListCount()}})
+                            </span>
+                            <ng-container *ngIf="isAuthorizationListValid()">
+                                <span style="color:red;">*</span>
+                            </ng-container>
+                        </span>
+                    </span>
+                </div>
+            </div>            
+            <div *ngIf="isAuthorizationList && !isFastEntry">
+                <app-authorization-list [railOrder]="railOrder" [formGroup]="formGroup" [wagonInformation]="wagonInformation"  [editMode]="editMode" [validationMode]="validationMode"></app-authorization-list>
+            </div >
+        </div>
+    </main>
+
+   <!-- Footer (Sticky) -->
+    <footer class="modal-footer-sticky">
+        <div class="close-section">
+            <a class="close-icon" title="{{ 'Shared.Close-dialog' | translate }}" 
+            (click)="cancel()">
+                <db-button type="button">{{ 'New-order.Main.Button.Cancel' | translate }}</db-button>
+            </a>
+        </div>
+        <div>
+            <db-button class="elm-button" variant="brand-primary" type="button" 
+                (click)="confirm()" 
+                [disabled]="!editMode">
+                <svg class="icon mouse-pointer remove-icon">
+                    <use xlink:href="assets/icons/icons.svg#confirm" />
+                </svg> 
+                {{ 'Shared.Confirm' | translate }}
+            </db-button>
+        </div>
+    </footer>

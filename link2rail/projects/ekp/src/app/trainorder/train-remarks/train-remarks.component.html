@@ -1,0 +1,27 @@
+
+
+<header class="modal-header">
+    <a class="close-icon" title="Close the dialog" mat-dialog-close>
+        <svg class="icon mouse-pointer remove-icon" viewBox="0 0 25 25">
+            <use xlink:href="assets/icons/icons.svg#close" />
+        </svg>
+    </a>
+    <h2> <strong> <span>{{ 'Order-view-page.Train-remarks-page.Train-remarks-header' | translate }}</span> </strong>
+    </h2>
+</header>
+
+<main class="modal-main">
+    <div id="details-infoblock" class="details-info-block">
+        <div class="details-list"  *ngFor="let remark of remarkList">
+            <div id="info-block-part">
+                <div id="info-header-part">
+                    <strong>{{ remark?.trainNumber || '-' }}
+                        <span class="details-h2-normal"> - {{ (remark?.productionDate| dateTime: 'shortDate')}}</span>
+                    </strong>
+                    <hr class="remark-line">
+                    <div id="info-remark-part">{{remark.remark}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
